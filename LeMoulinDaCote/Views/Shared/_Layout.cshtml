@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/Home/Index"> <img class="col-xs-9 col-md-9" src="~/Images/logo.png" alt="Le Moulin d'à côté'" /></a> 
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
+                    <li>@Html.ActionLink("À propos", "About", "Home")</li>
+                    <li>@Html.ActionLink("Évenements", "About", "Home")</li>
+                    <li>@Html.ActionLink("Groupe d'achats", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Impliquez-vous", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Contactez Nous", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+        </nav>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Crée par Pablo Aguilar-Lliguin, Stevee Bouchard et Michele Goyete</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+</body>
+</html>
