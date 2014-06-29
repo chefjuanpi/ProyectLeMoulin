@@ -1,0 +1,37 @@
+﻿@using LeMoulinDaCote.Models
+
+@model MailModel
+
+@{
+    ViewBag.Title = "Evoyez-nous un Courriel";
+}
+<h2>@ViewBag.Title</h2>
+<fieldset>
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary()
+    <table class="col-md-4">
+        <tr>
+            <td>To:</td>
+            <td>@Html.TextBoxFor(m => m.to)</td>
+        </tr>
+        <tr>
+            <td>Suject:</td>
+            <td>@Html.TextBoxFor(m => m.Subject)</td>
+        </tr>
+        <tr>
+            <td>Message</td>
+            <td>@Html.TextAreaFor(m => m.Subject)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Send" class="btn btn-default" /></td>
+        </tr>
+    </table>
+        <br/>
+        @*<p>From: @Html.TextBoxFor(m => m.from)</p>*@
+        
+    }
+</fieldset>
+

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LeMoulindaCoteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AppointmentDiary">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SomeImportantKey" Type="Int32" Nullable="false" />
+    <Property Name="DateTimeScheduled" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="AppointmentLength" Type="Int32" Nullable="false" />
+    <Property Name="StatusENUM" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="DiaryContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AppointmentDiary" EntityType="Self.AppointmentDiary" />
+  </EntityContainer>
+</Schema>
