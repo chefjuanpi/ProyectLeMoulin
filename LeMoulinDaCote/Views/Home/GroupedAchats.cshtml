@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Groupe d'achats";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-md-12 " style="zoom:150%;">
+        <p>Image principal du page</p>
+        <img src="~/Images/Achats.jpg">
+    </div>
+</div><br/>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Qu'est le groupe de achats? (Section 1 du page)</h3>
+    </div>
+    <div class="panel-body">
+        <p>
+            Cete page contiend un introduction sur le groupe d'achats et invite a la comunité du quartier à participér dans le groupe text avec format, est possible inclure images. <br /><br />
+
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br /><br />
+
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br /><br />
+
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br /><br />
+        </p>    
+        <a  href="#">
+                <i class="fa fa-rebel" style="zoom:400%;"></i> 
+            </a>
+        <p>  
+        Mobile
+
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+        </p>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Devenir membre (Section 2 du page)</h3>
+    </div>
+    <div class="panel-body">
+        <p> ecris nous un message ou @Html.ActionLink("contactez-Nous", "Contact", "Home")</p>
+        @Html.Partial("SendMail")
+    </div>
+</div>
+
+
+

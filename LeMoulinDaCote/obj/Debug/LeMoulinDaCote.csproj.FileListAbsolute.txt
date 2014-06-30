@@ -219,3 +219,4 @@ C:\Users\1336278.MHCHIC\Documents\GitHub\ProyectLeMoulin\LeMoulinDaCote\bin\fr\E
 C:\Users\1336278.MHCHIC\Documents\GitHub\ProyectLeMoulin\LeMoulinDaCote\obj\Debug\LeMoulinDaCote.csprojResolveAssemblyReference.cache
 C:\Users\1336278.MHCHIC\Documents\GitHub\ProyectLeMoulin\LeMoulinDaCote\obj\Debug\LeMoulinDaCote.dll
 C:\Users\1336278.MHCHIC\Documents\GitHub\ProyectLeMoulin\LeMoulinDaCote\obj\Debug\LeMoulinDaCote.pdb
+C:\Users\1336287\Documents\GitHub\ProyectLeMoulin\LeMoulinDaCote\bin\fr\EntityFramework.resources.dll

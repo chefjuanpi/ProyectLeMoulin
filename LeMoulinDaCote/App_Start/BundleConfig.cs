@@ -26,6 +26,7 @@ namespace LeMoulinDaCote
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/fonts/font-awesome/css/font-awesome.css",
                       "~/Content/fotorama.css"
                       ));
 
