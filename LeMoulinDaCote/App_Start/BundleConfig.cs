@@ -29,6 +29,18 @@ namespace LeMoulinDaCote
                       "~/Content/fotorama.css"
                       ));
 
+            bundles.Add(new StyleBundle("~/Content/admincss").Include(
+                    "~/Content/bootstrapAdmin.css",
+                    "~/fonts/font-awesome/css/font-awesome.css",
+                    "~/Content/plugins/morris/morris-0.4.3.min.css",
+                    "~/Content/plugins/timeline/timeline.css",
+                    "~/Content/sb-admin.css"
+                    ));
+
+            bundles.Add(new ScriptBundle("~/bundles/AdminScript").Include(
+                    "~/Scripts/plugins/metisMenu/jquery.metisMenu.js",
+                    "~/Scripts/sb-admin.js"));
+
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
             BundleTable.EnableOptimizations = true;
