@@ -24,23 +24,26 @@ namespace LeMoulinDaCote.Models
             var toDate = ConvertFromUnixTimestamp(end);
             using (DiaryContainer ent = new DiaryContainer())
             {
-                var rslt = ent.AppointmentDiary.Where(s => s.DateTimeScheduled >= fromDate && System.Data.Objects.EntityFunctions.AddMinutes(s.DateTimeScheduled, s.AppointmentLength) <= toDate);
+                var rslt = ent.AppointmentDiary.Where(s => s.DateTimeScheduled >= fromDate  && System.Data.Entity.DbFunctions.AddMinutes(s.DateTimeScheduled, s.AppointmentLength) <= toDate);
 
                 List<DiaryEvent> result = new List<DiaryEvent>();
-                foreach (var item in rslt)
+                if (rslt.Count() > 0)
                 {
-                    DiaryEvent rec = new DiaryEvent();
-                    rec.ID = item.ID;
-                    rec.SomeImportantKeyID = item.SomeImportantKey;
-                    rec.StartDateString = item.DateTimeScheduled.ToString("s"); // "s" is a preset format that outputs as: "2009-02-27T12:12:22"
-                    rec.EndDateString = item.DateTimeScheduled.AddMinutes(item.AppointmentLength).ToString("s"); // field AppointmentLength is in minutes
-                    rec.Title = item.Title + " - " + item.AppointmentLength.ToString() + " mins";
-                    rec.StatusString = Enums.GetName<AppointmentStatus>((AppointmentStatus)item.StatusENUM);
-                    rec.StatusColor = Enums.GetEnumDescription<AppointmentStatus>(rec.StatusString);
-                    string ColorCode = rec.StatusColor.Substring(0, rec.StatusColor.IndexOf(":"));
-                    rec.ClassName = rec.StatusColor.Substring(rec.StatusColor.IndexOf(":") + 1, rec.StatusColor.Length - ColorCode.Length - 1);
-                    rec.StatusColor = ColorCode;
-                    result.Add(rec);
+                    foreach (var item in rslt)
+                    {
+                        DiaryEvent rec = new DiaryEvent();
+                        rec.ID = item.ID;
+                        rec.SomeImportantKeyID = item.SomeImportantKey;
+                        rec.StartDateString = item.DateTimeScheduled.ToString("s"); // "s" is a preset format that outputs as: "2009-02-27T12:12:22"
+                        rec.EndDateString = item.DateTimeScheduled.AddMinutes(item.AppointmentLength).ToString("s"); // field AppointmentLength is in minutes
+                        rec.Title = item.Title + " - " + item.AppointmentLength.ToString() + " mins";
+                        rec.StatusString = Enums.GetName<AppointmentStatus>((AppointmentStatus)item.StatusENUM);
+                        rec.StatusColor = Enums.GetEnumDescription<AppointmentStatus>(rec.StatusString);
+                        string ColorCode = rec.StatusColor.Substring(0, rec.StatusColor.IndexOf(":"));
+                        rec.ClassName = rec.StatusColor.Substring(rec.StatusColor.IndexOf(":") + 1, rec.StatusColor.Length - ColorCode.Length - 1);
+                        rec.StatusColor = ColorCode;
+                        result.Add(rec);
+                    }
                 }
 
                 return result;
@@ -56,8 +59,8 @@ namespace LeMoulinDaCote.Models
             var toDate = ConvertFromUnixTimestamp(end);
             using (DiaryContainer ent = new DiaryContainer())
             {
-                var rslt = ent.AppointmentDiary.Where(s => s.DateTimeScheduled >= fromDate && System.Data.Objects.EntityFunctions.AddMinutes(s.DateTimeScheduled, s.AppointmentLength) <= toDate)
-                                                        .GroupBy(s => System.Data.Objects.EntityFunctions.TruncateTime(s.DateTimeScheduled))
+                var rslt = ent.AppointmentDiary.Where(s => s.DateTimeScheduled >= fromDate && System.Data.Entity.DbFunctions.AddMinutes(s.DateTimeScheduled, s.AppointmentLength) <= toDate)
+                                                        .GroupBy(s => System.Data.Entity.DbFunctions.TruncateTime(s.DateTimeScheduled))
                                                         .Select(x => new { DateTimeScheduled = x.Key, Count = x.Count() });
 
                 List<DiaryEvent> result = new List<DiaryEvent>();
