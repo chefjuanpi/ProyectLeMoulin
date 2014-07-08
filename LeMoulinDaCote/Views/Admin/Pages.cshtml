@@ -9,3 +9,37 @@
 
 lister les pages existentes, dernier part de la liste bouton Nouvelle Page, click sur le nom de la page aparaitre le editeur avec les boutons enregistrer cancel
 
+@Scripts
+{
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //build dropdown
+        $("<select />").appendTo(".sidebar-collapse");
+
+        // Create default option "Go to..."
+        $("<option />", {
+            "selected": "selected",
+            "value": "",
+            "text": "Please choose page"
+        }).appendTo(".sidebar-collapse select");
+
+        // Populate dropdowns with the first menu items
+        $(".sidebar-collapse li a").each(function () {
+            var el = $(this);
+            $("<option />", {
+                "value": el.attr("href"),
+                "text": el.text()
+            }).appendTo(".sidebar-collapse select");
+        });
+
+        //make responsive dropdown menu actually work
+        $(".sidebar-collapse select").change(function () {
+            window.location = $(this).find("option:selected").val();
+        });
+
+    });
+
+
+</script>
+}

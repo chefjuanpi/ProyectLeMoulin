@@ -44,7 +44,8 @@ namespace LeMoulinDaCote
 
             bundles.Add(new ScriptBundle("~/bundles/AdminScript").Include(
                     "~/Scripts/plugins/metisMenu/jquery.metisMenu.js",
-                    "~/Scripts/sb-admin.js"));
+                    "~/Scripts/sb-admin.js"
+                    ));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

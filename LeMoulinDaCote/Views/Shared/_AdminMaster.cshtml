@@ -1,12 +1,13 @@
 ﻿<!DOCTYPE html>
 
-<html>
+<html lang="fr-ca">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Administration du site</title>
     @Styles.Render("~/Content/admincss")
     <link href="~/Content/fullcalendar.css" rel="stylesheet" />
+
 
 
 </head>
@@ -262,7 +263,7 @@
                             <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file fa-fw"></i> Pages<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file fa-fw"></i>Tçout les pages</a>
+                                    <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file fa-fw"></i>Toût les pages</a>
                                 </li>
                                 <li>
                                     <a href='@Url.Action("NewPage", "Admin")'><i class="fa fa-edit fa-fw"></i>Nouvelle Page</a>
@@ -402,10 +403,12 @@
             @Scripts.Render("~/bundles/bootstrap")
             @Scripts.Render("~/bundles/AdminScript")
             <script src="~/Scripts/fullcalendar.js"></script>
-
+            @RenderSection("scripts", required:false)
             <!-- Page-Level Plugin Scripts - Blank -->
             <!-- SB Admin Scripts - Include with every page -->
             <!-- Page-Level Demo Scripts - Blank - Use for reference -->
+
+
 
 </body>
 
