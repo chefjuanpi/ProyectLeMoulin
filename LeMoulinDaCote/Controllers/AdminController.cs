@@ -41,5 +41,18 @@ namespace LeMoulinDaCote.Controllers
 
             return View();
         }
+
+        public ActionResult Notice()
+        {
+            ViewBag.Message = "creer une notice";
+
+            return View();
+        }
+        public ActionResult Photos()
+        {
+            ViewBag.Message = "Gestion du photos du site";
+
+            return View();
+        }
     }
 }
