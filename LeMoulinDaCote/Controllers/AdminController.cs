@@ -30,12 +30,12 @@ namespace LeMoulinDaCote.Controllers
 
         public ActionResult Pages()
         {
-            ViewBag.Message = "Lister Pages du site";
+            ViewBag.Message = "Edition des pages du site";
 
             return View();
         }
 
-        public ActionResult NewPage()
+        public ActionResult Evenements()
         {
             ViewBag.Message = "creer une nouvelle page";
 

@@ -1,12 +1,13 @@
-﻿
-@{
-    ViewBag.Title = "Editeur des Pages";
+﻿@{
+    ViewBag.Title = "Controle des évenements";
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
 
-<h2>Editeur des pages</h2>
-<p>Selectionne une page dans la liste derulante pour le voir et modifier, ou click sur le bouton 
-    Nouvelle page</p>
+<h2>@ViewBag.Title</h2>
+<p>
+    Selectionne une évenement future dans la liste derulante pour le voir et modifier, ou click sur le bouton
+    Nouvelle évenement
+</p>
 <br />
 
 <div class="row">
@@ -14,7 +15,7 @@
         <div class="col-md-3">
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    Selectionner une page
+                    Selectionner une évenement
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -24,7 +25,7 @@
             </div>
         </div>
         <div class="btn btn-info col-md-2">Modifier</div>
-        <div class="btn btn-success col-md-offset-5">Nouvelle page</div>
+        <div class="btn btn-success col-md-offset-5">Nouvelle évenement</div>
 
     </div>
 </div>
@@ -34,14 +35,38 @@
 
 <form method="post">
 
+        <div class="input-group row">
+            <div class="input-group-addon">Titre du évenement : </div>
+            <input class="form-control" type="text" placeholder="Ex: Fêtê des Voinsins 2014">
+        </div>
+    <br />
+
     <div class="row">
-        <div class="input-group">
-            <div class="input-group-addon">Titre du page : </div>
-            <input class="form-control" type="text" placeholder="Seulment le premier mot aparaitre dans le menu">
+        <div class="form-group col-md-4  ">
+            <label for="exampleInputFile">Image Principale</label>
+            <input type="file" id="exampleInputFile">
+            <p class="help-block">Selectionne l'imagn Principal a montrer de l'evenement.</p>
+        </div>
+
+        <div class="col-md-5">
+            <strong>Information de base sur l'évenement</strong>
+
+            <div class="input-group ">
+                <div class="input-group-addon">Lieu : </div>
+                <input class="form-control" type="text" placeholder="Ex: Centre Saint Nom de Jésus" />
+            </div>
+            <div class="input-group ">
+                <div class="input-group-addon">Directions : </div>
+                <input class="form-control" type="text" placeholder="Comme arriber a le lieu" />
+            </div>
         </div>
     </div>
+
     <br />
-    <textarea id="elm1" name="area" class="col-lg-12 col-xs-12"></textarea>
+
+    <div class="row">
+        <textarea id="elm1" name="area" class="col-md-12 col-xs-12"></textarea>
+    </div>
     <br />
     <div class="row alert alert-info">
         <div class="col-md-4">
@@ -82,7 +107,7 @@
             ],
             toolbar1: "print preview fullpage | undo redo paste | styleselect | bold italic underline | responsivefilemanager |" +
             " alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink " +
-            "anchor image media | forecolor backcolor emoticons charmap hr pagebreak searchreplace visualblocks visualchars"+
+            "anchor image media | forecolor backcolor emoticons charmap hr pagebreak searchreplace visualblocks visualchars" +
             " code | insertdatetime nonbreaking table ",
             style_formats: [
                  { title: 'Bold text', inline: 'b' },
@@ -96,34 +121,34 @@
         });
     </script>
 
-@*<script type="text/javascript">
-    $(document).ready(function () {
-        //build dropdown
-        $("<select />").appendTo(".sidebar-collapse");
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+                //build dropdown
+                $("<select />").appendTo(".sidebar-collapse");
 
-        // Create default option "Go to..."
-        $("<option />", {
-            "selected": "selected",
-            "value": "",
-            "text": "Please choose page"
-        }).appendTo(".sidebar-collapse select");
+                // Create default option "Go to..."
+                $("<option />", {
+                    "selected": "selected",
+                    "value": "",
+                    "text": "Please choose page"
+                }).appendTo(".sidebar-collapse select");
 
-        // Populate dropdowns with the first menu items
-        $(".sidebar-collapse li a").each(function () {
-            var el = $(this);
-            $("<option />", {
-                "value": el.attr("href"),
-                "text": el.text()
-            }).appendTo(".sidebar-collapse select");
-        });
+                // Populate dropdowns with the first menu items
+                $(".sidebar-collapse li a").each(function () {
+                    var el = $(this);
+                    $("<option />", {
+                        "value": el.attr("href"),
+                        "text": el.text()
+                    }).appendTo(".sidebar-collapse select");
+                });
 
-        //make responsive dropdown menu actually work
-        $(".sidebar-collapse select").change(function () {
-            window.location = $(this).find("option:selected").val();
-        });
+                //make responsive dropdown menu actually work
+                $(".sidebar-collapse select").change(function () {
+                    window.location = $(this).find("option:selected").val();
+                });
 
-    });
+            });
 
 
-</script>*@
+        </script>*@
 }
