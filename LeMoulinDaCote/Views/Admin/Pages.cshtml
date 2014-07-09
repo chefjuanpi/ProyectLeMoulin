@@ -24,7 +24,9 @@
             </div>
         </div>
         <div class="btn btn-info col-md-2">Modifier</div>
-        <div class="btn btn-success col-md-offset-5">Nouvelle page</div>
+        <div class="col-md-1"></div>
+        <div class="btn btn-danger col-md-2">Suprimer</div>
+        <div class="btn btn-success col-md-offset-2">Nouvelle évenement</div>
 
     </div>
 </div>
@@ -41,19 +43,12 @@
         </div>
     </div>
     <br />
-    <textarea id="elm1" name="area" class="col-lg-12 col-xs-12"></textarea>
-    <br />
-    <div class="row alert alert-info">
-        <div class="col-md-4">
-            <strong>Selectione la position du page dans le menu</strong>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> Dans le menu principal ou
-                </label>
-            </div>
-
-
-
+    <div class="row">
+        <strong>Selectione la position du page dans le menu</strong>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Dans le menu principal ou
+            </label>
             <select>
                 <option>Comme sous menu de : </option>
                 <option>Accueil               </option>
@@ -63,7 +58,23 @@
         </div>
 
 
-        <div class="btn btn-danger col-md-offset-4 col-md-3">Enregistrer</div>
+
+
+    </div>
+    <br />
+
+    <div class="row">
+        <textarea id="elm1" name="area" class="col-md-12 col-xs-12"></textarea>
+    </div>
+    <br />
+    <div class="row alert alert-info">
+        <div class="checkbox col-md-3">
+            <label>
+                <input type="checkbox"> Metre la page public ou
+            </label>
+        </div>
+
+        <div class="btn btn-danger col-md-offset-5 col-md-3">Enregistrer sans publier</div>
 
     </div>
 </form>
