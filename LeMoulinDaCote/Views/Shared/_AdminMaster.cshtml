@@ -1,12 +1,13 @@
 ﻿<!DOCTYPE html>
 
-<html>
+<html lang="fr-ca">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Administration du site</title>
     @Styles.Render("~/Content/admincss")
     <link href="~/Content/fullcalendar.css" rel="stylesheet" />
+
 
 
 </head>
@@ -259,24 +260,12 @@
                         </li>
 
                         <li>
-                            <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file fa-fw"></i> Pages<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file fa-fw"></i>Tçout les pages</a>
-                                </li>
-                                <li>
-                                    <a href='@Url.Action("NewPage", "Admin")'><i class="fa fa-edit fa-fw"></i>Nouvelle Page</a>
-                                </li>
-                            </ul>
+                            <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file fa-fw"></i> Pages</a>
                         </li>
 
                         <li>
-                            <a href='@Url.Action("Evements", "Admin")'><i class="fa fa-star fa-fw"></i> Évenements<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href='@Url.Action("NewEvement", "Admin")'><i class="fa fa-star-o fa-fw"></i>Nouvelle Evenement</a>
-                                </li>
-                            </ul>
+                            <a href='@Url.Action("Evenements", "Admin")'><i class="fa fa-star fa-fw"></i> Évenements</a>
+                            
                         </li>
 
                         <li>
@@ -388,7 +377,7 @@
                     @RenderBody()
                     <hr />
                     <footer>
-                        <p>&copy; @DateTime.Now.Year - Crée par Pablo Aguilar-Lliguin, Stevee Bouchard et Michele Goyete</p>
+                        <p>&copy; @DateTime.Now.Year - Crée par Pablo Aguilar-Lliguin, Steeve Bouchard et Michel Goyette</p>
                     </footer>
                 </div>
                 <!-- /#page-wrapper -->
@@ -401,11 +390,14 @@
             @Scripts.Render("~/bundles/jquery")
             @Scripts.Render("~/bundles/bootstrap")
             @Scripts.Render("~/bundles/AdminScript")
+            @Scripts.Render("~/bundles/jquery-ui")
             <script src="~/Scripts/fullcalendar.js"></script>
-
+            @RenderSection("scripts", required:false)
             <!-- Page-Level Plugin Scripts - Blank -->
             <!-- SB Admin Scripts - Include with every page -->
             <!-- Page-Level Demo Scripts - Blank - Use for reference -->
+
+
 
 </body>
 

@@ -13,7 +13,7 @@ namespace LeMoulinDaCote
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
                        "~/Scripts/jquery-ui.js",
-                       "~/Scripts/jquery-ui.min.js"));
+                       "~/Scripts/jquery.datetimepicker.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -39,12 +39,14 @@ namespace LeMoulinDaCote
                     "~/fonts/font-awesome/css/font-awesome.css",
                     "~/Content/plugins/morris/morris-0.4.3.min.css",
                     "~/Content/plugins/timeline/timeline.css",
+                    "~/Content/jquery.datetimepicker.css",
                     "~/Content/sb-admin.css"
                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/AdminScript").Include(
                     "~/Scripts/plugins/metisMenu/jquery.metisMenu.js",
-                    "~/Scripts/sb-admin.js"));
+                    "~/Scripts/sb-admin.js"
+                    ));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
