@@ -1,0 +1,4 @@
+http://pastebin.com/u/dave1374
+
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js">
+</script>
