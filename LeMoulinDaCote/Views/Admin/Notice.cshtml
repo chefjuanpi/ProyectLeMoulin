@@ -1,12 +1,13 @@
-﻿
-@{
-    ViewBag.Title = "Editeur des Pages";
+﻿@{
+    ViewBag.Title = "Centre des nouvelles";
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
 
-<h2>Editeur des pages</h2>
-<p>Selectionne une page dans la liste derulante pour le voir et modifier, ou click sur le bouton 
-    Nouvelle page</p>
+<h2>@ViewBag.Title</h2>
+<p>
+    Selectionne une notice dans la liste derulante pour le voir et modifier, ou click sur le bouton
+    Nouvelle nouvele
+</p>
 <br />
 
 <div class="row">
@@ -14,7 +15,7 @@
         <div class="col-md-3">
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    Selectionner une page
+                    Selectionner une notice
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -26,7 +27,7 @@
         <div class="btn btn-info col-md-2">Modifier</div>
         <div class="col-md-1"></div>
         <div class="btn btn-danger col-md-2">Suprimer</div>
-        <div class="btn btn-success col-md-offset-2">Nouvelle Pages</div>
+        <div class="btn btn-success col-md-offset-2">Nouvelle évenement</div>
 
     </div>
 </div>
@@ -38,31 +39,11 @@
 
     <div class="row">
         <div class="input-group">
-            <div class="input-group-addon">Titre du page : </div>
-            <input class="form-control" type="text" placeholder="Seulment le premier mot aparaitre dans le menu">
+            <div class="input-group-addon">Titre du Notice : </div>
+            <input class="form-control" type="text" placeholder="Ex: Le moulin d'àcôté recive un prix de la ville">
         </div>
     </div>
     <br />
-    <div class="row">
-        <strong>Selectione la position du page dans le menu</strong>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"> Dans le menu principal ou
-            </label>
-            <select>
-                <option>Comme sous menu de : </option>
-                <option>Accueil               </option>
-                <option>Contactez-nous        </option>
-                <option>Impliquez-vous        </option>
-            </select>
-        </div>
-
-
-
-
-    </div>
-    <br />
-
     <div class="row">
         <textarea id="elm1" name="area" class="col-md-12 col-xs-12"></textarea>
     </div>
@@ -70,7 +51,7 @@
     <div class="row alert alert-info">
         <div class="checkbox col-md-3">
             <label>
-                <input type="checkbox"> Metre la page public ou
+                <input type="checkbox"> Metre la notice public ou
             </label>
         </div>
 
@@ -107,34 +88,34 @@
         });
     </script>
 
-@*<script type="text/javascript">
-    $(document).ready(function () {
-        //build dropdown
-        $("<select />").appendTo(".sidebar-collapse");
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+                //build dropdown
+                $("<select />").appendTo(".sidebar-collapse");
 
-        // Create default option "Go to..."
-        $("<option />", {
-            "selected": "selected",
-            "value": "",
-            "text": "Please choose page"
-        }).appendTo(".sidebar-collapse select");
+                // Create default option "Go to..."
+                $("<option />", {
+                    "selected": "selected",
+                    "value": "",
+                    "text": "Please choose page"
+                }).appendTo(".sidebar-collapse select");
 
-        // Populate dropdowns with the first menu items
-        $(".sidebar-collapse li a").each(function () {
-            var el = $(this);
-            $("<option />", {
-                "value": el.attr("href"),
-                "text": el.text()
-            }).appendTo(".sidebar-collapse select");
-        });
+                // Populate dropdowns with the first menu items
+                $(".sidebar-collapse li a").each(function () {
+                    var el = $(this);
+                    $("<option />", {
+                        "value": el.attr("href"),
+                        "text": el.text()
+                    }).appendTo(".sidebar-collapse select");
+                });
 
-        //make responsive dropdown menu actually work
-        $(".sidebar-collapse select").change(function () {
-            window.location = $(this).find("option:selected").val();
-        });
+                //make responsive dropdown menu actually work
+                $(".sidebar-collapse select").change(function () {
+                    window.location = $(this).find("option:selected").val();
+                });
 
-    });
+            });
 
 
-</script>*@
+        </script>*@
 }

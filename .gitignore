@@ -26,7 +26,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -35,5 +36,35 @@ Icon
 .Spotlight-V100
 .Trashes
 
-LeMoulinDaCote/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-LeMoulinDaCote/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+LeMoulinDaCote.v12.suo
+LeMoulinDaCote.v11.suo
+
+LeMoulinDaCote/bin
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+

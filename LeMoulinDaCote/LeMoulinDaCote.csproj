@@ -309,6 +309,7 @@
     <Content Include="Images\Achats.jpg" />
     <Content Include="Images\Chicoutimi.jpg" />
     <Content Include="Images\ecocartier.JPG" />
+    <Content Include="Images\FileManager.png" />
     <Content Include="Images\fotorama%402x.png" />
     <Content Include="Images\fotorama.png" />
     <Content Include="Images\logo.png" />
@@ -442,6 +443,8 @@
     <Content Include="Views\Admin\Pages.cshtml" />
     <Content Include="Views\Admin\Evenements.cshtml" />
     <Content Include="Views\Home\GroupedAchats.cshtml" />
+    <Content Include="Views\Admin\Notice.cshtml" />
+    <Content Include="Views\Admin\Photos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
