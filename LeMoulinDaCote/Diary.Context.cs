@@ -26,5 +26,9 @@ namespace LeMoulinDaCote
         }
     
         public DbSet<AppointmentDiary> AppointmentDiary { get; set; }
+        public DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public DbSet<AspNetUsers> AspNetUsers { get; set; }
     }
 }
