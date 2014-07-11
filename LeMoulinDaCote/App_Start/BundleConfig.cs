@@ -28,6 +28,9 @@ namespace LeMoulinDaCote
                       "~/Scripts/respond.js",
                       "~/Scripts/fotorama.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/calendar").Include(
+                "~/Scripts/fullcalendar.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/fonts/font-awesome/css/font-awesome.css",

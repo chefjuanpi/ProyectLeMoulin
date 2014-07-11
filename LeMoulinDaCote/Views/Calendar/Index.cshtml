@@ -3,10 +3,10 @@
     ViewBag.Title = "Calendrier d'évenements";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link href="~/Content/fullcalendar.css" rel="stylesheet" />
 
 @section scripts{
-
+    @Scripts.Render("~/bundles/calendar")
     <script>
     $(document).ready(function () {
 
