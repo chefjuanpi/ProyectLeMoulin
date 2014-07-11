@@ -7,6 +7,10 @@ body {
     background-color: #f8f8f8;
 }
 
+#side-menu {
+    overflow-y:auto;
+}
+
 @media(min-width:768px) {
     body {
         padding-top: 50px;
@@ -34,6 +38,10 @@ body {
         padding: 0 30px;
         min-height: 1300px;
         border-left: 1px solid #e7e7e7;
+    }
+
+        .sidebar-collapse {
+        max-height: 600px;
     }
 }
 
@@ -150,14 +158,12 @@ body {
 @media(max-height:600px) and (max-width:767px) {
     .sidebar-collapse {
         max-height: 300px;
-        overflow-y: scroll;
     }
 }
 
 @media(max-height:400px) and (max-width:767px) {
     .sidebar-collapse {
         max-height: 200px;
-        overflow-y: scroll;
     }
 }
 
