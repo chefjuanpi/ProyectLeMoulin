@@ -205,8 +205,32 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRole.cs">
+      <DependentUpon>LeMoulinModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>LeMoulinModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogin.cs">
+      <DependentUpon>LeMoulinModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DiaryEvents.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LeMoulinModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeMoulinModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LeMoulinModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeMoulinModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LeMoulinModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeMoulinModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -384,6 +408,23 @@
     <Content Include="Content\plugins\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Content\plugins\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Content\plugins\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <EntityDeploy Include="Models\LeMoulinModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LeMoulinModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\LeMoulinModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LeMoulinModel.edmx</DependentUpon>
+      <LastGenOutput>LeMoulinModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\LeMoulinModel.edmx.diagram">
+      <DependentUpon>LeMoulinModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\LeMoulinModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LeMoulinModel.edmx</DependentUpon>
+      <LastGenOutput>LeMoulinModel.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\demo\dashboard-demo.js" />
     <Content Include="Scripts\demo\flot-demo.js" />
@@ -442,7 +483,6 @@
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -457,6 +497,8 @@
     <Content Include="Views\Home\GroupedAchats.cshtml" />
     <Content Include="Views\Admin\Notice.cshtml" />
     <Content Include="Views\Admin\Photos.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Admin\Membres.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,41 +1,148 @@
 ﻿@model LeMoulinDaCote.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Gestion des membres";
+    Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
+
+<style>
+    .membre123:hover {
+        cursor: pointer;
+        color: red;
+    }
+</style>
+
+
 
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
+<div class="row">
+    <div class="col-md-3" id="ListeMembres">
+        <h4>liste des membres</h4>
+        <ul class="list-group" id="MembresList"></ul>
+        <div class="btn btn-success" onclick="$.nouvelle()"><i class="fa fa-plus"></i> Nouvelle membre</div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    <div class="col-md-5 alert-info" id="ficheMemnbre">
+        <div class="col-md-5">
+            <strong>Fiche de membre</strong>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        <div class="btn btn-success col-md-offset-3" onclick="$.liste()">
+            <i class="fa fa-arrow-circle-left"></i> Liste
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+        
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary("", new { @id= "error123", @class = "text-danger" })
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+            <div class="form-group">
+                @Html.LabelFor(m => m.Prenom, new { @class = "col-md-5 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.Prenom, new { @class = "form-control", @id = "Prenom" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Nom, new { @class = "col-md-5 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.Nom, new { @class = "form-control", @id = "Nom" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-5 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "Courriel" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-5 control-label" })
+                <div class="col-md-7">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-5 control-label" })
+                <div class="col-md-7">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>
+            
+            <div class="form-group" id="Modif">
+                <div class="btn btn-info col-md-3 col-md-offset-2" onclick="$.Modif()">Modifier</div>
+                <div class="btn btn-danger col-md-3 col-md-offset-3">Suspendre </div>
+            </div>
+            
+            <div class="form-group" id="save">
+                <div class="col-md-offset-2">
+                    <input type="submit" class="btn btn-success col-md-4" value="Enregistrer" />
+                </div>
+                <div class="btn btn-danger col-md-3 col-md-offset-3">Annuler </div>
+            </div>
+        }
+        </div>
+    </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+    <script id="ListeMembresTemplate" type="text/x-handlebars-template">
+        {{#each}}
+        <li id="{{Courriel}}" class="membre123">{{Prenom}} {{Nom}} / {{Courriel}}</li>
+        {{/each}}
+    </script>
+    <script type="text/javascript">
+        templatemembres = null;
+
+        $(function () {
+            $("#ficheMemnbre").hide();
+            $("#save").hide()
+            templatemembres = Handlebars.compile($("#ListeMembresTemplate").html());
+            $.getJSON("GetMembres", null, function (data) {
+                var result = templatemembres(data);
+                $("#MembresList").html(result);
+                $(".membre123").click(function () {
+                    var Courriel = this.id;
+                    $("#ficheMemnbre").show();
+                    $("#Modif").show();
+                    $("#save").hide();                   
+                    $("#ListeMembres").hide();
+                    $.getJSON("GetInfo", { email: Courriel }, function (data) {
+                        $.each(data, function (i, result) {
+                            $("#Nom").val(result.Nom);
+                            $("#Prenom").val(result.Prenom);
+                            $("#Courriel").val(result.Courriel);
+                        });
+                    });
+
+                });
+
+            });
+
+            $.liste = function () {
+                $.vide();
+                $("#ListeMembres").show();
+                $("#ficheMemnbre").hide();
+            }
+
+            $.nouvelle = function () {
+                $.vide();
+                $("#ficheMemnbre").show();
+                $.Modif();
+                $("#ListeMembres").hide();
+            }
+
+            $.vide = function () {
+                $("#Nom").val("");
+                $("#Prenom").val("");
+                $("#Courriel").val("");
+                $("#error123").find("ul").html("");
+            }
+            $.Modif = function () {
+                $("#save").show();
+                $("#Modif").hide();
+
+            }
+
+        });
+    </script>
+        }
+
+

@@ -114,6 +114,38 @@ namespace LeMoulinDaCote.Controllers
             return View(model);
         }
 
+        public JsonResult GetMembres()
+        {
+            LeMoulinEntities db = new LeMoulinEntities();
+            var membres = from m in db.AspNetUsers
+                          select new
+                          {
+                              Courriel = m.UserName,
+                              Nom = m.Nom,
+                              Prenom = m.Prenom
+                          };
+            return Json(membres, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetInfo(string email)
+        {
+            LeMoulinEntities db = new LeMoulinEntities();
+            var membre = (from m in db.AspNetUsers
+                          where m.UserName == email
+                          select new
+                          {
+                              Courriel = m.UserName,
+                              Nom = m.Nom,
+                              Prenom = m.Prenom
+                          }).ToList();
+            string test = membre[0].Nom;
+            string test2 = membre[0].Prenom;
+            string tes4 = membre[0].Courriel;
+            string hola = tes4 + test + test2;
+
+            return Json(membre, JsonRequestBehavior.AllowGet);
+        }
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

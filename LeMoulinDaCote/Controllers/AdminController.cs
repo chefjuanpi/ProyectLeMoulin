@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LeMoulinDaCote.Models;
 
 namespace LeMoulinDaCote.Controllers
 {
@@ -54,5 +55,16 @@ namespace LeMoulinDaCote.Controllers
 
             return View();
         }
+
+        public ActionResult Membres()
+        {
+            ViewBag.Message = "Gestion du Membres";
+
+            return View();
+        }
+
+
+
+
     }
 }
