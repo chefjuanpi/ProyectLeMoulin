@@ -36,11 +36,6 @@ Icon
 .Spotlight-V100
 .Trashes
 
-LeMoulinDaCote.v12.suo
-LeMoulinDaCote.v11.suo
-
-LeMoulinDaCote/bin
-
 # Object files
 *.o
 *.ko
@@ -58,6 +53,7 @@ LeMoulinDaCote/bin
 *.so
 *.so.*
 *.dylib
+*.suo
 
 # Executables
 *.exe
@@ -67,5 +63,6 @@ LeMoulinDaCote/bin
 *.x86_64
 *.hex
 
-
+LeMoulinDaCote/bin
 *.suo
+*.cache
