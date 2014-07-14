@@ -70,16 +70,16 @@ namespace LeMoulinDaCote.Models
         [Display(Name = "Courriel")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "Le {0} besion avoir {2} charactéres minimum.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Mot de passe")]
-        public string Password { get; set; }
+        //[Required]
+        //[StringLength(100, ErrorMessage = "Le {0} besion avoir {2} charactéres minimum.", MinimumLength = 6)]
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Mot de passe")]
+        //public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirmer mot de passe")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Confirmer mot de passe")]
+        //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        //public string ConfirmPassword { get; set; }
     }
 
     public class ResetPasswordViewModel

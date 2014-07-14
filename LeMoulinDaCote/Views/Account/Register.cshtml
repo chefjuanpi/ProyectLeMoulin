@@ -53,7 +53,20 @@
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "Courriel" })
                 </div>
             </div>
-            <div class="form-group">
+            
+                <div class="form-group">
+        <label class="col-md-2 control-label">
+            Select User Role
+        </label>
+        <div class="col-md-10">
+            @foreach (var item in (SelectList)ViewBag.RoleId)
+            {
+                <input type="checkbox" name="SelectedRoles" value="@item.Value" class="checkbox-inline" />
+                @Html.Label(item.Value, new { @class = "control-label" })
+            }
+        </div>
+    </div>
+            @*<div class="form-group">
                 @Html.LabelFor(m => m.Password, new { @class = "col-md-5 control-label" })
                 <div class="col-md-7">
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
@@ -64,7 +77,9 @@
                 <div class="col-md-7">
                     @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
+            
+            
             
             <div class="form-group" id="Modif">
                 <div class="btn btn-info col-md-3 col-md-offset-2" onclick="$.Modif()">Modifier</div>
@@ -75,7 +90,7 @@
                 <div class="col-md-offset-2">
                     <input type="submit" class="btn btn-success col-md-4" value="Enregistrer" />
                 </div>
-                <div class="btn btn-danger col-md-3 col-md-offset-3">Annuler </div>
+                <div class="btn btn-danger col-md-3 col-md-offset-3" id="anuler">Annuler </div>
             </div>
         }
         </div>
@@ -95,12 +110,16 @@
             $("#ficheMemnbre").hide();
             $("#save").hide()
             templatemembres = Handlebars.compile($("#ListeMembresTemplate").html());
+            
             $.getJSON("GetMembres", null, function (data) {
+                console.log("hola");
+                console.log("hola");
                 var result = templatemembres(data);
                 $("#MembresList").html(result);
                 $(".membre123").click(function () {
                     var Courriel = this.id;
                     $("#ficheMemnbre").show();
+                    $.x(true);
                     $("#Modif").show();
                     $("#save").hide();                   
                     $("#ListeMembres").hide();
@@ -109,6 +128,16 @@
                             $("#Nom").val(result.Nom);
                             $("#Prenom").val(result.Prenom);
                             $("#Courriel").val(result.Courriel);
+                        });
+                        $("#anuler").click(function () {
+                            $.each(data, function (i, result) {
+                                $("#Nom").val(result.Nom);
+                                $("#Prenom").val(result.Prenom);
+                                $("#Courriel").val(result.Courriel);
+                            });
+                            $("#Modif").show();
+                            $("#save").hide();
+                            $.x(true);
                         });
                     });
 
@@ -138,7 +167,13 @@
             $.Modif = function () {
                 $("#save").show();
                 $("#Modif").hide();
+                $.x(false);
+            }
 
+            $.x = function (o) {
+                $("#Nom").prop('disabled', o);
+                $("#Prenom").prop('disabled', o);
+                $("#Courriel").prop('disabled', o);
             }
 
         });

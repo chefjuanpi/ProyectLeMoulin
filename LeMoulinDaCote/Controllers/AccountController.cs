@@ -75,6 +75,7 @@ namespace LeMoulinDaCote.Controllers
 
         //
         // GET: /Account/Register
+        //[Authorize(Roles = "Admin")]
         [AllowAnonymous]
         public ActionResult Register()
         {
@@ -84,14 +85,16 @@ namespace LeMoulinDaCote.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
+        //[Authorize(Roles = "Admin")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Nom = model.Nom, Prenom = model.Prenom};
+                IdentityResult result = await UserManager.CreateAsync(user, "Lemoulin@123");
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
@@ -289,10 +292,10 @@ namespace LeMoulinDaCote.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                message == ManageMessageId.ChangePasswordSuccess ? "Votre mot de passe à été change avec succes."
+                : message == ManageMessageId.SetPasswordSuccess ? "votre mot de passe local à été asigne"
+                : message == ManageMessageId.RemoveLoginSuccess ? "votre compte externe à été effacé"
+                : message == ManageMessageId.Error ? "erreur inconue."
                 : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -559,9 +562,10 @@ namespace LeMoulinDaCote.Controllers
             }
         }
 
-        private class ChallengeResult : HttpUnauthorizedResult
+        internal class ChallengeResult : HttpUnauthorizedResult
         {
-            public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
             {
             }
 
@@ -578,7 +582,7 @@ namespace LeMoulinDaCote.Controllers
 
             public override void ExecuteResult(ControllerContext context)
             {
-                var properties = new AuthenticationProperties() { RedirectUri = RedirectUri };
+                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
                 if (UserId != null)
                 {
                     properties.Dictionary[XsrfKey] = UserId;

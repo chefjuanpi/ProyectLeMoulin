@@ -7,6 +7,7 @@ using LeMoulinDaCote.Models;
 
 namespace LeMoulinDaCote.Controllers
 {
+    
     public class AdminController : Controller
     {
         // GET: Admin
@@ -55,16 +56,6 @@ namespace LeMoulinDaCote.Controllers
 
             return View();
         }
-
-        public ActionResult Membres()
-        {
-            ViewBag.Message = "Gestion du Membres";
-
-            return View();
-        }
-
-
-
 
     }
 }
