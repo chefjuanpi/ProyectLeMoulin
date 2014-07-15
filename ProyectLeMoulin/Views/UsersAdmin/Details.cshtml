@@ -2,44 +2,78 @@
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
 
 <h2>Details.</h2>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-    </dl>
+<div class="row">
+    <div class="container">
+        <div class="alert alert-info col-md-4">
+            <h4>Fiche de memmbre</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Prenom)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Prenom)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Nom)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Nom)
+                    </dd>
+                </dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+            </dl>
+        </div>
+    </div>
 </div>
-<h4>List of roles for this user</h4>
-@if (ViewBag.RoleNames.Count == 0)
-{
-    <hr />
-    <p>No roles found for this user.</p>
-}
+<br />
+<div class="row">
+    <div class="container">
+        <div class="alert alert-warning col-md-4">
+            <h4>Liste de roles de cette membre</h4>
+            @if (ViewBag.RoleNames.Count == 0)
+            {
+                <hr />
+                <p>Auccune role</p>
+            }
 
-<table class="table">
+            <table class="table">
 
-    @foreach (var item in ViewBag.RoleNames)
-    {
-        <tr>
-            <td>
-                @item
-            </td>
-        </tr>
-    }
-</table>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                @foreach (var item in ViewBag.RoleNames)
+                {
+                    <tr>
+                        <td>
+                            @item
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+            </div>
+</div>
+        <br />
+        <p>
+            <a href='@Url.Action("Edit", "UsersAdmin", new { id = Model.Id })' class="btn btn-warning col-md-2">
+                <i class="fa fa-edit"></i> Modifier
+            </a>
+
+            <a href='@Url.Action("Index", "UsersAdmin")' class="btn btn-success col-md-2 col-md-offset-1">
+                <i class="fa fa-arrow-circle-left"></i> Liste
+            </a>
+        </p>
 
 
 

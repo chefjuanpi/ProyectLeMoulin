@@ -1,19 +1,26 @@
 ﻿@model IEnumerable<IdentitySample.Models.ApplicationUser>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Liste des membres";
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<div class="row">
+    <a href='@Url.Action("Create", "UsersAdmin")' class="btn btn-success col-md-2">
+        <i class="fa fa-plus-square"></i> Nouvelle membre
+    </a>
+</div>
+<br />
+
+<table class="table alert alert-warning">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            Prenom et Nom
+        </th>
+        <th>
+            Courriel
         </th>
         <th>
 
@@ -23,6 +30,10 @@
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prenom) &nbsp;
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
