@@ -151,6 +151,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
+    <Content Include="tinyfilemanager.net\resources\files\1393850815-md-119793_md_13562_samsung_galaxy_s5_handson1.png" />
+    <Content Include="tinyfilemanager.net\resources\files\logo.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\main_img.png" />
+    <Content Include="tinyfilemanager.net\resources\files\Temp\photo_calc_logo.jpg" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\1393850815-md-119793_md_13562_samsung_galaxy_s5_handson1.png" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\logo.jpg" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\main_img.png" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\Temp\photo_calc_logo.jpg" />
+    <Content Include="tinyfilemanager.net\Web.config" />
+    <Content Include="tinyfilemanager.net\resources\files\gradient.psd" />
+    <Content Include="tinyfilemanager.net\resources\files\Home Renovations.xlsx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -362,6 +373,132 @@
     <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\sb-admin.js" />
+    <Content Include="tinyfilemanager.net\bin\TinyFileManager.dll" />
+    <Content Include="tinyfilemanager.net\css\basic.css" />
+    <Content Include="tinyfilemanager.net\css\bootstrap-lightbox.min.css" />
+    <Content Include="tinyfilemanager.net\css\bootstrap.min.css" />
+    <Content Include="tinyfilemanager.net\css\dropzone.css" />
+    <Content Include="tinyfilemanager.net\css\style.css" />
+    <Content Include="tinyfilemanager.net\dialog.aspx" />
+    <Content Include="tinyfilemanager.net\img\fabric_plaid.png" />
+    <Content Include="tinyfilemanager.net\img\glyphicons-halflings-white.png" />
+    <Content Include="tinyfilemanager.net\img\glyphicons-halflings.png" />
+    <Content Include="tinyfilemanager.net\img\ico\AC3.png" />
+    <Content Include="tinyfilemanager.net\img\ico\ACE.png" />
+    <Content Include="tinyfilemanager.net\img\ico\ADE.png" />
+    <Content Include="tinyfilemanager.net\img\ico\ADP.png" />
+    <Content Include="tinyfilemanager.net\img\ico\AI.png" />
+    <Content Include="tinyfilemanager.net\img\ico\AIFF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\AU.png" />
+    <Content Include="tinyfilemanager.net\img\ico\AVI.png" />
+    <Content Include="tinyfilemanager.net\img\ico\BAT.png" />
+    <Content Include="tinyfilemanager.net\img\ico\BIN.png" />
+    <Content Include="tinyfilemanager.net\img\ico\BMP.png" />
+    <Content Include="tinyfilemanager.net\img\ico\BUP.png" />
+    <Content Include="tinyfilemanager.net\img\ico\CAB.png" />
+    <Content Include="tinyfilemanager.net\img\ico\CAT.png" />
+    <Content Include="tinyfilemanager.net\img\ico\CHM.png" />
+    <Content Include="tinyfilemanager.net\img\ico\CSS.png" />
+    <Content Include="tinyfilemanager.net\img\ico\CSV.png" />
+    <Content Include="tinyfilemanager.net\img\ico\CUE.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DAT.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DCR.png" />
+    <Content Include="tinyfilemanager.net\img\ico\Default.png" />
+    <Content Include="tinyfilemanager.net\img\ico\Default2.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DER.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DIC.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DIVX.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DIZ.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DLL.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DOC.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DOCX.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DOS.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DVD.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DWG.png" />
+    <Content Include="tinyfilemanager.net\img\ico\DWT.png" />
+    <Content Include="tinyfilemanager.net\img\ico\EMF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\EXC.png" />
+    <Content Include="tinyfilemanager.net\img\ico\EXE.png" />
+    <Content Include="tinyfilemanager.net\img\ico\FLA.png" />
+    <Content Include="tinyfilemanager.net\img\ico\folder.png" />
+    <Content Include="tinyfilemanager.net\img\ico\folder_return.png" />
+    <Content Include="tinyfilemanager.net\img\ico\FON.png" />
+    <Content Include="tinyfilemanager.net\img\ico\GIF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\HLP.png" />
+    <Content Include="tinyfilemanager.net\img\ico\HTM.png" />
+    <Content Include="tinyfilemanager.net\img\ico\HTML.png" />
+    <Content Include="tinyfilemanager.net\img\ico\IFO.png" />
+    <Content Include="tinyfilemanager.net\img\ico\INF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\INI.png" />
+    <Content Include="tinyfilemanager.net\img\ico\INS.png" />
+    <Content Include="tinyfilemanager.net\img\ico\IP.png" />
+    <Content Include="tinyfilemanager.net\img\ico\ISO.png" />
+    <Content Include="tinyfilemanager.net\img\ico\ISP.png" />
+    <Content Include="tinyfilemanager.net\img\ico\JAVA.png" />
+    <Content Include="tinyfilemanager.net\img\ico\JFIF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\JPEG.png" />
+    <Content Include="tinyfilemanager.net\img\ico\JPG.png" />
+    <Content Include="tinyfilemanager.net\img\ico\JS.png" />
+    <Content Include="tinyfilemanager.net\img\ico\LOG.png" />
+    <Content Include="tinyfilemanager.net\img\ico\M4A.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MID.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MMF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MMM.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MOV.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MOVIE.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MP2.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MP2V.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MP3.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MP4.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MPE.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MPEG.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MPG.png" />
+    <Content Include="tinyfilemanager.net\img\ico\MPV2.png" />
+    <Content Include="tinyfilemanager.net\img\ico\NFO.png" />
+    <Content Include="tinyfilemanager.net\img\ico\PDD.png" />
+    <Content Include="tinyfilemanager.net\img\ico\PDF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\PHP.png" />
+    <Content Include="tinyfilemanager.net\img\ico\PNG.png" />
+    <Content Include="tinyfilemanager.net\img\ico\PPT.png" />
+    <Content Include="tinyfilemanager.net\img\ico\PPTX.png" />
+    <Content Include="tinyfilemanager.net\img\ico\PSD.png" />
+    <Content Include="tinyfilemanager.net\img\ico\RAR.png" />
+    <Content Include="tinyfilemanager.net\img\ico\REG.png" />
+    <Content Include="tinyfilemanager.net\img\ico\RTF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\SCP.png" />
+    <Content Include="tinyfilemanager.net\img\ico\SQL.png" />
+    <Content Include="tinyfilemanager.net\img\ico\THEME.png" />
+    <Content Include="tinyfilemanager.net\img\ico\TIF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\TIFF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\TLB.png" />
+    <Content Include="tinyfilemanager.net\img\ico\TTF.png" />
+    <Content Include="tinyfilemanager.net\img\ico\TXT.png" />
+    <Content Include="tinyfilemanager.net\img\ico\UIS.png" />
+    <Content Include="tinyfilemanager.net\img\ico\URL.png" />
+    <Content Include="tinyfilemanager.net\img\ico\VBS.png" />
+    <Content Include="tinyfilemanager.net\img\ico\VCR.png" />
+    <Content Include="tinyfilemanager.net\img\ico\VOB.png" />
+    <Content Include="tinyfilemanager.net\img\ico\WAV.png" />
+    <Content Include="tinyfilemanager.net\img\ico\WBA.png" />
+    <Content Include="tinyfilemanager.net\img\ico\WMA.png" />
+    <Content Include="tinyfilemanager.net\img\ico\WMV.png" />
+    <Content Include="tinyfilemanager.net\img\ico\WPL.png" />
+    <Content Include="tinyfilemanager.net\img\ico\WRI.png" />
+    <Content Include="tinyfilemanager.net\img\ico\WTX.png" />
+    <Content Include="tinyfilemanager.net\img\ico\XLS.png" />
+    <Content Include="tinyfilemanager.net\img\ico\XLSX.png" />
+    <Content Include="tinyfilemanager.net\img\ico\XML.png" />
+    <Content Include="tinyfilemanager.net\img\ico\XSL.png" />
+    <Content Include="tinyfilemanager.net\img\ico\ZAP.png" />
+    <Content Include="tinyfilemanager.net\img\ico\ZIP.png" />
+    <Content Include="tinyfilemanager.net\img\loading.gif" />
+    <Content Include="tinyfilemanager.net\img\processing.gif" />
+    <Content Include="tinyfilemanager.net\img\spritemap%402x.png" />
+    <Content Include="tinyfilemanager.net\img\spritemap.png" />
+    <Content Include="tinyfilemanager.net\js\bootstrap-lightbox.min.js" />
+    <Content Include="tinyfilemanager.net\js\bootstrap.min.js" />
+    <Content Include="tinyfilemanager.net\js\dropzone.min.js" />
+    <Content Include="tinyfilemanager.net\js\jquery.1.9.1.min.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Web.config" />
@@ -458,10 +595,21 @@
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="tinyfilemanager.net\classes\clsConfig.cs" />
+    <Compile Include="tinyfilemanager.net\classes\clsFileItem.cs" />
+    <Compile Include="tinyfilemanager.net\classes\clsProfile.cs" />
+    <Compile Include="tinyfilemanager.net\dialog.aspx.cs">
+      <DependentUpon>dialog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="tinyfilemanager.net\dialog.aspx.designer.cs">
+      <DependentUpon>dialog.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
