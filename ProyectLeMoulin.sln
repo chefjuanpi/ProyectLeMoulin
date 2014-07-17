@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30324.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectLeMoulin", "ProyectLeMoulin\ProyectLeMoulin.csproj", "{58F330E5-7E26-4352-A7E7-FEBFF2879474}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "elFinder.Net", "elFinder.Net\elFinder.Net.csproj", "{EE8DA138-7EDA-4EB5-B3FD-377763D5EAAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{58F330E5-7E26-4352-A7E7-FEBFF2879474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58F330E5-7E26-4352-A7E7-FEBFF2879474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58F330E5-7E26-4352-A7E7-FEBFF2879474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE8DA138-7EDA-4EB5-B3FD-377763D5EAAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE8DA138-7EDA-4EB5-B3FD-377763D5EAAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE8DA138-7EDA-4EB5-B3FD-377763D5EAAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE8DA138-7EDA-4EB5-B3FD-377763D5EAAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

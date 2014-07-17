@@ -17,6 +17,10 @@ namespace IdentitySample
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/elfinder").Include(
+                "~/Content/plugins/elfinder/js/elfinder.full.js"
+                ));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -44,6 +48,10 @@ namespace IdentitySample
                     "~/Content/jquery.datetimepicker.css",
                     "~/Content/sb-admin.css"
                     ));
+
+            bundles.Add(new StyleBundle("~/Content/elfinder").Include(
+                "~/Content/plugins/elfinder/css/elfinder.full.css",
+                "~/Content/plugins/elfinder/css/theme.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/AdminScript").Include(
                     "~/Scripts/plugins/metisMenu/jquery.metisMenu.js",
