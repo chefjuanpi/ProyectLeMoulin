@@ -147,52 +147,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\plugins\elfinder\css\elfinder.full.css" />
-    <Content Include="Content\plugins\elfinder\css\elfinder.min.css" />
-    <Content Include="Content\plugins\elfinder\css\theme.css" />
-    <Content Include="Content\plugins\elfinder\img\arrows-active.png" />
-    <Content Include="Content\plugins\elfinder\img\arrows-normal.png" />
-    <Content Include="Content\plugins\elfinder\img\crop.gif" />
-    <Content Include="Content\plugins\elfinder\img\dialogs.png" />
-    <Content Include="Content\plugins\elfinder\img\icons-big.png" />
-    <Content Include="Content\plugins\elfinder\img\icons-small.png" />
-    <Content Include="Content\plugins\elfinder\img\logo.png" />
-    <Content Include="Content\plugins\elfinder\img\progress.gif" />
-    <Content Include="Content\plugins\elfinder\img\quicklook-bg.png" />
-    <Content Include="Content\plugins\elfinder\img\quicklook-icons.png" />
-    <Content Include="Content\plugins\elfinder\img\resize.png" />
-    <Content Include="Content\plugins\elfinder\img\spinner-mini.gif" />
-    <Content Include="Content\plugins\elfinder\img\toolbar.png" />
-    <Content Include="Content\plugins\elfinder\js\elfinder.full.js" />
-    <Content Include="Content\plugins\elfinder\js\elfinder.min.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.ar.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.bg.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.ca.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.cs.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.de.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.el.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.es.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.fa.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.fr.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.hu.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.it.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.jp.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.ko.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.LANG.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.nl.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.no.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.pl.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.pt_BR.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.ru.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.tr.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.vi.js" />
-    <Content Include="Content\plugins\elfinder\js\i18n\elfinder.zh_CN.js" />
-    <Content Include="Content\plugins\elfinder\sounds\rm.wav" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
-    <Content Include="Views\Shared\FilesForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -449,7 +407,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Notice.cshtml" />
     <Content Include="Views\Admin\Pages.cshtml" />
-    <Content Include="Views\Admin\Files.cshtml" />
+    <Content Include="Views\Admin\photos.cshtml" />
     <Content Include="Views\Calendar\Index.cshtml" />
     <Content Include="Views\Home\GroupedAchats.cshtml" />
     <Content Include="Views\SendMailer\Index.cshtml" />
@@ -465,7 +423,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
-    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
@@ -494,7 +451,6 @@
       <DependentUpon>Coeur.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\DiaryEvents.cs" />
-    <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -505,15 +461,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\elFinder.Net\elFinder.Net.csproj">
-      <Project>{ee8da138-7eda-4eb5-b3fd-377763d5eaae}</Project>
-      <Name>elFinder.Net</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Files\MyFolder\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

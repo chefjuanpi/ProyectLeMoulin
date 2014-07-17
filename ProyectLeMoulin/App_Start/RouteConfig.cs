@@ -9,9 +9,6 @@ namespace IdentitySample
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            // elFinder's connector route
-            routes.MapRoute(null, "connector", new { controller = "File", action = "Index" });
-
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
