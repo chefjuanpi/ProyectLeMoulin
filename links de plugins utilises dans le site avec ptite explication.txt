@@ -1,0 +1,64 @@
+ ----------------------------------------------------------------------------
+ TRES IMPORTANTE!!!!!!!!!!!!!!
+ 
+Regle d'or dans le travail en equipe avec repositories comme github, TOUJOURS laisser le code de maniere fonctionel, a dire sans erreurs pour que est possible pour les outres compiler, si existe un erreur metre en commentaires de sa maniere le reste de l'equipe poudrait continuer de travailler.
+
+
+============================================================================
+http://fortawesome.github.io/Font-Awesome/icons/
+icones diverses et valides a tout dimension, pour le utiliser: ouvrir le lien, selectioner l'icone voulu et ecrit comme classe apres de fa ex:
+
+<i class="fa fa-bank" /> sorte l'icone bank
+
+--------------------------------------------------------------
+http://getbootstrap.com/components/   et
+http://getbootstrap.com/css/
+
+le site est fait avec bootstrap, ici le 2 pages avec la guide pour l'utiliser SVP utiliser ces classes pour garder tout le site avec le meme style.
+
+regard que est possible apliquer plus de un classe a le meme balise ecrit les nom des classes separe par un espace entre guillemets. EX
+
+<div class="classe1 classe2 row table classe25" ></div>  5 classes apliques dans cette div 
+
+----------------------------------------------------------
+http://www.codeproject.com/Articles/638674/Full-calendar-A-complete-web-diary-system-for-jQue
+
+full calendar, calendrier d'activites pour les evenements, guide d'utilisation, ets dejà personalise pour l'adapter au site
+
+------------------------------------------------------------------------------
+http://handlebarsjs.com/
+est dêjà instale dans _layout et sysAdmin, si marche pas bien reviser dans ses 2 views
+
+---------------------------------------------------------------------
+la securite est gere par identity framework 2.0 est dejà prêt mais pour developmet n'ete pas mise en marche pret atention dans le code au users et roles
+
+----------------------------------------------------------------------------
+le bd es gere par Entity framework, avec le mdele apele Coeur, mais est possible creer un outre modele pour travailler en paralele le development
+
+--------------------------------------------------------------------------
+http://www.andyarndt.net/TinyFileManager.aspx#install  
+file manager pour le control de photos et outres archives a monter dans le site
+cete plug in est asp.net mais comme le site est mvc one asp.net est totalment compatible et possible de le appeler n'importe pas ou.
+
+------------------------------------------------------------------------------
+ http://fotorama.io/
+ galerie des imagenes dans le page d'accueil, possible metre en marche das outres pages
+ 
+ ---------------------------------------------------------------------------
+  http://xdsoft.net/jqplugins/datetimepicker/
+ plug in jquery pour metre la date et l'houre ou comme dans la page admin/evenements est possible le configurer por suelement date, seulement heure et outres option guide dans la web
+ 
+ ----------------------------------------------------------------------------
+http://www.tinymce.com/download/download.php
+
+tinymce pour la edition des pages web dans mode admin
+
+
+___________________________________________________________________________
+http://www.c-sharpcorner.com/UploadFile/sourabh_mishra1/sending-an-e-mail-using-Asp-Net-mvc/
+
+send mailer mvc, code adapte en view partial pour l'utiliser dans plusiurs places, manque configurer le compte smtp .
+
+
+
+

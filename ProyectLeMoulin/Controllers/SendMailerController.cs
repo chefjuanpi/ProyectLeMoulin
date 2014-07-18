@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-using LeMoulinDaCote.Models;
+using ProyectLeMoulin.Models;
 
-namespace LeMoulinDaCote.Controllers
+namespace ProyectLeMoulin.Controllers
 {
     public class SendMailerController : Controller
     {

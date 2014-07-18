@@ -1,6 +1,6 @@
 ﻿using Owin;
 
-namespace IdentitySample
+namespace ProyectLeMoulin
 {
     public partial class Startup
     {

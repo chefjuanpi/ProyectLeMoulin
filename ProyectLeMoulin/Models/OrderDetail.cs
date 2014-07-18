@@ -12,13 +12,15 @@ namespace ProyectLeMoulin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AppointmentDiary
+    public partial class OrderDetail
     {
-        public int ID { get; set; }
-        public string Title { get; set; }
-        public int SomeImportantKey { get; set; }
-        public System.DateTime DateTimeScheduled { get; set; }
-        public int AppointmentLength { get; set; }
-        public int StatusENUM { get; set; }
+        public int OrderId { get; set; }
+        public int ProductId { get; set; }
+        public System.DateTime DateSemaine { get; set; }
+        public int Quantite { get; set; }
+        public decimal UnitPrice { get; set; }
+    
+        public virtual Order Order { get; set; }
+        public virtual Week Week { get; set; }
     }
 }

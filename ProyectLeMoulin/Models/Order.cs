@@ -12,13 +12,21 @@ namespace ProyectLeMoulin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AppointmentDiary
+    public partial class Order
     {
-        public int ID { get; set; }
-        public string Title { get; set; }
-        public int SomeImportantKey { get; set; }
-        public System.DateTime DateTimeScheduled { get; set; }
-        public int AppointmentLength { get; set; }
-        public int StatusENUM { get; set; }
+        public Order()
+        {
+            this.OrderDetails = new HashSet<OrderDetail>();
+        }
+    
+        public int OrderId { get; set; }
+        public System.DateTime Date { get; set; }
+        public System.DateTime Date_Fin_Commande { get; set; }
+        public Nullable<System.DateTime> Date_Recuperation { get; set; }
+        public bool Commande_Payee { get; set; }
+        public string UserId { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
