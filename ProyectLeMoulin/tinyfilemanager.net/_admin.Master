@@ -1,0 +1,160 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="_admin.master.cs" Inherits="ProyectLeMoulin.tinyfilemanager.net._admin" %>
+
+<!DOCTYPE html>
+
+<html lang="fr-ca">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Administration du site</title>
+    <%: System.Web.Optimization.Styles.Render("~/Content/admincss") %>
+    <meta name="description" content="page de administration du site" />
+    
+    <%: System.Web.Optimization.Scripts.Render("~/bundles/jquery") %>
+
+    <%: System.Web.Optimization.Scripts.Render("~/bundles/bootstrap") %>
+    <%: System.Web.Optimization.Scripts.Render("~/bundles/AdminScript") %>
+       <%: System.Web.Optimization.Scripts.Render("~/bundles/AdminScript2") %>
+
+   
+   
+     <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <p class="navbar-brand" >Panel d'administration</p>
+            </div>
+
+             <div class=" navbar-static-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Rechercher...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href='@Url.Action("Index", "Admin")'><i class="fa fa-dashboard fa-fw"></i> Accueil</a>
+                        </li>
+
+
+
+                        <li>
+
+                            <a href="#"><i class="fa fa-star"></i> Évenements<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href='@Url.Action("Evenements", "Admin")'><i class="fa fa-star-o"></i> Évenements à venir</a>
+                                </li>
+                                <li>
+                                    <a href='@Url.Action("OldEvenements", "Admin")'><i class="fa fa-database"></i> Évenements passes</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href='@Url.Action("Notice", "Admin")'><i class="fa fa-paper-plane fa-fw"></i> Notices</a>
+                        </li>
+                        <li>
+                            <a href='@Url.Action("Photos", "Admin")'><i class="fa fa-image fa-fw"></i> Gestion des photos</a>
+                        </li>
+
+                        <li>
+                            <a href='@Url.Action("Index", "UsersAdmin")'><i class="fa fa-users fa-fw"></i> Membres</a>
+                        </li>
+
+                        <li>
+                            <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file fa-fw"></i> Pages</a>
+                        </li>
+
+                        <li>
+                            <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Groupe de achats<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="flot.html"><i class="fa fa-pencil-square fa-fw"></i> Nouvelle Comande <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="morris.html"><i class="fa fa-pencil-square-o fa-fw"></i> Écrit comande</a>
+                                        </li>
+                                        <li>
+                                            <a href="morris.html"><i class="fa fa-align-left fa-fw"></i> listes d'achat</a>
+                                        </li>
+                                        <li>
+                                            <a href="morris.html"><i class="fa fa-file-text-o fa-fw"></i> Reçus du membres</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="morris.html"><i class="fa fa-coffee"></i> Produits</a>
+                                </li>
+                                <li>
+                                    <a href="morris.html"><i class="fa fa-truck"></i> Fourniseurs</a>
+                                </li>
+                                <li>
+                                    <a href="morris.html"><i class="fa fa-database"></i> Anciennes Comandes</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <li>
+                            <a href='@Url.Action("Configuration", "Admin")'><i class="fa fa-gear fa-fw"></i> Configuration de base</a>
+                        </li>
+
+                        <li>
+                            <a href='@Url.Action("Index", "RolesAdmin")'><i class="fa fa-gear fa-fw"></i> Gestion de Roles</a>
+                        </li>
+
+                    </ul>
+                    <!-- /#side-menu -->
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+
+                    <hr />
+                    <footer>
+                        <p>&copy; @DateTime.Now.Year - Crée par Pablo Aguilar-Lliguin, Steeve Bouchard et Michel Goyette</p>
+                    </footer>
+                </div>
+                <!-- /#page-wrapper -->
+
+            </div>
+        </div>
+    </div>
+            <!-- /#wrapper -->
+            <!-- Core Scripts - Include with every page -->
+
+   
+
+</body>
+</html>

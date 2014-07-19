@@ -50,7 +50,11 @@ namespace ProyectLeMoulin
                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/AdminScript").Include(
-                    "~/Scripts/plugins/metisMenu/jquery.metisMenu.js",
+            "~/Scripts/plugins/metisMenu/jquery.metisMenu.js"
+             ));
+
+            bundles.Add(new ScriptBundle("~/bundles/AdminScript2").Include(
+                    
                     "~/Scripts/sb-admin.js"
                     ));
 

@@ -155,6 +155,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <Content Include="Scripts\habdlebars-2.0.0.js" />
+    <Content Include="tinyfilemanager.net\Photos.aspx" />
     <Content Include="tinyfilemanager.net\resources\files\1393850815-md-119793_md_13562_samsung_galaxy_s5_handson1.png" />
     <Content Include="tinyfilemanager.net\resources\files\logo.jpg" />
     <Content Include="tinyfilemanager.net\resources\files\main_img.png" />
@@ -184,6 +185,7 @@
       <DependentUpon>Coeur.edmx</DependentUpon>
       <LastGenOutput>Coeur.cs</LastGenOutput>
     </Content>
+    <Content Include="tinyfilemanager.net\_admin.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -632,6 +634,20 @@
     </Compile>
     <Compile Include="tinyfilemanager.net\dialog.aspx.designer.cs">
       <DependentUpon>dialog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="tinyfilemanager.net\Photos.aspx.cs">
+      <DependentUpon>Photos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="tinyfilemanager.net\Photos.aspx.designer.cs">
+      <DependentUpon>Photos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="tinyfilemanager.net\_admin.Master.cs">
+      <DependentUpon>_admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="tinyfilemanager.net\_admin.Master.designer.cs">
+      <DependentUpon>_admin.Master</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
