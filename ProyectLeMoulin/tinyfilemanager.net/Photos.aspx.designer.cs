@@ -10,6 +10,6 @@
 namespace TinyFileManager.NET {
     
     
-    public partial class dialog {
+    public partial class Photos {
     }
 }

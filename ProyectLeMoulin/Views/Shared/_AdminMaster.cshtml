@@ -279,7 +279,7 @@
                             <a href='@Url.Action("Notice", "Admin")'><i class="fa fa-paper-plane fa-fw"></i> Notices</a>
                         </li>
                         <li>
-                            <a href='@Url.Action("Photos", "Admin")'><i class="fa fa-image fa-fw"></i> Gestion des photos</a>
+                            <a href='../tinyfilemanager.net/Photos.aspx'><i class="fa fa-image fa-fw"></i> Gestion des photos</a>
                         </li>
 
                         <li>
@@ -357,6 +357,8 @@
     @Scripts.Render("~/bundles/jquery-ui")
             @Scripts.Render("~/bundles/bootstrap")
             @Scripts.Render("~/bundles/AdminScript")
+    @Scripts.Render("~/bundles/AdminScript2")
+    @Scripts.Render("~/bundles/handlebars")
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>
 
             @RenderSection("scripts", required:false)

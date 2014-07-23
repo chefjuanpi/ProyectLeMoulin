@@ -46,9 +46,15 @@ namespace IdentitySample
                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/AdminScript").Include(
-                    "~/Scripts/plugins/metisMenu/jquery.metisMenu.js",
-                    "~/Scripts/sb-admin.js"
+                    "~/Scripts/plugins/metisMenu/jquery.metisMenu.js"
                     ));
+
+            bundles.Add(new ScriptBundle("~/bundles/AdminScript2").Include(
+                                "~/Scripts/sb-admin.js"
+                                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/handlebars").Include(
+                       "~/Scripts/habdlebars-2.0.0.js"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

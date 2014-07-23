@@ -20,36 +20,36 @@ namespace ProyectLeMoulin.Controllers
             return View();
         }
 
-        public JsonResult GetCategories()
-        {
-            CoeurContainer db = new CoeurContainer();
+        //public JsonResult GetCategories()
+        //{
+        //    CoeurContainer db = new CoeurContainer();
 
-            var category = (from c in db.Categories
-                            select new
-                            {
-                                CategoryID = c.CategoryID,
-                                CategoryName = c.CategoryName,
-                                Description = category.Description
-                            }).single();
-            return Json(category, JsonRequestBehavior.AllowGet);
-        }
+        //    var category = (from c in db.Categories
+        //                    select new
+        //                    {
+        //                        CategoryID = c.CategoryID,
+        //                        CategoryName = c.CategoryName,
+        //                        Description = category.Description
+        //                    }).single();
+        //    return Json(category, JsonRequestBehavior.AllowGet);
+        //}
 
-        public JsonResult GetProduits(int cat)
-        {
-            CoeurContainer db = new CoeurContainer();
+        //public JsonResult GetProduits(int cat)
+        //{
+        //    CoeurContainer db = new CoeurContainer();
 
-            var produit = (from p in db.Produits
-                           where p.Categories.CategoryID == cat
-                           select new
-                           {
-                               ProductID = p.ProductID,
-                               ProductName = p.ProductName,
-                               Description = p.Description,
-                               TVQ = p.TVQ,
-                               TPS = p.TPS,
-                               Available = p.Available
-                           }).ToList();
-            return Json(produit, JsonRequestBehavior.AllowGet);
-        }
+        //    var produit = (from p in db.Produits
+        //                   where p.Categories.CategoryID == cat
+        //                   select new
+        //                   {
+        //                       ProductID = p.ProductID,
+        //                       ProductName = p.ProductName,
+        //                       Description = p.Description,
+        //                       TVQ = p.TVQ,
+        //                       TPS = p.TPS,
+        //                       Available = p.Available
+        //                   }).ToList();
+        //    return Json(produit, JsonRequestBehavior.AllowGet);
+        //}
     }
 }

@@ -12,6 +12,7 @@ html {
 }
 body {
   margin: 0;
+  background-image:url(../tinyfilemanager.net/img/fabric_plaid.png);
 }
 article,
 aside,
@@ -3942,6 +3943,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
+  background-image:url(../tinyfilemanager.net/img/fabric_plaid.png);
   background-color: #f8f8f8;
   border-color: #e7e7e7;
 }
