@@ -1,4 +1,4 @@
-
+body{ background:url(../img/fabric_plaid.png); }
 .ff-container .affix input{display: none;}
 .ff-container .affix label{margin-bottom:10px;}
 .container-fluid{padding-right:0 !important;margin-top:10px !important;}
