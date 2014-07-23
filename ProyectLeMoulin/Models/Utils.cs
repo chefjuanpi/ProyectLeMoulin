@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using ProyectLeMoulin.Models;
 
-namespace ProyectLeMoulin.Models
+namespace IdentitySample.Models
 {
     public class Utils
     {

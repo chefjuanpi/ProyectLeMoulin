@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ProyectLeMoulin.Models;
+using IdentitySample.Models;
 
-namespace ProyectLeMoulin.Controllers
+namespace IdentitySample.Controllers
 {
     
     public class AdminController : Controller

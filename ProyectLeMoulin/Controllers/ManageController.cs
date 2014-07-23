@@ -1,4 +1,4 @@
-﻿using ProyectLeMoulin.Models;
+﻿using IdentitySample.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ProyectLeMoulin.Controllers
+namespace IdentitySample.Controllers
 {
     [Authorize]
     public class ManageController : Controller

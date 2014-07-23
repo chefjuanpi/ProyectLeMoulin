@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace ProyectLeMoulin
+namespace IdentitySample
 {
     public class FilterConfig
     {

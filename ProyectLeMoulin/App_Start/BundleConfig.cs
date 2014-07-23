@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace ProyectLeMoulin
+namespace IdentitySample
 {
     public class BundleConfig
     {

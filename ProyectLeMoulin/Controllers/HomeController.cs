@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace ProyectLeMoulin.Controllers
+namespace IdentitySample.Controllers
 {
     public class HomeController : Controller
     {

@@ -2,11 +2,11 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using ProyectLeMoulin.Models;
+using IdentitySample.Models;
 using Owin;
 using System;
 
-namespace ProyectLeMoulin
+namespace IdentitySample
 {
     public partial class Startup
     {

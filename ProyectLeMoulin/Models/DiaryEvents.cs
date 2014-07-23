@@ -5,7 +5,7 @@ using System.Web;
 using System.Globalization;
 using ProyectLeMoulin.Models;
 
-namespace ProyectLeMoulin.Models
+namespace IdentitySample.Models
 {
     public class DiaryEvent
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace ProyectLeMoulin.Models
+namespace IdentitySample.Models
 {
     public class RoleViewModel
     {

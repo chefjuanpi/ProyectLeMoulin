@@ -1,4 +1,4 @@
-﻿using ProyectLeMoulin.Models;
+﻿using IdentitySample.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Collections.Generic;
 
-namespace ProyectLeMoulin.Controllers
+namespace IdentitySample.Controllers
 {
     //[Authorize(Roles = "Admin")]
     public class RolesAdminController : Controller

@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-
-
 namespace ProyectLeMoulin.Controllers
 {
 
@@ -29,28 +27,28 @@ namespace ProyectLeMoulin.Controllers
             var category = (from c in db.Categories
                             select new
                             {
-                                CategoryID = c.CategoryId,
+                                CategoryID = c.CategoryID,
                                 CategoryName = c.CategoryName,
-                                Description = c.Description
-                            }).Single();
+                                Description = category.Description
+                            }).single();
             return Json(category, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetProduits(int cat)
         {
             CoeurContainer db = new CoeurContainer();
-            var produit = 0;
-            //var produit = (from p in db.Products
-            //               where p.CategoryProducts
-            //               select new
-            //               {
-            //                   ProductID = p.ProductID,
-            //                   ProductName = p.ProductName,
-            //                   Description = p.Description,
-            //                   TVQ = p.TVQ,
-            //                   TPS = p.TPS,
-            //                   Available = p.Available
-            //               }).ToList();
+
+            var produit = (from p in db.Produits
+                           where p.Categories.CategoryID == cat
+                           select new
+                           {
+                               ProductID = p.ProductID,
+                               ProductName = p.ProductName,
+                               Description = p.Description,
+                               TVQ = p.TVQ,
+                               TPS = p.TPS,
+                               Available = p.Available
+                           }).ToList();
             return Json(produit, JsonRequestBehavior.AllowGet);
         }
     }

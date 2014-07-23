@@ -4,21 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fa8021665ea54d51a190469d85278f9c" Name="Diagram1">
-        <EntityTypeShape EntityType="ProyectLeMoulinModel.AppointmentDiary" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProyectLeMoulinModel.AspNetUser" Width="1.5" PointX="6.125" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProyectLeMoulinModel.Category" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProyectLeMoulinModel.CategoryProduct" Width="2.25" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProyectLeMoulinModel.Product" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
-        <AssociationConnector Association="ProyectLeMoulinModel.FK_CategoryProduct_Categories" ManuallyRouted="false" />
-        <AssociationConnector Association="ProyectLeMoulinModel.FK_CategoryProduct_Products1" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ProyectLeMoulinModel.OrderDetail" Width="1.5" PointX="5.25" PointY="9.125" />
-        <EntityTypeShape EntityType="ProyectLeMoulinModel.Order" Width="1.5" PointX="3" PointY="13" />
-        <EntityTypeShape EntityType="ProyectLeMoulinModel.Week" Width="1.5" PointX="3" PointY="9" />
-        <AssociationConnector Association="ProyectLeMoulinModel.FK_Orders_AspNetUsers" />
-        <AssociationConnector Association="ProyectLeMoulinModel.FK_OrderDetails_Orders" />
-        <AssociationConnector Association="ProyectLeMoulinModel.FK_OrderDetails_Week" />
-        <AssociationConnector Association="ProyectLeMoulinModel.FK_Week_Products1" />
+      <Diagram DiagramId="0066da3e58324bf7b330da75395281ea" Name="Diagram1">
+        <EntityTypeShape EntityType="ProyectLeMoulinModel.AppointmentDiary" Width="2.75" PointX="0.75" PointY="0.875" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
