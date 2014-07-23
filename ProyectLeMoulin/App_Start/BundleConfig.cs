@@ -14,10 +14,6 @@ namespace ProyectLeMoulin
                        "~/Scripts/jquery-ui.js",
                        "~/Scripts/jquery.datetimepicker.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/handlebars").Include(
-                       "~/Scripts/habdlebars-2.0.0.js"));
-            
-
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
