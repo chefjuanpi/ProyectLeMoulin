@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using IdentitySample.Models;
+using System.Threading.Tasks;
+using ProyectLeMoulin.Models;
 
 namespace IdentitySample.Controllers
 {
@@ -44,12 +46,46 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        
+        //Get: Notices
         public ActionResult Notice()
         {
             ViewBag.Message = "creer une notice";
 
             return View();
         }
+
+        //
+        // POST: //enregistrer Notices
+        [HttpPost]
+        public async Task<ActionResult> Notice(NouvellesViewModel notice)
+        {
+            CoeurContainer db = new CoeurContainer();
+            if (ModelState.IsValid)
+            {
+                if (notice.NouvelleId == "")
+                {
+                    string utilisateur = User.Identity.Name;
+                    string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+                                        
+                    Nouvelle n = new Nouvelle();
+                    n.NouvelleDate = DateTime.Now;
+                    n.UserId = guid;
+                    n.NouvelleTitle = notice.Nouvelletitre;
+                    n.NouvelleText = notice.NouvelleText;
+                    n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
+                    n.Publier = notice.NouvellePublier;
+
+                    db.Nouvelles.Add(n);
+                    await db.SaveChangesAsync();                 
+                    
+                }
+            }
+
+            return View();
+        }
+
+
         public ActionResult Photos()
         {
             ViewBag.Message = "Gestion du photos du site";

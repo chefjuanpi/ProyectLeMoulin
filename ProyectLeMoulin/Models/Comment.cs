@@ -12,16 +12,15 @@ namespace ProyectLeMoulin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AppointmentDiary
+    public partial class Comment
     {
-        public int ID { get; set; }
-        public string Title { get; set; }
-        public int SomeImportantKey { get; set; }
-        public System.DateTime DateTimeScheduled { get; set; }
-        public int AppointmentLength { get; set; }
-        public int StatusENUM { get; set; }
-        public string UserId { get; set; }
+        public int CommentId { get; set; }
+        public int BlogId { get; set; }
+        public int UserId { get; set; }
+        public System.DateTime Date { get; set; }
+        public string Comment1 { get; set; }
+        public bool Validate { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Nouvelle Nouvelle { get; set; }
     }
 }

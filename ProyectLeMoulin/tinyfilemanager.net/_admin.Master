@@ -52,7 +52,7 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href='@Url.Action("Index", "Admin")'><i class="fa fa-dashboard fa-fw"></i> Accueil</a>
+                            <a href='../Admin/Index'><i class="fa fa-dashboard fa-fw"></i> Accueil</a>
                         </li>
 
 

@@ -12,16 +12,11 @@ namespace ProyectLeMoulin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AppointmentDiary
+    public partial class NouvellesPicture
     {
-        public int ID { get; set; }
-        public string Title { get; set; }
-        public int SomeImportantKey { get; set; }
-        public System.DateTime DateTimeScheduled { get; set; }
-        public int AppointmentLength { get; set; }
-        public int StatusENUM { get; set; }
-        public string UserId { get; set; }
+        public int BlogId { get; set; }
+        public int PictureId { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Nouvelle Nouvelle { get; set; }
     }
 }

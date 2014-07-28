@@ -82,6 +82,8 @@
 @section Scripts {
     <script type="text/javascript" src="../Content/plugins/tinymce/tinymce.min.js"></script>
     <script>
+        tfm_path = '/tinyfilemanager.net';
+        
         tinymce.init({
             selector: "textarea#elm1",
             theme: "modern",
@@ -89,7 +91,7 @@
             plugins: [
                  "advlist autolink link image lists charmap print preview hr anchor pagebreak",
                  "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                 "save table contextmenu directionality emoticons template paste textcolor responsivefilemanager"
+                 "save table contextmenu directionality emoticons template paste textcolor"
             ],
             toolbar1: "print preview fullpage | undo redo paste | styleselect | bold italic underline | responsivefilemanager |" +
             " alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink " +

@@ -19,7 +19,7 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Apropos</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">A propos</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Impliquez-Vous</a></li>
                 </ul>
             </div>
@@ -46,7 +46,7 @@
     <div class="row">
         <div class="form-group col-md-4  ">
             <label for="exampleInputFile">Image Principale</label>
-            <input type="file" id="exampleInputFile">
+            <input type="text" id="demotextbox" size="50">&nbsp;<button id="btnDemoTextBox">Choisissez un fichier</button>
             <p class="help-block">Selectionne l'imagen Principal a montrer de l'evenement.</p>
         </div>
 
@@ -101,19 +101,21 @@
     <script type="text/javascript" src="../Content/plugins/tinymce/tinymce.min.js"></script>
     <script>
         $(function () {
+            tfm_path = '/tinyfilemanager.net';
+
             tinymce.init({
                 selector: "textarea#elm1",
                 theme: "modern",
                 height: 400,
                 plugins: [
                      "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-                     "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                     "save table contextmenu directionality emoticons template paste textcolor responsivefilemanager"
+                     "searchreplace wordcount visualblocks visualchars code insertdatetime media nonbreaking",
+                     "save table contextmenu directionality emoticons template paste textcolor "
                 ],
-                toolbar1: "print preview fullpage | undo redo paste | styleselect | bold italic underline | responsivefilemanager |" +
+                toolbar: "print preview searchreplace | undo redo paste | styleselect | bold italic underline | upload |" +
                 " alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink " +
-                "anchor image media | forecolor backcolor emoticons charmap hr pagebreak searchreplace visualblocks visualchars" +
-                " code | insertdatetime nonbreaking table ",
+                "anchor image media | forecolor backcolor emoticons charmap hr | insertdatetime nonbreaking table |  pagebreak " +
+                " visualblocks visualchars code  ",
                 style_formats: [
                      { title: 'Bold text', inline: 'b' },
                      { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },
@@ -128,6 +130,11 @@
             $('.datetimepicker2').datetimepicker({
                 datepicker: false,
                 format: 'H:i'
+            });
+
+            $("#btnDemoTextBox").click(function () {
+                window.open('../tinyfilemanager.net/dialog.aspx?profile=notinymce', 'demo', 'toolbar=0,location=0,status=0,menubar=0,scrollbars=yes,resizable=1,width=900,height=600');
+                return false;
             });
 
             $('.datetimepicker1').datetimepicker({

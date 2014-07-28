@@ -12,16 +12,16 @@ namespace ProyectLeMoulin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AppointmentDiary
+    public partial class Tag
     {
-        public int ID { get; set; }
-        public string Title { get; set; }
-        public int SomeImportantKey { get; set; }
-        public System.DateTime DateTimeScheduled { get; set; }
-        public int AppointmentLength { get; set; }
-        public int StatusENUM { get; set; }
-        public string UserId { get; set; }
+        public Tag()
+        {
+            this.Nouvelles = new HashSet<Nouvelle>();
+        }
     
-        public virtual AspNetUser AspNetUser { get; set; }
+        public int TagId { get; set; }
+        public string Tag1 { get; set; }
+    
+        public virtual ICollection<Nouvelle> Nouvelles { get; set; }
     }
 }
