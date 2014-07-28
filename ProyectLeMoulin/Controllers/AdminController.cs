@@ -58,12 +58,13 @@ namespace IdentitySample.Controllers
         //
         // POST: //enregistrer Notices
         [HttpPost]
+        [ValidateInput(false)]
         public async Task<ActionResult> Notice(NouvellesViewModel notice)
         {
             CoeurContainer db = new CoeurContainer();
             if (ModelState.IsValid)
             {
-                if (notice.NouvelleId == "")
+                if (notice.NouvelleId == null)
                 {
                     string utilisateur = User.Identity.Name;
                     string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
