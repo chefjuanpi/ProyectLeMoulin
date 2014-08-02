@@ -1,0 +1,21 @@
+check box par code
+
+http://stackoverflow.com/questions/426258/how-do-i-check-a-checkbox-with-jquery
+
+disabled / enabled un ensemble
+
+http://stackoverflow.com/questions/15555295/how-to-disable-div-element-and-everything-inside
+
+enable disable tinymce
+
+http://stackoverflow.com/questions/13881812/make-readonly-disable-tinymce-textarea
+
+remplir tiny mce avec les donnes du bd
+
+http://stackoverflow.com/questions/11289599/set-content-in-dynamically-loaded-tinymce-editor
+
+effacer tout le contenu de un form
+
+http://stackoverflow.com/questions/6364289/clear-form-fields-with-jquery
+
+
