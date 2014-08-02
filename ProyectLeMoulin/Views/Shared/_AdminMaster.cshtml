@@ -7,7 +7,7 @@
     <title>@ViewBag.Title - Administration du site</title>
     @Styles.Render("~/Content/admincss")
     <link href="~/Content/fullcalendar.css" rel="stylesheet" />
-
+    @Scripts.Render("~/bundles/jquery")
 
 
     <meta name="description" content="page de administration du site" />
@@ -355,15 +355,13 @@
     </div>
             <!-- /#wrapper -->
             <!-- Core Scripts - Include with every page -->
-            @Scripts.Render("~/bundles/jquery")
+
     @Scripts.Render("~/bundles/jquery-ui")
             @Scripts.Render("~/bundles/bootstrap")
             @Scripts.Render("~/bundles/AdminScript")
     @Scripts.Render("~/bundles/AdminScript2")
     @Scripts.Render("~/bundles/handlebars")
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>
-
-            @RenderSection("scripts", required:false)
+                @RenderSection("scripts", required:false)
             <!-- Page-Level Plugin Scripts - Blank -->
             <!-- SB Admin Scripts - Include with every page -->
             <!-- Page-Level Demo Scripts - Blank - Use for reference -->

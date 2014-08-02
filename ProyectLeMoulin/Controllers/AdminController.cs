@@ -79,11 +79,38 @@ namespace IdentitySample.Controllers
 
                     db.Nouvelles.Add(n);
                     await db.SaveChangesAsync();                 
-                    
                 }
             }
 
             return View();
+        }
+
+        public JsonResult getNouvelles()
+        {
+            CoeurContainer db = new CoeurContainer();
+            var nouvelles = (from n in db.Nouvelles
+                             select new
+                             {
+                                 id = n.NouvelleId,
+                                 Titre = n.NouvelleTitle
+                             });
+            return Json(nouvelles, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getNDetails(int NouvelleId)
+        {
+            CoeurContainer db = new CoeurContainer();
+            var nouvelle = (from n in db.Nouvelles
+                            where n.NouvelleId == NouvelleId
+                             select new
+                             {
+                                 id = n.NouvelleId,
+                                 Titre = n.NouvelleTitle,
+                                 page = n.NouvelleText,
+                                 image = n.NouvellePrincipalPhoto,
+                                 publier = n.Publier
+                             }).Single();
+            return Json(nouvelle, JsonRequestBehavior.AllowGet);        
         }
 
 

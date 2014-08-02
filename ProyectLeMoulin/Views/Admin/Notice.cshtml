@@ -3,54 +3,30 @@
     ViewBag.Title = "Centre des nouvelles";
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
-
 <h2>@ViewBag.Title</h2>
 <p>
     Selectionne une notice dans la liste derulante pour le voir et modifier, ou click sur le bouton
     Nouvelle nouvele
 </p>
 <br />
-
 <div class="row">
-    <div class="alert alert-warning" role="alert">
-        <div class="col-md-3">
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    Selectionner une notice
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Apropos</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Impliquez-Vous</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="btn btn-info col-md-2">Modifier</div>
-        <div class="col-md-1"></div>
-        <div class="btn btn-danger col-md-2">Suprimer</div> 
-        <div class="btn btn-success col-md-offset-2">Nouvelle évenement</div>
-
-    </div>
+    @Html.Partial("_AdminButonModifNew")
 </div>
 
-
-
-
-@using (Html.BeginForm("Notice", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
+@using (Html.BeginForm("Notice", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", 
+    @id="Formulaire" }))
+{
     @Html.AntiForgeryToken()
-
     <hr />
     @Html.ValidationSummary("", new { @class = "text-error" })
-
     <div class="row">
         <div class="input-group">
             <div class="input-group-addon">Titre du Notice : </div>
-            @Html.TextBoxFor(m => m.Nouvelletitre, new { @class = "form-control", @placeholder="Ex: Le moulin d'àcôté recive un prix de la ville" })
+            @Html.TextBoxFor(m => m.Nouvelletitre, new { @class = "form-control", @id="titre",
+                                @placeholder="Ex: Le moulin d'àcôté recive un prix de la ville" })
         </div>
     </div>
     <br />
-
     <div class="row">
         <div class="form-group col-md-4  ">
             @Html.LabelFor(m => m.NouvellePhotoPrincipal)
@@ -59,87 +35,42 @@
             <p class="help-block">Selectionne l'imagen Principal a montrer de la nouvelle.</p>
         </div>
     </div>
-
     <div class="row">
         @Html.TextAreaFor(m => m.NouvelleText, new { @id="elm1", @name="area", @class="col-md-12 col-xs-12" })
     </div>
-        <br />
-        <div class="row alert alert-info">
-            <div class="checkbox col-md-3">
-                @Html.CheckBoxFor(m => m.NouvellePublier)
-                @Html.LabelFor(m => m.NouvellePublier)
-            </div>
-
-            <input type="submit" class="btn btn-danger col-md-offset-5 col-md-3" value="Enregistrer sans publier" />
-
+    <br />
+    <div class="row alert alert-info">
+        <div class="checkbox col-md-3">
+            @Html.CheckBoxFor(m => m.NouvellePublier, new { @id = "publier" })
+            @Html.LabelFor(m => m.NouvellePublier)
         </div>
-                }
+        @Html.HiddenFor(m => m.NouvelleId , new { id = "new123" })
+        <input type="submit" class="btn btn-danger col-md-offset-5 col-md-3" value="Enregistrer sans publier" />
+    </div>
+}
 
 @section Scripts {
-    <script type="text/javascript" src="../Content/plugins/tinymce/tinymce.min.js"></script>
     <script>
         $(function () {
-            $("#btnDemoTextBox").click(function () {
-            window.open('../tinyfilemanager.net/dialog.aspx?profile=notinymce', 'demo', 'toolbar=0,location=0,status=0,menubar=0,scrollbars=yes,resizable=1,width=900,height=600');
-            return false;
-            });
-
-            tfm_path = '/tinyfilemanager.net';
-
-            tinymce.init({
-                selector: "textarea#elm1",
-                theme: "modern",
-                height: 400,
-                plugins: [
-                     "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-                     "searchreplace wordcount visualblocks visualchars code insertdatetime media nonbreaking",
-                     "save table contextmenu directionality emoticons template paste textcolor "
-                ],
-                toolbar: "print preview searchreplace | undo redo paste | styleselect | bold italic underline | upload |" +
-                " alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink " +
-                "anchor image media | forecolor backcolor emoticons charmap hr | insertdatetime nonbreaking table |  pagebreak " +
-                " visualblocks visualchars code  ",
-                style_formats: [
-                     { title: 'Bold text', inline: 'b' },
-                     { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },
-                     { title: 'Red header', block: 'h1', styles: { color: '#ff0000' } },
-                     { title: 'Example 1', inline: 'span', classes: 'example1' },
-                     { title: 'Example 2', inline: 'span', classes: 'example2' },
-                     { title: 'Table styles' },
-                     { title: 'Table row 1', selector: 'tr', classes: 'tablerow1' }
-                ]
+            Templateitems = Handlebars.compile($("#itemsTemplate").html());
+            $.getJSON("getNouvelles", null, function (data) {
+                var result = Templateitems(data);
+                $("#ItemsList").html(result);
+                $(".items").click(function () {
+                    var id = this.id;
+                    $("#btnmodif").show();
+                    $("#btnSupr").show();
+                    $("#Formulaire").show();
+                    tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
+                    $("#new123").val(id);
+                    $.getJSON("getNDetails", { NouvelleId: id }, function (data) {
+                        $("#demotextbox").val(data.image);
+                        $("#publier").prop('checked', data.publier);
+                        tinymce.editors[0].setContent(data.page);
+                        $("#titre").val(data.Titre);
+                    });
+                });
             });
         });
     </script>
-
-    @*<script type="text/javascript">
-            $(document).ready(function () {
-                //build dropdown
-                $("<select />").appendTo(".sidebar-collapse");
-
-                // Create default option "Go to..."
-                $("<option />", {
-                    "selected": "selected",
-                    "value": "",
-                    "text": "Please choose page"
-                }).appendTo(".sidebar-collapse select");
-
-                // Populate dropdowns with the first menu items
-                $(".sidebar-collapse li a").each(function () {
-                    var el = $(this);
-                    $("<option />", {
-                        "value": el.attr("href"),
-                        "text": el.text()
-                    }).appendTo(".sidebar-collapse select");
-                });
-
-                //make responsive dropdown menu actually work
-                $(".sidebar-collapse select").change(function () {
-                    window.location = $(this).find("option:selected").val();
-                });
-
-            });
-
-
-        </script>*@
 }

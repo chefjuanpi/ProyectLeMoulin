@@ -302,6 +302,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="tinyfilemanager.net\_admin.Master" />
+    <Content Include="Views\Shared\_AdminButonModifNew.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
