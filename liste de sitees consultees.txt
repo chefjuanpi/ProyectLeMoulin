@@ -18,4 +18,13 @@ effacer tout le contenu de un form
 
 http://stackoverflow.com/questions/6364289/clear-form-fields-with-jquery
 
+confinrmation modal jquery ui
 
+http://jqueryui.com/dialog/#modal-confirmation
+
+
+
+
+
+
+http://www.mobilephoneemulator.com/ ask dave to another

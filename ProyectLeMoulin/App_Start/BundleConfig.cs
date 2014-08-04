@@ -42,6 +42,7 @@ namespace IdentitySample
                     "~/Content/plugins/morris/morris-0.4.3.min.css",
                     "~/Content/plugins/timeline/timeline.css",
                     "~/Content/jquery.datetimepicker.css",
+                    "~/Content/jquery-ui.min.css",
                     "~/Content/sb-admin.css"
                     ));
 

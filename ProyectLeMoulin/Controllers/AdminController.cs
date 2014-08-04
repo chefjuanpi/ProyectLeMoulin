@@ -62,13 +62,10 @@ namespace IdentitySample.Controllers
         public async Task<ActionResult> Notice(NouvellesViewModel notice)
         {
             CoeurContainer db = new CoeurContainer();
-            if (ModelState.IsValid)
-            {
-                if (notice.NouvelleId == null)
+            string utilisateur = User.Identity.Name;
+            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            if (notice.NouvelleId == null)
                 {
-                    string utilisateur = User.Identity.Name;
-                    string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-                                        
                     Nouvelle n = new Nouvelle();
                     n.NouvelleDate = DateTime.Now;
                     n.UserId = guid;
@@ -80,8 +77,19 @@ namespace IdentitySample.Controllers
                     db.Nouvelles.Add(n);
                     await db.SaveChangesAsync();                 
                 }
-            }
-
+                else
+                {
+                    int x = Convert.ToInt16(notice.NouvelleId);
+                    var modifnotice = (from n in db.Nouvelles
+                                       where n.NouvelleId == x
+                                       select n).Single();
+                    modifnotice.UserId = guid;
+                    modifnotice.NouvelleTitle = notice.Nouvelletitre;
+                    modifnotice.NouvelleText = notice.NouvelleText;
+                    modifnotice.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
+                    modifnotice.Publier = notice.NouvellePublier;
+                    await db.SaveChangesAsync();
+                }
             return View();
         }
 
@@ -111,6 +119,15 @@ namespace IdentitySample.Controllers
                                  publier = n.Publier
                              }).Single();
             return Json(nouvelle, JsonRequestBehavior.AllowGet);        
+        }
+
+        public JsonResult delNews(int nID)
+        {
+            CoeurContainer db = new CoeurContainer();
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            var nouvelle = 1;
+
+            return Json(nouvelle, JsonRequestBehavior.AllowGet); 
         }
 
 

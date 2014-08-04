@@ -12,13 +12,14 @@
 <div class="row">
     @Html.Partial("_AdminButonModifNew")
 </div>
+@Html.ValidationSummary("", new { @class = "text-error" })
 
 @using (Html.BeginForm("Notice", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", 
     @id="Formulaire" }))
 {
     @Html.AntiForgeryToken()
     <hr />
-    @Html.ValidationSummary("", new { @class = "text-error" })
+   
     <div class="row">
         <div class="input-group">
             <div class="input-group-addon">Titre du Notice : </div>
@@ -53,6 +54,7 @@
     <script>
         $(function () {
             Templateitems = Handlebars.compile($("#itemsTemplate").html());
+            
             $.getJSON("getNouvelles", null, function (data) {
                 var result = Templateitems(data);
                 $("#ItemsList").html(result);
