@@ -22,6 +22,10 @@ confinrmation modal jquery ui
 
 http://jqueryui.com/dialog/#modal-confirmation
 
+link in java
+
+http://stackoverflow.com/questions/8454510/open-url-in-same-window-and-in-same-tab
+
 
 
 

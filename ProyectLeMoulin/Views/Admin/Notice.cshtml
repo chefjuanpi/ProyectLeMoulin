@@ -54,8 +54,26 @@
     @Scripts.Render("~/bundles/AdminButons")
     <script>
         $(function () {
-            Templateitems = Handlebars.compile($("#itemsTemplate").html());
+            $("#btnSupr").click(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: 200,
+                    modal: true,
+                    buttons: {
+                        "Effacer": function () {
+                            var x = $("#new123").val();
+                            console.log(x);
+                            window.open("/Admin/delNews?nID=" + x, "_self");
+                            $(this).dialog("close");
+                        },
+                        Anuler: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
             
+            Templateitems = Handlebars.compile($("#itemsTemplate").html());
             $.getJSON("getNouvelles", null, function (data) {
                 var result = Templateitems(data);
                 $("#ItemsList").html(result);

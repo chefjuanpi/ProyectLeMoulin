@@ -121,13 +121,18 @@ namespace IdentitySample.Controllers
             return Json(nouvelle, JsonRequestBehavior.AllowGet);        
         }
 
-        public JsonResult delNews(int nID)
+        public async Task<ActionResult> delNews(int nID)
         {
             CoeurContainer db = new CoeurContainer();
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            var nouvelle = 1;
-
-            return Json(nouvelle, JsonRequestBehavior.AllowGet); 
+            var delnotice = (from n in db.Nouvelles
+                             where n.NouvelleId == nID
+                               select n).Single();
+            if(delnotice != null)
+            { 
+                db.Nouvelles.Remove(delnotice);
+                await db.SaveChangesAsync();
+            }
+            return Redirect("/Admin/Notice");
         }
 
 

@@ -38,25 +38,6 @@
             return false;
         });
 
-        $("#btnSupr").click(function () {
-            $("#dialog-confirm").dialog({
-                resizable: false,
-                height: 140,
-                modal: true,
-                buttons: {
-                    "Effacer": function () {
-                        var x = $("#new123").contains;
-                        console.log(x);
-                        $.getJSON("delNews", {nID: x }, function(data){
-                        });
-                    },
-                    Anuler: function () {
-                        $(this).dialog("close");
-                    }
-                }
-            });
-        });
-
         tfm_path = '/tinyfilemanager.net';
         tinymce.init({
             selector: "textarea#elm1",
