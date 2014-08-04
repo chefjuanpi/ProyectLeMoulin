@@ -21,5 +21,12 @@
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Cete action efface de maniere permanent et irrecouperable.</p>
 </div>
 
+<script type="text/javascript" src="../Content/plugins/tinymce/tinymce.min.js"></script>
+<script type="text/x-handlebars-template" id="itemsTemplate">
+    {{#each}}
+    <li role="presentation" class="items" id={{id}}><a role="menuitem" tabindex="-1">{{Titre}}</a></li>
+    {{/each}}
+</script>
+
 
 

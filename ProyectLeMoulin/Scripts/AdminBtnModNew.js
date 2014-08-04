@@ -1,11 +1,4 @@
-﻿<script type="text/javascript" src="../Content/plugins/tinymce/tinymce.min.js"></script>
-<script type="text/x-handlebars-template" id="itemsTemplate">
-    {{#each}}
-        <li role="presentation" class="items" id={{id}}><a role="menuitem" tabindex="-1">{{Titre}}</a></li>
-    {{/each}}
-</script>
-<script type="text/javascript">
-    Templateitems = null;
+﻿    Templateitems = null;
     $(function () {
         $("#btnmodif").hide();
         $("#btnSupr").hide();
@@ -89,4 +82,3 @@
             ]
         });
     });
-</script>
