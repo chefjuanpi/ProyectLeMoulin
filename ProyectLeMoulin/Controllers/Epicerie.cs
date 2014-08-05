@@ -34,12 +34,14 @@ namespace ProyectLeMoulin.Controllers
         //    return Json(category, JsonRequestBehavior.AllowGet);
         //}
 
-        //public JsonResult GetProduits(int cat)
+        //public JsonResult GetProduits(string cat)
         //{
         //    CoeurContainer db = new CoeurContainer();
 
         //    var produit = (from p in db.Produits
-        //                   where p.Categories.CategoryID == cat
+        //                   where p.Categories.CategoryName == cat
+        //                   inner join CategoryProduct cp
+        //                       On p.ProductId == cp.ProductId
         //                   select new
         //                   {
         //                       ProductID = p.ProductID,
