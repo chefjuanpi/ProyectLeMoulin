@@ -46,6 +46,56 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        //
+        // POST: //enregistrer Notices
+        [HttpPost]
+        [ValidateInput(false)]
+        public async Task<ActionResult> Evenements(EvenementsViewModel Evenement)
+        {
+            CoeurContainer db = new CoeurContainer();
+            string utilisateur = User.Identity.Name;
+            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            if (Evenement.EvenementId == null)
+            {
+                Evenement n = new Evenement();
+                n.UserId = guid;
+                n.TitleEvenement = Evenement.Titre;
+                n.Text = Evenement.Titre;
+                n.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
+                n.Poublier = Evenement.Publier;
+
+
+                db.Evenements.Add(n);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                int x = Convert.ToInt16(Evenement.EvenementId);
+                var modifEvenement = (from n in db.Evenements
+                                   where n.EventId == x
+                                   select n).Single();
+                modifEvenement.UserId = guid;
+                modifEvenement.TitleEvenement = Evenement.Titre;
+                modifEvenement.Text = Evenement.Titre;
+                modifEvenement.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
+                modifEvenement.Poublier = Evenement.Publier;
+                await db.SaveChangesAsync();
+            }
+            return View();
+        }
+
+        public JsonResult getEvenements()
+        {
+            CoeurContainer db = new CoeurContainer();
+            var Evenements = (from n in db.Evenements
+                             select new
+                             {
+                                 id = n.EventId,
+                                 Titre = n.TitleEvenement
+                             });
+            return Json(Evenements, JsonRequestBehavior.AllowGet);
+        }
+
         
         //Get: Notices
         public ActionResult Notice()
@@ -73,6 +123,7 @@ namespace IdentitySample.Controllers
                     n.NouvelleText = notice.NouvelleText;
                     n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
                     n.Publier = notice.NouvellePublier;
+                    
 
                     db.Nouvelles.Add(n);
                     await db.SaveChangesAsync();                 

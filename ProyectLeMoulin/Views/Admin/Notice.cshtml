@@ -12,24 +12,24 @@
 <div class="row">
     @Html.Partial("_AdminButonModifNew")
 </div>
-@Html.ValidationSummary("", new { @class = "text-error" })
+
 
 @using (Html.BeginForm("Notice", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", 
     @id="Formulaire" }))
 {
     @Html.AntiForgeryToken()
     <hr />
-   
+   @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="row">
         <div class="input-group">
-            <div class="input-group-addon">Titre du Notice : </div>
+            @Html.LabelFor(m => m.Nouvelletitre, new { @class = "input-group-addon" })
             @Html.TextBoxFor(m => m.Nouvelletitre, new { @class = "form-control", @id="titre",
                                 @placeholder="Ex: Le moulin d'àcôté recive un prix de la ville" })
         </div>
     </div>
     <br />
     <div class="row">
-        <div class="form-group col-md-4  ">
+        <div class="form-group col-md-3  ">
             @Html.LabelFor(m => m.NouvellePhotoPrincipal)
             @Html.TextBoxFor(m => m.NouvellePhotoPrincipal, new { @class = "form-control", @id = "demotextbox", @size = "50" })
             &nbsp;<button id="btnDemoTextBox">Choisissez un fichier</button>
@@ -51,6 +51,7 @@
 }
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/AdminButons")
     <script>
         $(function () {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-using LeMoulinDaCote.Models;
+using IdentitySample.Models;
 
 namespace LeMoulinDaCote.Controllers
 {

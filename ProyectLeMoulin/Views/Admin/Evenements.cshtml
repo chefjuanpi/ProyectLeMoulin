@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IdentitySample.Models.EvenementsViewModel
+@{
     ViewBag.Title = "Controle des évenements";
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
@@ -11,42 +12,28 @@
 <br />
 
 <div class="row">
-    <div class="alert alert-warning" role="alert">
-        <div class="col-md-3">
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    Selectionner une évenement
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">A propos</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Impliquez-Vous</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="btn btn-info col-md-2">Modifier</div>
-        <div class="col-md-1"></div>
-        <div class="btn btn-danger col-md-2">Suprimer</div>
-        <div class="btn btn-success col-md-offset-2">Nouvelle évenement</div>
-
-    </div>
+    @Html.Partial("_AdminButonModifNew")
 </div>
 
-
-
-
-<form method="post">
+@using (Html.BeginForm("Evenements", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form",
+    @id="Formulaire" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
 
         <div class="input-group row">
-            <div class="input-group-addon">Titre du évenement : </div>
-            <input class="form-control" type="text" placeholder="Ex: Fêtê des Voinsins 2014">
+            @Html.LabelFor(m => m.Titre, new { @class = "input-group-addon" })
+            @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", @id = "titre",
+                                @placeholder = "Ex: Fêtê des Voinsins 2014"})
         </div>
     <br />
 
     <div class="row">
         <div class="form-group col-md-4  ">
-            <label for="exampleInputFile">Image Principale</label>
-            <input type="text" id="demotextbox" size="50">&nbsp;<button id="btnDemoTextBox">Choisissez un fichier</button>
+            @Html.LabelFor(m => m.PhotoPrincipal)
+            @Html.TextBoxFor(m => m.PhotoPrincipal, new { @class = "form-control", @id = "demotextbox", @size = "50" })
+            &nbsp;<button id="btnDemoTextBox">Choisissez un fichier</button>
             <p class="help-block">Selectionne l'imagen Principal a montrer de l'evenement.</p>
         </div>
 
@@ -54,22 +41,44 @@
             <strong>Information de base sur l'évenement :</strong>
 
             <div class="input-group">
-                <div class="input-group-addon">Lieu : </div>
-                <input class="form-control" type="text" placeholder="Ex: Centre Saint Nom de Jésus" />
+                @Html.LabelFor(m=>m.Lieu)
+                @Html.TextBoxFor(m => m.Lieu, new { @class = "form-control", @id = "Lieu",
+                                    @placeholder = "Ex: Centre Saint Nom de Jésus" })
             </div>
             <div class="input-group ">
-                <div class="input-group-addon">Directions : </div>
-                <input class="form-control" type="text" placeholder="Comme arriber a le lieu" />
+                @Html.LabelFor(m => m.Adresse)
+                @Html.TextBoxFor(m => m.Adresse, new { @class = "form-control", @id = "Adresse",
+                                    @placeholder = "123 rue Racine Est" })
             </div>
             <div class="input-group ">
                 <div class="input-group-addon ">Commence </div>
-                <input class="datetimepicker1" type="text" placeholder="Date">
-                <input class="datetimepicker2" type="text" placeholder="Heure">
+                @Html.TextBoxFor(m => m.DateStart, new
+           {
+               @class = "datetimepicker1",
+               @id = "DateStart"
+                                    , @placeholder = "Date" })
+                @Html.TextBoxFor(m => m.HourStart, new
+           {
+               @class = "datetimepicker2",
+               @id = "HeureStart"
+                                    , @placeholder = "Heure" })
             </div>
             <div class="input-group ">
                 <div class="input-group-addon">&nbsp &nbsp &nbsp fin : &nbsp &nbsp &nbsp </div>
-                <input class="datetimepicker1" type="text" placeholder="Date">
-                <input class="datetimepicker2" type="text" placeholder="Heure">
+                @Html.TextBoxFor(m => m.DateEnd, new
+           {
+               @class = "datetimepicker1",
+               @id = "DateEnd"
+               ,
+               @placeholder = "Date"
+           })
+                @Html.TextBoxFor(m => m.HourEnd, new
+           {
+               @class = "datetimepicker2",
+               @id = "HourEnd"
+               ,
+               @placeholder = "Heure"
+           })
             </div>
         </div>
     </div>
@@ -77,64 +86,70 @@
     <br />
 
     <div class="row">
-        <textarea id="elm1" name="area" class="col-md-12 col-xs-12"></textarea>
+        @Html.TextAreaFor(m => m.Contenu, new { @id = "elm1", @name = "area", @class = "col-md-12 col-xs-12" })
     </div>
     <br />
     <div class="row alert alert-info">
         <div class="col-md-4">
             <strong>L'évenement est pret?</strong>
             <div class="checkbox">
-                <label>
-                    <input type="checkbox"> Publier dans le calendrier d'évenements ou
-                </label>
+                @Html.CheckBoxFor(m => m.Publier, new { @id = "publier" })
+                @Html.LabelFor(m => m.Publier)
             </div>
-
+            @Html.HiddenFor(m => m.EvenementId, new { id = "new123" })
         </div>
 
-
-        <div class="btn btn-danger col-md-offset-4 col-md-3">Enregistrer sans publier</div>
-
+        <input type="submit" class="btn btn-danger col-md-offset-5 col-md-3" value="Enregistrer sans publier" />
     </div>
-</form>
+}
 
 @section Scripts {
-    <script type="text/javascript" src="../Content/plugins/tinymce/tinymce.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/AdminButons")
     <script>
         $(function () {
-            tfm_path = '/tinyfilemanager.net';
+            $("#btnSupr").click(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: 200,
+                    modal: true,
+                    buttons: {
+                        "Effacer": function () {
+                            var x = $("#new123").val();
+                            console.log(x);
+                            window.open("/Admin/delNews?nID=" + x, "_self");
+                            $(this).dialog("close");
+                        },
+                        Anuler: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
 
-            tinymce.init({
-                selector: "textarea#elm1",
-                theme: "modern",
-                height: 400,
-                plugins: [
-                     "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-                     "searchreplace wordcount visualblocks visualchars code insertdatetime media nonbreaking",
-                     "save table contextmenu directionality emoticons template paste textcolor "
-                ],
-                toolbar: "print preview searchreplace | undo redo paste | styleselect | bold italic underline | upload |" +
-                " alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink " +
-                "anchor image media | forecolor backcolor emoticons charmap hr | insertdatetime nonbreaking table |  pagebreak " +
-                " visualblocks visualchars code  ",
-                style_formats: [
-                     { title: 'Bold text', inline: 'b' },
-                     { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },
-                     { title: 'Red header', block: 'h1', styles: { color: '#ff0000' } },
-                     { title: 'Example 1', inline: 'span', classes: 'example1' },
-                     { title: 'Example 2', inline: 'span', classes: 'example2' },
-                     { title: 'Table styles' },
-                     { title: 'Table row 1', selector: 'tr', classes: 'tablerow1' }
-                ]
+            Templateitems = Handlebars.compile($("#itemsTemplate").html());
+            $.getJSON("getEvenements", null, function (data) {
+                var result = Templateitems(data);
+                $("#ItemsList").html(result);
+                $(".items").click(function () {
+                    var id = this.id;
+                    $("#btnmodif").show();
+                    $("#btnSupr").show();
+                    $("#Formulaire").show();
+                    tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
+                    $("#new123").val(id);
+                    $.getJSON("getNDetails", { NouvelleId: id }, function (data) {
+                        $("#demotextbox").val(data.image);
+                        $("#publier").prop('checked', data.publier);
+                        tinymce.editors[0].setContent(data.page);
+                        $("#titre").val(data.Titre);
+                    });
+                });
             });
 
             $('.datetimepicker2').datetimepicker({
                 datepicker: false,
                 format: 'H:i'
-            });
-
-            $("#btnDemoTextBox").click(function () {
-                window.open('../tinyfilemanager.net/dialog.aspx?profile=notinymce', 'demo', 'toolbar=0,location=0,status=0,menubar=0,scrollbars=yes,resizable=1,width=900,height=600');
-                return false;
             });
 
             $('.datetimepicker1').datetimepicker({
@@ -159,34 +174,4 @@
         });
     </script>
 
-    @*<script type="text/javascript">
-            $(document).ready(function () {
-                //build dropdown
-                $("<select />").appendTo(".sidebar-collapse");
-
-                // Create default option "Go to..."
-                $("<option />", {
-                    "selected": "selected",
-                    "value": "",
-                    "text": "Please choose page"
-                }).appendTo(".sidebar-collapse select");
-
-                // Populate dropdowns with the first menu items
-                $(".sidebar-collapse li a").each(function () {
-                    var el = $(this);
-                    $("<option />", {
-                        "value": el.attr("href"),
-                        "text": el.text()
-                    }).appendTo(".sidebar-collapse select");
-                });
-
-                //make responsive dropdown menu actually work
-                $(".sidebar-collapse select").change(function () {
-                    window.location = $(this).find("option:selected").val();
-                });
-
-            });
-
-
-        </script>*@
 }

@@ -47,6 +47,24 @@
           <Property Name="Comment" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Validate" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Evenements">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="TitleEvenement" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PrincipalPhotoEvenement" Type="nvarchar" MaxLength="500" />
+          <Property Name="PlaceEvenement" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AdresseEvenement" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="DateStart" Type="date" Nullable="false" />
+          <Property Name="HourStart" Type="time" Precision="7" />
+          <Property Name="DateEnd" Type="date" Nullable="false" />
+          <Property Name="HourEnd" Type="time" Precision="7" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="Poublier" Type="bit" />
+        </EntityType>
         <EntityType Name="Nouvelles">
           <Key>
             <PropertyRef Name="NouvelleId" />
@@ -66,21 +84,6 @@
           </Key>
           <Property Name="BlogId" Type="int" Nullable="false" />
           <Property Name="PictureId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="NouvellesTag">
-          <Key>
-            <PropertyRef Name="BlogId" />
-            <PropertyRef Name="TagId" />
-          </Key>
-          <Property Name="BlogId" Type="int" Nullable="false" />
-          <Property Name="TagId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Tags">
-          <Key>
-            <PropertyRef Name="TagId" />
-          </Key>
-          <Property Name="TagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Tag" Type="nvarchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <Association Name="FK_AppointmentDiary_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
@@ -106,30 +109,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BlogTag_Blogs">
-          <End Role="Nouvelles" Type="Self.Nouvelles" Multiplicity="1" />
-          <End Role="NouvellesTag" Type="Self.NouvellesTag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Nouvelles">
-              <PropertyRef Name="NouvelleId" />
-            </Principal>
-            <Dependent Role="NouvellesTag">
-              <PropertyRef Name="BlogId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BlogTag_Tags">
-          <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
-          <End Role="NouvellesTag" Type="Self.NouvellesTag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tags">
-              <PropertyRef Name="TagId" />
-            </Principal>
-            <Dependent Role="NouvellesTag">
-              <PropertyRef Name="TagId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Comments_Blogs">
           <End Role="Nouvelles" Type="Self.Nouvelles" Multiplicity="1" />
           <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
@@ -139,6 +118,18 @@
             </Principal>
             <Dependent Role="Comments">
               <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evenements_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Evenements" Type="Self.Evenements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Evenements">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -158,10 +149,9 @@
           <EntitySet Name="AppointmentDiary" EntityType="Self.AppointmentDiary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evenements" EntityType="Self.Evenements" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nouvelles" EntityType="Self.Nouvelles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NouvellesPicture" EntityType="Self.NouvellesPicture" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="NouvellesTag" EntityType="Self.NouvellesTag" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AppointmentDiary_AspNetUsers" Association="Self.FK_AppointmentDiary_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AppointmentDiary" EntitySet="AppointmentDiary" />
@@ -170,17 +160,13 @@
             <End Role="Nouvelles" EntitySet="Nouvelles" />
             <End Role="NouvellesPicture" EntitySet="NouvellesPicture" />
           </AssociationSet>
-          <AssociationSet Name="FK_BlogTag_Blogs" Association="Self.FK_BlogTag_Blogs">
-            <End Role="Nouvelles" EntitySet="Nouvelles" />
-            <End Role="NouvellesTag" EntitySet="NouvellesTag" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BlogTag_Tags" Association="Self.FK_BlogTag_Tags">
-            <End Role="Tags" EntitySet="Tags" />
-            <End Role="NouvellesTag" EntitySet="NouvellesTag" />
-          </AssociationSet>
           <AssociationSet Name="FK_Comments_Blogs" Association="Self.FK_Comments_Blogs">
             <End Role="Nouvelles" EntitySet="Nouvelles" />
             <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evenements_AspNetUsers" Association="Self.FK_Evenements_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Evenements" EntitySet="Evenements" />
           </AssociationSet>
           <AssociationSet Name="FK_Nouvelles_AspNetUsers" Association="Self.FK_Nouvelles_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -231,6 +217,11 @@
             <End Role="Nouvelle" EntitySet="Nouvelles" />
             <End Role="Tag" EntitySet="Tags" />
           </AssociationSet>
+          <EntitySet Name="Evenements" EntityType="IdentitySample.Evenement" />
+          <AssociationSet Name="FK_Evenements_AspNetUsers" Association="IdentitySample.FK_Evenements_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Evenement" EntitySet="Evenements" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetUser">
           <Key>
@@ -252,6 +243,7 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AppointmentDiaries" Relationship="IdentitySample.FK_AppointmentDiary_AspNetUsers" FromRole="AspNetUser" ToRole="AppointmentDiary" />
           <NavigationProperty Name="Nouvelles" Relationship="IdentitySample.FK_Nouvelles_AspNetUsers" FromRole="AspNetUser" ToRole="Nouvelle" />
+          <NavigationProperty Name="Evenements" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="AspNetUser" ToRole="Evenement" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -350,6 +342,37 @@
           <End Type="IdentitySample.Nouvelle" Role="Nouvelle" Multiplicity="*" />
           <End Type="IdentitySample.Tag" Role="Tag" Multiplicity="*" />
         </Association>
+        <EntityType Name="Evenement">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="TitleEvenement" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PrincipalPhotoEvenement" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PlaceEvenement" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AdresseEvenement" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HourStart" Type="Time" Precision="7" />
+          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HourEnd" Type="Time" Precision="7" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="Poublier" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="Evenement" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_Evenements_AspNetUsers">
+          <End Type="IdentitySample.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="IdentitySample.Evenement" Role="Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -422,22 +445,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tags">
-            <EntityTypeMapping TypeName="IdentitySample.Tag">
-              <MappingFragment StoreEntitySet="Tags">
-                <ScalarProperty Name="Tag1" ColumnName="Tag" />
-                <ScalarProperty Name="TagId" ColumnName="TagId" />
+          <EntitySetMapping Name="Evenements">
+            <EntityTypeMapping TypeName="IdentitySample.Evenement">
+              <MappingFragment StoreEntitySet="Evenements">
+                <ScalarProperty Name="Poublier" ColumnName="Poublier" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="HourEnd" ColumnName="HourEnd" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="HourStart" ColumnName="HourStart" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="AdresseEvenement" ColumnName="AdresseEvenement" />
+                <ScalarProperty Name="PlaceEvenement" ColumnName="PlaceEvenement" />
+                <ScalarProperty Name="PrincipalPhotoEvenement" ColumnName="PrincipalPhotoEvenement" />
+                <ScalarProperty Name="TitleEvenement" ColumnName="TitleEvenement" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="NouvellesTag" TypeName="IdentitySample.NouvellesTag" StoreEntitySet="NouvellesTag">
-            <EndProperty Name="Tag">
-              <ScalarProperty Name="TagId" ColumnName="TagId" />
-            </EndProperty>
-            <EndProperty Name="Nouvelle">
-              <ScalarProperty Name="NouvelleId" ColumnName="BlogId" />
-            </EndProperty>
-          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

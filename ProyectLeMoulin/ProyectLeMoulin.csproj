@@ -591,6 +591,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
+    <Compile Include="Controllers\SendMailerController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -622,6 +623,9 @@
       <DependentUpon>Coeur.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DiaryEvents.cs" />
+    <Compile Include="Models\Evenement.cs">
+      <DependentUpon>Coeur.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
