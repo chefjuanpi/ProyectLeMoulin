@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace ProyectLeMoulin.Controllers
 {
@@ -53,5 +54,28 @@ namespace ProyectLeMoulin.Controllers
         //                   }).ToList();
         //    return Json(produit, JsonRequestBehavior.AllowGet);
         //}
+
+        public JsonResult Recuperer_Membre()
+        {
+            
+            //if (HttpContext.Current.User.Identity.IsAuthenticated)
+            //{
+            //    //Récupérer l'id (Guid) de l'usager actuellement connecter
+            //    Guid userId = (Guid)Membership.GetUser().ProviderUserKey;
+
+            //    CoeurContainer db = new CoeurContainer();
+                
+                //var membre = (from m in db.AspNetUsers
+                //              where m.Id == userId
+                //              select new
+                //              {
+                                  
+                              }
+                
+            
+
+                return Json(membre, JsonRequestBehavior.AllowGet); 
+            }
+        }
     }
 }
