@@ -4,20 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0066da3e58324bf7b330da75395281ea" Name="Diagram1" ZoomLevel="98" DisplayType="true">
-        <EntityTypeShape EntityType="IdentitySample.AppointmentDiary" Width="2.75" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="IdentitySample.AspNetUser" Width="1.5" PointX="4.125" PointY="0.5" />
-        <EntityTypeShape EntityType="IdentitySample.Comment" Width="1.5" PointX="8.375" PointY="0.5" />
-        <EntityTypeShape EntityType="IdentitySample.Nouvelle" Width="2.125" PointX="6.25" PointY="2.375" />
-        <EntityTypeShape EntityType="IdentitySample.NouvellesPicture" Width="1.5" PointX="10.625" PointY="2.125" />
-        <EntityTypeShape EntityType="IdentitySample.Tag" Width="1.5" PointX="8.875" PointY="4.25" />
-        <AssociationConnector Association="IdentitySample.FK_AppointmentDiary_AspNetUsers" />
-        <AssociationConnector Association="IdentitySample.FK_Nouvelles_AspNetUsers" />
-        <AssociationConnector Association="IdentitySample.FK_Comments_Blogs" />
-        <AssociationConnector Association="IdentitySample.FK_BlogPicture_Blogs" />
-        <AssociationConnector Association="IdentitySample.NouvellesTag" />
-        <EntityTypeShape EntityType="IdentitySample.Evenement" Width="1.5" PointX="6.375" PointY="6.75" />
-        <AssociationConnector Association="IdentitySample.FK_Evenements_AspNetUsers" />
+      <Diagram DiagramId="52e209c467d44b58b6c2313b6f96f057" Name="Diagram1">
+        <EntityTypeShape EntityType="IdentitySample.AppointmentDiary" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IdentitySample.AspNetUser" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IdentitySample.Comment" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IdentitySample.Evenement" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IdentitySample.Nouvelle" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IdentitySample.NouvellesPicture" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
+        <AssociationConnector Association="IdentitySample.FK_AppointmentDiary_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="IdentitySample.FK_Evenements_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="IdentitySample.FK_Nouvelles_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="IdentitySample.FK_Comments_Blogs" ManuallyRouted="false" />
+        <AssociationConnector Association="IdentitySample.FK_BlogPicture_Blogs" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

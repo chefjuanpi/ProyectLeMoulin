@@ -4,13 +4,41 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProyectLeMoulinModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="IdentitySample.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="IdentitySampleStoreContainer">
+          <EntitySet Name="AppointmentDiary" EntityType="IdentitySample.Store.AppointmentDiary" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AspNetUsers" EntityType="IdentitySample.Store.AspNetUsers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Comments" EntityType="IdentitySample.Store.Comments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Evenements" EntityType="IdentitySample.Store.Evenements" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nouvelles" EntityType="IdentitySample.Store.Nouvelles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NouvellesPicture" EntityType="IdentitySample.Store.NouvellesPicture" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_AppointmentDiary_AspNetUsers" Association="IdentitySample.Store.FK_AppointmentDiary_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AppointmentDiary" EntitySet="AppointmentDiary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogPicture_Blogs" Association="IdentitySample.Store.FK_BlogPicture_Blogs">
+            <End Role="Nouvelles" EntitySet="Nouvelles" />
+            <End Role="NouvellesPicture" EntitySet="NouvellesPicture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Blogs" Association="IdentitySample.Store.FK_Comments_Blogs">
+            <End Role="Nouvelles" EntitySet="Nouvelles" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evenements_AspNetUsers" Association="IdentitySample.Store.FK_Evenements_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Evenements" EntitySet="Evenements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nouvelles_AspNetUsers" Association="IdentitySample.Store.FK_Nouvelles_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Nouvelles" EntitySet="Nouvelles" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="AppointmentDiary">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="SomeImportantKey" Type="int" Nullable="false" />
           <Property Name="DateTimeScheduled" Type="datetime" Nullable="false" />
           <Property Name="AppointmentLength" Type="int" Nullable="false" />
@@ -21,7 +49,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
           <Property Name="Nom" Type="nvarchar(max)" />
           <Property Name="Prenom" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
@@ -34,17 +62,17 @@
           <Property Name="LockoutEndDateUtc" Type="datetime" />
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
             <PropertyRef Name="CommentId" />
           </Key>
-          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CommentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="BlogId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
-          <Property Name="Comment" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" Nullable="false" MaxLength="128" />
           <Property Name="Validate" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Evenements">
@@ -52,16 +80,16 @@
             <PropertyRef Name="EventId" />
           </Key>
           <Property Name="EventId" Type="int" Nullable="false" />
-          <Property Name="TitleEvenement" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="PrincipalPhotoEvenement" Type="nvarchar" MaxLength="500" />
-          <Property Name="PlaceEvenement" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="AdresseEvenement" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="TitleEvenement" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="PrincipalPhotoEvenement" Type="nvarchar" MaxLength="300" />
+          <Property Name="PlaceEvenement" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="AdresseEvenement" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="DateStart" Type="date" Nullable="false" />
-          <Property Name="HourStart" Type="time" Precision="7" />
+          <Property Name="HourStart" Type="time" />
           <Property Name="DateEnd" Type="date" Nullable="false" />
-          <Property Name="HourEnd" Type="time" Precision="7" />
+          <Property Name="HourEnd" Type="time" />
           <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
           <Property Name="TypeId" Type="int" Nullable="false" />
           <Property Name="Poublier" Type="bit" />
         </EntityType>
@@ -69,12 +97,12 @@
           <Key>
             <PropertyRef Name="NouvelleId" />
           </Key>
-          <Property Name="NouvelleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NouvelleTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="NouvelleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NouvelleTitle" Type="nvarchar" Nullable="false" MaxLength="150" />
           <Property Name="NouvellePrincipalPhoto" Type="nvarchar" MaxLength="300" />
           <Property Name="NouvelleText" Type="text" Nullable="false" />
           <Property Name="NouvelleDate" Type="date" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
           <Property Name="Publier" Type="bit" />
         </EntityType>
         <EntityType Name="NouvellesPicture">
@@ -86,8 +114,8 @@
           <Property Name="PictureId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_AppointmentDiary_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="AppointmentDiary" Type="Self.AppointmentDiary" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="IdentitySample.Store.AspNetUsers" Multiplicity="0..1" />
+          <End Role="AppointmentDiary" Type="IdentitySample.Store.AppointmentDiary" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -98,8 +126,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BlogPicture_Blogs">
-          <End Role="Nouvelles" Type="Self.Nouvelles" Multiplicity="1" />
-          <End Role="NouvellesPicture" Type="Self.NouvellesPicture" Multiplicity="*" />
+          <End Role="Nouvelles" Type="IdentitySample.Store.Nouvelles" Multiplicity="1" />
+          <End Role="NouvellesPicture" Type="IdentitySample.Store.NouvellesPicture" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Nouvelles">
               <PropertyRef Name="NouvelleId" />
@@ -110,8 +138,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comments_Blogs">
-          <End Role="Nouvelles" Type="Self.Nouvelles" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <End Role="Nouvelles" Type="IdentitySample.Store.Nouvelles" Multiplicity="1" />
+          <End Role="Comments" Type="IdentitySample.Store.Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Nouvelles">
               <PropertyRef Name="NouvelleId" />
@@ -122,8 +150,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Evenements_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Evenements" Type="Self.Evenements" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="IdentitySample.Store.AspNetUsers" Multiplicity="1" />
+          <End Role="Evenements" Type="IdentitySample.Store.Evenements" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -134,8 +162,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Nouvelles_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Nouvelles" Type="Self.Nouvelles" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="IdentitySample.Store.AspNetUsers" Multiplicity="1" />
+          <End Role="Nouvelles" Type="IdentitySample.Store.Nouvelles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -145,133 +173,119 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ProyectLeMoulinModelStoreContainer">
-          <EntitySet Name="AppointmentDiary" EntityType="Self.AppointmentDiary" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Evenements" EntityType="Self.Evenements" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Nouvelles" EntityType="Self.Nouvelles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="NouvellesPicture" EntityType="Self.NouvellesPicture" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_AppointmentDiary_AspNetUsers" Association="Self.FK_AppointmentDiary_AspNetUsers">
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IdentitySample" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CoeurContainer" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="AppointmentDiaries" EntityType="IdentitySample.AppointmentDiary" />
+          <EntitySet Name="AspNetUsers" EntityType="IdentitySample.AspNetUser" />
+          <EntitySet Name="Comments" EntityType="IdentitySample.Comment" />
+          <EntitySet Name="Evenements" EntityType="IdentitySample.Evenement" />
+          <EntitySet Name="Nouvelles" EntityType="IdentitySample.Nouvelle" />
+          <EntitySet Name="NouvellesPictures" EntityType="IdentitySample.NouvellesPicture" />
+          <AssociationSet Name="FK_AppointmentDiary_AspNetUsers" Association="IdentitySample.FK_AppointmentDiary_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AppointmentDiary" EntitySet="AppointmentDiary" />
+            <End Role="AppointmentDiary" EntitySet="AppointmentDiaries" />
           </AssociationSet>
-          <AssociationSet Name="FK_BlogPicture_Blogs" Association="Self.FK_BlogPicture_Blogs">
-            <End Role="Nouvelles" EntitySet="Nouvelles" />
-            <End Role="NouvellesPicture" EntitySet="NouvellesPicture" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_Blogs" Association="Self.FK_Comments_Blogs">
-            <End Role="Nouvelles" EntitySet="Nouvelles" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Evenements_AspNetUsers" Association="Self.FK_Evenements_AspNetUsers">
+          <AssociationSet Name="FK_Evenements_AspNetUsers" Association="IdentitySample.FK_Evenements_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Evenements" EntitySet="Evenements" />
           </AssociationSet>
-          <AssociationSet Name="FK_Nouvelles_AspNetUsers" Association="Self.FK_Nouvelles_AspNetUsers">
+          <AssociationSet Name="FK_Nouvelles_AspNetUsers" Association="IdentitySample.FK_Nouvelles_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Nouvelles" EntitySet="Nouvelles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Comments_Blogs" Association="IdentitySample.FK_Comments_Blogs">
+            <End Role="Nouvelles" EntitySet="Nouvelles" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogPicture_Blogs" Association="IdentitySample.FK_BlogPicture_Blogs">
+            <End Role="Nouvelles" EntitySet="Nouvelles" />
+            <End Role="NouvellesPicture" EntitySet="NouvellesPictures" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
-    <!-- CSDL content -->
-    <edmx:ConceptualModels>
-      <Schema Namespace="IdentitySample" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="AppointmentDiary">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="SomeImportantKey" Type="Int32" Nullable="false" />
           <Property Name="DateTimeScheduled" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="AppointmentLength" Type="Int32" Nullable="false" />
           <Property Name="StatusENUM" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_AppointmentDiary_AspNetUsers" FromRole="AppointmentDiary" ToRole="AspNetUser" />
+          <Property Name="UserId" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_AppointmentDiary_AspNetUsers" FromRole="AppointmentDiary" ToRole="AspNetUsers" />
         </EntityType>
-        <EntityContainer Name="CoeurContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AppointmentDiaries" EntityType="Self.AppointmentDiary" />
-          <EntitySet Name="AspNetUsers" EntityType="IdentitySample.AspNetUser" />
-          <EntitySet Name="Comments" EntityType="IdentitySample.Comment" />
-          <EntitySet Name="Nouvelles" EntityType="IdentitySample.Nouvelle" />
-          <EntitySet Name="NouvellesPictures" EntityType="IdentitySample.NouvellesPicture" />
-          <EntitySet Name="Tags" EntityType="IdentitySample.Tag" />
-          <AssociationSet Name="FK_AppointmentDiary_AspNetUsers" Association="IdentitySample.FK_AppointmentDiary_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AppointmentDiary" EntitySet="AppointmentDiaries" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Nouvelles_AspNetUsers" Association="IdentitySample.FK_Nouvelles_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Nouvelle" EntitySet="Nouvelles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_Blogs" Association="IdentitySample.FK_Comments_Blogs">
-            <End Role="Nouvelle" EntitySet="Nouvelles" />
-            <End Role="Comment" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BlogPicture_Blogs" Association="IdentitySample.FK_BlogPicture_Blogs">
-            <End Role="Nouvelle" EntitySet="Nouvelles" />
-            <End Role="NouvellesPicture" EntitySet="NouvellesPictures" />
-          </AssociationSet>
-          <AssociationSet Name="NouvellesTag" Association="IdentitySample.NouvellesTag">
-            <End Role="Nouvelle" EntitySet="Nouvelles" />
-            <End Role="Tag" EntitySet="Tags" />
-          </AssociationSet>
-          <EntitySet Name="Evenements" EntityType="IdentitySample.Evenement" />
-          <AssociationSet Name="FK_Evenements_AspNetUsers" Association="IdentitySample.FK_Evenements_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Evenement" EntitySet="Evenements" />
-          </AssociationSet>
-          </EntityContainer>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Prenom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="Nom" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Prenom" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AppointmentDiaries" Relationship="IdentitySample.FK_AppointmentDiary_AspNetUsers" FromRole="AspNetUser" ToRole="AppointmentDiary" />
-          <NavigationProperty Name="Nouvelles" Relationship="IdentitySample.FK_Nouvelles_AspNetUsers" FromRole="AspNetUser" ToRole="Nouvelle" />
-          <NavigationProperty Name="Evenements" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="AspNetUser" ToRole="Evenement" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="AppointmentDiaries" Relationship="IdentitySample.FK_AppointmentDiary_AspNetUsers" FromRole="AspNetUsers" ToRole="AppointmentDiary" />
+          <NavigationProperty Name="Evenements" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="AspNetUsers" ToRole="Evenements" />
+          <NavigationProperty Name="Nouvelles" Relationship="IdentitySample.FK_Nouvelles_AspNetUsers" FromRole="AspNetUsers" ToRole="Nouvelles" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
             <PropertyRef Name="CommentId" />
           </Key>
-          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CommentId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="BlogId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Comment1" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Comment1" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
           <Property Name="Validate" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Nouvelle" Relationship="IdentitySample.FK_Comments_Blogs" FromRole="Comment" ToRole="Nouvelle" />
+          <NavigationProperty Name="Nouvelle" Relationship="IdentitySample.FK_Comments_Blogs" FromRole="Comments" ToRole="Nouvelles" />
+        </EntityType>
+        <EntityType Name="Evenement">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="TitleEvenement" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="PrincipalPhotoEvenement" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="PlaceEvenement" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="AdresseEvenement" Type="String" Nullable="false" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HourStart" Type="Time" Precision="7" />
+          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HourEnd" Type="Time" Precision="7" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="Poublier" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="Evenements" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="Nouvelle">
           <Key>
             <PropertyRef Name="NouvelleId" />
           </Key>
-          <Property Name="NouvelleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NouvelleTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="NouvellePrincipalPhoto" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="NouvelleText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NouvelleId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="NouvelleTitle" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="NouvellePrincipalPhoto" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="NouvelleText" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="NouvelleDate" Type="DateTime" Precision="0" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
           <Property Name="Publier" Type="Boolean" />
-          <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_Nouvelles_AspNetUsers" FromRole="Nouvelle" ToRole="AspNetUser" />
-          <NavigationProperty Name="Comments" Relationship="IdentitySample.FK_Comments_Blogs" FromRole="Nouvelle" ToRole="Comment" />
-          <NavigationProperty Name="NouvellesPictures" Relationship="IdentitySample.FK_BlogPicture_Blogs" FromRole="Nouvelle" ToRole="NouvellesPicture" />
-          <NavigationProperty Name="Tags" Relationship="IdentitySample.NouvellesTag" FromRole="Nouvelle" ToRole="Tag" />
+          <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_Nouvelles_AspNetUsers" FromRole="Nouvelles" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Comments" Relationship="IdentitySample.FK_Comments_Blogs" FromRole="Nouvelles" ToRole="Comments" />
+          <NavigationProperty Name="NouvellesPictures" Relationship="IdentitySample.FK_BlogPicture_Blogs" FromRole="Nouvelles" ToRole="NouvellesPicture" />
         </EntityType>
         <EntityType Name="NouvellesPicture">
           <Key>
@@ -280,21 +294,13 @@
           </Key>
           <Property Name="BlogId" Type="Int32" Nullable="false" />
           <Property Name="PictureId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Nouvelle" Relationship="IdentitySample.FK_BlogPicture_Blogs" FromRole="NouvellesPicture" ToRole="Nouvelle" />
-        </EntityType>
-        <EntityType Name="Tag">
-          <Key>
-            <PropertyRef Name="TagId" />
-          </Key>
-          <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Tag1" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Nouvelles" Relationship="IdentitySample.NouvellesTag" FromRole="Tag" ToRole="Nouvelle" />
+          <NavigationProperty Name="Nouvelle" Relationship="IdentitySample.FK_BlogPicture_Blogs" FromRole="NouvellesPicture" ToRole="Nouvelles" />
         </EntityType>
         <Association Name="FK_AppointmentDiary_AspNetUsers">
-          <End Type="IdentitySample.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="IdentitySample.AppointmentDiary" Role="AppointmentDiary" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="IdentitySample.AspNetUser" Multiplicity="0..1" />
+          <End Role="AppointmentDiary" Type="IdentitySample.AppointmentDiary" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUser">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="AppointmentDiary">
@@ -302,35 +308,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Nouvelles_AspNetUsers">
-          <End Type="IdentitySample.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="IdentitySample.Nouvelle" Role="Nouvelle" Multiplicity="*" />
+        <Association Name="FK_Evenements_AspNetUsers">
+          <End Role="AspNetUsers" Type="IdentitySample.AspNetUser" Multiplicity="1" />
+          <End Role="Evenements" Type="IdentitySample.Evenement" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUser">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Nouvelle">
+            <Dependent Role="Evenements">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nouvelles_AspNetUsers">
+          <End Role="AspNetUsers" Type="IdentitySample.AspNetUser" Multiplicity="1" />
+          <End Role="Nouvelles" Type="IdentitySample.Nouvelle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Nouvelles">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comments_Blogs">
-          <End Type="IdentitySample.Nouvelle" Role="Nouvelle" Multiplicity="1" />
-          <End Type="IdentitySample.Comment" Role="Comment" Multiplicity="*" />
+          <End Role="Nouvelles" Type="IdentitySample.Nouvelle" Multiplicity="1" />
+          <End Role="Comments" Type="IdentitySample.Comment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Nouvelle">
+            <Principal Role="Nouvelles">
               <PropertyRef Name="NouvelleId" />
             </Principal>
-            <Dependent Role="Comment">
+            <Dependent Role="Comments">
               <PropertyRef Name="BlogId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BlogPicture_Blogs">
-          <End Type="IdentitySample.Nouvelle" Role="Nouvelle" Multiplicity="1" />
-          <End Type="IdentitySample.NouvellesPicture" Role="NouvellesPicture" Multiplicity="*" />
+          <End Role="Nouvelles" Type="IdentitySample.Nouvelle" Multiplicity="1" />
+          <End Role="NouvellesPicture" Type="IdentitySample.NouvellesPicture" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Nouvelle">
+            <Principal Role="Nouvelles">
               <PropertyRef Name="NouvelleId" />
             </Principal>
             <Dependent Role="NouvellesPicture">
@@ -338,133 +356,98 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="NouvellesTag">
-          <End Type="IdentitySample.Nouvelle" Role="Nouvelle" Multiplicity="*" />
-          <End Type="IdentitySample.Tag" Role="Tag" Multiplicity="*" />
-        </Association>
-        <EntityType Name="Evenement">
-          <Key>
-            <PropertyRef Name="EventId" />
-          </Key>
-          <Property Name="EventId" Type="Int32" Nullable="false" />
-          <Property Name="TitleEvenement" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="PrincipalPhotoEvenement" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="PlaceEvenement" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="AdresseEvenement" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="HourStart" Type="Time" Precision="7" />
-          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="HourEnd" Type="Time" Precision="7" />
-          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="TypeId" Type="Int32" Nullable="false" />
-          <Property Name="Poublier" Type="Boolean" />
-          <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="Evenement" ToRole="AspNetUser" />
-        </EntityType>
-        <Association Name="FK_Evenements_AspNetUsers">
-          <End Type="IdentitySample.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="IdentitySample.Evenement" Role="Evenement" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Evenement">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ProyectLeMoulinModelStoreContainer" CdmEntityContainer="CoeurContainer">
+        <EntityContainerMapping StorageEntityContainer="IdentitySampleStoreContainer" CdmEntityContainer="CoeurContainer">
           <EntitySetMapping Name="AppointmentDiaries">
             <EntityTypeMapping TypeName="IdentitySample.AppointmentDiary">
               <MappingFragment StoreEntitySet="AppointmentDiary">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="SomeImportantKey" ColumnName="SomeImportantKey" />
                 <ScalarProperty Name="DateTimeScheduled" ColumnName="DateTimeScheduled" />
                 <ScalarProperty Name="AppointmentLength" ColumnName="AppointmentLength" />
                 <ScalarProperty Name="StatusENUM" ColumnName="StatusENUM" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="IdentitySample.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
-                <ScalarProperty Name="Nom" ColumnName="Nom" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="IdentitySample.Comment">
               <MappingFragment StoreEntitySet="Comments">
-                <ScalarProperty Name="Validate" ColumnName="Validate" />
-                <ScalarProperty Name="Comment1" ColumnName="Comment" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
                 <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Nouvelles">
-            <EntityTypeMapping TypeName="IdentitySample.Nouvelle">
-              <MappingFragment StoreEntitySet="Nouvelles">
-                <ScalarProperty Name="Publier" ColumnName="Publier" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="NouvelleDate" ColumnName="NouvelleDate" />
-                <ScalarProperty Name="NouvelleText" ColumnName="NouvelleText" />
-                <ScalarProperty Name="NouvellePrincipalPhoto" ColumnName="NouvellePrincipalPhoto" />
-                <ScalarProperty Name="NouvelleTitle" ColumnName="NouvelleTitle" />
-                <ScalarProperty Name="NouvelleId" ColumnName="NouvelleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NouvellesPictures">
-            <EntityTypeMapping TypeName="IdentitySample.NouvellesPicture">
-              <MappingFragment StoreEntitySet="NouvellesPicture">
-                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
                 <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Comment1" ColumnName="Comment" />
+                <ScalarProperty Name="Validate" ColumnName="Validate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Evenements">
             <EntityTypeMapping TypeName="IdentitySample.Evenement">
               <MappingFragment StoreEntitySet="Evenements">
-                <ScalarProperty Name="Poublier" ColumnName="Poublier" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="HourEnd" ColumnName="HourEnd" />
-                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
-                <ScalarProperty Name="HourStart" ColumnName="HourStart" />
-                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
-                <ScalarProperty Name="AdresseEvenement" ColumnName="AdresseEvenement" />
-                <ScalarProperty Name="PlaceEvenement" ColumnName="PlaceEvenement" />
-                <ScalarProperty Name="PrincipalPhotoEvenement" ColumnName="PrincipalPhotoEvenement" />
-                <ScalarProperty Name="TitleEvenement" ColumnName="TitleEvenement" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="TitleEvenement" ColumnName="TitleEvenement" />
+                <ScalarProperty Name="PrincipalPhotoEvenement" ColumnName="PrincipalPhotoEvenement" />
+                <ScalarProperty Name="PlaceEvenement" ColumnName="PlaceEvenement" />
+                <ScalarProperty Name="AdresseEvenement" ColumnName="AdresseEvenement" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="HourStart" ColumnName="HourStart" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="HourEnd" ColumnName="HourEnd" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Poublier" ColumnName="Poublier" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <EntitySetMapping Name="Nouvelles">
+            <EntityTypeMapping TypeName="IdentitySample.Nouvelle">
+              <MappingFragment StoreEntitySet="Nouvelles">
+                <ScalarProperty Name="NouvelleId" ColumnName="NouvelleId" />
+                <ScalarProperty Name="NouvelleTitle" ColumnName="NouvelleTitle" />
+                <ScalarProperty Name="NouvellePrincipalPhoto" ColumnName="NouvellePrincipalPhoto" />
+                <ScalarProperty Name="NouvelleText" ColumnName="NouvelleText" />
+                <ScalarProperty Name="NouvelleDate" ColumnName="NouvelleDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Publier" ColumnName="Publier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NouvellesPictures">
+            <EntityTypeMapping TypeName="IdentitySample.NouvellesPicture">
+              <MappingFragment StoreEntitySet="NouvellesPicture">
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -478,9 +461,8 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

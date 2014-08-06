@@ -70,12 +70,11 @@ namespace ProyectLeMoulin.Controllers
                 //              select new
                 //              {
                                   
-                              }
+                              //}
                 
-            
+                  var membre =1  ;
 
                 return Json(membre, JsonRequestBehavior.AllowGet); 
             }
         }
     }
-}

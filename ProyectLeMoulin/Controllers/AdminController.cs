@@ -47,7 +47,7 @@ namespace IdentitySample.Controllers
         }
 
         //
-        // POST: //enregistrer Notices
+        // POST: //enregistrer Evenement nouveles et modifié
         [HttpPost]
         [ValidateInput(false)]
         public async Task<ActionResult> Evenements(EvenementsViewModel Evenement)
@@ -58,27 +58,44 @@ namespace IdentitySample.Controllers
             if (Evenement.EvenementId == null)
             {
                 Evenement n = new Evenement();
+                TimeSpan x = new TimeSpan(Evenement.HourStart.Hour, Evenement.HourStart.Minute, Evenement.HourStart.Second);
+                TimeSpan y = new TimeSpan(Evenement.HourEnd.Hour, Evenement.HourEnd.Minute, Evenement.HourEnd.Second);
+
                 n.UserId = guid;
                 n.TitleEvenement = Evenement.Titre;
                 n.Text = Evenement.Titre;
                 n.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
                 n.Poublier = Evenement.Publier;
-
-
+                n.DateStart = Evenement.DateStart;
+                n.HourStart = x;
+                n.DateEnd = Evenement.DateEnd;
+                n.HourEnd = y;
+                n.PlaceEvenement = Evenement.Lieu;
+                n.AdresseEvenement = Evenement.Adresse;
                 db.Evenements.Add(n);
                 await db.SaveChangesAsync();
             }
             else
             {
                 int x = Convert.ToInt16(Evenement.EvenementId);
+                TimeSpan z = new TimeSpan(Evenement.HourStart.Hour, Evenement.HourStart.Minute, Evenement.HourStart.Second);
+                TimeSpan y = new TimeSpan(Evenement.HourEnd.Hour, Evenement.HourEnd.Minute, Evenement.HourEnd.Second);
+                
                 var modifEvenement = (from n in db.Evenements
                                    where n.EventId == x
                                    select n).Single();
+
                 modifEvenement.UserId = guid;
                 modifEvenement.TitleEvenement = Evenement.Titre;
                 modifEvenement.Text = Evenement.Titre;
                 modifEvenement.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
                 modifEvenement.Poublier = Evenement.Publier;
+                modifEvenement.DateStart = Evenement.DateStart;
+                modifEvenement.HourStart = z;
+                modifEvenement.DateEnd = Evenement.DateEnd;
+                modifEvenement.HourEnd = y;
+                modifEvenement.PlaceEvenement = Evenement.Lieu;
+                modifEvenement.AdresseEvenement = Evenement.Adresse;
                 await db.SaveChangesAsync();
             }
             return View();
@@ -94,6 +111,20 @@ namespace IdentitySample.Controllers
                                  Titre = n.TitleEvenement
                              });
             return Json(Evenements, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> delEvenement(int eID)
+        {
+            CoeurContainer db = new CoeurContainer();
+            var delevenement = (from n in db.Evenements
+                             where n.EventId == eID
+                             select n).Single();
+            if (delevenement != null)
+            {
+                db.Evenements.Remove(delevenement);
+                await db.SaveChangesAsync();
+            }
+            return Redirect("/Admin/Evenements");
         }
 
         
