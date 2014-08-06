@@ -162,8 +162,6 @@ namespace IdentitySample.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Email,Id")] EditUserViewModel editUser, params string[] selectedRole)
         {
-            if (ModelState.IsValid)
-            {
                 var user = await UserManager.FindByIdAsync(editUser.Id);
                 if (user == null)
                 {
@@ -192,9 +190,6 @@ namespace IdentitySample.Controllers
                     return View();
                 }
                 return RedirectToAction("Index");
-            }
-            ModelState.AddModelError("", "Something failed.");
-            return View();
         }
 
         //

@@ -24,8 +24,7 @@
 
         <div class="input-group row">
             @Html.LabelFor(m => m.Titre, new { @class = "input-group-addon" })
-            @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", @id = "titre",
-                                @placeholder = "Ex: Fêtê des Voinsins 2014"})
+            @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", @id = "titre", @placeholder = "Ex: Fêtê des Voinsins 2014"})
         </div>
     <br />
 
@@ -42,49 +41,25 @@
 
             <div class="input-group">
                 @Html.LabelFor(m=>m.Lieu)
-                @Html.TextBoxFor(m => m.Lieu, new { @class = "form-control", @id = "Lieu",
-                                    @placeholder = "Ex: Centre Saint Nom de Jésus" })
+                @Html.TextBoxFor(m => m.Lieu, new { @class = "form-control", @id = "Lieu", @placeholder = "Ex: Centre Saint Nom de Jésus" })
             </div>
             <div class="input-group ">
                 @Html.LabelFor(m => m.Adresse)
-                @Html.TextBoxFor(m => m.Adresse, new { @class = "form-control", @id = "Adresse",
-                                    @placeholder = "123 rue Racine Est" })
+                @Html.TextBoxFor(m => m.Adresse, new { @class = "form-control", @id = "Adresse", @placeholder = "123 rue Racine Est" })
             </div>
             <div class="input-group ">
                 <div class="input-group-addon ">Commence </div>
-                @Html.TextBoxFor(m => m.DateStart, new
-           {
-               @class = "datetimepicker1",
-               @id = "DateStart"
-                                    , @placeholder = "Date" })
-                @Html.TextBoxFor(m => m.HourStart, new
-           {
-               @class = "datetimepicker2",
-               @id = "HeureStart"
-                                    , @placeholder = "Heure" })
+                @Html.TextBoxFor(m => m.DateStart, new { @id = "DateStart" , @placeholder = "Date" })
+                @Html.TextBoxFor(m => m.HourStart, new { @class = "datetimepicker2", @id = "HourStart", @placeholder = "Heure" })
             </div>
             <div class="input-group ">
                 <div class="input-group-addon">&nbsp &nbsp &nbsp fin : &nbsp &nbsp &nbsp </div>
-                @Html.TextBoxFor(m => m.DateEnd, new
-           {
-               @class = "datetimepicker1",
-               @id = "DateEnd"
-               ,
-               @placeholder = "Date"
-           })
-                @Html.TextBoxFor(m => m.HourEnd, new
-           {
-               @class = "datetimepicker2",
-               @id = "HourEnd"
-               ,
-               @placeholder = "Heure"
-           })
+                @Html.TextBoxFor(m => m.DateEnd, new { @id = "DateEnd", @placeholder = "Date" })
+                @Html.TextBoxFor(m => m.HourEnd, new { @class = "datetimepicker2", @id = "HourEnd", @placeholder = "Heure" })
             </div>
         </div>
     </div>
-
     <br />
-
     <div class="row">
         @Html.TextAreaFor(m => m.Contenu, new { @id = "elm1", @name = "area", @class = "col-md-12 col-xs-12" })
     </div>
@@ -117,7 +92,7 @@
                         "Effacer": function () {
                             var x = $("#new123").val();
                             console.log(x);
-                            window.open("/Admin/delNews?nID=" + x, "_self");
+                            window.open("/Admin/delEvenement?eID=" + x, "_self");
                             $(this).dialog("close");
                         },
                         Anuler: function () {
@@ -125,6 +100,32 @@
                         }
                     }
                 });
+            });
+
+            $('#DateStart').datetimepicker({
+                lang: "fr",
+                format: 'Y/m/d',
+                onShow: function (ct) {
+                    this.setOptions({
+                        maxDate: $('#DateEnd').val() ? $('#DateEnd').val() : false
+                    })
+                },
+                timepicker: false
+            });
+            $('#DateEnd').datetimepicker({
+                lang: "fr",
+                format: 'Y/m/d',
+                onShow: function (ct) {
+                    this.setOptions({
+                        minDate: $('#DateStart').val() ? $('#DateStart').val() : false
+                    })
+                },
+                timepicker: false
+            });
+
+            $('.datetimepicker2').datetimepicker({
+                datepicker: false,
+                format: 'H:i'
             });
 
             Templateitems = Handlebars.compile($("#itemsTemplate").html());
@@ -138,39 +139,30 @@
                     $("#Formulaire").show();
                     tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
                     $("#new123").val(id);
-                    $.getJSON("getNDetails", { NouvelleId: id }, function (data) {
+                    $.getJSON("getEDetails", { IdEvenement: id }, function (data) {
                         $("#demotextbox").val(data.image);
                         $("#publier").prop('checked', data.publier);
                         tinymce.editors[0].setContent(data.page);
-                        $("#titre").val(data.Titre);
+                        $("#titre").val(data.titre);
+                        $("#Lieu").val(data.lieu);
+                        $("#Adresse").val(data.adresse);
+                        var date = new Date(parseInt(data.dateStart.substr(6)))
+                        var m = date.getMonth() + 1;
+                        var mm = (m < 10) ? "0" + m : m;
+                        var dd = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+                        $('#DateStart').val(date.getFullYear() + "/" + mm + "/" + dd);
+                        date = new Date(parseInt(data.dateEnd.substr(6)))
+                        m = date.getMonth() + 1;
+                        mm = (m < 10) ? "0" + m : m;
+                        dd = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+                        $('#DateEnd').val(date.getFullYear() + "/" + mm + "/" + dd);
+                        var Endmin = (data.hourEnd.Minutes < 10) ? "0" + data.hourEnd.Minutes : data.hourEnd.Minutes;
+                        $('#HourEnd').val(data.hourEnd.Hours + ":" + Endmin);
+                        var startmin = (data.hourStart.Minutes < 10) ? "0" + data.hourStart.Minutes : data.hourStart.Minutes;
+                        $('#HourStart').val(data.hourStart.Hours + ":" + startmin);
                     });
                 });
             });
-
-            $('.datetimepicker2').datetimepicker({
-                datepicker: false,
-                format: 'H:i'
-            });
-
-            $('.datetimepicker1').datetimepicker({
-                lang: 'de',
-                i18n: {
-                    de: {
-                        months: [
-                         'Januar', 'Februar', 'März', 'April',
-                         'Mai', 'Juni', 'Juli', 'August',
-                         'September', 'Oktober', 'November', 'Dezember',
-                        ],
-                        dayOfWeek: [
-                         "So.", "Mo", "Di", "Mi",
-                         "Do", "Fr", "Sa.",
-                        ]
-                    }
-                },
-                timepicker: false,
-                format: 'd.m.Y'
-            });
-
         });
     </script>
 

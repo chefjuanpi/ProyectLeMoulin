@@ -17,8 +17,8 @@ namespace ProyectLeMoulin.Models
         public AspNetUser()
         {
             this.AppointmentDiaries = new HashSet<AppointmentDiary>();
-            this.Evenements = new HashSet<Evenement>();
             this.Nouvelles = new HashSet<Nouvelle>();
+            this.Evenements = new HashSet<Evenement>();
         }
     
         public string Id { get; set; }
@@ -37,7 +37,7 @@ namespace ProyectLeMoulin.Models
         public string UserName { get; set; }
     
         public virtual ICollection<AppointmentDiary> AppointmentDiaries { get; set; }
-        public virtual ICollection<Evenement> Evenements { get; set; }
         public virtual ICollection<Nouvelle> Nouvelles { get; set; }
+        public virtual ICollection<Evenement> Evenements { get; set; }
     }
 }

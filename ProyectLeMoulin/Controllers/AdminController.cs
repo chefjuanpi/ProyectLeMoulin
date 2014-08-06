@@ -58,18 +58,15 @@ namespace IdentitySample.Controllers
             if (Evenement.EvenementId == null)
             {
                 Evenement n = new Evenement();
-                TimeSpan x = new TimeSpan(Evenement.HourStart.Hour, Evenement.HourStart.Minute, Evenement.HourStart.Second);
-                TimeSpan y = new TimeSpan(Evenement.HourEnd.Hour, Evenement.HourEnd.Minute, Evenement.HourEnd.Second);
-
                 n.UserId = guid;
                 n.TitleEvenement = Evenement.Titre;
-                n.Text = Evenement.Titre;
+                n.Text = Evenement.Contenu;
                 n.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
                 n.Poublier = Evenement.Publier;
                 n.DateStart = Evenement.DateStart;
-                n.HourStart = x;
+                n.HourStart = Evenement.HourStart;
                 n.DateEnd = Evenement.DateEnd;
-                n.HourEnd = y;
+                n.HourEnd = Evenement.HourEnd;
                 n.PlaceEvenement = Evenement.Lieu;
                 n.AdresseEvenement = Evenement.Adresse;
                 db.Evenements.Add(n);
@@ -78,22 +75,19 @@ namespace IdentitySample.Controllers
             else
             {
                 int x = Convert.ToInt16(Evenement.EvenementId);
-                TimeSpan z = new TimeSpan(Evenement.HourStart.Hour, Evenement.HourStart.Minute, Evenement.HourStart.Second);
-                TimeSpan y = new TimeSpan(Evenement.HourEnd.Hour, Evenement.HourEnd.Minute, Evenement.HourEnd.Second);
-                
                 var modifEvenement = (from n in db.Evenements
                                    where n.EventId == x
                                    select n).Single();
 
                 modifEvenement.UserId = guid;
                 modifEvenement.TitleEvenement = Evenement.Titre;
-                modifEvenement.Text = Evenement.Titre;
+                modifEvenement.Text = Evenement.Contenu;
                 modifEvenement.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
                 modifEvenement.Poublier = Evenement.Publier;
                 modifEvenement.DateStart = Evenement.DateStart;
-                modifEvenement.HourStart = z;
+                modifEvenement.HourStart = Evenement.HourStart;
                 modifEvenement.DateEnd = Evenement.DateEnd;
-                modifEvenement.HourEnd = y;
+                modifEvenement.HourEnd = Evenement.HourEnd;
                 modifEvenement.PlaceEvenement = Evenement.Lieu;
                 modifEvenement.AdresseEvenement = Evenement.Adresse;
                 await db.SaveChangesAsync();
@@ -111,6 +105,31 @@ namespace IdentitySample.Controllers
                                  Titre = n.TitleEvenement
                              });
             return Json(Evenements, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getEDetails(int IdEvenement)
+        {
+            CoeurContainer db = new CoeurContainer();
+            var evement = (from n in db.Evenements
+                           where n.EventId == IdEvenement
+                            select new
+                            {
+                                id = n.EventId,
+                                titre = n.TitleEvenement,
+                                page = n.Text,
+                                image = n.PrincipalPhotoEvenement,
+                                publier = n.Poublier,
+                                dateStart = n.DateStart,
+                                dateEnd = n.DateEnd,
+                                hourStart = n.HourStart,
+                                hourEnd = n.HourEnd,
+                                lieu = n.PlaceEvenement,
+                                adresse = n.AdresseEvenement,
+                            }).Single();
+
+           
+            
+            return Json(evement, JsonRequestBehavior.AllowGet);
         }
 
         public async Task<ActionResult> delEvenement(int eID)

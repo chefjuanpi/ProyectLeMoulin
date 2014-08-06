@@ -92,18 +92,18 @@ namespace IdentitySample.Models
         public string Adresse { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime DateStart { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime HourStart { get; set; }
+        [DataType(DataType.Time)]
+        public TimeSpan HourStart { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime DateEnd { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime HourEnd { get; set; }
+        [DataType(DataType.Time)]
+        public TimeSpan HourEnd { get; set; }
 
         [Required]
         [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer

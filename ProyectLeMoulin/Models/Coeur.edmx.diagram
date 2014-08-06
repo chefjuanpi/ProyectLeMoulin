@@ -5,17 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="52e209c467d44b58b6c2313b6f96f057" Name="Diagram1">
-        <EntityTypeShape EntityType="IdentitySample.AppointmentDiary" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IdentitySample.AppointmentDiary" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="IdentitySample.AspNetUser" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="IdentitySample.Comment" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="IdentitySample.Evenement" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="IdentitySample.Nouvelle" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="IdentitySample.NouvellesPicture" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IdentitySample.Comment" Width="1.5" PointX="7.625" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IdentitySample.Nouvelle" Width="1.5" PointX="5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IdentitySample.NouvellesPicture" Width="1.5" PointX="7.5" PointY="8.375" IsExpanded="true" />
         <AssociationConnector Association="IdentitySample.FK_AppointmentDiary_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="IdentitySample.FK_Evenements_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="IdentitySample.FK_Nouvelles_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="IdentitySample.FK_Comments_Blogs" ManuallyRouted="false" />
         <AssociationConnector Association="IdentitySample.FK_BlogPicture_Blogs" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="IdentitySample.Evenement" Width="1.5" PointX="3" PointY="1.75" />
+        <AssociationConnector Association="IdentitySample.FK_Evenements_AspNetUsers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

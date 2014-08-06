@@ -28,8 +28,8 @@ namespace ProyectLeMoulin.Models
         public DbSet<AppointmentDiary> AppointmentDiaries { get; set; }
         public DbSet<AspNetUser> AspNetUsers { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Evenement> Evenements { get; set; }
         public DbSet<Nouvelle> Nouvelles { get; set; }
         public DbSet<NouvellesPicture> NouvellesPictures { get; set; }
+        public DbSet<Evenement> Evenements { get; set; }
     }
 }
