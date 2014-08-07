@@ -337,6 +337,12 @@
       <DependentUpon>Coeur.edmx</DependentUpon>
       <LastGenOutput>Coeur.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\AchatAdmin\Index.cshtml" />
+    <Content Include="Views\AchatAdmin\NewOrder.cshtml" />
+    <Content Include="Views\AchatAdmin\Products.cshtml" />
+    <Content Include="Views\AchatAdmin\Suppliers.cshtml" />
+    <Content Include="Views\AchatAdmin\OldOrders.cshtml" />
+    <Content Include="Views\AchatAdmin\MembersOrders.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -586,6 +592,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AchatAdminController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\Epicerie.cs" />

@@ -295,28 +295,28 @@
                             <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Groupe de achats<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-pencil-square fa-fw"></i> Nouvelle Commande <span class="fa arrow"></span></a>
+                                    <a href="flot.html"><i class="fa fa-pencil-square fa-fw"></i> Commandes <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href='@Url.Action("Index", "AchatAdmin")'><i class="fa fa-pencil-square-o fa-fw"></i> Écrit commande</a>
+                                            <a href='@Url.Action("NewOrder", "AchatAdmin")'><i class="fa fa-pencil-square-o fa-fw"></i> Nouvelle commande</a>
                                         </li>
                                         <li>
                                             <a href='@Url.Action("Index", "AchatAdmin")'><i class="fa fa-align-left fa-fw"></i> listes d'achat</a>
                                         </li>
                                         <li>
-                                            <a href='@Url.Action("Index", "AchatAdmin")'><i class="fa fa-file-text-o fa-fw"></i> Reçus des membres</a>
+                                            <a href='@Url.Action("MembersOrders", "AchatAdmin")'><i class="fa fa-file-text-o fa-fw"></i> Reçus des membres</a>
                                         </li>
                                     </ul>
                                 </li>
 
                                 <li>
-                                    <a href='@Url.Action("Index", "AchatAdmin")'><i class="fa fa-coffee"></i> Produits</a>
+                                    <a href='@Url.Action("Products", "AchatAdmin")'><i class="fa fa-coffee"></i> Produits</a>
                                 </li>
                                 <li>
-                                    <a href='@Url.Action("Index", "AchatAdmin")'><i class="fa fa-truck"></i> Fourniseurs</a>
+                                    <a href='@Url.Action("Suppliers", "AchatAdmin")'><i class="fa fa-truck"></i> Fourniseurs</a>
                                 </li>
                                 <li>
-                                    <a href='@Url.Action("Index", "AchatAdmin")'><i class="fa fa-database"></i> Anciennes Commandes</a>
+                                    <a href='@Url.Action("OldOrders", "AchatAdmin")'><i class="fa fa-database"></i> Anciennes Commandes</a>
                                 </li>
                             </ul>
                             @*<!-- /.nav-second-level -->*@
