@@ -16,15 +16,20 @@ namespace ProyectLeMoulin.Controllers
 
     public class EpicerieController : Controller
     {
+
+
+
+
         public ActionResult Index()
         {
+
             return View();
+
         }
 
         //public JsonResult GetCategories()
         //{
         //    CoeurContainer db = new CoeurContainer();
-
         //    var category = (from c in db.Categories
         //                    select new
         //                    {
@@ -39,10 +44,7 @@ namespace ProyectLeMoulin.Controllers
         //{
         //    CoeurContainer db = new CoeurContainer();
 
-        //    var produit = (from p in db.Produits
-        //                   where p.Categories.CategoryName == cat
-        //                   inner join CategoryProduct cp
-        //                       On p.ProductId == cp.ProductId
+        //    var produit = (from p in db.Weeks
         //                   select new
         //                   {
         //                       ProductID = p.ProductID,
@@ -55,26 +57,28 @@ namespace ProyectLeMoulin.Controllers
         //    return Json(produit, JsonRequestBehavior.AllowGet);
         //}
 
-        public JsonResult Recuperer_Membre()
-        {
-            
-            //if (HttpContext.Current.User.Identity.IsAuthenticated)
-            //{
-            //    //Récupérer l'id (Guid) de l'usager actuellement connecter
-            //    Guid userId = (Guid)Membership.GetUser().ProviderUserKey;
+        //public JsonResult Recuperer_Membre()
+        //{
 
-            //    CoeurContainer db = new CoeurContainer();
-                
-                //var membre = (from m in db.AspNetUsers
-                //              where m.Id == userId
-                //              select new
-                //              {
-                                  
-                              //}
-                
-                  var membre =1  ;
+        //    CoeurContainer db = new CoeurContainer();
+        //    string utilisateur = User.Identity.Name;
+        //    string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
-                return Json(membre, JsonRequestBehavior.AllowGet); 
-            }
-        }
+
+
+        //    var membre = (from m in db.AspNetUsers
+        //                  where m.Id == guid
+        //                  select new
+        //                  {
+        //                      MembreID          =   m.Id,
+        //                      UserFirstName     =   m.Prenom, 
+        //                      UserLastName      =   m.Nom
+        //                  }).ToList();
+
+
+
+        //        return Json(membre, JsonRequestBehavior.AllowGet); 
+        //    }
+        //}
     }
+}

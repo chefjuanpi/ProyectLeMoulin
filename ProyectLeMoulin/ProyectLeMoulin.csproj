@@ -312,7 +312,7 @@
     <Content Include="tinyfilemanager.net\resources\thumbs\logo.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\main_img.png" />
     <Content Include="tinyfilemanager.net\resources\thumbs\Temp\photo_calc_logo.jpg" />
-    <Content Include="Views\GroupedAchats\Index.cshtml" />
+    <Content Include="Views\Epicerie\Index.cshtml" />
     <Content Include="tinyfilemanager.net\resources\files\gradient.psd" />
     <Content Include="tinyfilemanager.net\resources\files\Home Renovations.xlsx" />
     <Content Include="tinyfilemanager.net\Web.config">
@@ -344,6 +344,24 @@
     <Content Include="Views\AchatAdmin\OldOrders.cshtml" />
     <Content Include="Views\AchatAdmin\MembersOrders.cshtml" />
     <Content Include="Views\Shared\_AdminButonNewSaveModDel.cshtml" />
+    <Content Include="Views\Panier\Index.cshtml" />
+    <EntityDeploy Include="GrpAchats.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GrpAchats.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="GrpAchats.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GrpAchats.edmx</DependentUpon>
+      <LastGenOutput>GrpAchats.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="GrpAchats.edmx.diagram">
+      <DependentUpon>GrpAchats.edmx</DependentUpon>
+    </Content>
+    <Content Include="GrpAchats.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GrpAchats.edmx</DependentUpon>
+      <LastGenOutput>GrpAchats.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -592,11 +610,20 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="AspNetUsers.cs">
+      <DependentUpon>GrpAchats.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Categories.cs">
+      <DependentUpon>GrpAchats.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CategoryProduct.cs">
+      <DependentUpon>GrpAchats.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AchatAdminController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
-    <Compile Include="Controllers\Epicerie.cs" />
+    <Compile Include="Controllers\EpicerieController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
@@ -604,6 +631,21 @@
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GrpAchats.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GrpAchats.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GrpAchats.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GrpAchats.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GrpAchats.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GrpAchats.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -646,6 +688,15 @@
     </Compile>
     <Compile Include="Models\Shared.cs" />
     <Compile Include="Models\Utils.cs" />
+    <Compile Include="OrderDetails.cs">
+      <DependentUpon>GrpAchats.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Orders.cs">
+      <DependentUpon>GrpAchats.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Products.cs">
+      <DependentUpon>GrpAchats.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="tinyfilemanager.net\classes\clsConfig.cs" />
@@ -671,6 +722,9 @@
     </Compile>
     <Compile Include="tinyfilemanager.net\_admin.Master.designer.cs">
       <DependentUpon>_admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Week.cs">
+      <DependentUpon>GrpAchats.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
