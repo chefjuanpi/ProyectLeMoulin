@@ -42,7 +42,7 @@ namespace ProyectLeMoulin.Controllers
         }
 
         //Récupérer les produits selon la catégorie choisie
-        //public JsonResult GetProduits(string cat);
+        //public JsonResult GetProduits(string cat)
         //{
         //    EpicerieEntities db = new EpicerieEntities();
 
@@ -51,7 +51,7 @@ namespace ProyectLeMoulin.Controllers
         //                   on w.ProductId equals p.ProductId
         //                   join c in db.Categories
         //                   on cat equals c.CategoryId
-        //                   where c.CategoryId == cat
+        //                   where c.CategoryName == cat
         //                   select new
         //                   {
         //                       ProductID = w.ProductId,
@@ -63,17 +63,34 @@ namespace ProyectLeMoulin.Controllers
         //    return Json(produit, JsonRequestBehavior.AllowGet);
         //}
 
-        //Céer le panier d'épicerie
-        public JsonResult Creer_Le_Panier(int productID)
+        //Remplir le Panier
+        public JsonResult Remplir_Le_Panier(int productId)
+        {
+            Panier p = new Panier();
+
+            int X = 0;
+
+            p.ProductID =   X;
+            p.Produits  =   "aa";
+            p.Qantity   =   X;
+            p.Price     =   X;
+
+            return Json(p, JsonRequestBehavior.AllowGet);
+
+        }
+        
+        //Afficher le panier d'épicerie
+        public JsonResult Afficherer_Le_Panier()
         {
             EpicerieEntities db = new EpicerieEntities();
 
             var panier = (from w in db.Week
-                          select new
+                          select new Panier()
                           {
                               ProductID     =   w.ProductId,
-                              Products      =   w.Products,
-                              Price         =   w.UnitPrice
+                              Produits      =   "",
+                              Price         =   w.UnitPrice,
+                              Qantity       =   w.Quantity
                           }).ToList();
 
             return Json(panier, JsonRequestBehavior.AllowGet);
