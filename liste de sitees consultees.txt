@@ -26,6 +26,12 @@ link in java
 
 http://stackoverflow.com/questions/8454510/open-url-in-same-window-and-in-same-tab
 
+select options
+
+http://stackoverflow.com/questions/2888446/get-the-selected-option-id-with-jquery
+
+
+
 
 
 
