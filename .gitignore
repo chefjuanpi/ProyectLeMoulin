@@ -29,3 +29,5 @@ _ReSharper*/
 *.vssscc
 $tf*/
 packages*/
+ProyectLeMoulin/bin/
+ProyectLeMoulin/obj/
