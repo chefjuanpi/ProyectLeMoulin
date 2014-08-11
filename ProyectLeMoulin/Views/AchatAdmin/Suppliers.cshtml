@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 ﻿@model IdentitySample.Models.SupplierViewModel
 @{
-=======
-﻿@{
->>>>>>> origin/master
     ViewBag.Title = "Fournisseurs";
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
@@ -16,7 +12,6 @@
     </div>
 </div>
 <br />
-<<<<<<< HEAD
 <p>
     Selectionner un fournisseur dans la liste derulante pour le voir et le modifier, ou cliquer sur le bouton
     nouveau pour en ajouter un.
@@ -34,48 +29,81 @@
    @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="row">
         <div class="input-group">
-            <div>
-                @Html.LabelFor(m => m.SupplierName, new { @class = "input-group-addon" }) &nbsp
-                @Html.TextBoxFor(m => m.SupplierName, new { @class = "form-control", @id="name" })
-            </div>
-            <div>
-                @Html.LabelFor(m => m.SupplierContactName, new { @class = "input-group-addon" }) &nbsp
-                @Html.TextBoxFor(m => m.SupplierContactName, new { @class = "form-control", @id="contact" })
-            </div>
-            <div>
-                @Html.LabelFor(m => m.SupplierPhone, new { @class = "input-group-addon" }) &nbsp
-                @Html.TextBoxFor(m => m.SupplierPhone, new { @class = "form-control", @id="phone" })
-            </div>
-            <div>
-                @Html.LabelFor(m => m.SupplierFax, new { @class = "input-group-addon" }) &nbsp
-                @Html.TextBoxFor(m => m.SupplierFax, new { @class = "form-control", @id="fax" })
-            </div>
-            <div>
-                @Html.LabelFor(m => m.SupplierMail, new { @class = "input-group-addon" }) &nbsp
-                @Html.TextBoxFor(m => m.SupplierMail, new { @class = "form-control", @id="mail" })
-            </div>
-            <div>
-                @Html.LabelFor(m => m.SupplierAdress, new { @class = "input-group-addon" }) &nbsp
-                @Html.TextBoxFor(m => m.SupplierAdress, new { @class = "form-control", @id="adress" })
-            </div>
-            <div>
-                @Html.LabelFor(m => m.SupplierCity, new { @class = "input-group-addon" }) &nbsp
-                @Html.TextBoxFor(m => m.SupplierCity, new { @class = "form-control", @id="city" })
-            </div>
-            <div>
-                @Html.LabelFor(m => m.SupplierPostalCode, new { @class = "input-group-addon" }) &nbsp
-                @Html.TextBoxFor(m => m.SupplierPostalCode, new { @class = "form-control", @id="postalcode" })
-            </div>
+            <table>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.SupplierName, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.SupplierName, new { @class = "form-control", @id="name" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.SupplierContactName, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.SupplierContactName, new { @class = "form-control", @id="contact" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.SupplierPhone, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.SupplierPhone, new { @class = "form-control", @id="phone" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.SupplierFax, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.SupplierFax, new { @class = "form-control", @id="fax" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.SupplierMail, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                       @Html.TextBoxFor(m => m.SupplierMail, new { @class = "form-control", @id="mail" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.SupplierAdress, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.SupplierAdress, new { @class = "form-control", @id="adress" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.SupplierCity, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.SupplierCity, new { @class = "form-control", @id="city" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.SupplierPostalCode, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.SupplierPostalCode, new { @class = "form-control", @id="postalcode" })
+                    </td>
+                </tr>
+
+            </table>
         </div>
     </div>
 
 }
 
 @section Scripts {
-
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/AdminButonsV2")
 }
-=======
-<div class="row">
-    @Html.Partial("_AdminButonNewSaveModDel")
-</div>
->>>>>>> origin/master
+
+
