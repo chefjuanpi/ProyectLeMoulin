@@ -16,6 +16,7 @@ namespace ProyectLeMoulin
     {
         public AspNetUsers()
         {
+            this.AspNetUserRoles = new HashSet<AspNetUserRoles>();
             this.Orders = new HashSet<Orders>();
         }
     
@@ -34,6 +35,7 @@ namespace ProyectLeMoulin
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
     
+        public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }
     }
 }

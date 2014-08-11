@@ -29,4 +29,3 @@ _ReSharper*/
 *.vssscc
 $tf*/
 packages*/
-bin/

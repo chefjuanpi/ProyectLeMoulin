@@ -63,6 +63,22 @@ namespace ProyectLeMoulin.Controllers
         //    return Json(produit, JsonRequestBehavior.AllowGet);
         //}
 
+        //Céer le panier d'épicerie
+        public JsonResult Creer_Le_Panier(int productID)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+
+            var panier = (from w in db.Week
+                          select new
+                          {
+                              ProductID     =   w.ProductId,
+                              Products      =   w.Products,
+                              Price         =   w.UnitPrice
+                          }).ToList();
+
+            return Json(panier, JsonRequestBehavior.AllowGet);
+        }
+
         //Récupérer le GUID du membre connecté et son role au sein du groupe d'achats
         //public JsonResult Recuperer_Membre()
         //{
@@ -85,5 +101,7 @@ namespace ProyectLeMoulin.Controllers
         //        return Json(membre, JsonRequestBehavior.AllowGet); 
         //    }
         //}
+
+        
     }
 }

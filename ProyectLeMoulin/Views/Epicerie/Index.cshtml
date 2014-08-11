@@ -31,7 +31,15 @@
         var membreName = "";
     });
 
-    $(function () {
+    $(function (AddQty) {
+        var qty = ($("#Quantity").text) += 1;
+    });
+
+    $(function (AddQty) {
+        var qty = ($("#Quantity").text) -= 1;
+    });
+
+    $(function (GetCategories) {
         templateCategories = Handlebars.compile($("#CategoriesTemplate").html());
         templateProducts = Handlebars.compile($("#ProductsTemplate").html());
 
@@ -39,14 +47,14 @@
 
         $("#GetCategoriesButton").click(function () {
             
-            $.getJSON("category/GetCategories", null, function () {
+            $.getJSON("Epicerie/GetCategories", null, function () {
                 console.log("hello world 2");
                 console.log(data.d.legth);
 
                 $("#CategoriesOutput").html(result);
 
                 $(function () {
-                    $("#CategoriesOutput").autocomplete({
+                    $("#ProductsOutput").autocomplete({
                         source: function (request, response) {
                             $.ajax({
                                 url: "/Epicerie/GetProducts",
@@ -56,6 +64,12 @@
                                 success: function (data) {
                                     response($.map(data, function (item) {
                                         return { label: item.ProductName, id: item.ProductID }
+
+                                        $("#GetProducts").click(function () {
+                                            $.getJSON("Epicerie/Creer_Le_Panier", null, function () {
+                                                
+                                            });
+                                        });
                                     }));
                                 }
                             });
@@ -70,8 +84,24 @@
     <input type="text" id="Membre" />
 </div>
 <div>
-    <input id="GetCategoriesButton" type="button" value="Produit" />
+    
+</div>
+<div>
     <div>
+        <input type-text id="ProductsOutput" />
+        <input id="Add" type="button" value="+" OnClick="AddQty"  />
+        <input id="Remove" type="button" value="-" OnClick="RemoveQty"  />
+        <input type-text id="Quantity" text="0" />
+    </div>
+    <div>
+        <input id="GetCategoriesButton" type="button" value="Catégories" OnClick="GetCategories" />
         <input type-text id="CategoriesOutput" />
+    </div>
+    <div>
+        <input type-text id="PanierOutput" />
+        <input id="Add" type="button" value="+" OnClick="AddQty" />
+        <input id="Remove" type="button" value="-" OnClick="RemoveQty" />
+        <input id="Delete" type="button" value="-" OnClick="Delete" />
+        <input type-text id="Quantity" text="0" />
     </div>
 </div>

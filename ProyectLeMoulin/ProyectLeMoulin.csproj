@@ -362,6 +362,23 @@
       <DependentUpon>GrpAchats.edmx</DependentUpon>
       <LastGenOutput>GrpAchats.cs</LastGenOutput>
     </Content>
+    <EntityDeploy Include="Epicerie.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Epicerie.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Epicerie.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Epicerie.edmx</DependentUpon>
+      <LastGenOutput>Epicerie.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Epicerie.edmx.diagram">
+      <DependentUpon>Epicerie.edmx</DependentUpon>
+    </Content>
+    <Content Include="Epicerie.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Epicerie.edmx</DependentUpon>
+      <LastGenOutput>Epicerie.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -610,14 +627,17 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="AspNetUserRoles.cs">
+      <DependentUpon>Epicerie.tt</DependentUpon>
+    </Compile>
     <Compile Include="AspNetUsers.cs">
-      <DependentUpon>GrpAchats.tt</DependentUpon>
+      <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
     <Compile Include="Categories.cs">
-      <DependentUpon>GrpAchats.tt</DependentUpon>
+      <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
     <Compile Include="CategoryProduct.cs">
-      <DependentUpon>GrpAchats.tt</DependentUpon>
+      <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AchatAdminController.cs" />
@@ -629,6 +649,21 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\SendMailerController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Epicerie.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Epicerie.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Epicerie.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Epicerie.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Epicerie.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Epicerie.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -689,13 +724,13 @@
     <Compile Include="Models\Shared.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="OrderDetails.cs">
-      <DependentUpon>GrpAchats.tt</DependentUpon>
+      <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
     <Compile Include="Orders.cs">
-      <DependentUpon>GrpAchats.tt</DependentUpon>
+      <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
     <Compile Include="Products.cs">
-      <DependentUpon>GrpAchats.tt</DependentUpon>
+      <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -724,7 +759,7 @@
       <DependentUpon>_admin.Master</DependentUpon>
     </Compile>
     <Compile Include="Week.cs">
-      <DependentUpon>GrpAchats.tt</DependentUpon>
+      <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
