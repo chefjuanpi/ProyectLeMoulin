@@ -27,56 +27,61 @@ namespace ProyectLeMoulin.Controllers
 
         }
 
-        //public JsonResult GetCategories()
-        //{
-        //    CoeurContainer db = new CoeurContainer();
-        //    var category = (from c in db.Categories
-        //                    select new
-        //                    {
-        //                        CategoryID = c.CategoryID,
-        //                        CategoryName = c.CategoryName,
-        //                        Description = category.Description
-        //                    }).single();
-        //    return Json(category, JsonRequestBehavior.AllowGet);
-        //}
+        //Récupérer les catégories de produits
+        public JsonResult GetCategories()
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var category = (from c in db.Categories
+                            select new
+                            {
+                                CategoryID = c.CategoryId,
+                                CategoryName = c.CategoryName,
+                                Description = c.Description
+                            }).ToList();
+            return Json(category, JsonRequestBehavior.AllowGet);
+        }
 
-        //public JsonResult GetProduits(string cat)
+        //Récupérer les produits selon la catégorie choisie
+        //public JsonResult GetProduits(string cat);
         //{
-        //    CoeurContainer db = new CoeurContainer();
+        //    EpicerieEntities db = new EpicerieEntities();
 
-        //    var produit = (from p in db.Weeks
+        //    var produit = (from w in db.Week
+        //                   join p in db.Products
+        //                   on w.ProductId equals p.ProductId
+        //                   join c in db.Categories
+        //                   on cat equals c.CategoryId
+        //                   where c.CategoryId == cat
         //                   select new
         //                   {
-        //                       ProductID = p.ProductID,
-        //                       ProductName = p.ProductName,
-        //                       Description = p.Description,
+        //                       ProductID = w.ProductId,
+        //                       ProductName = w.Products,
         //                       TVQ = p.TVQ,
         //                       TPS = p.TPS,
-        //                       Available = p.Available
+        //                       Available = p.Avaibled
         //                   }).ToList();
         //    return Json(produit, JsonRequestBehavior.AllowGet);
         //}
 
+        //Récupérer le GUID du membre connecté et son role au sein du groupe d'achats
         //public JsonResult Recuperer_Membre()
         //{
 
-        //    CoeurContainer db = new CoeurContainer();
+        //    EpicerieEntities db = new EpicerieEntities();
         //    string utilisateur = User.Identity.Name;
         //    string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
-
-
         //    var membre = (from m in db.AspNetUsers
+        //                  join r in db.AspNetUserRoles
+        //                  on m.UserName equals r.AspNetUsers
         //                  where m.Id == guid
         //                  select new
         //                  {
         //                      MembreID          =   m.Id,
         //                      UserFirstName     =   m.Prenom, 
-        //                      UserLastName      =   m.Nom
+        //                      UserLastName      =   m.Nom,
+        //                      Role              =   r.RoleId
         //                  }).ToList();
-
-
-
         //        return Json(membre, JsonRequestBehavior.AllowGet); 
         //    }
         //}
