@@ -69,11 +69,12 @@ namespace ProyectLeMoulin.Controllers
             EpicerieEntities db = new EpicerieEntities();
 
             var panier = (from w in db.Week
-                          select new
+                          select new Panier()
                           {
                               ProductID     =   w.ProductId,
                               Products      =   w.Products,
-                              Price         =   w.UnitPrice
+                              Price         =   w.UnitPrice,
+                              Qantity       =   w.Quantity
                           }).ToList();
 
             return Json(panier, JsonRequestBehavior.AllowGet);
