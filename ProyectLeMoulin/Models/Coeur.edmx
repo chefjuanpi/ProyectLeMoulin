@@ -62,7 +62,6 @@
           <Property Name="HourEnd" Type="time" Precision="7" />
           <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="TypeId" Type="int" Nullable="false" />
           <Property Name="Poublier" Type="bit" />
         </EntityType>
         <EntityType Name="Nouvelles">
@@ -84,6 +83,19 @@
           </Key>
           <Property Name="BlogId" Type="int" Nullable="false" />
           <Property Name="PictureId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pages">
+          <Key>
+            <PropertyRef Name="PageID" />
+          </Key>
+          <Property Name="PageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuName" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Text" Type="text" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Principal" Type="bit" Nullable="false" />
+          <Property Name="SousMenu" Type="int" />
+          <Property Name="Poublier" Type="bit" />
         </EntityType>
         <Association Name="FK_AppointmentDiary_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
@@ -145,6 +157,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pages_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Pages" Type="Self.Pages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pages">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="IdentitySampleStoreContainer">
           <EntitySet Name="AppointmentDiary" EntityType="Self.AppointmentDiary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
@@ -152,6 +176,7 @@
           <EntitySet Name="Evenements" EntityType="Self.Evenements" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nouvelles" EntityType="Self.Nouvelles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NouvellesPicture" EntityType="Self.NouvellesPicture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pages" EntityType="Self.Pages" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AppointmentDiary_AspNetUsers" Association="Self.FK_AppointmentDiary_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AppointmentDiary" EntitySet="AppointmentDiary" />
@@ -171,6 +196,10 @@
           <AssociationSet Name="FK_Nouvelles_AspNetUsers" Association="Self.FK_Nouvelles_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Nouvelles" EntitySet="Nouvelles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pages_AspNetUsers" Association="Self.FK_Pages_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Pages" EntitySet="Pages" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -203,6 +232,11 @@
           <AssociationSet Name="FK_Evenements_AspNetUsers" Association="IdentitySample.FK_Evenements_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Evenement" EntitySet="Evenements" />
+          </AssociationSet>
+          <EntitySet Name="Pages" EntityType="IdentitySample.Page" />
+          <AssociationSet Name="FK_Pages_AspNetUsers" Association="IdentitySample.FK_Pages_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Page" EntitySet="Pages" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AppointmentDiary">
@@ -239,6 +273,7 @@
           <NavigationProperty Name="AppointmentDiaries" Relationship="IdentitySample.FK_AppointmentDiary_AspNetUsers" FromRole="AspNetUsers" ToRole="AppointmentDiary" />
           <NavigationProperty Name="Nouvelles" Relationship="IdentitySample.FK_Nouvelles_AspNetUsers" FromRole="AspNetUsers" ToRole="Nouvelles" />
           <NavigationProperty Name="Evenements" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="AspNetUser" ToRole="Evenement" />
+          <NavigationProperty Name="Pages" Relationship="IdentitySample.FK_Pages_AspNetUsers" FromRole="AspNetUser" ToRole="Page" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -339,7 +374,6 @@
           <Property Name="HourEnd" Type="Time" Precision="7" />
           <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="TypeId" Type="Int32" Nullable="false" />
           <Property Name="Poublier" Type="Boolean" />
           <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="Evenement" ToRole="AspNetUser" />
         </EntityType>
@@ -351,6 +385,32 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Evenement">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Page">
+          <Key>
+            <PropertyRef Name="PageID" />
+          </Key>
+          <Property Name="PageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuName" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Principal" Type="Boolean" Nullable="false" />
+          <Property Name="SousMenu" Type="Int32" />
+          <Property Name="Poublier" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_Pages_AspNetUsers" FromRole="Page" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_Pages_AspNetUsers">
+          <End Type="IdentitySample.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="IdentitySample.Page" Role="Page" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Page">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -431,7 +491,6 @@
             <EntityTypeMapping TypeName="IdentitySample.Evenement">
               <MappingFragment StoreEntitySet="Evenements">
                 <ScalarProperty Name="Poublier" ColumnName="Poublier" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="HourEnd" ColumnName="HourEnd" />
@@ -443,6 +502,20 @@
                 <ScalarProperty Name="PrincipalPhotoEvenement" ColumnName="PrincipalPhotoEvenement" />
                 <ScalarProperty Name="TitleEvenement" ColumnName="TitleEvenement" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pages">
+            <EntityTypeMapping TypeName="IdentitySample.Page">
+              <MappingFragment StoreEntitySet="Pages">
+                <ScalarProperty Name="Poublier" ColumnName="Poublier" />
+                <ScalarProperty Name="SousMenu" ColumnName="SousMenu" />
+                <ScalarProperty Name="Principal" ColumnName="Principal" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="PageID" ColumnName="PageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

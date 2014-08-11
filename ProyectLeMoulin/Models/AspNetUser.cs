@@ -19,6 +19,7 @@ namespace ProyectLeMoulin.Models
             this.AppointmentDiaries = new HashSet<AppointmentDiary>();
             this.Nouvelles = new HashSet<Nouvelle>();
             this.Evenements = new HashSet<Evenement>();
+            this.Pages = new HashSet<Page>();
         }
     
         public string Id { get; set; }
@@ -39,5 +40,6 @@ namespace ProyectLeMoulin.Models
         public virtual ICollection<AppointmentDiary> AppointmentDiaries { get; set; }
         public virtual ICollection<Nouvelle> Nouvelles { get; set; }
         public virtual ICollection<Evenement> Evenements { get; set; }
+        public virtual ICollection<Page> Pages { get; set; }
     }
 }

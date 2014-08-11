@@ -40,20 +40,20 @@
             <strong>Information de base sur l'évenement :</strong>
 
             <div class="input-group">
-                @Html.LabelFor(m=>m.Lieu)
+                <div class="input-group-addon">Lieu : &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp</div>
                 @Html.TextBoxFor(m => m.Lieu, new { @class = "form-control", @id = "Lieu", @placeholder = "Ex: Centre Saint Nom de Jésus" })
             </div>
             <div class="input-group ">
-                @Html.LabelFor(m => m.Adresse)
+                <div class = "input-group-addon" >Adresse : &nbsp &nbsp&nbsp</div>
                 @Html.TextBoxFor(m => m.Adresse, new { @class = "form-control", @id = "Adresse", @placeholder = "123 rue Racine Est" })
             </div>
             <div class="input-group ">
-                <div class="input-group-addon ">Commence </div>
+                <div class="input-group-addon ">Commence : </div>
                 @Html.TextBoxFor(m => m.DateStart, new { @id = "DateStart" , @placeholder = "Date" })
                 @Html.TextBoxFor(m => m.HourStart, new { @class = "datetimepicker2", @id = "HourStart", @placeholder = "Heure" })
             </div>
             <div class="input-group ">
-                <div class="input-group-addon">&nbsp &nbsp &nbsp fin : &nbsp &nbsp &nbsp </div>
+                <div class="input-group-addon">Fin  : &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp&nbsp</div>
                 @Html.TextBoxFor(m => m.DateEnd, new { @id = "DateEnd", @placeholder = "Date" })
                 @Html.TextBoxFor(m => m.HourEnd, new { @class = "datetimepicker2", @id = "HourEnd", @placeholder = "Heure" })
             </div>
@@ -71,7 +71,7 @@
                 @Html.CheckBoxFor(m => m.Publier, new { @id = "publier" })
                 @Html.LabelFor(m => m.Publier)
             </div>
-            @Html.HiddenFor(m => m.EvenementId, new { id = "new123" })
+            @Html.HiddenFor(m => m.EvenementId, new { @id = "new123" })
         </div>
 
         <input type="submit" class="btn btn-danger col-md-offset-5 col-md-3" value="Enregistrer sans publier" />
@@ -132,8 +132,10 @@
             $.getJSON("getEvenements", null, function (data) {
                 var result = Templateitems(data);
                 $("#ItemsList").html(result);
-                $(".items").click(function () {
-                    var id = this.id;
+                
+                $(".items").change(function () {
+                    var id = $(this).children(":selected").attr("id");
+                    console.log(id);
                     $("#btnmodif").show();
                     $("#btnSupr").show();
                     $("#Formulaire").show();

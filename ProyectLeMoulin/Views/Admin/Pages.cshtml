@@ -1,112 +1,125 @@
-﻿
+﻿@model IdentitySample.Models.PagesViewModel
 @{
-    ViewBag.Title = "Editeur des Pages";
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
 
-<h2>Editeur des pages</h2>
-<p>Selectionne une page dans la liste derulante pour le voir et modifier, ou click sur le bouton  HHHHHHHHHHHHHHHHHH
-    Nouvelle page</p>
+<h2>@ViewBag.Title</h2>
+<p>
+    Selectionne une page dans la liste derulante pour le voir et modifier, ou click sur le bouton  HHHHHHHHHHHHHHHHHH
+    Nouvelle page
+</p>
 <br />
 
 <div class="row">
     @Html.Partial("_AdminButonModifNew")
 </div>
 
-@using (Html.BeginForm("Evenements", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form",
+@using (Html.BeginForm("Pages", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form",
     @id="Formulaire" }))
 {
     @Html.AntiForgeryToken()
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
-    <div class="row">
-        <div class="input-group">
-            <div class="input-group-addon">Titre du page : </div>
-            <input class="form-control" type="text" placeholder="Seulment le premier mot aparaitre dans le menu">
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <strong>Selectione la position du page dans le menu</strong>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"> Dans le menu principal ou
-            </label>
-            <select>
-                <option>Comme sous menu de : </option>
-                <option>Accueil               </option>
-                <option>Contactez-nous        </option>
-                <option>Impliquez-vous        </option>
-            </select>
-        </div>
-
-
-
-
+    <div class="input-group row">
+        @Html.LabelFor(m => m.Titre, new { @class = "input-group-addon" })
+        @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", @id = "titre", @placeholder = "Ex: Fêtê des Voinsins 2014"})
     </div>
     <br />
 
     <div class="row">
-        <textarea id="elm1" name="area" class="col-md-12 col-xs-12"></textarea>
+        <div class="form-group col-md-2">
+            <div class="input-group">
+                @Html.LabelFor(m => m.MenuName, new { @class = "input-group-addon" })
+                @Html.TextBoxFor(m => m.MenuName, new { @class = "form-control col-md-2", @id = "MenuName", @placeholder = "Ex: A propos" })
+            </div>
+            <p class="help-block">Nom du page à apparaitre dans les menus Max 15 char.</p>
+        </div>
+
+        <div class="col-md-7">
+
+            <strong>Position du page dans le menu</strong>
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.Principal, new { @id = "menuPrincipal" })
+                @Html.LabelFor(m => m.Principal)
+                
+            </div>
+            <div class="col-md-3">
+                <select class="form-control" id="menuparents"></select>
+            </div>
+        </div>
     </div>
+            <br />
+
+            <div class="row">
+                @Html.TextAreaFor(m => m.Contenu, new { @id = "elm1", @name = "area", @class = "col-md-12 col-xs-12" })
+            </div>
+            <br />
     <br />
     <div class="row alert alert-info">
-        <div class="checkbox col-md-3">
-            <label>
-                <input type="checkbox"> Metre la page public ou
-            </label>
+        <div class="col-md-4">
+            <strong>L'évenement est pret?</strong>
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.Publier, new { @id = "publier" })
+                @Html.LabelFor(m => m.Publier)
+            </div>
+            @Html.HiddenFor(m => m.PageId, new { @id = "new123" })
         </div>
 
-        <div class="btn btn-danger col-md-offset-5 col-md-3">Enregistrer sans publier</div>
-
+        <input type="submit" class="btn btn-danger col-md-offset-5 col-md-3" value="Enregistrer sans publier" />
     </div>
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/AdminButons")
-    <script>
-        $(function () {
-            $("#btnSupr").click(function () {
-                $("#dialog-confirm").dialog({
-                    resizable: false,
-                    height: 200,
-                    modal: true,
-                    buttons: {
-                        "Effacer": function () {
-                            var x = $("#new123").val();
-                            console.log(x);
-                            window.open("/Admin/delEvenement?eID=" + x, "_self");
-                            $(this).dialog("close");
-                        },
-                        Anuler: function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-            });
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+                @Scripts.Render("~/bundles/AdminButons")
+                <script>
+                    $(function () {
+                        $("#btnSupr").click(function () {
+                            $("#dialog-confirm").dialog({
+                                resizable: false,
+                                height: 200,
+                                modal: true,
+                                buttons: {
+                                    "Effacer": function () {
+                                        var x = $("#new123").val();
+                                        console.log(x);
+                                        window.open("/Admin/delPage?pID=" + x, "_self");
+                                        $(this).dialog("close");
+                                    },
+                                    Anuler: function () {
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            });
+                        });
 
-            Templateitems = Handlebars.compile($("#itemsTemplate").html());
-            $.getJSON("getNouvelles", null, function (data) {
-                var result = Templateitems(data);
-                $("#ItemsList").html(result);
-                $(".items").click(function () {
-                    var id = this.id;
-                    $("#btnmodif").show();
-                    $("#btnSupr").show();
-                    $("#Formulaire").show();
-                    tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
-                    $("#new123").val(id);
-                    $.getJSON("getNDetails", { NouvelleId: id }, function (data) {
-                        $("#demotextbox").val(data.image);
-                        $("#publier").prop('checked', data.publier);
-                        tinymce.editors[0].setContent(data.page);
-                        $("#titre").val(data.Titre);
+                        $.getJSON("getparents", null, function (data) {
+                            var result = Templateitems(data);
+                            $("#menuparents").html(result);
+                        });
+
+                        Templateitems = Handlebars.compile($("#itemsTemplate").html());
+                        $.getJSON("getPages", null, function (data) {
+                            var result = Templateitems(data);
+                            $("#ItemsList").html(result);
+                            $(".items").change(function () {
+                                var id = $(this).children(":selected").attr("id");
+                                $("#btnmodif").show();
+                                $("#btnSupr").show();
+                                $("#Formulaire").show();
+                                tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
+                                $("#new123").val(id);
+                                $.getJSON("getPDetails", { pageId: id }, function (data) {
+                                    $("#publier").prop('checked', data.publier);
+                                    tinymce.editors[0].setContent(data.page);
+                                    $("#titre").val(data.Titre);
+                                    $("#menuPrincipal").prop('checked', data.principal);
+                                    $("#MenuName").val(data.menuName);
+                                });
+                            });
+                        });
                     });
-                });
-            });
-        });
 
-    </script>
-}
+                </script>
+            }

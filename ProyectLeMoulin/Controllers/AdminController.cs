@@ -34,10 +34,109 @@ namespace IdentitySample.Controllers
 
         public ActionResult Pages()
         {
+            ViewBag.Title = "Editeur des Pages";
             ViewBag.Message = "Edition des pages du site";
 
             return View();
         }
+
+        //
+        // POST: //enregistrer Notices
+        [HttpPost]
+        [ValidateInput(false)]
+        public async Task<ActionResult> Pages(PagesViewModel page)
+        {
+            ViewBag.Title = "Editeur des Pages";
+            CoeurContainer db = new CoeurContainer();
+            string utilisateur = User.Identity.Name;
+            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            if (page.PageId == null)
+            {
+                Page n = new Page();
+                n.MenuName = page.MenuName;
+                n.UserId = guid;
+                n.Title = page.Titre;
+                n.Text = page.Contenu;
+                n.Poublier = page.Publier;
+                n.Principal = page.Principal;
+                if(page.Principal == false)
+                {
+                    n.SousMenu = page.menuParent;
+                }
+                else{
+                    n.SousMenu = null;
+                }
+                db.Pages.Add(n);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                int x = Convert.ToInt16(page.PageId);
+                var modPage = (from n in db.Pages
+                                   where n.PageID == x
+                                   select n).Single();
+                modPage.UserId = guid;
+                modPage.Title = page.Titre;
+                modPage.Text = page.Contenu;
+                modPage.MenuName = page.MenuName;
+                modPage.Poublier = page.Publier;
+                if (page.Principal == false)
+                {
+                    modPage.SousMenu = page.menuParent;
+                }
+                else
+                {
+                    modPage.SousMenu = null;
+                }
+                await db.SaveChangesAsync();
+            }
+            return View();
+        }
+
+        public JsonResult getPages()
+        {
+            CoeurContainer db = new CoeurContainer();
+            var nouvelles = (from n in db.Pages
+                             select new
+                             {
+                                 id = n.PageID,
+                                 Titre = n.MenuName
+                             });
+            return Json(nouvelles, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getparents()
+        {
+            CoeurContainer db = new CoeurContainer();
+            var nouvelles = (from n in db.Pages
+                             where n.Principal == true
+                             select new
+                             {
+                                 id = n.PageID,
+                                 Titre = n.MenuName
+                             });
+            return Json(nouvelles, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getPDetails(int pageId)
+        {
+            CoeurContainer db = new CoeurContainer();
+            var nouvelle = (from n in db.Pages
+                            where n.PageID == pageId
+                            select new
+                            {
+                                id = n.PageID,
+                                Titre = n.Title,
+                                page = n.Text,
+                                publier = n.Poublier,
+                                principal = n.Principal,
+                                menuparent = n.SousMenu,
+                                menuName = n.MenuName
+                            }).Single();
+            return Json(nouvelle, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         public ActionResult Evenements()
         {
@@ -99,6 +198,7 @@ namespace IdentitySample.Controllers
         {
             CoeurContainer db = new CoeurContainer();
             var Evenements = (from n in db.Evenements
+                              orderby n.DateStart
                              select new
                              {
                                  id = n.EventId,
@@ -198,6 +298,7 @@ namespace IdentitySample.Controllers
         {
             CoeurContainer db = new CoeurContainer();
             var nouvelles = (from n in db.Nouvelles
+                             orderby n.NouvelleDate
                              select new
                              {
                                  id = n.NouvelleId,

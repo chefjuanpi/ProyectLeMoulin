@@ -684,6 +684,7 @@
       <DependentUpon>GrpAchats.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AchatAdminViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\AppointmentDiary.cs">
       <DependentUpon>Coeur.tt</DependentUpon>
@@ -720,6 +721,9 @@
       <DependentUpon>Coeur.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NouvellesPicture.cs">
+      <DependentUpon>Coeur.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Page.cs">
       <DependentUpon>Coeur.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Shared.cs" />

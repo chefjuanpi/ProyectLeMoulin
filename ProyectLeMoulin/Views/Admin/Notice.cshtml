@@ -78,8 +78,8 @@
             $.getJSON("getNouvelles", null, function (data) {
                 var result = Templateitems(data);
                 $("#ItemsList").html(result);
-                $(".items").click(function () {
-                    var id = this.id;
+                $(".items").change(function () {
+                    var id = $(this).children(":selected").attr("id");
                     $("#btnmodif").show();
                     $("#btnSupr").show();
                     $("#Formulaire").show();

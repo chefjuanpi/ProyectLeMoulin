@@ -12,19 +12,15 @@ namespace ProyectLeMoulin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Evenement
+    public partial class Page
     {
-        public int EventId { get; set; }
-        public string TitleEvenement { get; set; }
-        public string PrincipalPhotoEvenement { get; set; }
-        public string PlaceEvenement { get; set; }
-        public string AdresseEvenement { get; set; }
-        public System.DateTime DateStart { get; set; }
-        public Nullable<System.TimeSpan> HourStart { get; set; }
-        public System.DateTime DateEnd { get; set; }
-        public Nullable<System.TimeSpan> HourEnd { get; set; }
-        public string Text { get; set; }
+        public int PageID { get; set; }
+        public string MenuName { get; set; }
         public string UserId { get; set; }
+        public string Text { get; set; }
+        public string Title { get; set; }
+        public bool Principal { get; set; }
+        public Nullable<int> SousMenu { get; set; }
         public Nullable<bool> Poublier { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }

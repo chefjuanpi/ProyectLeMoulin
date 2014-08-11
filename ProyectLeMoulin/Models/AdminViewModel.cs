@@ -64,6 +64,36 @@ namespace IdentitySample.Models
         public bool NouvellePublier { get; set; }
    }
 
+    public class PagesViewModel
+    {
+        public string PageId { get; set; }
+        
+        [Required]
+        public string MenuName { get; set; }
+
+        [Required]
+        [StringLength(150, ErrorMessage = "Titre trop long, max. 150 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Titre du Notice :")]
+        public string Titre { get; set; }
+
+        [Required]
+        [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
+        [DataType(DataType.Html)]
+        [Display(Name = "Text")]
+        public string Contenu { get; set; }
+
+        [Required]
+        [Display(Name = "Publier la notice  ou ")]
+        public bool Publier { get; set; }
+
+        [Required]
+        [Display(Name = "Dans le menu principal  ou comme sous-menu de :")]
+        public bool Principal { get; set; }
+
+        public int menuParent { get; set; }
+    }
+
     public class EvenementsViewModel
     {
         public string EvenementId { get; set; }
