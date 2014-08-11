@@ -42,26 +42,26 @@ namespace ProyectLeMoulin.Controllers
         }
 
         //Récupérer les produits selon la catégorie choisie
-        public JsonResult GetProduits(string cat)
-        {
-            EpicerieEntities db = new EpicerieEntities();
+        //public JsonResult GetProduits(string cat)
+        //{
+        //    EpicerieEntities db = new EpicerieEntities();
 
-            var produit = (from w in db.Week
-                           join p in db.Products
-                           on w.ProductId equals p.ProductId
-                           //join c in db.Categories
-                           on cat equals c.CategoryId
-                           where c.CategoryName == cat
-                           select new
-                           {
-                               ProductID = w.ProductId,
-                               ProductName = w.Products,
-                               TVQ = p.TVQ,
-                               TPS = p.TPS,
-                               Available = p.Avaibled
-                           }).ToList();
-            return Json(produit, JsonRequestBehavior.AllowGet);
-        }
+        //    var produit = (from w in db.Week
+        //                   join p in db.Products
+        //                   on w.ProductId equals p.ProductId
+        //                   join c in db.Categories
+        //                   on cat equals c.CategoryId
+        //                   where c.CategoryName == cat
+        //                   select new
+        //                   {
+        //                       ProductID = w.ProductId,
+        //                       ProductName = w.Products,
+        //                       TVQ = p.TVQ,
+        //                       TPS = p.TPS,
+        //                       Available = p.Avaibled
+        //                   }).ToList();
+        //    return Json(produit, JsonRequestBehavior.AllowGet);
+        //}
 
         //Remplir le Panier
         public JsonResult Remplir_Le_Panier(int productId)
