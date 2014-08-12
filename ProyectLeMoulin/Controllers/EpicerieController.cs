@@ -45,53 +45,61 @@ namespace ProyectLeMoulin.Controllers
         }
 
         //Récupérer les produits selon la catégorie choisie
-        //public JsonResult GetProduits(int cat)
-        //{
-        //    EpicerieEntities db = new EpicerieEntities();
-        //    if (cat == db.Categories.CategoryId)
-        //    {
+        public JsonResult GetProduits(int cat)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            //if (cat == db.Categories.CategoryId)
+            //{
 
-        //        var produit = (from w in db.Week
-        //                       join p in db.Products
-        //                       on w.ProductId equals p.ProductId
-        //                       join cp in db.CategoryProduct
-        //                       on p.ProductId equals cp.ProductId
-        //                       where cp.CategoryId == cat
-        //                       select new
-        //                       {
-        //                           ProductID = p.ProductId,
-        //                           ProductName = p.ProductName,
-        //                           TVQ = p.TVQ,
-        //                           TPS = p.TPS,
-        //                           Price = w.UnitPrice,
-        //                           Available = p.Avaibled
-        //                       }).ToList();
-        //        return Json(produit, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
+                var produit = (from w in db.Week
+                               join p in db.Products
+                               on w.ProductId equals p.ProductId
+                               join cp in db.CategoryProduct
+                               on p.ProductId equals cp.ProductId
+                               where cp.CategoryId == cat
+                               select new
+                               {
+                                   ProductID = p.ProductId,
+                                   ProductName = p.ProductName,
+                                   TVQ = p.TVQ,
+                                   TPS = p.TPS,
+                                   Price = w.UnitPrice,
+                                   Available = p.Avaibled
+                               }).ToList();
+                return Json(produit, JsonRequestBehavior.AllowGet);
+            //}
+        }
 
         //Remplir le Panier
-        //public JsonResult Remplir_Le_Panier(int productId, string produit, int qty, decimal price, bool tvq, bool tps)
+        //public JsonResult Remplir_Le_Panier(int produit)
         //{
         //    EpicerieEntities db = new EpicerieEntities();
-        //    if (produit == db.Products.ProductName)
-        //    {
+        //    //if (produit == db.Products.ProductName)
+        //    //{
         //        Panier p = new Panier();
 
-        //        p.ProductID = productId;
-        //        p.Produits = produit;
-        //        p.Qantity = qty;
-        //        p.Price = price;
-        //        p.TVQ = tvq;
-        //        p.TPS = tps;
-        //        p.Total = 0;
-        //        p.Quebec = Quebec;
-        //        p.Canada = Canada;
+        //        var product = (from w in db.Week
+        //                       join prod in db.Products
+        //                       on w.ProductId equals prod.ProductId
+        //                       join cp in db.CategoryProduct
+        //                       on prod.ProductId equals cp.ProductId
+        //                       where prod.ProductId == produit
+        //                       select new
+        //                       {
+        //                            p.ProductID = w.ProductId,
+        //                            p.Produits = p.Produits,
+        //                            p.Qantity = w.Quantity,
+        //                            p.Price = w.UnitPrice,
+        //                            p.TVQ = p.TVQ,
+        //                            p.TPS = p.TPS,
+        //                            p.Total = 0,
+        //                            p.Quebec = Quebec,
+        //                            p.Canada = Canada
+        //                        }).ToList();
+        //        //Calculer_Prix_Total(p.TVQ, p.TPS, p.Price);
 
-        //        Calculer_Prix_Total(p.TVQ, p.TPS, p.Price);
-
-        //        return Json(p, JsonRequestBehavior.AllowGet);
-        //    }
+        //        return Json(product, JsonRequestBehavior.AllowGet);
+            //}
 
         //}
 
