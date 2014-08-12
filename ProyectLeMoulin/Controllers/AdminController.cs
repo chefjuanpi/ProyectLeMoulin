@@ -93,6 +93,12 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        /// <summary>
+        /// function Json permet recouperer l'ensemble des pages du site
+        /// </summary>
+        /// <returns>
+        /// return tous le id et titre de tous les pages
+        /// </returns>
         public JsonResult getPages()
         {
             CoeurContainer db = new CoeurContainer();
