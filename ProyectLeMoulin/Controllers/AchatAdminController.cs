@@ -1,5 +1,6 @@
 ﻿using EpicerieEntities;
 using EpicerieModel.Models;
+using ProyectLeMoulin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,10 +53,10 @@ namespace ProyectLeMoulin.Controllers
         [ValidateInput(false)]
         public async Task<ActionResult> Supplier(SupplierViewModel Supplier)
         {
-            CoeurContainer db = new CoeurContainer();
+            EpicerieEntities db = new EpicerieEntities();
             if (Supplier.SupplierId == null)
             {
-                Nouvelle n = new Nouvelle();
+                Suppliers s = new Suppliers();
                 n.NouvelleDate = DateTime.Now;
                 n.UserId = guid;
                 n.NouvelleTitle = notice.Nouvelletitre;

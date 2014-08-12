@@ -137,6 +137,8 @@
           <Property Name="E-Mail" Type="nvarchar" MaxLength="256" />
           <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="256" />
           <Property Name="Fax" Type="nvarchar" MaxLength="256" />
+          <Property Name="PostalCode" Type="nvarchar" Nullable="false" MaxLength="7" />
+          <Property Name="Ville" Type="nvarchar" Nullable="false" MaxLength="256" />
         </EntityType>
         <EntityType Name="Week">
           <Key>
@@ -502,6 +504,8 @@
           <Property Type="String" Name="Phone" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Fax" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Week" Relationship="EpicerieModel.FK_Week_Suppliers" FromRole="Suppliers" ToRole="Week" />
+          <Property Type="String" Name="PostalCode" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ville" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Week_Suppliers">
           <End Type="EpicerieModel.Suppliers" Role="Suppliers" Multiplicity="1" />
@@ -617,6 +621,8 @@
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="EpicerieModel.Suppliers">
               <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="Ville" ColumnName="Ville" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
                 <ScalarProperty Name="Fax" ColumnName="Fax" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="E_Mail" ColumnName="E-Mail" />

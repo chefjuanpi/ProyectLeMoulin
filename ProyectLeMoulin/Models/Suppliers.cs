@@ -26,6 +26,8 @@ namespace ProyectLeMoulin.Models
         public string E_Mail { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
+        public string PostalCode { get; set; }
+        public string Ville { get; set; }
     
         public virtual ICollection<Week> Week { get; set; }
     }
