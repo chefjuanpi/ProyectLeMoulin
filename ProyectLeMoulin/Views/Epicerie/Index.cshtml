@@ -18,7 +18,7 @@
 <script type="text/x-handlebars-template" id="ProductsTemplate" >
         Produits<select class="form-control">
             {{#each}}
-                <option id={{ProductID}}>{{ProductName}}</option>
+                <option id={{ProductID}}>{{ProductName}}, TVQ: {{TVQ}}, TPS: {{TPS}}, Prix: {{Price}}</option>
             {{/each}}
         </select>
 </script>
@@ -74,23 +74,17 @@
 </script>
 }
 
-@*<div>
-    <input id="Membre" type="text"  />
-</div>*@
-
-<div id="CategoriesOutput"> </div>
-    
-
-
-
-<hr />
-
- <div id="ProductsOutput">
-    <input id="Add"             type="button"   value="+" OnClick="AddQty"  />
-    <input id="Quantity"        type-text       text="1" />
+<div id="Membre">
+    Bienvenue <input id="Membre" type="text" />!</input>
 </div>
 
-<hr />
+<div id="Message"></div>
+
+<div id="CategoriesOutput" style="width:480px; float:left;"></div>
+ 
+<div id="ProductsOutput" style="width:480px; float:left; margin-left:20%;"></div>
+    
+
 @*<div>
    
     <div>
@@ -100,6 +94,9 @@
         <input id="Delete"          type="button"   value="Retirer" OnClick="Delete" />
         <input id="Quantity"        type-text       text="" />
     </div>
-    <hr />
+    
 
 </div>*@
+
+
+<div style="height:200px; float:left;"></div>

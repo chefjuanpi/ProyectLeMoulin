@@ -55,6 +55,7 @@ namespace ProyectLeMoulin.Controllers
                                ProductName = p.ProductName,
                                TVQ = p.TVQ,
                                TPS = p.TPS,
+                               Price = w.UnitPrice,
                                Available = p.Avaibled
                            }).ToList();
             return Json(produit, JsonRequestBehavior.AllowGet);
