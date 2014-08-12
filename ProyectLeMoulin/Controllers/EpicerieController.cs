@@ -17,6 +17,12 @@ namespace ProyectLeMoulin.Controllers
     public class EpicerieController : Controller
     {
 
+        public decimal Total = 0;
+        public decimal TotTaxe = 0;
+        public decimal GrandTot = 0;
+        public decimal Quebec = 0;
+        public decimal Canada = 0;
+
         public ActionResult Index()
         {
 
@@ -39,41 +45,86 @@ namespace ProyectLeMoulin.Controllers
         }
 
         //Récupérer les produits selon la catégorie choisie
-        public JsonResult GetProduits(int cat)
-        {
-            EpicerieEntities db = new EpicerieEntities();
+        //public JsonResult GetProduits(int cat)
+        //{
+        //    EpicerieEntities db = new EpicerieEntities();
+        //    if (cat == db.Categories.CategoryId)
+        //    {
 
-            var produit = (from w in db.Week
-                           join p in db.Products
-                           on w.ProductId equals p.ProductId
-                           join cp in db.CategoryProduct
-                           on p.ProductId equals cp.ProductId
-                           where cp.CategoryId ==cat
-                           select new
-                           {
-                               ProductID = p.ProductId,
-                               ProductName = p.ProductName,
-                               TVQ = p.TVQ,
-                               TPS = p.TPS,
-                               Price = w.UnitPrice,
-                               Available = p.Avaibled
-                           }).ToList();
-            return Json(produit, JsonRequestBehavior.AllowGet);
-        }
+        //        var produit = (from w in db.Week
+        //                       join p in db.Products
+        //                       on w.ProductId equals p.ProductId
+        //                       join cp in db.CategoryProduct
+        //                       on p.ProductId equals cp.ProductId
+        //                       where cp.CategoryId == cat
+        //                       select new
+        //                       {
+        //                           ProductID = p.ProductId,
+        //                           ProductName = p.ProductName,
+        //                           TVQ = p.TVQ,
+        //                           TPS = p.TPS,
+        //                           Price = w.UnitPrice,
+        //                           Available = p.Avaibled
+        //                       }).ToList();
+        //        return Json(produit, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
 
         //Remplir le Panier
-        public JsonResult Remplir_Le_Panier(int productId, string produit, int qty, decimal price)
-        {
-            Panier p = new Panier();
+        //public JsonResult Remplir_Le_Panier(int productId, string produit, int qty, decimal price, bool tvq, bool tps)
+        //{
+        //    EpicerieEntities db = new EpicerieEntities();
+        //    if (produit == db.Products.ProductName)
+        //    {
+        //        Panier p = new Panier();
 
-            p.ProductID = productId;
-            p.Produits = produit;
-            p.Qantity = qty;
-            p.Price = price;
+        //        p.ProductID = productId;
+        //        p.Produits = produit;
+        //        p.Qantity = qty;
+        //        p.Price = price;
+        //        p.TVQ = tvq;
+        //        p.TPS = tps;
+        //        p.Total = 0;
+        //        p.Quebec = Quebec;
+        //        p.Canada = Canada;
 
-            return Json(p, JsonRequestBehavior.AllowGet);
+        //        Calculer_Prix_Total(p.TVQ, p.TPS, p.Price);
 
-        }
+        //        return Json(p, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //}
+
+        //public void Calculer_Prix_Total(bool tvq, bool tps, decimal price)
+        //{
+
+        //    if (tvq == true && tps == true)
+        //    {
+        //        Quebec = price * (decimal)0.09975;
+        //        Canada = price * (decimal)0.05;
+        //        price = price + Quebec + Canada;
+
+        //    }
+        //    if (tvq == true && tps == false)
+        //    {
+        //        Quebec = price * (decimal)0.09975;
+        //        Canada = 0;
+        //        price = price + Quebec;
+        //    }
+
+        //    if (tps == true && tvq == false)
+        //    {
+        //        Canada = price * (decimal)0.05;
+        //        Quebec = 0;
+        //        price = price + Canada;
+        //    }
+        //    if (tvq == false && tps == false)
+        //    {
+        //        Quebec = 0;
+        //        Canada = 0;
+        //        return;
+        //    }
+        //}
 
         //Afficher le panier d'épicerie
         //public JsonResult Afficherer_Le_Panier()
@@ -83,8 +134,6 @@ namespace ProyectLeMoulin.Controllers
         //    var panier = p;
 
         //    return Json(panier, JsonRequestBehavior.AllowGet);
-
-
         //}
 
         //Récupérer le GUID du membre connecté et son role au sein du groupe d'achats
@@ -120,12 +169,12 @@ namespace ProyectLeMoulin.Controllers
         //{
         //    EpicerieEntities db = new EpicerieEntities();
 
-        //    var semaine = (from w in db.Week
+        //    var sem = (from w in db.Week
         //                    select new
         //                    {
-        //                        Semaine   =   db.
+        //                        Semaine   =   w.DateSemaine,
         //                    }).ToString;
-        //    return Json(semaine, JsonRequestBehavior.AllowGet);
+        //    return Json(sem, JsonRequestBehavior.AllowGet);
         //}
 
     }

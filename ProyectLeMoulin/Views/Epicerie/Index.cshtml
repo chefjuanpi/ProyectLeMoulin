@@ -27,6 +27,8 @@
     templateCategories = null;
     templateProducts = null;
 
+
+
     //Valide le droit de l'usager avec ses nom et GUID
     $(function () {
         var membreId = 0;
@@ -71,6 +73,8 @@
                 });
             })//getJASON                               
     });
+
+
 </script>
 }
 
@@ -82,21 +86,10 @@
 
 <div id="CategoriesOutput" style="width:480px; float:left;"></div>
  
-<div id="ProductsOutput" style="width:480px; float:left; margin-left:20%;"></div>
+<div id="ProductsOutput" style="width:480px; float:left; margin-left:20%;"><input type="submit" id="AddCart" value="Ajouter au panier" onclick="AddCart" /></div>
     
-
 @*<div>
    
-    <div>
-        <input id="PanierOutput"    type-text       border="red" />
-        <input id="Add"             type="button"   value="+"       OnClick="AddQty" />
-        <input id="Remove"          type="button"   value="-"       OnClick="RemoveQty" />
-        <input id="Delete"          type="button"   value="Retirer" OnClick="Delete" />
-        <input id="Quantity"        type-text       text="" />
-    </div>
-    
-
 </div>*@
-
 
 <div style="height:200px; float:left;"></div>
