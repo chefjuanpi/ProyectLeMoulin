@@ -3,17 +3,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="robots" content="noindex,nofollow">
         <title>Tiny File Manager</title>
- 
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/bootstrap-lightbox.min.css" rel="stylesheet" type="text/css" />
         <link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/dropzone.css" type="text/css" rel="stylesheet" />
-        <link href="css/bootstrap-lightbox.min.css" 
-
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <!----- uploader div start ------->
+<!----- uploader div start ------->
         <div class="uploader">            
 	        <form action="dialog.aspx?cmd=upload" method="post" enctype="multipart/form-data" id="myAwesomeDropzone" class="dropzone">
 		        <input type="hidden" name="folder" value="<% Response.Write(this.strCurrPath); %>"/>
@@ -128,8 +125,9 @@
 		    </div>    
 	    </div>
 	    <!----- lightbox div end ------->
-   <script type="text/javascript" src="js/bootstrap-lightbox.min.js"></script>
-    	<script type="text/javascript" src="js/dropzone.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-lightbox.min.js"></script>
+		<script type="text/javascript" src="js/dropzone.min.js"></script>
         <script type="text/javascript">
 
             var ext_img=new Array(<% Response.Write(this.objConfig.strAllowedImageExtensions); %>);
@@ -139,22 +137,22 @@
 
             $(document).ready(function () {
 
-		        //dropzone config
-		        Dropzone.options.myAwesomeDropzone = {
-		            //forceFallback: true,
-		            dictInvalidFileType: "File extension is not allowed",
-		            dictFileTooBig: "The upload exceeds the max filesize allowed",
-		            dictResponseError: "SERVER ERROR",
-		            paramName: "file", // The name that will be used to transfer the file
-		            maxFilesize: <% Response.Write(this.objConfig.intMaxUploadSizeMb); %>, // MB
-				    accept: function(file, done) {
-				        var extension=file.name.split('.').pop();
-				        if ($.inArray(extension.toLowerCase(), allowed_ext) > -1) {
-				            done();
-				        } else { 
-				            done("File extension is not allowed"); 
-				        }
-				    }
+                //dropzone config
+                Dropzone.options.myAwesomeDropzone = {
+                    //forceFallback: true,
+                    dictInvalidFileType: "File extension is not allowed",
+                    dictFileTooBig: "The upload exceeds the max filesize allowed",
+                    dictResponseError: "SERVER ERROR",
+                    paramName: "file", // The name that will be used to transfer the file
+                    maxFilesize: <% Response.Write(this.objConfig.intMaxUploadSizeMb); %>, // MB
+		            accept: function(file, done) {
+		                var extension=file.name.split('.').pop();
+		                if ($.inArray(extension.toLowerCase(), allowed_ext) > -1) {
+		                    done();
+		                } else { 
+		                    done("File extension is not allowed"); 
+		                }
+		            }
 		        };
 
                 $('input[name=radio-sort]').click(function(){
@@ -214,56 +212,56 @@
             //********************************************
             function apply(file, type_file) {
                 <% if (this.objConfig.strFillSelector != "") { %>
-                    $(<% Response.Write(this.objConfig.strFillSelector); %>).val(file);
-                    <% Response.Write(this.objConfig.strPopupCloseCode); %>
+                $(<% Response.Write(this.objConfig.strFillSelector); %>).val(file);
+                <% Response.Write(this.objConfig.strPopupCloseCode); %>
                 <% } else { %>
-                    var target = window.parent.document.getElementById(track+'_ifr');
-                    var closed = window.parent.document.getElementsByClassName('mce-tinyfilemanager.net');
-                    var ext=file.split('.').pop();
-                    var fill='';
-                    if($.inArray(ext.toLowerCase(), ext_img) > -1){
-                        fill=$("<img />",{"src":file});
-                    }else{
-                        fill=$("<a />").attr("href", file).text(file.replace(/\..+$/, ''));
-                    }
-                    $(target).contents().find('#tinymce').append(fill);
-                    $(closed).find('.mce-close').trigger('click');
+                var target = window.parent.document.getElementById(track+'_ifr');
+                var closed = window.parent.document.getElementsByClassName('mce-tinyfilemanager.net');
+                var ext=file.split('.').pop();
+                var fill='';
+                if($.inArray(ext.toLowerCase(), ext_img) > -1){
+                    fill=$("<img />",{"src":file});
+                }else{
+                    fill=$("<a />").attr("href", file).text(file.replace(/\..+$/, ''));
+                }
+                $(target).contents().find('#tinymce').append(fill);
+                $(closed).find('.mce-close').trigger('click');
                 <% } %>
             }
 
             function apply_link(file,type_file){
                 <% if (this.objConfig.strFillSelector != "") { %>
-                    $(<% Response.Write(this.objConfig.strFillSelector); %>).val(file);
-                    <% Response.Write(this.objConfig.strPopupCloseCode); %>
+                $(<% Response.Write(this.objConfig.strFillSelector); %>).val(file);
+                <% Response.Write(this.objConfig.strPopupCloseCode); %>
                 <% } else { %>
-                    $('.mce-link_'+track, window.parent.document).val(file);
-                    var closed = window.parent.document.getElementsByClassName('mce-tinyfilemanager.net');
-                    if($('.mce-text_'+track, window.parent.document).val()=='') $('.mce-text_'+track, window.parent.document).val(file.replace(/\..+$/, ''));
-                    $(closed).find('.mce-close').trigger('click');
+                $('.mce-link_'+track, window.parent.document).val(file);
+                var closed = window.parent.document.getElementsByClassName('mce-tinyfilemanager.net');
+                if($('.mce-text_'+track, window.parent.document).val()=='') $('.mce-text_'+track, window.parent.document).val(file.replace(/\..+$/, ''));
+                $(closed).find('.mce-close').trigger('click');
                 <% } %>
             }
 
             function apply_img(file,type_file){
                 <% if (this.objConfig.strFillSelector != "") { %>
-                    $(<% Response.Write(this.objConfig.strFillSelector); %>).val(file);
-                    <% Response.Write(this.objConfig.strPopupCloseCode); %>
+                $(<% Response.Write(this.objConfig.strFillSelector); %>).val(file);
+                <% Response.Write(this.objConfig.strPopupCloseCode); %>
                 <% } else { %>
-                    var target = window.parent.document.getElementsByClassName('mce-img_' + track);
-                    var closed = window.parent.document.getElementsByClassName('mce-tinyfilemanager.net');
-                    $(target).val(file);
-                    $(closed).find('.mce-close').trigger('click');
+                var target = window.parent.document.getElementsByClassName('mce-img_' + track);
+                var closed = window.parent.document.getElementsByClassName('mce-tinyfilemanager.net');
+                $(target).val(file);
+                $(closed).find('.mce-close').trigger('click');
                 <% } %>
             }
 
             function apply_video(file,type_file){
                 <% if (this.objConfig.strFillSelector != "") { %>
-                    $(<% Response.Write(this.objConfig.strFillSelector); %>).val(file);
-                    <% Response.Write(this.objConfig.strPopupCloseCode); %>
+                $(<% Response.Write(this.objConfig.strFillSelector); %>).val(file);
+                <% Response.Write(this.objConfig.strPopupCloseCode); %>
                 <% } else { %>
-                    var target = window.parent.document.getElementsByClassName('mce-video' + type_file + '_' + track);
-                    var closed = window.parent.document.getElementsByClassName('mce-tinyfilemanager.net');
-                    $(target).val(file);
-                    $(closed).find('.mce-close').trigger('click');
+                var target = window.parent.document.getElementsByClassName('mce-video' + type_file + '_' + track);
+                var closed = window.parent.document.getElementsByClassName('mce-tinyfilemanager.net');
+                $(target).val(file);
+                $(closed).find('.mce-close').trigger('click');
                 <% } %>
             }
 
