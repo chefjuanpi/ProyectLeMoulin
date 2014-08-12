@@ -79,17 +79,20 @@
             $("#btnSupr").click(function () {
                 $("#dialog-confirm").dialog({
                     resizable: false,
-                    height: 200,
-                    modal: true,
-                    buttons: {
-                        "Effacer": function () {
-                            var x = $("#new123").val();
-                            console.log(x);
-                            window.open("/Admin/delPage?pID=" + x, "_self");
-                            $(this).dialog("close");
-                        },
-                        Anuler: function () {
-                            $(this).dialog("close");
+                    height   : 200,
+                    modal    : true,
+
+                    buttons:
+                        {
+                            "Effacer": function ()
+                            {
+                                var x = $("#new123").val();
+                                console.log(x);
+                                window.open("/Admin/delPage?pID=" + x, "_self");
+                                $(this).dialog("close");
+                            },
+                            Anuler: function () {
+                                $(this).dialog("close");
                         }
                     }
                 });
@@ -100,7 +103,8 @@
                 $("#menuparents").html(result);
             });
 
-            Templateitems = Handlebars.compile($("#itemsTemplate").html());
+
+
             $.getJSON("getPages", null, function (data) {
                 var result = Templateitems(data);
                 $("#ItemsList").html(result);
@@ -119,7 +123,8 @@
                             $("#titre").val(data.Titre);
                             $("#menuPrincipal").prop('checked', data.principal);
                             $("#MenuName").val(data.menuName);
-                            $("#menuparents option[value='" + data.menuparent + "']").prop('selected',true);
+                            $("#menuparents option[value='" + data.menuparent + "']").prop('selected', true);
+                            $("#publier").change();
                         });
                     }
                     else $("#btnAnuler").click();

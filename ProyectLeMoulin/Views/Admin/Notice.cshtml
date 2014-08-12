@@ -97,6 +97,7 @@
                             $("#publier").prop('checked', data.publier);
                             tinymce.editors[0].setContent(data.page);
                             $("#titre").val(data.Titre);
+                            $("#publier").change();
                         });
                     }
                     else $("#btnAnuler").click();

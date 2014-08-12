@@ -61,7 +61,7 @@
                             <a href="#"><i class="fa fa-star"></i> Évenements<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href='../Admin/Evenements'><i class="fa fa-star-o"></i> Évenements à venir</a>
+                                    <a href='../Admin/Evenements_a_venir'><i class="fa fa-star-o"></i> Évenements à venir</a>
                                 </li>
                                 <li>
                                     <a href='../Admin/OldEvenements'><i class="fa fa-database"></i> Évenements passes</a>

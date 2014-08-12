@@ -593,7 +593,7 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Admin\Configuration.cshtml" />
-    <Content Include="Views\Admin\Evenements.cshtml" />
+    <Content Include="Views\Admin\Evenements_a_venir.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Notice.cshtml" />
     <Content Include="Views\Admin\Pages.cshtml" />

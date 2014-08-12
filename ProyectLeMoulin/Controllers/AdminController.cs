@@ -144,7 +144,7 @@ namespace IdentitySample.Controllers
 
 
 
-        public ActionResult Evenements()
+        public ActionResult Evenements_a_venir()
         {
             ViewBag.Message = "creer une nouvelle page";
 
@@ -155,7 +155,7 @@ namespace IdentitySample.Controllers
         // POST: //enregistrer nouveles Evenement  et modifié
         [HttpPost]
         [ValidateInput(false)]
-        public async Task<ActionResult> Evenements(EvenementsViewModel Evenement)
+        public async Task<ActionResult> Evenements_a_venir(EvenementsViewModel Evenement)
         {
             CoeurContainer db = new CoeurContainer();
             string utilisateur = User.Identity.Name;

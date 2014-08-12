@@ -163,6 +163,7 @@
                             $('#HourEnd').val(data.hourEnd.Hours + ":" + Endmin);
                             var startmin = (data.hourStart.Minutes < 10) ? "0" + data.hourStart.Minutes : data.hourStart.Minutes;
                             $('#HourStart').val(data.hourStart.Hours + ":" + startmin);
+                            $("#publier").change();
                         });
                     }
                     else $("#btnAnuler").click();
