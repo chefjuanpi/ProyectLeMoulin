@@ -50,7 +50,7 @@ namespace IdentitySample.Controllers
             CoeurContainer db = new CoeurContainer();
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-            if (page.PageId == null)
+            if (page.PId == null)
             {
                 Page n = new Page();
                 n.MenuName = page.MenuName;
@@ -71,7 +71,7 @@ namespace IdentitySample.Controllers
             }
             else
             {
-                int x = Convert.ToInt16(page.PageId);
+                int x = Convert.ToInt16(page.PId);
                 var modPage = (from n in db.Pages
                                    where n.PageID == x
                                    select n).Single();
@@ -146,7 +146,7 @@ namespace IdentitySample.Controllers
         }
 
         //
-        // POST: //enregistrer Evenement nouveles et modifié
+        // POST: //enregistrer nouveles Evenement  et modifié
         [HttpPost]
         [ValidateInput(false)]
         public async Task<ActionResult> Evenements(EvenementsViewModel Evenement)
@@ -154,7 +154,7 @@ namespace IdentitySample.Controllers
             CoeurContainer db = new CoeurContainer();
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-            if (Evenement.EvenementId == null)
+            if (Evenement.PId == null)
             {
                 Evenement n = new Evenement();
                 n.UserId = guid;
@@ -173,7 +173,7 @@ namespace IdentitySample.Controllers
             }
             else
             {
-                int x = Convert.ToInt16(Evenement.EvenementId);
+                int x = Convert.ToInt16(Evenement.PId);
                 var modifEvenement = (from n in db.Evenements
                                    where n.EventId == x
                                    select n).Single();
@@ -198,6 +198,7 @@ namespace IdentitySample.Controllers
         {
             CoeurContainer db = new CoeurContainer();
             var Evenements = (from n in db.Evenements
+                              where n.DateEnd > DateTime.Now
                               orderby n.DateStart
                              select new
                              {
@@ -264,7 +265,7 @@ namespace IdentitySample.Controllers
             CoeurContainer db = new CoeurContainer();
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-            if (notice.NouvelleId == null)
+            if (notice.PId == null)
                 {
                     Nouvelle n = new Nouvelle();
                     n.NouvelleDate = DateTime.Now;
@@ -272,7 +273,7 @@ namespace IdentitySample.Controllers
                     n.NouvelleTitle = notice.Nouvelletitre;
                     n.NouvelleText = notice.NouvelleText;
                     n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
-                    n.Publier = notice.NouvellePublier;
+                    n.Publier = notice.Publier;
                     
 
                     db.Nouvelles.Add(n);
@@ -280,7 +281,7 @@ namespace IdentitySample.Controllers
                 }
                 else
                 {
-                    int x = Convert.ToInt16(notice.NouvelleId);
+                    int x = Convert.ToInt16(notice.PId);
                     var modifnotice = (from n in db.Nouvelles
                                        where n.NouvelleId == x
                                        select n).Single();
@@ -288,7 +289,7 @@ namespace IdentitySample.Controllers
                     modifnotice.NouvelleTitle = notice.Nouvelletitre;
                     modifnotice.NouvelleText = notice.NouvelleText;
                     modifnotice.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
-                    modifnotice.Publier = notice.NouvellePublier;
+                    modifnotice.Publier = notice.Publier;
                     await db.SaveChangesAsync();
                 }
             return View();

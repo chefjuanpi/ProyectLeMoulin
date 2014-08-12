@@ -44,8 +44,8 @@
                 @Html.LabelFor(m => m.Principal)
                 
             </div>
-            <div class="col-md-3">
-                @Html.DropDownListFor(m => m.menuParent, new SelectList(new string[] {"Football"}), ( new {@class="form-control", @id="menuparents"}))
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => m.menuParent, new SelectList(new string[] {"soccer"}), ( new {@class="form-control", @id="menuparents"}))
             </div>
         </div>
     </div>
@@ -54,86 +54,87 @@
             <div class="row">
                 @Html.TextAreaFor(m => m.Contenu, new { @id = "elm1", @name = "area", @class = "col-md-12 col-xs-12" })
             </div>
-            <br />
+    <br />
     <br />
     <div class="row alert alert-info">
         <div class="col-md-4">
-            <strong>L'évenement est pret?</strong>
+            <strong>Prêt a publier?</strong>
             <div class="checkbox">
                 @Html.CheckBoxFor(m => m.Publier, new { @id = "publier" })
                 @Html.LabelFor(m => m.Publier)
             </div>
-            @Html.HiddenFor(m => m.PageId, new { @id = "new123" })
+            @Html.HiddenFor(m => m.PId, new { @id = "new123" })
         </div>
-
-        <input type="submit" class="btn btn-danger col-md-offset-5 col-md-3" value="Enregistrer sans publier" />
+        <button type="submit" class="btn btn-danger col-md-offset-3 col-md-2" id="save">
+            <i class="fa fa-save"></i><b> Enregistrer sans publier</b>
+        </button>
     </div>
 }
 
-            @section Scripts {
-                @Scripts.Render("~/bundles/jqueryval")
-                @Scripts.Render("~/bundles/AdminButons")
-                <script>
-                    $(function () {
-                        $("#btnSupr").click(function () {
-                            $("#dialog-confirm").dialog({
-                                resizable: false,
-                                height: 200,
-                                modal: true,
-                                buttons: {
-                                    "Effacer": function () {
-                                        var x = $("#new123").val();
-                                        console.log(x);
-                                        window.open("/Admin/delPage?pID=" + x, "_self");
-                                        $(this).dialog("close");
-                                    },
-                                    Anuler: function () {
-                                        $(this).dialog("close");
-                                    }
-                                }
-                            });
-                        });
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/AdminButons")
+    <script>
+        $(function () {
+            $("#btnSupr").click(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: 200,
+                    modal: true,
+                    buttons: {
+                        "Effacer": function () {
+                            var x = $("#new123").val();
+                            console.log(x);
+                            window.open("/Admin/delPage?pID=" + x, "_self");
+                            $(this).dialog("close");
+                        },
+                        Anuler: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
 
-                        $.getJSON("getparents", null, function (data) {
-                            var result = Templateitems(data);
-                            $("#menuparents").html(result);
-                        });
+            $.getJSON("getparents", null, function (data) {
+                var result = Templateitems(data);
+                $("#menuparents").html(result);
+            });
 
-                        Templateitems = Handlebars.compile($("#itemsTemplate").html());
-                        $.getJSON("getPages", null, function (data) {
-                            var result = Templateitems(data);
-                            $("#ItemsList").html(result);
-                            $(".items").change(function () {
-                                var id = $(this).children(":selected").attr("id");
-                                if(id != 0){
-                                    $("#menuparents option[value='0']").prop('selected', true);
-                                    $("#btnmodif").show();
-                                    $("#btnSupr").show();
-                                    $("#Formulaire").show();
-                                    tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
-                                    $("#new123").val(id);
-                                    $.getJSON("getPDetails", { pageId: id }, function (data) {
-                                        $("#publier").prop('checked', data.publier);
-                                        tinymce.editors[0].setContent(data.page);
-                                        $("#titre").val(data.Titre);
-                                        $("#menuPrincipal").prop('checked', data.principal);
-                                        $("#MenuName").val(data.menuName);
-                                        $("#menuparents option[value='" + data.menuparent + "']").prop('selected',true);
-                                    });
-                                }
-                                else $("#btnAnuler").click();
-                            });
+            Templateitems = Handlebars.compile($("#itemsTemplate").html());
+            $.getJSON("getPages", null, function (data) {
+                var result = Templateitems(data);
+                $("#ItemsList").html(result);
+                $(".items").change(function () {
+                    var id = $(this).children(":selected").attr("id");
+                    if(id != 0){
+                        $("#menuparents option[value='0']").prop('selected', true);
+                        $("#btnmodif").show();
+                        $("#btnSupr").show();
+                        $("#Formulaire").show();
+                        tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
+                        $("#new123").val(id);
+                        $.getJSON("getPDetails", { pageId: id }, function (data) {
+                            $("#publier").prop('checked', data.publier);
+                            tinymce.editors[0].setContent(data.page);
+                            $("#titre").val(data.Titre);
+                            $("#menuPrincipal").prop('checked', data.principal);
+                            $("#MenuName").val(data.menuName);
+                            $("#menuparents option[value='" + data.menuparent + "']").prop('selected',true);
                         });
+                    }
+                    else $("#btnAnuler").click();
+                });
+            });
 
-                        $("#menuparents").change(function () {
-                            $("#menuPrincipal").prop('checked', false);
-                        });
+            $("#menuparents").change(function () {
+                $("#menuPrincipal").prop('checked', false);
+            });
 
-                        $("#menuPrincipal").change(function () {
-                            if ($(this).is(":checked")) {
-                                $("#menuparents option[value='0']").prop('selected', true);
-                            }
-                        });
-                    });
-                </script>
-            }
+            $("#menuPrincipal").change(function () {
+                if ($(this).is(":checked")) {
+                    $("#menuparents option[value='0']").prop('selected', true);
+                }
+            });
+        });
+    </script>
+}

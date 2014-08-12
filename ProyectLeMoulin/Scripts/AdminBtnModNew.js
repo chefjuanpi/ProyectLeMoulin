@@ -33,6 +33,7 @@
             $("#Formulaire").hide();
             $("#Formulaire *").attr("disabled", "disabled").off('click');
             $("#btnAnuler").hide();
+            $("#ItemsList option[value='0']").prop('selected', true);
         });
 
         $("#btnDemoTextBox").click(function () {
@@ -63,5 +64,16 @@
                  { title: 'Table styles' },
                  { title: 'Table row 1', selector: 'tr', classes: 'tablerow1' }
             ]
+        });
+
+        $("#publier").change(function () {
+            if ($(this).is(":checked")) {
+                $("#save").attr("class", "btn btn-success col-md-offset-3 col-md-2");
+                $("#save").html('<i class="fa fa-save"></i><b> Enregistrer</b>');
+            }
+            else {
+                $("#save").attr("class", "btn btn-danger col-md-offset-3 col-md-2");
+                $("#save").html('<i class="fa fa-save"></i><b> Enregistrer sans publier</b>');
+            }
         });
     });
