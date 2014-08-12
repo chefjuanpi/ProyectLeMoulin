@@ -346,23 +346,6 @@
     <Content Include="Views\AchatAdmin\MembersOrders.cshtml" />
     <Content Include="Views\Shared\_AdminButonNewSaveModDel.cshtml" />
     <Content Include="Views\Panier\Index.cshtml" />
-    <EntityDeploy Include="GrpAchats.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GrpAchats.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="GrpAchats.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GrpAchats.edmx</DependentUpon>
-      <LastGenOutput>GrpAchats.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="GrpAchats.edmx.diagram">
-      <DependentUpon>GrpAchats.edmx</DependentUpon>
-    </Content>
-    <Content Include="GrpAchats.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GrpAchats.edmx</DependentUpon>
-      <LastGenOutput>GrpAchats.cs</LastGenOutput>
-    </Content>
     <EntityDeploy Include="Epicerie.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Epicerie.Designer.cs</LastGenOutput>
@@ -668,21 +651,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="GrpAchats.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GrpAchats.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GrpAchats.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GrpAchats.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GrpAchats.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GrpAchats.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AchatAdminViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -739,6 +707,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Suppliers.cs">
+      <DependentUpon>Epicerie.tt</DependentUpon>
+    </Compile>
     <Compile Include="tinyfilemanager.net\classes\clsConfig.cs" />
     <Compile Include="tinyfilemanager.net\classes\clsFileItem.cs" />
     <Compile Include="tinyfilemanager.net\classes\clsProfile.cs" />

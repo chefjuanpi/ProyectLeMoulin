@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EpicerieModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EpicerieModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="EpicerieModelStoreContainer">
           <EntitySet Name="AspNetUserRoles" EntityType="EpicerieModel.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="AspNetUsers" EntityType="EpicerieModel.Store.AspNetUsers" store:Type="Tables" Schema="dbo" />
@@ -13,6 +13,7 @@
           <EntitySet Name="OrderDetails" EntityType="EpicerieModel.Store.OrderDetails" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Orders" EntityType="EpicerieModel.Store.Orders" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Products" EntityType="EpicerieModel.Store.Products" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Suppliers" EntityType="EpicerieModel.Store.Suppliers" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Week" EntityType="EpicerieModel.Store.Week" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_CategoryProduct_Categories" Association="EpicerieModel.Store.FK_CategoryProduct_Categories">
             <End Role="Categories" EntitySet="Categories" />
@@ -40,6 +41,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Week_Products1" Association="EpicerieModel.Store.FK_Week_Products1">
             <End Role="Products" EntitySet="Products" />
+            <End Role="Week" EntitySet="Week" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Week_Suppliers" Association="EpicerieModel.Store.FK_Week_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Week" EntitySet="Week" />
           </AssociationSet>
         </EntityContainer>
@@ -120,6 +125,18 @@
           <Property Name="TVQ" Type="bit" Nullable="false" />
           <Property Name="TPS" Type="bit" Nullable="false" />
           <Property Name="Avaibled" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ContactName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="Adress" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="E-Mail" Type="nvarchar" MaxLength="256" />
+          <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="Week">
           <Key>
@@ -221,8 +238,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+        <Association Name="FK_Week_Suppliers">
+          <End Role="Suppliers" Type="EpicerieModel.Store.Suppliers" Multiplicity="1" />
+          <End Role="Week" Type="EpicerieModel.Store.Week" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Week">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EpicerieModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -261,6 +289,11 @@
           </AssociationSet>
           <AssociationSet Name="FK_Week_Products1" Association="EpicerieModel.FK_Week_Products1">
             <End Role="Products" EntitySet="Products" />
+            <End Role="Week" EntitySet="Week" />
+          </AssociationSet>
+          <EntitySet Name="Suppliers" EntityType="EpicerieModel.Suppliers" />
+          <AssociationSet Name="FK_Week_Suppliers" Association="EpicerieModel.FK_Week_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Week" EntitySet="Week" />
           </AssociationSet>
         </EntityContainer>
@@ -367,6 +400,7 @@
           <Property Name="Format" Type="String" Nullable="false" MaxLength="64" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="OrderDetails" Relationship="EpicerieModel.FK_OrderDetails_Week" FromRole="Week" ToRole="OrderDetails" />
           <NavigationProperty Name="Products" Relationship="EpicerieModel.FK_Week_Products1" FromRole="Week" ToRole="Products" />
+          <NavigationProperty Name="Suppliers" Relationship="EpicerieModel.FK_Week_Suppliers" FromRole="Week" ToRole="Suppliers" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="EpicerieModel.AspNetUsers" Multiplicity="1">
@@ -453,6 +487,31 @@
             </Principal>
             <Dependent Role="Week">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Type="Int32" Name="SupplierId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ContactName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Adress" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="E_Mail" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Phone" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Fax" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Week" Relationship="EpicerieModel.FK_Week_Suppliers" FromRole="Suppliers" ToRole="Week" />
+        </EntityType>
+        <Association Name="FK_Week_Suppliers">
+          <End Type="EpicerieModel.Suppliers" Role="Suppliers" Multiplicity="1" />
+          <End Type="EpicerieModel.Week" Role="Week" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Week">
+              <PropertyRef Name="SupplierId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -552,6 +611,19 @@
                 <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Format" ColumnName="Format" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="EpicerieModel.Suppliers">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="E_Mail" ColumnName="E-Mail" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

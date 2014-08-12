@@ -20,6 +20,8 @@
         <AssociationConnector Association="EpicerieModel.FK_OrderDetails_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="EpicerieModel.FK_OrderDetails_Week" ManuallyRouted="false" />
         <AssociationConnector Association="EpicerieModel.FK_Week_Products1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EpicerieModel.Suppliers" Width="1.5" PointX="3.8740517496476188" PointY="2.56885457158501" />
+        <AssociationConnector Association="EpicerieModel.FK_Week_Suppliers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

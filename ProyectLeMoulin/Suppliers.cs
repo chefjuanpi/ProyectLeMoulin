@@ -12,22 +12,21 @@ namespace ProyectLeMoulin
     using System;
     using System.Collections.Generic;
     
-    public partial class Week
+    public partial class Suppliers
     {
-        public Week()
+        public Suppliers()
         {
-            this.OrderDetails = new HashSet<OrderDetails>();
+            this.Week = new HashSet<Week>();
         }
     
-        public System.DateTime DateSemaine { get; set; }
-        public int ProductId { get; set; }
         public int SupplierId { get; set; }
-        public decimal UnitPrice { get; set; }
-        public int Quantity { get; set; }
-        public string Format { get; set; }
+        public string SupplierName { get; set; }
+        public string ContactName { get; set; }
+        public string Adress { get; set; }
+        public string E_Mail { get; set; }
+        public string Phone { get; set; }
+        public string Fax { get; set; }
     
-        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
-        public virtual Products Products { get; set; }
-        public virtual Suppliers Suppliers { get; set; }
+        public virtual ICollection<Week> Week { get; set; }
     }
 }

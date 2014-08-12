@@ -2,22 +2,26 @@
     ViewBag.Title = "Home Page";
 }
 <h2>Je suis dans le groupe d'achats</h2>
-<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>
 <link   rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
  
 <script type="text/x-handlebars-template" id="CategoriesTemplate" >
-    {{#each}}
-        <h3>{{CategoryName}}</h3>
-    {{/each}}
+        Catégories<select id="ProductsOutput" name="Categories" class="form-control">
+            {{#each}}
+                <option id={{CategoryId}}>{{CategoryName}}</option>
+            {{/each}}
+        </select>
 </script>
 
 <script type="text/x-handlebars-template" id="ProductsTemplate" >
-    {{#each}}
-        <h3>{{ProductName}}</h3>
-    {{/each}}
+        Produits<select class="form-control">
+            {{#each}}
+                <option id={{ProductId}}>{{ProductName}}</option>
+            {{/each}}
+        </select>
 </script>
 <script type="text/javascript">
 
@@ -44,72 +48,58 @@
         }
     });
 
-    //$(function () {
-    //    templateCategories = Handlebars.compile($("#CategoriesTemplate").html());
-    //    templateProducts = Handlebars.compile($("#ProductsTemplate").html());
-    //    console.log("Hello 1");
+    $(function () {
+        templateCategories = Handlebars.compile($("#CategoriesTemplate").html());
+        templateProducts = Handlebars.compile($("#ProductsTemplate").html());
+        console.log("Hello 1");
 
-        //$.getJSON("/Epicerie/GetCategories", null, function (data) {
-        //    console.log(data.legth);
-        //    var result = templateCategories(data);
+        $.getJSON("/Epicerie/GetCategories", null, function (data) {//console.log(data.legth);
+            var result = templateCategories(data);
 
-        //    $("#CategoriesTemplate").html(result);
-        //    console.log(data.length);
-        //    console.log("hello 2");
+            $("#CategoriesOutput").html(result);
+            console.log("hello 2");
 
             //Afficher les catégories
-            //$("#GetCategories").click(function () {
-            //    console.log("hello 3");
-                //Afficher les produits
-                $(function () {
-                    $("#CategoriesOutput").autocomplete({
-                        source: function (request, response) {
-                            $.ajax({
-                                url: "/Epicerie/GetCategories",
-                                type: "POST",
-                                dataType: "json",
-                                data: { cat: request.term },
-                                success: function (data) {
-                                    response($.map(data, function (item) {
-                                        console.log("hello 4");
-                                        return { label: item.ProductName, id: item.ProductID }
-                                    }));
-                                }//response
-                            });//success
-                        },//source
-                    })//autoComplete
-                })//vide 
-            //})//GetCategories                  
-                                        
-        //    })//getJASON                               
-        //});//vide
+            $("#CategoriesOutput").click(function () {
+                console.log("hello 3");
+                var id = this.id;
+                console.log(this.id);
+                $.getJSON("GetProduits", { CategoryID: id }, function (data) {
+                    console.log(data.length + "produits dans la cat " + id);
+                    var result = templateProducts(data);
+                    $("#ProductsOutput").html(result);
+                    console.log("Hello 4");
+                    
+                    })//GetCategories                  
+                });
+            })//getJASON                               
+        });//vide
 </script>
-@*<div id="CategoriesOutput"></div>
 
-<div id="ProductsOutput"></div>
-
-<hr />
-<div>
-    <input id="PanierOutput"    type-text       border="red" />
-    <input id="Add"             type="button"   value="+"       OnClick="AddQty" />
-    <input id="Remove"          type="button"   value="-"       OnClick="RemoveQty" />
-    <input id="Delete"          type="button"   value="Retirer" OnClick="Delete" />
-    <input id="Quantity"        type-text       text="" />
-</div>
-<hr />
-<div>
+@*<div>
     <input id="Membre" type="text"  />
-</div>
+</div>*@
+
+<div id="CategoriesOutput">
+    
+
+
+
 <hr />
-<div>
+ <div id="ProductsOutput">
+    <input id="Add"             type="button"   value="+" OnClick="AddQty"  />
+    <input id="Quantity"        type-text       text="1" />
+</div>
+
+<hr />
+@*<div>
+   
     <div>
-        <input id="ProductsOutput"  type-text  />
-        <input id="Add"             type="button"   value="+" OnClick="AddQty"  />
-        <input id="Remove"          type="button"   value="-" OnClick="RemoveQty"  />
-        <input id="Quantity"        type-text       text="0" />
-    </div>*@
-    <div>
-        <input id="GetCategories" type="button" value="Catégories" OnClick="GetCategories" />
-        <input id="CategoriesOutput"    type-text />
+        <input id="PanierOutput"    type-text       border="red" />
+        <input id="Add"             type="button"   value="+"       OnClick="AddQty" />
+        <input id="Remove"          type="button"   value="-"       OnClick="RemoveQty" />
+        <input id="Delete"          type="button"   value="Retirer" OnClick="Delete" />
+        <input id="Quantity"        type-text       text="" />
     </div>
-@*</div>*@
+    <hr />
+</div>*@
