@@ -15,9 +15,9 @@
 
 <script type="text/javascript" src="../Content/plugins/tinymce/tinymce.min.js"></script>
 <script type="text/x-handlebars-template" id="itemsTemplate">
-    <option selected="selected">Selectioner ici</option>
+    <option selected="selected" id=0 value="0">Selectioner ici</option>
     {{#each}}
-    <option id={{id}}>{{Titre}}</option>
+    <option id={{id}} value={{id}}>{{Titre}}</option>
     {{/each}}
 </script>
 

@@ -80,17 +80,20 @@
                 $("#ItemsList").html(result);
                 $(".items").change(function () {
                     var id = $(this).children(":selected").attr("id");
-                    $("#btnmodif").show();
-                    $("#btnSupr").show();
-                    $("#Formulaire").show();
-                    tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
-                    $("#new123").val(id);
-                    $.getJSON("getNDetails", { NouvelleId: id }, function (data) {
-                        $("#demotextbox").val(data.image);
-                        $("#publier").prop('checked', data.publier);
-                        tinymce.editors[0].setContent(data.page);
-                        $("#titre").val(data.Titre);
-                    });
+                    if (id != 0) {
+                        $("#btnmodif").show();
+                        $("#btnSupr").show();
+                        $("#Formulaire").show();
+                        tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
+                        $("#new123").val(id);
+                        $.getJSON("getNDetails", { NouvelleId: id }, function (data) {
+                            $("#demotextbox").val(data.image);
+                            $("#publier").prop('checked', data.publier);
+                            tinymce.editors[0].setContent(data.page);
+                            $("#titre").val(data.Titre);
+                        });
+                    }
+                    else $("#btnAnuler").click();
                 });
             });
         });

@@ -132,37 +132,38 @@
             $.getJSON("getEvenements", null, function (data) {
                 var result = Templateitems(data);
                 $("#ItemsList").html(result);
-                
                 $(".items").change(function () {
                     var id = $(this).children(":selected").attr("id");
-                    console.log(id);
-                    $("#btnmodif").show();
-                    $("#btnSupr").show();
-                    $("#Formulaire").show();
-                    tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
-                    $("#new123").val(id);
-                    $.getJSON("getEDetails", { IdEvenement: id }, function (data) {
-                        $("#demotextbox").val(data.image);
-                        $("#publier").prop('checked', data.publier);
-                        tinymce.editors[0].setContent(data.page);
-                        $("#titre").val(data.titre);
-                        $("#Lieu").val(data.lieu);
-                        $("#Adresse").val(data.adresse);
-                        var date = new Date(parseInt(data.dateStart.substr(6)))
-                        var m = date.getMonth() + 1;
-                        var mm = (m < 10) ? "0" + m : m;
-                        var dd = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
-                        $('#DateStart').val(date.getFullYear() + "/" + mm + "/" + dd);
-                        date = new Date(parseInt(data.dateEnd.substr(6)))
-                        m = date.getMonth() + 1;
-                        mm = (m < 10) ? "0" + m : m;
-                        dd = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
-                        $('#DateEnd').val(date.getFullYear() + "/" + mm + "/" + dd);
-                        var Endmin = (data.hourEnd.Minutes < 10) ? "0" + data.hourEnd.Minutes : data.hourEnd.Minutes;
-                        $('#HourEnd').val(data.hourEnd.Hours + ":" + Endmin);
-                        var startmin = (data.hourStart.Minutes < 10) ? "0" + data.hourStart.Minutes : data.hourStart.Minutes;
-                        $('#HourStart').val(data.hourStart.Hours + ":" + startmin);
-                    });
+                    if(id != 0){
+                        $("#btnmodif").show();
+                        $("#btnSupr").show();
+                        $("#Formulaire").show();
+                        tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
+                        $("#new123").val(id);
+                        $.getJSON("getEDetails", { IdEvenement: id }, function (data) {
+                            $("#demotextbox").val(data.image);
+                            $("#publier").prop('checked', data.publier);
+                            tinymce.editors[0].setContent(data.page);
+                            $("#titre").val(data.titre);
+                            $("#Lieu").val(data.lieu);
+                            $("#Adresse").val(data.adresse);
+                            var date = new Date(parseInt(data.dateStart.substr(6)))
+                            var m = date.getMonth() + 1;
+                            var mm = (m < 10) ? "0" + m : m;
+                            var dd = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+                            $('#DateStart').val(date.getFullYear() + "/" + mm + "/" + dd);
+                            date = new Date(parseInt(data.dateEnd.substr(6)))
+                            m = date.getMonth() + 1;
+                            mm = (m < 10) ? "0" + m : m;
+                            dd = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+                            $('#DateEnd').val(date.getFullYear() + "/" + mm + "/" + dd);
+                            var Endmin = (data.hourEnd.Minutes < 10) ? "0" + data.hourEnd.Minutes : data.hourEnd.Minutes;
+                            $('#HourEnd').val(data.hourEnd.Hours + ":" + Endmin);
+                            var startmin = (data.hourStart.Minutes < 10) ? "0" + data.hourStart.Minutes : data.hourStart.Minutes;
+                            $('#HourStart').val(data.hourStart.Hours + ":" + startmin);
+                        });
+                    }
+                    else $("#btnAnuler").click();
                 });
             });
         });

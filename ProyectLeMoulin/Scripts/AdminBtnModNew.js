@@ -23,6 +23,7 @@
             tinymce.editors[0].setContent("");
             $("#Formulaire *").attr("disabled", false).on('click');
             tinymce.activeEditor.getBody().setAttribute('contenteditable', true);
+            $("#menuparents option[value='0']").prop('selected', true);
         });
 
         $("#btnAnuler").click(function () {
@@ -30,6 +31,7 @@
             $("#btnmodif").hide();
             $("#btnSupr").hide();
             $("#Formulaire").hide();
+            $("#Formulaire *").attr("disabled", "disabled").off('click');
             $("#btnAnuler").hide();
         });
 

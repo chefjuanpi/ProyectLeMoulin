@@ -336,14 +336,5 @@ namespace IdentitySample.Controllers
             }
             return Redirect("/Admin/Notice");
         }
-
-
-        public ActionResult Photos()
-        {
-            ViewBag.Message = "Gestion du photos du site";
-
-            return View();
-        }
-
     }
 }

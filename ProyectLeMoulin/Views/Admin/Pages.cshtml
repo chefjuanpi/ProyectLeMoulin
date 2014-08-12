@@ -28,7 +28,7 @@
     <br />
 
     <div class="row">
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
             <div class="input-group">
                 @Html.LabelFor(m => m.MenuName, new { @class = "input-group-addon" })
                 @Html.TextBoxFor(m => m.MenuName, new { @class = "form-control col-md-2", @id = "MenuName", @placeholder = "Ex: A propos" })
@@ -45,7 +45,7 @@
                 
             </div>
             <div class="col-md-3">
-                <select class="form-control" id="menuparents"></select>
+                @Html.DropDownListFor(m => m.menuParent, new SelectList(new string[] {"Football"}), ( new {@class="form-control", @id="menuparents"}))
             </div>
         </div>
     </div>
@@ -105,21 +105,35 @@
                             $("#ItemsList").html(result);
                             $(".items").change(function () {
                                 var id = $(this).children(":selected").attr("id");
-                                $("#btnmodif").show();
-                                $("#btnSupr").show();
-                                $("#Formulaire").show();
-                                tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
-                                $("#new123").val(id);
-                                $.getJSON("getPDetails", { pageId: id }, function (data) {
-                                    $("#publier").prop('checked', data.publier);
-                                    tinymce.editors[0].setContent(data.page);
-                                    $("#titre").val(data.Titre);
-                                    $("#menuPrincipal").prop('checked', data.principal);
-                                    $("#MenuName").val(data.menuName);
-                                });
+                                if(id != 0){
+                                    $("#menuparents option[value='0']").prop('selected', true);
+                                    $("#btnmodif").show();
+                                    $("#btnSupr").show();
+                                    $("#Formulaire").show();
+                                    tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
+                                    $("#new123").val(id);
+                                    $.getJSON("getPDetails", { pageId: id }, function (data) {
+                                        $("#publier").prop('checked', data.publier);
+                                        tinymce.editors[0].setContent(data.page);
+                                        $("#titre").val(data.Titre);
+                                        $("#menuPrincipal").prop('checked', data.principal);
+                                        $("#MenuName").val(data.menuName);
+                                        $("#menuparents option[value='" + data.menuparent + "']").prop('selected',true);
+                                    });
+                                }
+                                else $("#btnAnuler").click();
                             });
                         });
-                    });
 
+                        $("#menuparents").change(function () {
+                            $("#menuPrincipal").prop('checked', false);
+                        });
+
+                        $("#menuPrincipal").change(function () {
+                            if ($(this).is(":checked")) {
+                                $("#menuparents option[value='0']").prop('selected', true);
+                            }
+                        });
+                    });
                 </script>
             }
