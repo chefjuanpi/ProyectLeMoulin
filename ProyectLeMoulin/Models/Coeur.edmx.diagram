@@ -14,7 +14,7 @@
         <AssociationConnector Association="IdentitySample.FK_Nouvelles_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="IdentitySample.FK_Comments_Blogs" ManuallyRouted="false" />
         <AssociationConnector Association="IdentitySample.FK_BlogPicture_Blogs" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="IdentitySample.Evenement" Width="1.5" PointX="3" PointY="1.75" />
+        <EntityTypeShape EntityType="IdentitySample.Evenement" Width="1.5" PointX="3" PointY="1.625" />
         <AssociationConnector Association="IdentitySample.FK_Evenements_AspNetUsers" />
         <EntityTypeShape EntityType="IdentitySample.Page" Width="1.5" PointX="3" PointY="9.375" />
         <AssociationConnector Association="IdentitySample.FK_Pages_AspNetUsers" />
