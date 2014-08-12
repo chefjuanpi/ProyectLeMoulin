@@ -10,7 +10,6 @@ $(function () {
     $("#btnmodif").click(function () {
         $("#boutons").hide();
         $("#btnAnuler").show();
-        tinymce.activeEditor.getBody().setAttribute('contenteditable', true);
         $("#Formulaire *").attr("disabled", false).on('click');
     });
 
@@ -20,9 +19,7 @@ $(function () {
         $("#btnAnuler").show();
         $("#Formulaire").find("input[type=text], textarea, input[type=hidden]").val("");
         $("#publier").prop('checked', false);
-        tinymce.editors[0].setContent("");
         $("#Formulaire *").attr("disabled", false).on('click');
-        tinymce.activeEditor.getBody().setAttribute('contenteditable', true);
     });
 
     $("#btnAnuler").click(function () {

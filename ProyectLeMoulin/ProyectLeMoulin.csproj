@@ -344,7 +344,7 @@
     <Content Include="Views\AchatAdmin\Suppliers.cshtml" />
     <Content Include="Views\AchatAdmin\OldOrders.cshtml" />
     <Content Include="Views\AchatAdmin\MembersOrders.cshtml" />
-    <Content Include="Views\Shared\_AdminButonNewSaveModDel.cshtml" />
+    <Content Include="Views\Shared\_AdminButonSansMCE.cshtml" />
     <Content Include="Views\Panier\Index.cshtml" />
     <EntityDeploy Include="GrpAchats.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
