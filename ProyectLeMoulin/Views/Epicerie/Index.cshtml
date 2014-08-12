@@ -3,105 +3,112 @@
 }
 <h2>Je suis dans le groupe d'achats</h2>
 <script src="~/Scripts/jquery-1.8.2.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js">
-</script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>
+<link   rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
  
-<script type="text/x-handlebars-template">
+<script type="text/x-handlebars-template" id="CategoriesTemplate" >
     {{#each}}
         <h3>{{CategoryName}}</h3>
     {{/each}}
 </script>
 
-<div>
-    <input id="GetProductButton" type="button" value="Catégorie" />
-    <div id="ProductsOutput"></div>
-</div>
-<script type="text/x-handlebars-template">
+<script type="text/x-handlebars-template" id="ProductsTemplate" >
     {{#each}}
         <h3>{{ProductName}}</h3>
     {{/each}}
 </script>
 <script type="text/javascript">
 
+    templateCategories = null;
+    templateProducts = null;
+
+    //Valide le droit de l'usager avec ses nom et GUID
     $(function () {
         var membreId = 0;
         var membreName = "";
     });
 
+    //Incrémente la quantité du produit par 1 jusqu'à 100 max
     $(function (AddQty) {
-        var qty = ($("#Quantity").text) += 1;
+        if (($("#AddQty").text) > 0 && ($("#AddQty").text) < 101) {
+            var qty = ($("#Quantity").text) += 1;
+        }
     });
 
-    $(function (AddQty) {
-        var qty = ($("#Quantity").text) -= 1;
+    //Décrémente la quantité du produit de 1 jusqu'à 1 min
+    $(function (RemoveQty) {
+        if (($("#RemoveQty").text) > 1) {
+            var qty = ($("#Quantity").text) -= 1;
+        }
     });
 
-    $(function (GetCategories) {
+    $(function () {
         templateCategories = Handlebars.compile($("#CategoriesTemplate").html());
         templateProducts = Handlebars.compile($("#ProductsTemplate").html());
+        console.log("Hello 1");
 
-        var result = templateCategories(data)
+        $.getJSON("/Epicerie/GetCategories", null, function (data) {
+            console.log(data.legth);
+            var result = templateCategories(data);
 
-        $("#GetCategoriesButton").click(function () {
-            
-            $.getJSON("Epicerie/GetCategories", null, function () {
-                console.log("hello world 2");
-                console.log(data.d.legth);
+            $("#CategoriesOutput").html(result);
+            console.log(data.length);
+            console.log("hello 2");
 
-                $("#CategoriesOutput").html(result);
-
+            //Afficher les catégories
+            $("#GetCategories").click(function () {
+                console.log("hello 3");
+                //Afficher les produits
                 $(function () {
-                    $("#ProductsOutput").autocomplete({
+                    $("#CategoriesTemplate").autocomplete({
                         source: function (request, response) {
-                            $.ajax({
-                                url: "/Epicerie/GetProducts",
-                                type: "POST",
-                                dataType: "json",
-                                data: { cat: request.term },
-                                success: function (data) {
-                                    response($.map(data, function (item) {
-                                        return { label: item.ProductName, id: item.ProductID }
+                            //    $.ajax({
+                            //        url: "/Epicerie/GetProducts",
+                            //        type: "POST",
+                            //        dataType: "json",
+                            //        data: { cat: request.term },
+                            //        success: function (data) {
+                            //            response($.map(data, function (item) {
+                            //                console.log("hello 4");
+                            //                return { label: item.ProductName, id: item.ProductID }
+                            //        }//response
+                            //    })//success
+                            //}))//$.ajax
+                        }//source
+                    })//autoComplete              
+                });//Vide 
+            });//GetCategories                         
+        })//getJASON                               
+    });//vide
+</script>
+<div id="CategoriesOutput"></div>
 
-                                        $("#GetProducts").click(function () {
-                                            $.getJSON("Epicerie/Creer_Le_Panier", null, function () {
-                                                
-                                            });
-                                        });
-                                    }));
-                                }
-                            });
-                        }
-                    });
-                });
-            });
-        });
-    });
- </script>
+<div id="ProductsOutput"></div>
+
+<hr />
 <div>
-    <input type="text" id="Membre" />
+    <input id="PanierOutput"    type-text       border="red" />
+    <input id="Add"             type="button"   value="+"       OnClick="AddQty" />
+    <input id="Remove"          type="button"   value="-"       OnClick="RemoveQty" />
+    <input id="Delete"          type="button"   value="Retirer" OnClick="Delete" />
+    <input id="Quantity"        type-text       text="" />
 </div>
+<hr />
 <div>
-    
+    <input id="Membre" type="text"  />
 </div>
+<hr />
 <div>
     <div>
-        <input type-text id="ProductsOutput" />
-        <input id="Add" type="button" value="+" OnClick="AddQty"  />
-        <input id="Remove" type="button" value="-" OnClick="RemoveQty"  />
-        <input type-text id="Quantity" text="0" />
+        <input id="ProductsOutput"  type-text  />
+        <input id="Add"             type="button"   value="+" OnClick="AddQty"  />
+        <input id="Remove"          type="button"   value="-" OnClick="RemoveQty"  />
+        <input id="Quantity"        type-text       text="0" />
     </div>
     <div>
-        <input id="GetCategoriesButton" type="button" value="Catégories" OnClick="GetCategories" />
-        <input type-text id="CategoriesOutput" />
-    </div>
-    <div>
-        <input type-text id="PanierOutput" />
-        <input id="Add" type="button" value="+" OnClick="AddQty" />
-        <input id="Remove" type="button" value="-" OnClick="RemoveQty" />
-        <input id="Delete" type="button" value="-" OnClick="Delete" />
-        <input type-text id="Quantity" text="0" />
+        <input id="GetCategories" type="button" value="Catégories" OnClick="GetCategories" />
+        <input id="CategoriesOutput"    type-text />
     </div>
 </div>
