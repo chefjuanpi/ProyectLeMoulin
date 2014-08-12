@@ -40,7 +40,7 @@ namespace IdentitySample.Models
 
     public class NouvellesViewModel
     {
-        public string NouvelleId { get; set; }
+        public string PId { get; set; }
 
         [Required]
         [StringLength(150, ErrorMessage = "Titre trop long, max. 150 charactéres")]
@@ -60,13 +60,13 @@ namespace IdentitySample.Models
         public string NouvelleText { get; set; }
 
         [Required]
-        [Display(Name = "Publier la notice  ou ")]
-        public bool NouvellePublier { get; set; }
+        [Display(Name = "Publier cette nouvelle ")]
+        public bool Publier { get; set; }
    }
 
     public class PagesViewModel
     {
-        public string PageId { get; set; }
+        public string PId { get; set; }
         
         [Required]
         public string MenuName { get; set; }
@@ -84,7 +84,7 @@ namespace IdentitySample.Models
         public string Contenu { get; set; }
 
         [Required]
-        [Display(Name = "Publier la notice  ou ")]
+        [Display(Name = "Publier cette page ")]
         public bool Publier { get; set; }
 
         [Required]
@@ -96,7 +96,7 @@ namespace IdentitySample.Models
 
     public class EvenementsViewModel
     {
-        public string EvenementId { get; set; }
+        public string PId { get; set; }
 
         [Required]
         [StringLength(150, ErrorMessage = "Titre trop long, max. 150 charactéres")]
@@ -142,7 +142,7 @@ namespace IdentitySample.Models
         public string Contenu { get; set; }
 
         [Required]
-        [Display(Name = "Publier la notice  ou ")]
+        [Display(Name = "Metre publique l'evenement ")]
         public bool Publier { get; set; }
     }
 }

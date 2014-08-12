@@ -40,13 +40,19 @@
         @Html.TextAreaFor(m => m.NouvelleText, new { @id="elm1", @name="area", @class="col-md-12 col-xs-12" })
     </div>
     <br />
+    <br />
     <div class="row alert alert-info">
-        <div class="checkbox col-md-3">
-            @Html.CheckBoxFor(m => m.NouvellePublier, new { @id = "publier" })
-            @Html.LabelFor(m => m.NouvellePublier)
+        <div class="col-md-4">
+            <strong>Prêt a publier?</strong>
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.Publier, new { @id = "publier" })
+                @Html.LabelFor(m => m.Publier)
+            </div>
+            @Html.HiddenFor(m => m.PId, new { @id = "new123" })
         </div>
-        @Html.HiddenFor(m => m.NouvelleId , new { id = "new123" })
-        <input type="submit" class="btn btn-danger col-md-offset-5 col-md-3" value="Enregistrer sans publier" />
+        <button type="submit" class="btn btn-danger col-md-offset-3 col-md-2" id="save">
+            <i class="fa fa-save"></i><b> Enregistrer sans publier</b>
+        </button>
     </div>
 }
 

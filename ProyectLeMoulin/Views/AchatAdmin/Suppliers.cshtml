@@ -17,7 +17,7 @@
     nouveau pour en ajouter un.
 </p>
 <div class="row">
-    @Html.Partial("_AdminButonNewSaveModDel")
+    @Html.Partial("_AdminButonSansMCE")
 </div>
 <br />
 
@@ -97,6 +97,7 @@
 
             </table>
         </div>
+        @Html.HiddenFor(m => m.NouvelleId , new { id = "new123" })
     </div>
 
 }
@@ -104,6 +105,51 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/AdminButonsV2")
+    <script>
+        $(function () {
+            $("#btnSupr").click(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: 200,
+                    modal: true,
+                    buttons: {
+                        "Effacer": function () {
+                            var x = $("#new123").val();
+                            console.log(x);
+                            window.open("/Admin/delSupplier?nID=" + x, "_self"); // Controler a faire
+                            $(this).dialog("close");
+                        },
+                        Anuler: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+            
+            Templateitems = Handlebars.compile($("#itemsTemplate").html());
+            $.getJSON("getSuppliers", null, function (data) { // Controler a faire
+                var result = Templateitems(data);
+                $("#ItemsList").html(result);
+                $(".items").change(function () {
+                    var id = $(this).children(":selected").attr("id");
+                    if (id != 0) {
+                        $("#btnmodif").show();
+                        $("#btnSupr").show();
+                        $("#Formulaire").show();
+                        tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
+                        $("#new123").val(id);
+                        $.getJSON("getSupplierDetails", { NouvelleId: id }, function (data) { // Controler a faire
+                            $("#demotextbox").val(data.image);
+                            $("#publier").prop('checked', data.publier);
+                            tinymce.editors[0].setContent(data.page);
+                            $("#titre").val(data.Titre);
+                        });
+                    }
+                    else $("#btnAnuler").click();
+                });
+            });
+        });
+    </script>
 }
 
 
