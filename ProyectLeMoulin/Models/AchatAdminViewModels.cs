@@ -7,7 +7,7 @@ namespace EpicerieModel.Models
 {
     public class SupplierViewModel
     {
-        public string SupplierId { get; set; }
+        public Guid SupplierId { get; set; }
 
         [Required]
         [StringLength(150, ErrorMessage = "Nom trop long, max. 150 charactéres")]
@@ -36,19 +36,19 @@ namespace EpicerieModel.Models
         [StringLength(150, ErrorMessage = "Courriel trop long, max. 150 charactéres")]
         [DataType(DataType.Text)]
         [Display(Name = "Courriel")]
-        public bool SupplierMail { get; set; }
+        public string SupplierMail { get; set; }
 
         [Required]
         [StringLength(200, ErrorMessage = "Adresse trop longue, max. 200 charactéres")]
         [DataType(DataType.Text)]
         [Display(Name = "Adresse")]
-        public bool SupplierAdress { get; set; }
+        public string SupplierAdress { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "Nom de ville trop long, max. 100 charactéres")]
         [DataType(DataType.Text)]
         [Display(Name = "Ville")]
-        public bool SupplierCity { get; set; }
+        public string SupplierCity { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage = "Code trop long")]  // valeur a confirmer

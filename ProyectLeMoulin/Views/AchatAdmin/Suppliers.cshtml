@@ -1,4 +1,4 @@
-﻿@model IdentitySample.Models.SupplierViewModel
+﻿@model EpicerieModel.Models.SupplierViewModel
 @{
     ViewBag.Title = "Fournisseurs";
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
@@ -32,74 +32,73 @@
             <table>
                 <tr>
                     <td>
-                        @Html.LabelFor(m => m.SupplierName, new { @class = "input-group-addon" })
+                        @Html.LabelFor(s => s.SupplierName, new { @class = "input-group-addon" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.SupplierName, new { @class = "form-control", @id="name" })
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(m => m.SupplierContactName, new { @class = "input-group-addon" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.SupplierContactName, new { @class = "form-control", @id="contact" })
+                        @Html.TextBoxFor(s => s.SupplierName, new { @class = "form-control", @id="name" })
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        @Html.LabelFor(m => m.SupplierPhone, new { @class = "input-group-addon" })
+                        @Html.LabelFor(s => s.SupplierContactName, new { @class = "input-group-addon" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.SupplierPhone, new { @class = "form-control", @id="phone" })
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(m => m.SupplierFax, new { @class = "input-group-addon" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.SupplierFax, new { @class = "form-control", @id="fax" })
+                        @Html.TextBoxFor(s => s.SupplierContactName, new { @class = "form-control", @id="contact" })
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        @Html.LabelFor(m => m.SupplierMail, new { @class = "input-group-addon" })
+                        @Html.LabelFor(s => s.SupplierPhone, new { @class = "input-group-addon" })
                     </td>
                     <td>
-                       @Html.TextBoxFor(m => m.SupplierMail, new { @class = "form-control", @id="mail" })
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(m => m.SupplierAdress, new { @class = "input-group-addon" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.SupplierAdress, new { @class = "form-control", @id="adress" })
+                        @Html.TextBoxFor(s => s.SupplierPhone, new { @class = "form-control", @id="phone" })
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        @Html.LabelFor(m => m.SupplierCity, new { @class = "input-group-addon" })
+                        @Html.LabelFor(s => s.SupplierFax, new { @class = "input-group-addon" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.SupplierCity, new { @class = "form-control", @id="city" })
+                        @Html.TextBoxFor(s => s.SupplierFax, new { @class = "form-control", @id="fax" })
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        @Html.LabelFor(m => m.SupplierPostalCode, new { @class = "input-group-addon" })
+                        @Html.LabelFor(s => s.SupplierMail, new { @class = "input-group-addon" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.SupplierPostalCode, new { @class = "form-control", @id="postalcode" })
+                       @Html.TextBoxFor(s => s.SupplierMail, new { @class = "form-control", @id="mail" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(s => s.SupplierAdress, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(s => s.SupplierAdress, new { @class = "form-control", @id="adress" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(s => s.SupplierCity, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(s => s.SupplierCity, new { @class = "form-control", @id="city" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(s => s.SupplierPostalCode, new { @class = "input-group-addon" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(s => s.SupplierPostalCode, new { @class = "form-control", @id="postalcode" })
                     </td>
                 </tr>
 
             </table>
         </div>
-        @Html.HiddenFor(m => m.NouvelleId , new { id = "new123" })
+        @Html.HiddenFor(s => s.SupplierId , new { id = "new123" })
     </div>
-
 }
 
 @section Scripts {
@@ -138,7 +137,7 @@
                         $("#Formulaire").show();
                         tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
                         $("#new123").val(id);
-                        $.getJSON("getSupplierDetails", { NouvelleId: id }, function (data) { // Controler a faire
+                        $.getJSON("getSupplierDetails", { SupplierId: id }, function (data) { // Controler a faire
                             $("#demotextbox").val(data.image);
                             $("#publier").prop('checked', data.publier);
                             tinymce.editors[0].setContent(data.page);

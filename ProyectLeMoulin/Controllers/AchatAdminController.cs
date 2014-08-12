@@ -1,5 +1,4 @@
-﻿using EpicerieEntities;
-using EpicerieModel.Models;
+﻿using EpicerieModel.Models;
 using ProyectLeMoulin.Models;
 using System;
 using System.Collections.Generic;
@@ -49,83 +48,91 @@ namespace ProyectLeMoulin.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateInput(false)]
-        public async Task<ActionResult> Supplier(SupplierViewModel Supplier)
-        {
-            EpicerieEntities db = new EpicerieEntities();
-            if (Supplier.SupplierId == null)
-            {
-                Suppliers s = new Suppliers();
-                n.NouvelleDate = DateTime.Now;
-                n.UserId = guid;
-                n.NouvelleTitle = notice.Nouvelletitre;
-                n.NouvelleText = notice.NouvelleText;
-                n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
-                n.Publier = notice.NouvellePublier;
+//        [HttpPost]
+//        [ValidateInput(false)]
+//        public async Task<ActionResult> Supplier(SupplierViewModel Supplier)
+//        {
+//            EpicerieEntities db = new EpicerieEntities();
+//            if (Supplier.SupplierId == null)
+//            {
+//                Suppliers s = new Suppliers();
+//                s.SupplierName = Supplier.SupplierName;
+//                s.ContactName = Supplier.SupplierContactName;
+//                s.Adress = Supplier.SupplierAdress;
+//                s.E_Mail = Supplier.SupplierMail;
+//                s.Phone = Supplier.SupplierPhone;
+//                s.Fax = Supplier.SupplierFax;
+//                s.PostalCode = Supplier.SupplierPostalCode;
+//                s.Ville = Supplier.SupplierCity;
 
+//                db.Suppliers.Add(s);
+//                await db.SaveChangesAsync();
+//            }
+//            else
+//            {
+//                int x = Convert.ToInt16(Supplier.SupplierId);
+//                var modifsupplier = (from s in db.Suppliers
+//                                   where s.SupplierId == x
+//                                   select s).Single();
+//                modifsupplier.SupplierName = Supplier.SupplierName;
+//                modifsupplier.ContactName = Supplier.SupplierContactName;
+//                modifsupplier.Adress = Supplier.SupplierAdress;
+//                modifsupplier.E_Mail = Supplier.SupplierMail;
+//                modifsupplier.Phone = Supplier.SupplierPhone;
+//                modifsupplier.Fax = Supplier.SupplierFax;
+//                modifsupplier.PostalCode = Supplier.SupplierPostalCode;
+//                modifsupplier.Ville = Supplier.SupplierCity;
+//                await db.SaveChangesAsync();
+//            }
+//            return View();
+//        }
 
-                db.Nouvelles.Add(n);
-                await db.SaveChangesAsync();
-            }
-            else
-            {
-                int x = Convert.ToInt16(notice.NouvelleId);
-                var modifnotice = (from n in db.Nouvelles
-                                   where n.NouvelleId == x
-                                   select n).Single();
-                modifnotice.UserId = guid;
-                modifnotice.NouvelleTitle = notice.Nouvelletitre;
-                modifnotice.NouvelleText = notice.NouvelleText;
-                modifnotice.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
-                modifnotice.Publier = notice.NouvellePublier;
-                await db.SaveChangesAsync();
-            }
-            return View();
-        }
+//        public JsonResult getSuppliers()
+//        {
+//            EpicerieEntities db = new EpicerieEntities();
+//            var suppliers = (from s in db.Suppliers
+//                             orderby s.SupplierName
+//                             select new
+//                             {
+//                                 id = s.SupplierId,
+//                                 nom = s.SupplierName
+//                             });
+//            return Json(suppliers, JsonRequestBehavior.AllowGet);
+//        }
 
-        public JsonResult getNouvelles()
-        {
-            CoeurContainer db = new CoeurContainer();
-            var nouvelles = (from n in db.Nouvelles
-                             orderby n.NouvelleDate
-                             select new
-                             {
-                                 id = n.NouvelleId,
-                                 Titre = n.NouvelleTitle
-                             });
-            return Json(nouvelles, JsonRequestBehavior.AllowGet);
-        }
+//        public JsonResult getSupplierDetails(int SupplierId)
+//        {
+//            EpicerieEntities db = new EpicerieEntities();
+//            var supplier = (from s in db.Suppliers
+//                            where s.SupplierId == SupplierId
+//                            select new
+//                            {
+//                                id = s.SupplierId,
+//                                Nom = s.SupplierName,
+//                                contact = s.ContactName,
+//                                adresse = s.Adress,
+//                                mail = s.E_Mail,
+//                                phone = s.Phone,
+//                                fax = s.Fax,
+//                                codepostal = s.PostalCode,
+//                                ville = s.Ville,
+//                            }).Single();
+//            return Json(supplier, JsonRequestBehavior.AllowGet);
+//        }
 
-        public JsonResult getNDetails(int NouvelleId)
-        {
-            CoeurContainer db = new CoeurContainer();
-            var nouvelle = (from n in db.Nouvelles
-                            where n.NouvelleId == NouvelleId
-                            select new
-                            {
-                                id = n.NouvelleId,
-                                Titre = n.NouvelleTitle,
-                                page = n.NouvelleText,
-                                image = n.NouvellePrincipalPhoto,
-                                publier = n.Publier
-                            }).Single();
-            return Json(nouvelle, JsonRequestBehavior.AllowGet);
-        }
-
-        public async Task<ActionResult> delNews(int nID)
-        {
-            CoeurContainer db = new CoeurContainer();
-            var delnotice = (from n in db.Nouvelles
-                             where n.NouvelleId == nID
-                             select n).Single();
-            if (delnotice != null)
-            {
-                db.Nouvelles.Remove(delnotice);
-                await db.SaveChangesAsync();
-            }
-            return Redirect("/Admin/Notice");
-        }
+//        public async Task<ActionResult> delSupplier(int nID)
+//        {
+//            EpicerieEntities db = new EpicerieEntities();
+//            var delsupplier = (from n in db.Suppliers
+//                               where n.SupplierId == nID
+//                             select n).Single();
+//            if (delsupplier != null)
+//            {
+//                db.Suppliers.Remove(delsupplier);
+//                await db.SaveChangesAsync();
+//            }
+//            return Redirect("/Admin/Suppliers");
+//        }
 
     }
 }
