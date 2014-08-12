@@ -115,7 +115,7 @@
                         "Effacer": function () {
                             var x = $("#new123").val();
                             console.log(x);
-                            window.open("/Admin/delSupplier?nID=" + x, "_self"); // Controler a faire
+                            window.open("/AchatAdmin/delSupplier?nID=" + x, "_self");
                             $(this).dialog("close");
                         },
                         Anuler: function () {
@@ -126,7 +126,7 @@
             });
             
             Templateitems = Handlebars.compile($("#itemsTemplate").html());
-            $.getJSON("getSuppliers", null, function (data) { // Controler a faire
+            $.getJSON("getSuppliers", null, function (data) {
                 var result = Templateitems(data);
                 $("#ItemsList").html(result);
                 $(".items").change(function () {
@@ -135,13 +135,16 @@
                         $("#btnmodif").show();
                         $("#btnSupr").show();
                         $("#Formulaire").show();
-                        tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
                         $("#new123").val(id);
-                        $.getJSON("getSupplierDetails", { SupplierId: id }, function (data) { // Controler a faire
-                            $("#demotextbox").val(data.image);
-                            $("#publier").prop('checked', data.publier);
-                            tinymce.editors[0].setContent(data.page);
-                            $("#titre").val(data.Titre);
+                        $.getJSON("getSupplierDetails", { SupplierId: id }, function (data) {
+                            $("#name").val(data.Nom);
+                            $("#contact").val(data.contact);
+                            $("#adress").val(data.adresse);
+                            $("#mail").val(data.mail);
+                            $("#phone").val(data.phone);
+                            $("#fax").val(data.fax);
+                            $("#city").val(data.ville);
+                            $("#postalcode").val(data.codepostal);
                         });
                     }
                     else $("#btnAnuler").click();
@@ -150,5 +153,3 @@
         });
     </script>
 }
-
-
