@@ -44,46 +44,47 @@
         }
     });
 
-    $(function () {
-        templateCategories = Handlebars.compile($("#CategoriesTemplate").html());
-        templateProducts = Handlebars.compile($("#ProductsTemplate").html());
-        console.log("Hello 1");
+    //$(function () {
+    //    templateCategories = Handlebars.compile($("#CategoriesTemplate").html());
+    //    templateProducts = Handlebars.compile($("#ProductsTemplate").html());
+    //    console.log("Hello 1");
 
-        $.getJSON("/Epicerie/GetCategories", null, function (data) {
-            console.log(data.legth);
-            var result = templateCategories(data);
+        //$.getJSON("/Epicerie/GetCategories", null, function (data) {
+        //    console.log(data.legth);
+        //    var result = templateCategories(data);
 
-            $("#CategoriesOutput").html(result);
-            console.log(data.length);
-            console.log("hello 2");
+        //    $("#CategoriesTemplate").html(result);
+        //    console.log(data.length);
+        //    console.log("hello 2");
 
             //Afficher les catégories
-            $("#GetCategories").click(function () {
-                console.log("hello 3");
+            //$("#GetCategories").click(function () {
+            //    console.log("hello 3");
                 //Afficher les produits
                 $(function () {
-                    $("#CategoriesTemplate").autocomplete({
+                    $("#CategoriesOutput").autocomplete({
                         source: function (request, response) {
-                            //    $.ajax({
-                            //        url: "/Epicerie/GetProducts",
-                            //        type: "POST",
-                            //        dataType: "json",
-                            //        data: { cat: request.term },
-                            //        success: function (data) {
-                            //            response($.map(data, function (item) {
-                            //                console.log("hello 4");
-                            //                return { label: item.ProductName, id: item.ProductID }
-                            //        }//response
-                            //    })//success
-                            //}))//$.ajax
-                        }//source
-                    })//autoComplete              
-                });//Vide 
-            });//GetCategories                         
-        })//getJASON                               
-    });//vide
+                            $.ajax({
+                                url: "/Epicerie/GetCategories",
+                                type: "POST",
+                                dataType: "json",
+                                data: { cat: request.term },
+                                success: function (data) {
+                                    response($.map(data, function (item) {
+                                        console.log("hello 4");
+                                        return { label: item.ProductName, id: item.ProductID }
+                                    }));
+                                }//response
+                            });//success
+                        },//source
+                    })//autoComplete
+                })//vide 
+            //})//GetCategories                  
+                                        
+        //    })//getJASON                               
+        //});//vide
 </script>
-<div id="CategoriesOutput"></div>
+@*<div id="CategoriesOutput"></div>
 
 <div id="ProductsOutput"></div>
 
@@ -106,9 +107,9 @@
         <input id="Add"             type="button"   value="+" OnClick="AddQty"  />
         <input id="Remove"          type="button"   value="-" OnClick="RemoveQty"  />
         <input id="Quantity"        type-text       text="0" />
-    </div>
+    </div>*@
     <div>
         <input id="GetCategories" type="button" value="Catégories" OnClick="GetCategories" />
         <input id="CategoriesOutput"    type-text />
     </div>
-</div>
+@*</div>*@
