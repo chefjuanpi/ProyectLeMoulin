@@ -3,15 +3,14 @@
 }
 <h2>Je suis dans le groupe d'achats</h2>
 
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>
-<link   rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
- 
+
+
+
+@section Scripts {
 <script type="text/x-handlebars-template" id="CategoriesTemplate" >
-        Catégories<select id="ProductsOutput" name="Categories" class="form-control">
+        Catégories<select id="CategoryOutput" name="Categories" class="form-control">
             {{#each}}
-                <option id={{CategoryId}}>{{CategoryName}}</option>
+                <option id={{CategoryID}}>{{CategoryName}}</option>
             {{/each}}
         </select>
 </script>
@@ -19,7 +18,7 @@
 <script type="text/x-handlebars-template" id="ProductsTemplate" >
         Produits<select class="form-control">
             {{#each}}
-                <option id={{ProductId}}>{{ProductName}}</option>
+                <option id={{ProductID}}>{{ProductName}}</option>
             {{/each}}
         </select>
 </script>
@@ -32,7 +31,7 @@
     $(function () {
         var membreId = 0;
         var membreName = "";
-    });
+
 
     //Incrémente la quantité du produit par 1 jusqu'à 100 max
     $(function (AddQty) {
@@ -48,23 +47,21 @@
         }
     });
 
-    $(function () {
         templateCategories = Handlebars.compile($("#CategoriesTemplate").html());
         templateProducts = Handlebars.compile($("#ProductsTemplate").html());
         console.log("Hello 1");
 
         $.getJSON("/Epicerie/GetCategories", null, function (data) {//console.log(data.legth);
             var result = templateCategories(data);
-
             $("#CategoriesOutput").html(result);
             console.log("hello 2");
 
             //Afficher les catégories
-            $("#CategoriesOutput").click(function () {
+            $("#CategoryOutput").change(function () {
                 console.log("hello 3");
-                var id = this.id;
-                console.log(this.id);
-                $.getJSON("GetProduits", { CategoryID: id }, function (data) {
+                var id = $(this).children(":selected").attr("id");
+                console.log(id);
+                $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
                     console.log(data.length + "produits dans la cat " + id);
                     var result = templateProducts(data);
                     $("#ProductsOutput").html(result);
@@ -73,19 +70,21 @@
                     })//GetCategories                  
                 });
             })//getJASON                               
-        });//vide
+    });
 </script>
+}
 
 @*<div>
     <input id="Membre" type="text"  />
 </div>*@
 
-<div id="CategoriesOutput">
+<div id="CategoriesOutput"> </div>
     
 
 
 
 <hr />
+
  <div id="ProductsOutput">
     <input id="Add"             type="button"   value="+" OnClick="AddQty"  />
     <input id="Quantity"        type-text       text="1" />
@@ -102,4 +101,5 @@
         <input id="Quantity"        type-text       text="" />
     </div>
     <hr />
+
 </div>*@

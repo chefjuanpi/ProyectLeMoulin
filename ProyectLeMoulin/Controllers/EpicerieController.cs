@@ -39,20 +39,20 @@ namespace ProyectLeMoulin.Controllers
         }
 
         //Récupérer les produits selon la catégorie choisie
-        public JsonResult GetProduits(string cat)
+        public JsonResult GetProduits(int cat)
         {
             EpicerieEntities db = new EpicerieEntities();
 
             var produit = (from w in db.Week
                            join p in db.Products
                            on w.ProductId equals p.ProductId
-                           join c in db.Categories
-                           on cat equals c.CategoryName
-                           where c.CategoryName == cat
+                           join cp in db.CategoryProduct
+                           on p.ProductId equals cp.ProductId
+                           where cp.CategoryId ==cat
                            select new
                            {
-                               ProductID = w.ProductId,
-                               ProductName = w.Products,
+                               ProductID = p.ProductId,
+                               ProductName = p.ProductName,
                                TVQ = p.TVQ,
                                TPS = p.TPS,
                                Available = p.Avaibled
