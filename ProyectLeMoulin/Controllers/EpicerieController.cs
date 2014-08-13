@@ -16,7 +16,7 @@ namespace ProyectLeMoulin.Controllers
 
     public class EpicerieController : Controller
     {
-
+        public Panier p = new Panier();
         public decimal Total = 0;
         public decimal TotTaxe = 0;
         public decimal GrandTot = 0;
@@ -71,19 +71,18 @@ namespace ProyectLeMoulin.Controllers
         }
 
         //Remplir le Panier
-        //public JsonResult Remplir_Le_Panier(int produit)
+        //public JsonResult Remplir_Le_Panier(int prod)
         //{
         //    EpicerieEntities db = new EpicerieEntities();
         //    //if (produit == db.Products.ProductName)
         //    //{
-        //        Panier p = new Panier();
-
+        //        
         //        var product = (from w in db.Week
         //                       join prod in db.Products
         //                       on w.ProductId equals prod.ProductId
         //                       join cp in db.CategoryProduct
         //                       on prod.ProductId equals cp.ProductId
-        //                       where prod.ProductId == produit
+        //                       where prod.ProductId == prod
         //                       select new
         //                       {
         //                            p.ProductID = w.ProductId,
@@ -95,7 +94,7 @@ namespace ProyectLeMoulin.Controllers
         //                            p.Total = 0,
         //                            p.Quebec = Quebec,
         //                            p.Canada = Canada
-        //                        }).ToList();
+        //                       }).ToList();
         //        //Calculer_Prix_Total(p.TVQ, p.TPS, p.Price);
 
         //        return Json(product, JsonRequestBehavior.AllowGet);
@@ -108,28 +107,28 @@ namespace ProyectLeMoulin.Controllers
 
         //    if (tvq == true && tps == true)
         //    {
-        //        Quebec = price * (decimal)0.09975;
-        //        Canada = price * (decimal)0.05;
-        //        price = price + Quebec + Canada;
+        //        p.Quebec = P.Price * (decimal)0.09975;
+        //        p.Canada = P.Price * (decimal)0.05;
+        //        p.Total = P.Price + p.Quebec + p.Canada;
 
         //    }
         //    if (tvq == true && tps == false)
         //    {
-        //        Quebec = price * (decimal)0.09975;
-        //        Canada = 0;
-        //        price = price + Quebec;
+        //        p.Quebec = P.Price * (decimal)0.09975;
+        //        p.Canada = 0;
+        //        p.Total = P.Price + p.Quebec;
         //    }
 
         //    if (tps == true && tvq == false)
         //    {
-        //        Canada = price * (decimal)0.05;
-        //        Quebec = 0;
-        //        price = price + Canada;
+        //        P.Canada = price * (decimal)0.05;
+        //        P.Quebec = 0;
+        //        p.Total = P.Price + p.Canada;
         //    }
         //    if (tvq == false && tps == false)
         //    {
-        //        Quebec = 0;
-        //        Canada = 0;
+        //        p.Quebec = 0;
+        //        p.Canada = 0;
         //        return;
         //    }
         //}

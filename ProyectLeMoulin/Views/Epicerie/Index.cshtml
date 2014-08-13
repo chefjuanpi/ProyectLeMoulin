@@ -16,20 +16,28 @@
 </script>
 
 <script type="text/x-handlebars-template" id="ProductsTemplate" >
+    <div>
+        <div style="width:100px; float:left">
         <h4>Produits</h4>
-        {{#each}}
-            <h6 id={{ProductID}} >{{ProductName}}, TVQ: {{TVQ}}, TPS: {{TPS}}, Prix: {{Price}}@*<input type="submit" id="AddCart" value="Ajouter au panier" onclick="AddCart" />*@</h6>
-        {{/each}}
-        
+            {{#each}}
+                <h6 class="product" id={{ProductID}} >{{ProductName}}</h6>
+            {{/each}}
+        </div>
+        <div style="width:100px; float:left">
+        <h4>Prix</h4>
+            {{#each}}
+                <h6 class="price" id={{ProductID}} >{{Price}}</h6>
+            {{/each}}
+        </div>
+    </div>        
 </script>
 
-@*<script type="text/x-handlebars-template" id="ProductsTemplate" >
-        Produits<select class="form-control">
+<script type="text/x-handlebars-template" id="CartTemplate" >
+        <h4>Panier</h4>
             {{#each}}
-                <option id={{ProductID}}>{{ProductName}}, TVQ: {{TVQ}}, TPS: {{TPS}}, Prix: {{Price}}</option>
+                <h6 id={{ProductID}}>{{ProductName}}, TVQ: {{TVQ}}, TPS: {{TPS}}, Prix: {{Price}}</h6>
             {{/each}}
-        </select>
-</script>*@
+</script>
 
 <script type="text/javascript">
 
@@ -60,6 +68,7 @@
 
         templateCategories = Handlebars.compile($("#CategoriesTemplate").html());
         templateProducts = Handlebars.compile($("#ProductsTemplate").html());
+        templateCart = Handlebars.compile($("#CartTemplate").html());
         console.log("Hello 1");
 
         $.getJSON("/Epicerie/GetCategories", null, function (data) {//console.log(data.legth);
@@ -76,12 +85,12 @@
                     var result = templateProducts(data);
                     $("#ProductsOutput").html(result);
                     console.log("Hello 4");
-                    //$("#ProductsOutput").click(function () {
-                    //    var x = Document.GetElementById("ProductID");
-                    //    console.log(x);
-                    //    console.log("Hello 5");
-                    //    //});
-                    //});
+                    $(".product").click(function () {
+                        var id = this.id;
+                        console.log(this.id);
+                        console.log("Hello 5");
+                        $.getJSON("/Epicerie/GetProduits", { prod: id }, function (data) {
+                        });
                     })//GetCategories                  
                 });
             })//getJASON                               
@@ -103,6 +112,9 @@
         <td><div id="CategoriesOutput" style="width:480px; float:left;"></div></td>
  
         <td><div id="ProductsOutput" style="width:480px; float:left; margin-left:20%;"></div></td>
+    </tr>
+    <tr>
+        <td><div id="CartOutput" style="width:480px; float:left; margin-left:20%;"></div></td>
     </tr>   
 @*<div>
    
