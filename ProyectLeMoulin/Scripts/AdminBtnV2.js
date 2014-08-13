@@ -29,4 +29,6 @@ $(function () {
         $("#Formulaire").hide();
         $("#btnAnuler").hide();
     });
+
+    Templateitems = Handlebars.compile($("#itemsTemplate").html());
 });

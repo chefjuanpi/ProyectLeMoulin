@@ -17,43 +17,43 @@ namespace EpicerieModel.Models
 
         [StringLength(100, ErrorMessage = "Nom du contact trop long, max. 100 charactéres")]
         [DataType(DataType.Text)]
-        [Display(Name = "Nom du contact")]
+        [Display(Name = "Nom du contact :")]
         public string SupplierContactName { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage = "Numéro trop long")]  // valeur a confirmer
         [DataType(DataType.Text)]
-        [Display(Name = "# Téléphone")]
+        [Display(Name = "# Téléphone :")]
         public string SupplierPhone { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage = "Numéro trop long")]  // valeur a confirmer
         [DataType(DataType.Text)]
-        [Display(Name = "# Fax")]
+        [Display(Name = "# Fax :")]
         public string SupplierFax { get; set; }
 
         [Required]
         [StringLength(150, ErrorMessage = "Courriel trop long, max. 150 charactéres")]
         [DataType(DataType.Text)]
-        [Display(Name = "Courriel")]
+        [Display(Name = "Courriel :")]
         public string SupplierMail { get; set; }
 
         [Required]
         [StringLength(200, ErrorMessage = "Adresse trop longue, max. 200 charactéres")]
         [DataType(DataType.Text)]
-        [Display(Name = "Adresse")]
+        [Display(Name = "Adresse :")]
         public string SupplierAdress { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "Nom de ville trop long, max. 100 charactéres")]
         [DataType(DataType.Text)]
-        [Display(Name = "Ville")]
+        [Display(Name = "Ville :")]
         public string SupplierCity { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage = "Code trop long")]  // valeur a confirmer
         [DataType(DataType.Text)]
-        [Display(Name = "Code Postal")]
+        [Display(Name = "Code Postal :")]
         public string SupplierPostalCode { get; set; }
     }
 }
