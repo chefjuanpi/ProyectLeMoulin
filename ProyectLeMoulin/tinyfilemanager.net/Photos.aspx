@@ -58,8 +58,6 @@
     class="btn btn-default ff-label-type-2">Images</label>&nbsp;
     <input id="select-type-3" name="radio-sort" type="radio"
     data-item="ff-item-type-3" class="hide" />
-    <label label-default="label-default" id="ff-item-type-3" for="select-type-3"
-    class="btn btn-default ff-label-type-3">Archives</label>&nbsp;
     <input id="select-type-4" name="radio-sort" type="radio"
     data-item="ff-item-type-4" class="hide" />
     <label label-default="label-default" id="ff-item-type-4" for="select-type-4"

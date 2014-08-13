@@ -52,9 +52,6 @@
                     <input id="select-type-2" name="radio-sort" type="radio" data-item="ff-item-type-2" class="hide"  />
                     <label id="ff-item-type-2" for="select-type-2" class="btn ff-label-type-2">Images</label>
                     &nbsp;
-                    <input id="select-type-3" name="radio-sort" type="radio" data-item="ff-item-type-3" class="hide"  />
-                    <label id="ff-item-type-3" for="select-type-3" class="btn ff-label-type-3">Archives</label>
-                    &nbsp;
                     <input id="select-type-4" name="radio-sort" type="radio" data-item="ff-item-type-4" class="hide"  />
                     <label id="ff-item-type-4" for="select-type-4" class="btn ff-label-type-4">Videos</label>
                     &nbsp;
