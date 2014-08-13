@@ -16,7 +16,6 @@ namespace ProyectLeMoulin.Controllers
 
     public class EpicerieController : Controller
     {
-        
         public decimal Total = 0;
         public decimal TotTaxe = 0;
         public decimal GrandTot = 0;
@@ -50,7 +49,7 @@ namespace ProyectLeMoulin.Controllers
             EpicerieEntities db = new EpicerieEntities();
             //if (cat == db.Categories.CategoryId)
             //{
-
+            
                 var produit = (from w in db.Week
                                join p in db.Products
                                on w.ProductId equals p.ProductId
@@ -61,10 +60,7 @@ namespace ProyectLeMoulin.Controllers
                                {
                                    ProductID = p.ProductId,
                                    ProductName = p.ProductName,
-                                   TVQ = p.TVQ,
-                                   TPS = p.TPS,
-                                   Price = w.UnitPrice,
-                                   Available = p.Avaibled
+                                   Price = w.UnitPrice
                                }).ToList();
                 return Json(produit, JsonRequestBehavior.AllowGet);
             //}
@@ -73,9 +69,8 @@ namespace ProyectLeMoulin.Controllers
         //Remplir le Panier
         public JsonResult Remplir_Le_Panier(int prod)
         {
-            
-       
-        EpicerieEntities db = new EpicerieEntities();
+            Panier x = new Panier();
+            EpicerieEntities db = new EpicerieEntities();
             //if (produit == db.Products.ProductName)
             //{
                 
@@ -87,10 +82,10 @@ namespace ProyectLeMoulin.Controllers
                                where p.ProductId == prod
                                select new
                                {
-                                    ProductID = w.ProductId
-                                    //x.Produits = p.Produits,
+                                    ProductID = w.ProductId,
+                                    ProductName = p.ProductName,
                                     //x.Qantity = w.Quantity,
-                                    //x.Price = w.UnitPrice,
+                                    Price = w.UnitPrice
                                     //x.TVQ = p.TVQ,
                                     //x.TPS = p.TPS,
                                     //x.Total = 0,
