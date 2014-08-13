@@ -1,78 +1,88 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/tinyfilemanager.net/_admin.Master" AutoEventWireup="true" CodeBehind="Photos.aspx.cs" Inherits="TinyFileManager.NET.Photos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="robots" content="noindex,nofollow">
+    <meta name="robots" content="noindex,nofollow">
         <title>Tiny File Manager</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="css/bootstrap-lightbox.min.css" rel="stylesheet" type="text/css" />
+               <link href="css/ekko-lightbox.min.css" rel="stylesheet" type="text/css" />
         <link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/dropzone.css" type="text/css" rel="stylesheet" />
+    <style type="text/css">
+        .borderless  {
+    border: none;
+}
+    </style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <!----- uploader div start ------->
         <div class="uploader">            
-	        <form action="dialog.aspx?cmd=upload" method="post" enctype="multipart/form-data" id="myAwesomeDropzone" class="dropzone">
-		        <input type="hidden" name="folder" value="<% Response.Write(this.strCurrPath); %>"/>
+	        <form action="Photos.aspx?cmd=upload" method="post" enctype="multipart/form-data" id="myAwesomeDropzone" class="dropzone">
+		        <input type="hidden" name="folder" value="<% Response.Write(this.strCurrPath); %>" class="form-control">
 		        <div class="fallback">
-                    <input type="hidden" name="fback" value="true" />
-	    	        <input name="file" type="file" multiple />
-                    <br />
-                    <input type="submit" name="submit" value="Upload" />
+                    <input type="hidden" name="fback" value="true" class="form-control">
+	    	        <input name="file" type="file" multiple="" class="form-control">
+                    <br>
+                    <input type="submit" name="submit" value="Upload" class="form-control">
 	  	        </div>
 	        </form>
-	        <center><button class="btn btn-large btn-primary close-uploader"><i class="icon-backward icon-white"></i> Return to files list</button></center>
+	        <center><button class="btn btn-primary close-uploader btn-lg"><i class="icon-backward icon-white"></i> Return to files list</button></center>
 	        <div class="space10"></div><div class="space10"></div>
         </div>
 <!----- uploader div end ------->
 
-        <div class="container-fluid">
+       <div class="container"></div>
           
           
 <!----- header div start ------->
 			<div class="filters">
 <% if (this.objConfig.boolAllowUploadFile) { %>
-                <button class="btn btn-primary upload-btn" style="margin-left:5px;"><i class="icon-upload icon-white"></i> Upload a file</button> 
+                <button class="btn btn-primary upload-btn btn-default" style="margin-left: 5px;"><i class="glyphicon glyphicon-upload icon-white"></i> Importer un fichier</button>
 <% } %>
 <% if (this.objConfig.boolAllowCreateFolder)
    { %>
-			    <button class="btn new-folder" style="margin-left:5px;"><i class="icon-folder-open"></i> New Folder</button> 
+			    <button class="btn new-folder" style="margin-left: 5px;"><i class="glyphicon glyphicon-folder-open"></i> &nbsp Nouvelle Dossier</button>
 <% } %>
 <% if ((Convert.ToInt32(this.strType) != 1) && (Convert.ToInt32(this.strType) < 3)) { // not only image or only video %>
                 <div class="pull-right">Filter: &nbsp;&nbsp;
-			        <input id="select-type-all" name="radio-sort" type="radio" data-item="ff-item-type-all" class="hide" />
-                    <label id="ff-item-type-all" for="select-type-all" class="btn btn-info ff-label-type-all">All</label>
-                    &nbsp;
-                    <input id="select-type-1" name="radio-sort" type="radio" data-item="ff-item-type-1" checked="checked"  class="hide"  />
-                    <label id="ff-item-type-1" for="select-type-1" class="btn ff-label-type-1">Files</label>
-                    &nbsp;
-                    <input id="select-type-2" name="radio-sort" type="radio" data-item="ff-item-type-2" class="hide"  />
-                    <label id="ff-item-type-2" for="select-type-2" class="btn ff-label-type-2">Images</label>
-                    &nbsp;
-                    <input id="select-type-3" name="radio-sort" type="radio" data-item="ff-item-type-3" class="hide"  />
-                    <label id="ff-item-type-3" for="select-type-3" class="btn ff-label-type-3">Archives</label>
-                    &nbsp;
-                    <input id="select-type-4" name="radio-sort" type="radio" data-item="ff-item-type-4" class="hide"  />
-                    <label id="ff-item-type-4" for="select-type-4" class="btn ff-label-type-4">Videos</label>
-                    &nbsp;
-                    <input id="select-type-5" name="radio-sort" type="radio" data-item="ff-item-type-5" class="hide"  />
-                    <label id="ff-item-type-5" for="select-type-5" class="btn ff-label-type-5">Music</label>
-                </div>
+    <input id="select-type-all" name="radio-sort" type="radio"
+    data-item="ff-item-type-all" class="hide" />
+    <label label-default="label-default" id="ff-item-type-all" for="select-type-all"
+    class="btn btn-info ff-label-type-all">Tous</label>&nbsp;
+    <input id="select-type-1" name="radio-sort" type="radio"
+    data-item="ff-item-type-1" checked="checked" class="hide" />
+    <label label-default="label-default" id="ff-item-type-1" for="select-type-1"
+    class="btn btn-default ff-label-type-1">Fichiers</label>&nbsp;
+    <input id="select-type-2" name="radio-sort" type="radio"
+    data-item="ff-item-type-2" class="hide" />
+    <label label-default="label-default" id="ff-item-type-2" for="select-type-2"
+    class="btn btn-default ff-label-type-2">Images</label>&nbsp;
+    <input id="select-type-3" name="radio-sort" type="radio"
+    data-item="ff-item-type-3" class="hide" />
+    <label label-default="label-default" id="ff-item-type-3" for="select-type-3"
+    class="btn btn-default ff-label-type-3">Archives</label>&nbsp;
+    <input id="select-type-4" name="radio-sort" type="radio"
+    data-item="ff-item-type-4" class="hide" />
+    <label label-default="label-default" id="ff-item-type-4" for="select-type-4"
+    class="btn btn-default ff-label-type-4">Videos</label>&nbsp;
+    <input id="select-type-5" name="radio-sort" type="radio"
+    data-item="ff-item-type-5" class="hide" />
+    <label label-default="label-default" id="ff-item-type-5" for="select-type-5"
+    class="btn btn-default ff-label-type-5">Music</label>
+</div>
 <% } %>
             </div>
 <!----- header div end ------->
 
 <!----- breadcrumb div start ------->
-			<div class="row-fluid">
-				<ul class="breadcrumb">
-                <%= this.getBreadCrumb() %>
-				</ul>
-			</div>
+<div class="row">
+    <ul class="breadcrumb">
+        <%= this.getBreadCrumb() %>
+    </ul>
 <!----- breadcrumb div end ------->
             
-            <div class="row-fluid ff-container">
-                <div class="span12 pull-right">
-                    <ul class="thumbnails ff-items">                
+<div class="row ff-container">
+    <div class="col-md-12 pull-right">
+        <ul class="thumbnails ff-items list-group">              
 
                     <%  
                         // loop through folder/file list that we have already created
@@ -82,8 +92,8 @@
                             Response.Write(this.getStartOfLine(objF.intColNum));
 
                             // start of item
-                            Response.Write("<li class=\"span2 ff-item-type-" + objF.strClassType + "\">");
-                            Response.Write("<div class=\"boxes thumbnail\">");
+                            Response.Write("<li class='col-md-2 ff-item-type-" + objF.strClassType + " list-group-item borderless '>");
+                            Response.Write("<div class=\"boxes thumbnail \">");
                                     
                             if (objF.boolIsFolder)
                             {
@@ -95,8 +105,8 @@
                             {
                                 // if file
                                 Response.Write(objF.strDownFormOpen);
-                                Response.Write("<div class=\"btn-group toolbox\">");
-                                Response.Write("<button type=\"submit\" title=\"Download\" class=\"btn\"><i class=\"icon-download\"></i></button>");
+                                Response.Write("<div class=\"center-block toolbox\">");
+                                Response.Write("<button type='submit' title='Download' class='btn btn-default'><i class='glyphicon glyphicon-download'></i></button>");
                                 Response.Write(objF.strPreviewLink);
                                 Response.Write(objF.strDeleteLink);
                                 Response.Write("</div>");
@@ -118,15 +128,10 @@
             </div>    
         </div>
         
-	    <!----- lightbox div end ------->    
-	    <div id="previewLightbox" class="lightbox hide fade"  tabindex="-1" role="dialog" aria-hidden="true">
-		    <div class='lightbox-content'>
-			    <img id="full-img" src="">
-		    </div>    
-	    </div>
+	    <!----- lightbox div end -------> 
+ 
 	    <!----- lightbox div end ------->
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap-lightbox.min.js"></script>
+        <script type="text/javascript" src="js/ekko-lightbox.min.js"></script>
 		<script type="text/javascript" src="js/dropzone.min.js"></script>
         <script type="text/javascript">
 
@@ -155,6 +160,19 @@
 		            }
 		        };
 
+                // delegate calls to data-toggle="lightbox"
+                $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+                    event.preventDefault();
+                    return $(this).ekkoLightbox({
+                        onShown: function() {
+                            if (window.console) {
+                                return console.log('Checking our the events huh?');
+                            }
+                        }
+                    });
+                });
+
+
                 $('input[name=radio-sort]').click(function(){
                     var li=$(this).data('item');
                     $('.filters label').removeClass("btn-info");
@@ -180,7 +198,8 @@
                     window.location = removeVariableFromURL(window.location, 'cmd');
                 });
                 $('.preview').click(function(){
-                    $('#full-img').attr('src',$(this).data('url'));
+                    $(".preview").attr("data-remote", $(this).data('url'));
+                    console.log($(this).data('url'));
                     return true;
                 });
                 $('.new-folder').click(function(){
@@ -189,7 +208,7 @@
                         folder_path=curr_dir + '\\' + folder_name;
                         $.ajax({
                             type: "POST",
-                            url: "dialog.aspx?cmd=createfolder",
+                            url: "Photos.aspx?cmd=createfolder",
                             data: {folder: folder_path}
                         }).done(function (msg) {
                             //TODO: add error handling

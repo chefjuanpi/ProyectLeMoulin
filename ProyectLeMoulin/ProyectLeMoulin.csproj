@@ -175,6 +175,7 @@
     <Content Include="tinyfilemanager.net\css\bootstrap-lightbox.min.css" />
     <Content Include="tinyfilemanager.net\css\bootstrap.min.css" />
     <Content Include="tinyfilemanager.net\css\dropzone.css" />
+    <Content Include="tinyfilemanager.net\css\ekko-lightbox.min.css" />
     <Content Include="tinyfilemanager.net\css\style.css" />
     <Content Include="tinyfilemanager.net\dialog.aspx" />
     <Content Include="tinyfilemanager.net\img\fabric_plaid.png" />
@@ -295,6 +296,7 @@
     <Content Include="tinyfilemanager.net\js\bootstrap-lightbox.min.js" />
     <Content Include="tinyfilemanager.net\js\bootstrap.min.js" />
     <Content Include="tinyfilemanager.net\js\dropzone.min.js" />
+    <Content Include="tinyfilemanager.net\js\ekko-lightbox.min.js" />
     <Content Include="tinyfilemanager.net\js\jquery.1.9.1.min.js" />
     <Content Include="tinyfilemanager.net\Photos.aspx" />
     <Content Include="tinyfilemanager.net\resources\files\10325682_10202444768974609_6766977629065192163_n.jpg" />
