@@ -7,13 +7,18 @@
 <h2>@ViewBag.Title</h2>
 <fieldset>
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("index", "SendMailer", FormMethod.Post, new
+    {
+        @class = "form-horizontal",
+        role = "form",
+        @id = "Formulaire"
+    }))
     {
         @Html.ValidationSummary()
     <table class="col-md-4">
         <tr>
             <td>To:</td>
-            <td>@Html.TextBoxFor(m => m.to           )</td>
+            <td>@Html.TextBoxFor(m => m.to)</td>
         </tr>
         <tr>
             <td>Suject:</td>

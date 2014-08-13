@@ -47,21 +47,23 @@
     <input id="select-type-all" name="radio-sort" type="radio"
     data-item="ff-item-type-all" class="hide" />
     <label label-default="label-default" id="ff-item-type-all" for="select-type-all"
-    class="btn btn-info ff-label-type-all">Tous</label>&nbsp;
+    class="btn btn-info ff-label-type-all">Tous</label>
+    &nbsp;
     <input id="select-type-1" name="radio-sort" type="radio"
     data-item="ff-item-type-1" checked="checked" class="hide" />
     <label label-default="label-default" id="ff-item-type-1" for="select-type-1"
-    class="btn btn-default ff-label-type-1">Fichiers</label>&nbsp;
+    class="btn btn-default ff-label-type-1">Fichiers</label>
+    &nbsp;
     <input id="select-type-2" name="radio-sort" type="radio"
     data-item="ff-item-type-2" class="hide" />
     <label label-default="label-default" id="ff-item-type-2" for="select-type-2"
-    class="btn btn-default ff-label-type-2">Images</label>&nbsp;
-    <input id="select-type-3" name="radio-sort" type="radio"
-    data-item="ff-item-type-3" class="hide" />
+    class="btn btn-default ff-label-type-2">Images</label>
+    &nbsp;
     <input id="select-type-4" name="radio-sort" type="radio"
     data-item="ff-item-type-4" class="hide" />
     <label label-default="label-default" id="ff-item-type-4" for="select-type-4"
-    class="btn btn-default ff-label-type-4">Videos</label>&nbsp;
+    class="btn btn-default ff-label-type-4">Videos</label>
+    &nbsp;
     <input id="select-type-5" name="radio-sort" type="radio"
     data-item="ff-item-type-5" class="hide" />
     <label label-default="label-default" id="ff-item-type-5" for="select-type-5"

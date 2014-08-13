@@ -68,6 +68,9 @@ namespace IdentitySample.Controllers
                 }
                 db.Pages.Add(n);
                 await db.SaveChangesAsync();
+                int lastId = db.Pages.Max(m => m.PageID);
+                int x = 0;
+                //continuer apres si marche le reste de la page en public
             }
             else
             {
@@ -103,6 +106,7 @@ namespace IdentitySample.Controllers
         {
             CoeurContainer db = new CoeurContainer();
             var nouvelles = (from n in db.Pages
+                             where n.PageID > 5
                              select new
                              {
                                  id = n.PageID,
