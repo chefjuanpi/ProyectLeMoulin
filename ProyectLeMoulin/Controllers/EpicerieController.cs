@@ -85,7 +85,8 @@ namespace ProyectLeMoulin.Controllers
                                     ProductID = w.ProductId,
                                     ProductName = p.ProductName,
                                     //x.Qantity = w.Quantity,
-                                    Price = w.UnitPrice
+                                    Price = w.UnitPrice,
+                                    CategoryID = cp.CategoryId
                                     //x.TVQ = p.TVQ,
                                     //x.TPS = p.TPS,
                                     //x.Total = 0,
