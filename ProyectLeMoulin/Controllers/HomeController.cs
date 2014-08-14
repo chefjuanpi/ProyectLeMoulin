@@ -16,6 +16,26 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        public ActionResult PhotoEvement()
+        {
+            CoeurContainer db = new CoeurContainer();
+            var photos = (from e in db.Evenements
+                          where e.DateStart >= DateTime.Now & e.Poublier == true
+                          orderby e.DateStart
+                          select new
+                          {
+                              photos = e.PrincipalPhotoEvenement
+                          }).ToList();
+            string t = "";
+            for (int i = 0; i < photos.Count; i++)
+            {
+                t += "<img src='" + photos[i].photos + "'>";
+            }
+            t += "";
+            int o = 0;
+            return Content(t);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
