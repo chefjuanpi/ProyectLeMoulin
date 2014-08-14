@@ -106,7 +106,7 @@ namespace IdentitySample.Controllers
         {
             CoeurContainer db = new CoeurContainer();
             var nouvelles = (from n in db.Pages
-                             where n.PageID > 5
+                             where n.PageID > 4
                              select new
                              {
                                  id = n.PageID,
@@ -119,7 +119,7 @@ namespace IdentitySample.Controllers
         {
             CoeurContainer db = new CoeurContainer();
             var nouvelles = (from n in db.Pages
-                             where n.Principal == true
+                             where n.Principal == true & n.PageID > 1
                              select new
                              {
                                  id = n.PageID,
@@ -146,7 +146,19 @@ namespace IdentitySample.Controllers
             return Json(nouvelle, JsonRequestBehavior.AllowGet);
         }
 
-
+        public async Task<ActionResult> delPage(int pID)
+        {
+            CoeurContainer db = new CoeurContainer();
+            var delpage = (from n in db.Pages
+                                where n.PageID == pID
+                                select n).Single();
+            if (delpage != null)
+            {
+                db.Pages.Remove(delpage);
+                await db.SaveChangesAsync();
+            }
+            return Redirect("/Admin/Pages");
+        }
 
         public ActionResult Evenements_a_venir()
         {

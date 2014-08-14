@@ -745,7 +745,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="tinyfilemanager.net\bin\" />
-    <Folder Include="Views\Layout\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
