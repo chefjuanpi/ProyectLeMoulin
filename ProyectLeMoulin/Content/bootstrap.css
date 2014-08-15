@@ -31,6 +31,8 @@ summary {
 }
 
 
+
+
 .dropdown-submenu {
     position: relative;
 }
@@ -1156,6 +1158,9 @@ p {
   .lead {
     font-size: 22.5px;
   }
+  .cubobajatexto{
+    height:300px;
+}
 }
 small,
 .small {
@@ -1314,6 +1319,7 @@ dd {
   .dl-horizontal dd {
     margin-left: 180px;
   }
+
 }
 abbr[title],
 abbr[data-original-title] {
@@ -2287,6 +2293,7 @@ table th[class*="col-"] {
   background-color: #ebcccc;
 }
 @media screen and (max-width: 767px) {
+
   .table-responsive {
     width: 100%;
     margin-bottom: 15.75px;
@@ -3865,6 +3872,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-fixed-bottom .navbar-collapse {
     max-height: 200px;
   }
+  .cubobajatexto{
+    height:200px;
+
+}
 }
 .container > .navbar-header,
 .container-fluid > .navbar-header,
