@@ -1,0 +1,184 @@
+﻿@model IdentitySample.Models.EvenementsViewModel
+@{
+    ViewBag.Title = "Évenements déjà passés";
+    Layout = "~/Views/Shared/_AdminMaster.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<p>
+    Selectionne une évenement dans la liste derulante pour le voir, modifier ou effacer
+</p>
+<br />
+
+<div class="row">
+    @Html.Partial("_AdminButonModifNew")
+</div>
+
+@using (Html.BeginForm("Evenements_a_venir", "Admin", FormMethod.Post, new
+{
+    @class = "form-horizontal",
+    role = "form",
+    @id = "Formulaire"
+}))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="input-group row">
+        @Html.LabelFor(m => m.Titre, new { @class = "input-group-addon" })
+        @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", @id = "titre", @placeholder = "Ex: Fêtê des Voinsins 2014" })
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="form-group col-md-4  ">
+            @Html.LabelFor(m => m.PhotoPrincipal)
+            @Html.TextBoxFor(m => m.PhotoPrincipal, new { @class = "form-control", @id = "photoPrincipal", @size = "50" })
+            &nbsp;<button id="btnDemoTextBox">Choisissez un fichier</button>
+            <p class="help-block">Selectionne l'imagen Principal a montrer de l'evenement.</p>
+        </div>
+
+        <div class="col-md-5">
+            <strong>Information de base sur l'évenement :</strong>
+
+            <div class="input-group">
+                <div class="input-group-addon">Lieu : &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp</div>
+                @Html.TextBoxFor(m => m.Lieu, new { @class = "form-control", @id = "Lieu", @placeholder = "Ex: Centre Saint Nom de Jésus" })
+            </div>
+            <div class="input-group ">
+                <div class="input-group-addon">Adresse : &nbsp &nbsp&nbsp</div>
+                @Html.TextBoxFor(m => m.Adresse, new { @class = "form-control", @id = "Adresse", @placeholder = "123 rue Racine Est" })
+            </div>
+            <div class="input-group ">
+                <div class="input-group-addon ">Commence : </div>
+                @Html.TextBoxFor(m => m.DateStart, new { @id = "DateStart", @placeholder = "Date" })
+                @Html.TextBoxFor(m => m.HourStart, new { @class = "datetimepicker2", @id = "HourStart", @placeholder = "Heure" })
+            </div>
+            <div class="input-group ">
+                <div class="input-group-addon">Fin  : &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp&nbsp</div>
+                @Html.TextBoxFor(m => m.DateEnd, new { @id = "DateEnd", @placeholder = "Date" })
+                @Html.TextBoxFor(m => m.HourEnd, new { @class = "datetimepicker2", @id = "HourEnd", @placeholder = "Heure" })
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.TextAreaFor(m => m.Contenu, new { @id = "elm1", @name = "area", @class = "col-md-12 col-xs-12" })
+    </div>
+    <br />
+    <br />
+    <div class="row alert alert-info">
+        <div class="col-md-4">
+            <strong>Prêt a publier?</strong>
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.Publier, new { @id = "publier" })
+                @Html.LabelFor(m => m.Publier)
+            </div>
+            @Html.HiddenFor(m => m.PId, new { @id = "new123" })
+        </div>
+        <button type="submit" class="btn btn-danger col-md-offset-3 col-md-2" id="save">
+            <i class="fa fa-save"></i><b> Enregistrer sans publier</b>
+        </button>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/AdminButons")
+    <script>
+        $(function () {
+            $("#btnNew").html("");
+            $("#btnNew").attr("class", "");
+            $("#boutons").attr("class", "");
+            $("#btnSupr").click(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: 200,
+                    modal: true,
+                    buttons: {
+                        "Effacer": function () {
+                            var x = $("#new123").val();
+                            console.log(x);
+                            window.open("/Admin/delEvenement?eID=" + x, "_self");
+                            $(this).dialog("close");
+                        },
+                        Anuler: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+
+            $('#DateStart').datetimepicker({
+                lang: "fr",
+                format: 'Y/m/d',
+                onShow: function (ct) {
+                    this.setOptions({
+                        maxDate: $('#DateEnd').val() ? $('#DateEnd').val() : false
+                    })
+                },
+                timepicker: false
+            });
+            $('#DateEnd').datetimepicker({
+                lang: "fr",
+                format: 'Y/m/d',
+                onShow: function (ct) {
+                    this.setOptions({
+                        minDate: $('#DateStart').val() ? $('#DateStart').val() : false
+                    })
+                },
+                timepicker: false
+            });
+
+            $('.datetimepicker2').datetimepicker({
+                datepicker: false,
+                format: 'H:i'
+            });
+
+            Templateitems = Handlebars.compile($("#itemsTemplate").html());
+            $.getJSON("getEvenementsPasses", null, function (data) {
+                var result = Templateitems(data);
+                $("#ItemsList").html(result);
+                $(".items").change(function () {
+                    var id = $(this).children(":selected").attr("id");
+                    if (id != 0) {
+                        $("#btnmodif").show();
+                        $("#btnSupr").show();
+                        $("#Formulaire").show();
+                        $("#boutons").attr("class", "alert alert-warning");
+                        tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
+                        $("#new123").val(id);
+                        $.getJSON("getEDetails", { IdEvenement: id }, function (data) {
+                            $("#demotextbox").val(data.image);
+                            $("#publier").prop('checked', data.publier);
+                            tinymce.editors[0].setContent(data.page);
+                            $("#titre").val(data.titre);
+                            $("#Lieu").val(data.lieu);
+                            $("#Adresse").val(data.adresse);
+                            var date = new Date(parseInt(data.dateStart.substr(6)))
+                            var m = date.getMonth() + 1;
+                            var mm = (m < 10) ? "0" + m : m;
+                            var dd = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+                            $('#DateStart').val(date.getFullYear() + "/" + mm + "/" + dd);
+                            date = new Date(parseInt(data.dateEnd.substr(6)))
+                            m = date.getMonth() + 1;
+                            mm = (m < 10) ? "0" + m : m;
+                            dd = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+                            $('#DateEnd').val(date.getFullYear() + "/" + mm + "/" + dd);
+                            var Endmin = (data.hourEnd.Minutes < 10) ? "0" + data.hourEnd.Minutes : data.hourEnd.Minutes;
+                            $('#HourEnd').val(data.hourEnd.Hours + ":" + Endmin);
+                            var startmin = (data.hourStart.Minutes < 10) ? "0" + data.hourStart.Minutes : data.hourStart.Minutes;
+                            $('#HourStart').val(data.hourStart.Hours + ":" + startmin);
+                            $("#publier").change();
+                        });
+                    }
+                    else {
+                        $("#btnAnuler").click();
+                    }
+                });
+            });
+        });
+    </script>
+
+}

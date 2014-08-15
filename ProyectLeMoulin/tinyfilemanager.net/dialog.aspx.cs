@@ -424,7 +424,24 @@ namespace TinyFileManager.NET
                             {
                                 this.objFItem.strPreviewLink = "<a class=\"btn preview disabled\" title=\"Preview\"><i class=\"icon-eye-open\"></i></a>";
                             }
-                            this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + this.strApply + "('" + this.objConfig.strUploadURL + "/" + this.objFItem.strPath.Replace('\\', '/') + "'," + this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName + "</h4></a>";
+                            if (strProfile == "notinymce")
+                            { 
+                                this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + 
+                                    this.strApply + "('" + 
+                                    this.objFItem.strPath.Replace('\\', '/') + "'," + 
+                                    this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + 
+                                    this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName + 
+                                    "</h4></a>";
+                            }
+                            else
+                            {
+                                this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" +
+                                this.strApply + "('../tinyfilemanager.net/resources/files/" +
+                                this.objFItem.strPath.Replace('\\', '/') + "'," +
+                                this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" +
+                                this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName +
+                                "</h4></a>";
+                            }
 
                             this.arrLinks.Add(objFItem);
                         }

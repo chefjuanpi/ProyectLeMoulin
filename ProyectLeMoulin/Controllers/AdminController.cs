@@ -167,6 +167,13 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        public ActionResult Evenements_Passes()
+        {
+            ViewBag.Message = "creer une nouvelle page";
+
+            return View();
+        }
+
         //
         // POST: //enregistrer nouveles Evenement  et modifié
         [HttpPost]
@@ -220,13 +227,27 @@ namespace IdentitySample.Controllers
         {
             CoeurContainer db = new CoeurContainer();
             var Evenements = (from n in db.Evenements
-                              where n.DateEnd > DateTime.Now
+                              where n.DateEnd >= DateTime.Now || n.DateStart >= DateTime.Now
                               orderby n.DateStart
                              select new
                              {
                                  id = n.EventId,
                                  Titre = n.TitleEvenement
                              });
+            return Json(Evenements, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getEvenementsPasses()
+        {
+            CoeurContainer db = new CoeurContainer();
+            var Evenements = (from n in db.Evenements
+                              where n.DateEnd < DateTime.Now || n.DateStart < DateTime.Now
+                              orderby n.DateStart
+                              select new
+                              {
+                                  id = n.EventId,
+                                  Titre = n.TitleEvenement
+                              });
             return Json(Evenements, JsonRequestBehavior.AllowGet);
         }
 

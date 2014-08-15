@@ -364,6 +364,7 @@
       <DependentUpon>Epicerie.edmx</DependentUpon>
       <LastGenOutput>Epicerie.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Admin\Evenements_Passes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

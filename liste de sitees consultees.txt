@@ -31,10 +31,8 @@ select options
 http://stackoverflow.com/questions/2888446/get-the-selected-option-id-with-jquery
 
 
+config security asp.net 
+http://weblogs.asp.net/gurusarkar/setting-authorization-rules-for-a-particular-page-or-folder-in-web-config
 
 
 
-
-
-
-http://www.mobilephoneemulator.com/ ask dave to another

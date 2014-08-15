@@ -29,7 +29,9 @@ namespace IdentitySample.Controllers
             string t = "";
             for (int i = 0; i < photos.Count; i++)
             {
-                t += "<img src='" + photos[i].photos + "'>";
+                t += "<img href='../tinyfilemanager.net/resources/files/" + photos[i].photos + 
+                    "'" + "src='../tinyfilemanager.net/resources/thumbs/" + photos[i].photos + 
+                    "'>";
             }
             t += "";
             int o = 0;
