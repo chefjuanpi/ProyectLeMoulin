@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-ui")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/handlebars")
+    @RenderSection("scripts", required: false)
 </head>
 <body>
     <!-- Google Tag Manager -->
@@ -37,40 +42,26 @@
                 <ul class="nav nav-pills">
                     <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
                     @Html.Action("Menu", "Layout")
-                    @*<li>@Html.ActionLink("À propos", "About", "Home")</li>
-                    <li>@Html.ActionLink("Événements", "Index", "Calendar")</li>
-                    <li>@Html.ActionLink("Groupe d'achats", "GroupedAchats", "Home")</li>
-                    <li>@Html.ActionLink("Impliquez-vous", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Contactez Nous", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos", "About", "Home")</li>
-*@
-
                     <li>
                         @Html.Partial("_LoginPartial")
                     </li>
                 </ul>
-
             </div>
-            
         </div>
-
     </nav>
-
-
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>Le Moulin d'À Côté &copy; @DateTime.Now.Year - Crée par Pablo Aguilar-Lliguin, Steeve Bouchard et Michel Goyette</p>
-        </footer>
+        <br/>
     </div>
+    <br/>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jquery-ui")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/handlebars")
-    @RenderSection("scripts", required: false)
-
+    <div class="container" >
+        <hr />
+        <div class="panel-footer">
+            <footer>
+                <p>Le Moulin d'À Côté &copy; @DateTime.Now.Year - Crée par Pablo Aguilar-Lliguin, Steeve Bouchard et Michel Goyette</p>
+            </footer>
+        </div>
+    </div>
 </body>
 </html>

@@ -382,6 +382,8 @@
     <None Include="Properties\PublishProfiles\myasp.net.pubxml" />
     <Content Include="tinyfilemanager.net\resources\files\analysepréliminairemoulin.doc" />
     <Content Include="tinyfilemanager.net\resources\files\testdemuerte\ya dice.docx" />
+    <Content Include="Views\Home\Pages.cshtml" />
+    <Content Include="Views\Admin\Accueil.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -599,7 +601,6 @@
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Pages.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
