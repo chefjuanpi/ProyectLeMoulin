@@ -32,6 +32,38 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        // POST: //enregistrer Notices
+        [HttpPost]
+        public async Task<ActionResult> Accueil(AccueilViewModel page)
+        {
+            //CoeurContainer db = new CoeurContainer();
+            //string utilisateur = User.Identity.Name;
+            //string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+
+            //var Section = (from n in db.Pages
+            //               join ps in db.Page_Section
+            //               on n.PageID equals ps.idpage
+                                                   
+                           
+                           
+            //                   select n).Single();
+            //modAccueil.UserId = guid;
+            //    modPage.Title = page.Titre;
+            //    modPage.Text = page.Contenu;
+            //    modPage.MenuName = page.MenuName;
+            //    modPage.Poublier = page.Publier;
+            //    if (page.Principal == false)
+            //    {
+            //        modPage.SousMenu = page.menuParent;
+            //    }
+            //    else
+            //    {
+            //        modPage.SousMenu = null;
+            //    }
+            //    await db.SaveChangesAsync();
+            return View();
+        }
+
         public ActionResult Pages()
         {
             ViewBag.Title = "Editeur des Pages";

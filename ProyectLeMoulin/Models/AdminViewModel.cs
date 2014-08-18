@@ -75,7 +75,7 @@ namespace IdentitySample.Models
         [Required]
         [StringLength(150, ErrorMessage = "Titre trop long, max. 150 charactéres")]
         [DataType(DataType.Text)]
-        [Display(Name = "Titre du Notice :")]
+        [Display(Name = "Titre du Page :")]
         public string Titre { get; set; }
 
         [Required]
@@ -141,11 +141,28 @@ namespace IdentitySample.Models
         [Required]
         [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
         [DataType(DataType.Html)]
+        [AllowHtml]
         [Display(Name = "Text")]
         public string Contenu { get; set; }
 
         [Required]
         [Display(Name = "Metre publique l'evenement ")]
         public bool Publier { get; set; }
+    }
+
+    public class AccueilViewModel
+    {
+        [Required]
+        [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
+        [DataType(DataType.Html)]
+        [AllowHtml]
+        [Display(Name = "Contenu de page d'accueil")]
+        public string Contenu { get; set; }
+
+        [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
+        [DataType(DataType.Html)]
+        [AllowHtml]
+        [Display(Name = "Code de Facebook")]
+        public string Gauche { get; set; }
     }
 }

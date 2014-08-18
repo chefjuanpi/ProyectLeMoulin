@@ -29,7 +29,7 @@ namespace IdentitySample.Controllers
             for (int i = 0; i < photos.Count; i++)
             {
                 t += "<div data-img='../tinyfilemanager.net/resources/files/" + photos[i].photos +
-                    "' ><div><div class='cubobajatexto'></div> <a class='fotorama__select' href='/Home/Evenement?id=" + photos[i].titre + "'>" +
+                    "' data-thumb='../tinyfilemanager.net/resources/thumbs/" + photos[i].photos + "' ><div><div class='cubobajatexto'></div> <a class='fotorama__select' href='/Home/Evenement?id=" + photos[i].titre + "'>" +
                     "<div class='alert alert-info' style=' background:#464646; background-color: rgba(91, 192, 222, 0.5);' ><div class='row'><h2>"
                     + photos[i].titre + "</h1></div><div class='row'><h2>de " + photos[i].dateStart.ToLongDateString() + " au " +
                     photos[i].dateEnd.ToLongDateString() + "</h2></div></a></div></div></div>";

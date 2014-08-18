@@ -341,7 +341,7 @@
     <Content Include="Models\Coeur.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Coeur.edmx</DependentUpon>
-      <LastGenOutput>Coeur.Context.cs</LastGenOutput>
+      <LastGenOutput>Coeur.Context1.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Coeur.edmx.diagram">
       <DependentUpon>Coeur.edmx</DependentUpon>
@@ -382,6 +382,7 @@
     <None Include="Properties\PublishProfiles\myasp.net.pubxml" />
     <Content Include="tinyfilemanager.net\resources\files\analysepréliminairemoulin.doc" />
     <Content Include="tinyfilemanager.net\resources\files\testdemuerte\ya dice.docx" />
+    <Content Include="Views\Admin\Accueil.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -656,6 +657,11 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\SendMailerController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Models\Coeur.Context1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Coeur.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Epicerie.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
