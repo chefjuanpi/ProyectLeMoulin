@@ -170,7 +170,6 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\AdminBtnModNew.js" />
     <Content Include="Scripts\habdlebars-2.0.0.js" />
-    <Content Include="Scripts\jquery-1.8.2.min.js" />
     <Content Include="tinyfilemanager.net\css\basic.css" />
     <Content Include="tinyfilemanager.net\css\bootstrap-lightbox.min.css" />
     <Content Include="tinyfilemanager.net\css\bootstrap.min.css" />
@@ -299,25 +298,36 @@
     <Content Include="tinyfilemanager.net\js\ekko-lightbox.min.js" />
     <Content Include="tinyfilemanager.net\js\jquery.1.9.1.min.js" />
     <Content Include="tinyfilemanager.net\Photos.aspx" />
-    <Content Include="tinyfilemanager.net\resources\files\10325682_10202444768974609_6766977629065192163_n.jpg" />
     <Content Include="tinyfilemanager.net\resources\files\10370995_10202444768574599_5577734903687174851_n.jpg" />
     <Content Include="tinyfilemanager.net\resources\files\10425119_10202444766334543_2454097077301222024_n.jpg" />
     <Content Include="tinyfilemanager.net\resources\files\1393850815-md-119793_md_13562_samsung_galaxy_s5_handson1.png" />
-    <Content Include="tinyfilemanager.net\resources\files\922931_638836456130081_1030856133_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\1488254_407332482731528_1997471036_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\1507126_407332532731523_2090085822_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\1509057_407332502731526_1822018121_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\297258_10151556305136562_67690510_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\483212_366270143486563_1736725180_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\desert.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\gradient.psd" />
+    <Content Include="tinyfilemanager.net\resources\files\Home Renovations.xlsx" />
     <Content Include="tinyfilemanager.net\resources\files\logo.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\maid with the flaxen hair.mp3" />
     <Content Include="tinyfilemanager.net\resources\files\main_img.png" />
     <Content Include="tinyfilemanager.net\resources\files\Temp\photo_calc_logo.jpg" />
-    <Content Include="tinyfilemanager.net\resources\thumbs\10325682_10202444768974609_6766977629065192163_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\testdemuerte\desert.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\10370995_10202444768574599_5577734903687174851_n.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\10425119_10202444766334543_2454097077301222024_n.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\1393850815-md-119793_md_13562_samsung_galaxy_s5_handson1.png" />
-    <Content Include="tinyfilemanager.net\resources\thumbs\922931_638836456130081_1030856133_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\1488254_407332482731528_1997471036_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\1507126_407332532731523_2090085822_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\1509057_407332502731526_1822018121_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\297258_10151556305136562_67690510_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\483212_366270143486563_1736725180_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\desert.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\logo.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\main_img.png" />
     <Content Include="tinyfilemanager.net\resources\thumbs\Temp\photo_calc_logo.jpg" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\testdemuerte\desert.jpg" />
     <Content Include="Views\Epicerie\Index.cshtml" />
-    <Content Include="tinyfilemanager.net\resources\files\gradient.psd" />
-    <Content Include="tinyfilemanager.net\resources\files\Home Renovations.xlsx" />
     <Content Include="tinyfilemanager.net\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -365,6 +375,12 @@
       <LastGenOutput>Epicerie.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Admin\Evenements_Passes.cshtml" />
+    <None Include="Properties\PublishProfiles\LeMoulin %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\LeMoulin %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\LeMoulin.pubxml" />
+    <None Include="Properties\PublishProfiles\myasp.net.pubxml" />
+    <Content Include="tinyfilemanager.net\resources\files\analysepréliminairemoulin.doc" />
+    <Content Include="tinyfilemanager.net\resources\files\testdemuerte\ya dice.docx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -555,7 +571,9 @@
     <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\sb-admin.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
@@ -614,6 +632,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\Panier.cs" />
+    <Compile Include="Controllers\titreTextNouvelle.cs" />
     <Compile Include="Models\AspNetUserRoles.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>

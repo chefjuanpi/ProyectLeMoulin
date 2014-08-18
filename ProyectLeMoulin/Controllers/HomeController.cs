@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using IdentitySample.Models;
 using System.Threading.Tasks;
 using ProyectLeMoulin.Models;
+using ProyectLeMoulin.Controllers;
 
 namespace IdentitySample.Controllers
 {
@@ -13,7 +14,52 @@ namespace IdentitySample.Controllers
     {
         public ActionResult Index()
         {
+
             return View();
+        }
+
+        public JsonResult getNews()
+        {
+            CoeurContainer db = new CoeurContainer();
+            var nouvelles = (from n in db.Nouvelles
+                             where n.Publier == true
+                             orderby n.NouvelleDate
+                             select new titreTextNouvelle
+                             {
+                                 titre = n.NouvelleTitle,
+                                 text = n.NouvelleText
+                             }).Take(5).ToList();
+
+            for (int x = 0; x < nouvelles.Count(); x++)
+            {
+                int i = nouvelles.Count();
+                int y;
+                string temp = "";
+
+                for (y = 0; y < nouvelles[x].text.Count() - 1; )
+                {
+                    if (nouvelles[x].text.IndexOf("<", y) > -1)
+                    {
+                        int start = nouvelles[x].text.IndexOf("<", y);
+                        y = nouvelles[x].text.IndexOf(">", start) + 1;
+                        start = nouvelles[x].text.IndexOf("<", y);
+                        if ((start - y) > 0)
+                        {
+                            if (nouvelles[x].text.Substring(y, (start - y)) != "\r\n")
+                            {
+                                temp += " " + nouvelles[x].text.Substring(y, (start - y));
+                                if (temp.Count() > 450)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                nouvelles[x].text = temp;
+            }
+
+            return Json(nouvelles, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult PhotoEvement()
