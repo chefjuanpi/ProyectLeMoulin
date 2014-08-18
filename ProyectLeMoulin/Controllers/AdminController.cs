@@ -43,7 +43,6 @@ namespace IdentitySample.Controllers
         //
         // POST: //enregistrer Notices
         [HttpPost]
-        [ValidateInput(false)]
         public async Task<ActionResult> Pages(PagesViewModel page)
         {
             ViewBag.Title = "Editeur des Pages";
@@ -177,7 +176,6 @@ namespace IdentitySample.Controllers
         //
         // POST: //enregistrer nouveles Evenement  et modifié
         [HttpPost]
-        [ValidateInput(false)]
         public async Task<ActionResult> Evenements_a_venir(EvenementsViewModel Evenement)
         {
             CoeurContainer db = new CoeurContainer();
@@ -302,7 +300,6 @@ namespace IdentitySample.Controllers
         //
         // POST: //enregistrer Notices
         [HttpPost]
-        [ValidateInput(false)]
         public async Task<ActionResult> Notice(NouvellesViewModel notice)
         {
             CoeurContainer db = new CoeurContainer();

@@ -14,6 +14,27 @@ namespace IdentitySample.Controllers
     {
         public ActionResult Index()
         {
+            CoeurContainer db = new CoeurContainer();
+            var photos = (from e in db.Evenements
+                          where e.DateStart >= DateTime.Now & e.Poublier == true
+                          orderby e.DateStart
+                          select new
+                          {
+                              photos = e.PrincipalPhotoEvenement,
+                              titre = e.TitleEvenement,
+                              dateStart = e.DateStart,
+                              dateEnd = e.DateEnd
+                          }).ToList();
+            string t = "";
+            for (int i = 0; i < photos.Count; i++)
+            {
+                t += "<div data-img='../tinyfilemanager.net/resources/files/" + photos[i].photos +
+                    "' ><div><div class='cubobajatexto'></div> <a class='fotorama__select' href='/Home/Evenement?id=" + photos[i].titre + "'>" +
+                    "<div class='alert alert-info' style=' background:#464646; background-color: rgba(91, 192, 222, 0.5);' ><div class='row'><h2>"
+                    + photos[i].titre + "</h1></div><div class='row'><h2>de " + photos[i].dateStart.ToLongDateString() + " au " +
+                    photos[i].dateEnd.ToLongDateString() + "</h2></div></a></div></div></div>";
+            }
+            ViewBag.Photos = t;
 
             return View();
         }
@@ -45,55 +66,63 @@ namespace IdentitySample.Controllers
                         start = nouvelles[x].text.IndexOf("<", y);
                         if ((start - y) > 0)
                         {
-                            if (nouvelles[x].text.Substring(y, (start - y)) != "\r\n")
-                            {
-                                temp += " " + nouvelles[x].text.Substring(y, (start - y));
-                                if (temp.Count() > 450)
+                            string yupi = nouvelles[x].text.Substring(y, (start - y)).Trim();
+                            if (nouvelles[x].text.Substring(y, (start - y)) != "\r\n") 
+                            {    
+                                if (nouvelles[x].text.Substring(y, (start - y)).Trim() != "&nbsp;")
                                 {
-                                    break;
+                                    temp += " " + nouvelles[x].text.Substring(y, (start - y));
+                                    if (temp.Count() > 150)
+                                    {
+                                        temp = temp.Substring(0, 149);
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                nouvelles[x].text = temp;
+                nouvelles[x].text = temp + " ...";
             }
 
             return Json(nouvelles, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult PhotoEvement()
+        //public ActionResult PhotoEvement()
+        //{
+        //    CoeurContainer db = new CoeurContainer();
+        //    var photos = (from e in db.Evenements
+        //                  where e.DateStart >= DateTime.Now & e.Poublier == true
+        //                  orderby e.DateStart
+        //                  select new
+        //                  {
+        //                      photos = e.PrincipalPhotoEvenement,
+        //                      titre = e.TitleEvenement,
+        //                      dateStart = e.DateStart,
+        //                      dateEnd = e.DateEnd
+        //                  }).ToList();
+        //    string t = "";
+        //    for (int i = 0; i < photos.Count; i++)
+        //    {
+        //        t += "<div data-img='../tinyfilemanager.net/resources/files/" + photos[i].photos +
+        //            "' ><div><div class='cubobajatexto'></div> <a class='fotorama__select' href='/Home/Evenement?id=" + photos[i].titre + "'>" +
+        //            "<div class='alert alert-info' style=' background:#464646; background-color: rgba(91, 192, 222, 0.5);' ><div class='row'><h2>" 
+        //            + photos[i].titre + "</h1></div><div class='row'><h2>de " + photos[i].dateStart.ToLongDateString() + " au " + 
+        //            photos[i].dateEnd.ToLongDateString() + "</h2></div></a></div></div></div>";
+        //    }
+        //    return Content(t);
+        //}
+
+
+        public ActionResult Pages(string pname)
         {
             CoeurContainer db = new CoeurContainer();
-            var photos = (from e in db.Evenements
-                          where e.DateStart >= DateTime.Now & e.Poublier == true
-                          orderby e.DateStart
-                          select new
-                          {
-                              photos = e.PrincipalPhotoEvenement,
-                              titre = e.TitleEvenement,
-                              dateStart = e.DateStart,
-                              dateEnd = e.DateEnd
-                          }).ToList();
-            string t = "";
-            for (int i = 0; i < photos.Count; i++)
-            {
-                t += "<div data-img='../tinyfilemanager.net/resources/files/" + photos[i].photos +
-                    "' >" +
-                    "<div><div class='cubobajatexto'></div> <a class='fotorama__select' href='/Home/Evenement?id=" + photos[i].titre + "'>" +
-                    "<div class='alert alert-info' style=' background:#464646; background-color: rgba(91, 192, 222, 0.5);' ><div class='row'><h2>" + photos[i].titre + "</h1></div><div class='row'><h2>de " +
-                    photos[i].dateStart.ToLongDateString() + " au " + photos[i].dateEnd.ToLongDateString() + "</h2></div></a></div></div></div>";
-
-
-            }
-            return Content(t);
-        }
-
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
+            var page = (from p in db.Pages
+                        where p.Poublier == true & p.MenuName == pname
+                        select p).FirstOrDefault();
+            if (page == null) return Redirect("/");
+            ViewBag.Title = page.Title;
+            ViewBag.contenu = page.Text;
             return View();
         }
 

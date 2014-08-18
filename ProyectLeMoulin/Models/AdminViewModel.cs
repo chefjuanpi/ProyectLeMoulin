@@ -56,6 +56,7 @@ namespace IdentitySample.Models
         [Required]
         [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
         [DataType(DataType.Html)]
+        [AllowHtml]
         [Display(Name = "Text")]
         public string NouvelleText { get; set; }
 
@@ -80,6 +81,7 @@ namespace IdentitySample.Models
         [Required]
         [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
         [DataType(DataType.Html)]
+        [AllowHtml]
         [Display(Name = "Text")]
         public string Contenu { get; set; }
 
@@ -112,6 +114,7 @@ namespace IdentitySample.Models
         [Required]
         [StringLength(150, ErrorMessage = "Nom du lieu trop long, max. 150 charactéres")]
         [DataType(DataType.Text)]
+        [AllowHtml]
         [Display(Name = "Lieu :")]
         public string Lieu { get; set; }
 

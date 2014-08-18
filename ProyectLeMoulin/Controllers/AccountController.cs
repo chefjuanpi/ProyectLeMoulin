@@ -9,6 +9,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using ProyectLeMoulin.Models;
+
 
 namespace IdentitySample.Controllers
 {
@@ -76,6 +78,13 @@ namespace IdentitySample.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    CoeurContainer db = new CoeurContainer();
+                    var id = (from u in db.AspNetUsers
+                                 where u.Email == model.Email
+                                 select new { id = u.Id }).Single();
+                    string d;
+                    var userRoles = UserManager.GetRoles(id.id);
+                    if (userRoles.Contains("Admin")) return  Redirect("../Admin");
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -87,6 +96,8 @@ namespace IdentitySample.Controllers
                     return View(model);
             }
         }
+
+
 
         //
         // GET: /Account/VerifyCode

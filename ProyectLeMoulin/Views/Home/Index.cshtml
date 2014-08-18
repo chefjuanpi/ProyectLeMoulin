@@ -7,13 +7,15 @@
         <div class="col-md-8">
             <div class="fotorama" data-width="100%" data-ratio="700/467" data-max-width="100%"
                  data-nav="thumbs" data-keyboard="true">
-                @Html.Action("PhotoEvement", "Home")
+                @Html.Raw(ViewBag.Photos)
             </div>
         </div>
 
         <div class="col-md-4">
             <h2>Nouvelles</h2>
-            <div id="NContainer"></div>
+            <div id="NContainer">
+                <img class="image-preview" id="attent" src="~/Images/attent.gif" />
+            </div>
         </div>
     </div>
 </div>
@@ -45,10 +47,11 @@
     <script type="text/javascript">
         TemplateNews = Handlebars.compile($("#NewsTemplate").html());
         $(function () {
-            $.getJSON("getNews", null, function (data) {
+            $.getJSON("/Home/getNews", null, function (data) {
                 console.log(data);
                 var result = TemplateNews(data);
                 $("#NContainer").html(result);
+        
             });
         });
     </script>
