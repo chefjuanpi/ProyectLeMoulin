@@ -34,5 +34,7 @@ http://stackoverflow.com/questions/2888446/get-the-selected-option-id-with-jquer
 config security asp.net 
 http://weblogs.asp.net/gurusarkar/setting-authorization-rules-for-a-particular-page-or-folder-in-web-config
 
+relations tables entity
 
+http://smehrozalam.wordpress.com/2010/06/29/entity-framework-queries-involving-many-to-many-relationship-tables/
 
