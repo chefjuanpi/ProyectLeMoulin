@@ -2,8 +2,7 @@
     ViewBag.Title = "Page d'accueil";
 }
 
-<div class="row">
-    <div class="container">
+    <div class="row">
         <div class="col-md-8">
             <div class="fotorama" data-width="100%" data-ratio="700/467" data-max-width="100%"
                  data-nav="thumbs" data-keyboard="true">
@@ -18,38 +17,40 @@
             </div>
         </div>
     </div>
-</div>
+
 
 <br />
 <br/>
 
-<div class="row">
-    <div class="col-md-4">
-        @Html.Raw(ViewBag.Gauche)
-    </div>
-    <div class="col-md-8">
-        @Html.Raw(ViewBag.Accueil)
-    </div>
-</div>
 
-@section Scripts {
-    <script type="text/x-handlebars-template" id="NewsTemplate">
-        {{#each}}
-        <p>
-            - <b>{{titre}}</b>
-            {{text}}
-            <a class="btn btn-default" href="/Home/nouvelles&Titre={{titre}}">Plus...</a>
-        </p>
-        <br />
-        {{/each}}
-    </script>
-    <script type="text/javascript">
-        TemplateNews = Handlebars.compile($("#NewsTemplate").html());
-        $(function () {
-            $.getJSON("/Home/getNews", null, function (data) {
-                var result = TemplateNews(data);
-                $("#NContainer").html(result);
+    <div class="row">
+        <div class="col-md-3 ">
+                @Html.Raw(ViewBag.Gauche)
+        </div>
+        <div class="col-md-9">
+            @Html.Raw(ViewBag.Accueil)
+        </div>
+    </div>
+
+
+    @section Scripts {
+        <script type="text/x-handlebars-template" id="NewsTemplate">
+            {{#each}}
+            <p>
+                - <b>{{titre}}</b>
+                {{text}}
+                <a class="btn btn-default" href="/Home/nouvelles&Titre={{titre}}">Plus...</a>
+            </p>
+            <br />
+            {{/each}}
+        </script>
+        <script type="text/javascript">
+            TemplateNews = Handlebars.compile($("#NewsTemplate").html());
+            $(function () {
+                $.getJSON("/Home/getNews", null, function (data) {
+                    var result = TemplateNews(data);
+                    $("#NContainer").html(result);
+                });
             });
-        });
-    </script>
-}
+        </script>
+    }
