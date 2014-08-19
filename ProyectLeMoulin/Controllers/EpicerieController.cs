@@ -74,72 +74,36 @@ namespace ProyectLeMoulin.Controllers
         /// <param name="prod">ProductID sélectionné</param>
         /// <param name="qty">Quantité choisie</param>
         /// <returns>retourne le contenu du panier</returns>
-        public JsonResult Remplir_Le_Panier(int prod)
-        {
+        //public JsonResult Remplir_Le_Panier(int prod)
+        //{
             
             
-            //if (prod == db.Products.)
-            //{
-                var product = (from w in db.Week
-                               join p in db.Products
-                               on w.ProductId equals p.ProductId
-                               join cp in db.CategoryProduct
-                               on p.ProductId equals cp.ProductId
-                               where p.ProductId == prod
-                               join od in db.OrderDetails
-                               on w.ProductId equals od.ProductId
-                               join o in db.Orders
-                               on od.OrderId equals o.OrderId
-                               select new
-                               {
-                                    ProductId = w.ProductId,
-                                    ProductName = p.ProductName,
-                                    //Qantity = qty,
-                                    Price = w.UnitPrice,
-                                    CategoryID = cp.CategoryId
-                               }).ToList();
+        //    //if (prod == db.Products.)
+        //    //{
+        //        var product = (from w in db.Week
+        //                       join p in db.Products
+        //                       on w.ProductId equals p.ProductId
+        //                       join cp in db.CategoryProduct
+        //                       on p.ProductId equals cp.ProductId
+        //                       where p.ProductId == prod
+        //                       join od in db.OrderDetails
+        //                       on w.ProductId equals od.ProductId
+        //                       join o in db.Orders
+        //                       on od.OrderId equals o.OrderId
+        //                       select new
+        //                       {
+        //                            ProductId = w.ProductId,
+        //                            ProductName = p.ProductName,
+        //                            //Qantity = qty,
+        //                            Price = w.UnitPrice,
+        //                            CategoryID = cp.CategoryId
+        //                       }).ToList();
 
-                return Json(product, JsonRequestBehavior.AllowGet);
-            //}
-        }
+        //        return Json(product, JsonRequestBehavior.AllowGet);
+        //    //}
+        //}
 
-        [HttpPost]
-        public ActionResult Produit(Panier Supplier)
-        {
-            EpicerieEntities db = new EpicerieEntities();
-            if (Panier. == null)
-            {
-                Suppliers s = new Suppliers();
-                s.SupplierName = Supplier.SupplierName;
-                s.ContactName = Supplier.SupplierContactName;
-                s.Adress = Supplier.SupplierAdress;
-                s.E_Mail = Supplier.SupplierMail;
-                s.Phone = Supplier.SupplierPhone;
-                s.Fax = Supplier.SupplierFax;
-                s.PostalCode = Supplier.SupplierPostalCode;
-                s.Ville = Supplier.SupplierCity;
-
-                db.Suppliers.Add(s);
-                db.SaveChanges();
-            }
-            else
-            {
-                int x = Convert.ToInt16(Supplier.SupplierId);
-                var modifsupplier = (from s in db.Suppliers
-                                     where s.SupplierId == x
-                                     select s).Single();
-                modifsupplier.SupplierName = Supplier.SupplierName;
-                modifsupplier.ContactName = Supplier.SupplierContactName;
-                modifsupplier.Adress = Supplier.SupplierAdress;
-                modifsupplier.E_Mail = Supplier.SupplierMail;
-                modifsupplier.Phone = Supplier.SupplierPhone;
-                modifsupplier.Fax = Supplier.SupplierFax;
-                modifsupplier.PostalCode = Supplier.SupplierPostalCode;
-                modifsupplier.Ville = Supplier.SupplierCity;
-                db.SaveChanges();
-            }
-            return View();
-        }
+        
 
         /// <summary>
         /// Supprimer un article du panier

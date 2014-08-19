@@ -12,28 +12,12 @@
 
 <script type="text/x-handlebars-template" id="ProductsTemplate" >
     <div>
-        <div style="width:100px; height:18px; float:left">
+        <div id=Product{{ProductID}} class="row" style="width:100px; height:18px; float:left">
             <h4>Produits</h4>
             {{#each}}
-                <h6 style="height:18px;" class="product" id={{ProductID}} >{{ProductName}}</h6>
-            {{/each}}
-        </div>
-        <div style="width:35px; float:left">
-            <h4>Prix</h4>
-            {{#each}}
-                <h5 style="height:18px;" class="price" id={{ProductID}} >{{Price}}$</h5>
-            {{/each}}
-        </div>
-        <div style="width:150px; float:left">
-            <h4>Quantité</h4>
-            {{#each}}
-                <input class="quantity" id={{ProductID}} type="text" text="1" /></h6>
-            {{/each}}
-        </div>
-        <div style="width:50px; float:left">
-            <h4>OK</h4>
-            {{#each}}
-                <input class="addcart" id={{ProductID}} type="submit" value="OK" /></h6>
+                <div class="col-md-4"></div><h6 style="height:18px;" id=Name{{ProductID}} >{{ProductName}} {{Price}}$</h6></div>
+                <div class="col-md-7"><input id=Quantity{{ProductID}} type="text" value="0" /></h6></div>
+                <div class="col-md-11"><input id=Addcart{{ProductID}} type="submit" value="OK" onclick="AjouterPanier('{{ProductID}}')" /></div>
             {{/each}}
         </div>
     </div>        
@@ -41,30 +25,14 @@
 
 <script type="text/x-handlebars-template" id="CartTemplate" >
         <div><h1>Panier</h1>
-        <div style="width:100px; float:left">
+        <div id="Panier{{ProductID}}" style="width:100px; float:left">
         <h4>Produits</h4>
             {{#each}}
-                <h6 class="cartproduct" id={{ProductID}} >{{ProductName}}</h6>
+                <h6 id=Cartproduct{{ProductID}} >{{ProductName}} {{Qty}} {{Price}}$ </h6>
+                <h6 id=Cartupdate{{ProductID}} ><input type="submit" value="Modifier"</h6>
+                <h6 id=Cartdelete{{ProductID}} ><input id=cartdelete{{ProductID}} type="submit" value="Retirer"</h6>
             {{/each}}
-        </div>
-        <div style="width:100px; float:left">
-        <h4>Prix</h4>
-            {{#each}}
-                <h6 class="cartprice" id={{ProductID}} >{{Price}}$</h6>
-            {{/each}}
-        </div>
-        <div style="width:100px; float:left">
-            <h4>Retirer</h4>
-            {{#each}}
-                <h6 class="cartdelete" id={{ProductID}} ><input type="submit" value="Retirer"</h6>
-            {{/each}}
-        </div>
-        <div style="width:100px; float:left">
-            <h4>Modifier</h4>
-            {{#each}}
-                <h6 class="cartupdate" id={{ProductID}} ><input type="submit" value="Modifier"</h6>
-            {{/each}}
-        </div>
+        </div>      
     </div>  
 </script>
 
@@ -98,27 +66,16 @@
                     var result = templateProducts(data);
                     $("#ProductsOutput").html(result);
                     console.log("Hello 4");
-                    $(".addcart").click(function () {
-                        var id = this.id;
-                        console.log(this.id);
-                        console.log("Hello 5");
-                        $.getJSON("/Epicerie/Remplir_Le_Panier", { prod: id }, function (data) {
-                            //$(".quantity").val(data.qty)
-                            var result = templateCart(data);
+                    
+                    $("#Addcart('{{ProductID}}')".on("click")
+                        (function AjouterPanier(id){
+                            var qty = $("#Quantity" + id).val();
                             $("#CartOutput").html(result);
-                            console.log("Hello 6");
-                            $.getJSON("/Epicerie/Remplir_Le_Panier", { prod: id }, function (data) {
-                                $(".quantity").val(data.qty)
-                                $(".product").val(data.name);
-                                $(".price").val(data.price);
-                                console.log(data.name +" " + data.price + " " + data.qty + " " + "hello 7");
-                            });
-                        })//Remplir Panier
-                    })//addcart click
-                });//GetProducts
-            })//GetCategories                               
+                            console.log("hello 5" + " " + qty);
+                    }));//AddCart
+             });//GetProducts
+        })//GetCategories                               
     });
-
 });
 </script>
 }
