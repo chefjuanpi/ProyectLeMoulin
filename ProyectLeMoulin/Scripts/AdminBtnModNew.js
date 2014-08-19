@@ -1,5 +1,4 @@
-﻿    Templateitems = null;
-    $(function () {
+﻿    $(function () {
         //initialisation des parts couvertes de la page, et disabilite le formulaire
         $("#btnmodif").hide();
         $("#btnSupr").hide();
@@ -80,8 +79,7 @@
             if ($(this).is(":checked")) {
                 $("#save").attr("class", "btn btn-success col-md-offset-3 col-md-2");
                 $("#save").html('<i class="fa fa-save"></i><b> Enregistrer</b>');
-            }
-            else {
+            } else {
                 $("#save").attr("class", "btn btn-danger col-md-offset-3 col-md-2");
                 $("#save").html('<i class="fa fa-save"></i><b> Enregistrer sans publier</b>');
             }

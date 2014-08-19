@@ -306,7 +306,7 @@ namespace TinyFileManager.NET
                         this.objFItem.intColNum = this.getNextColNum();
                         this.objFItem.strPath = this.getUpOneDir(this.strCurrPath);
                         this.objFItem.strClassType = "dir";
-                        this.objFItem.strDeleteLink = "<a class=\"btn erase-button top-right disabled\" title=\"Erase\"><i class=\"icon-trash\"></i></a>";
+                        this.objFItem.strDeleteLink = "<a class=\"btn btn-default erase-button top-right disabled\" title=\"Erase\"><i class=\"glyphicon glyphicon-trash\"></i></a>";
                         this.objFItem.strThumbImage = "img/ico/folder_return.png";
                         this.objFItem.strLink = "<a title=\"Open\" href=\"" + this.strCurrLink + "&currpath=" + this.objFItem.strPath + "\"><img class=\"directory-img\" src=\"" + this.objFItem.strThumbImage + "\" alt=\"folder\" /><h3>..</h3></a>";
                         this.arrLinks.Add(objFItem);
@@ -324,16 +324,17 @@ namespace TinyFileManager.NET
                         this.objFItem.strClassType = "dir";
                         if (this.objConfig.boolAllowDeleteFolder)
                         {
-                            this.objFItem.strDeleteLink = "<a href=\"" + this.strCurrLink + "&cmd=delfolder&folder=" + this.objFItem.strPath + "&currpath=" + this.strCurrPath + "\" class=\"btn erase-button top-right\" onclick=\"return confirm('Are you sure to delete the folder and all the objects in it?');\" title=\"Erase\"><i class=\"icon-trash\"></i></a>";
+                            this.objFItem.strDeleteLink = "<a href=\"" + this.strCurrLink + "&cmd=delfolder&folder=" + this.objFItem.strPath + "&currpath=" + this.strCurrPath + "\" class=\"btn btn-default erase-button top-right\" onclick=\"return confirm('Are you sure to delete the folder and all the objects in it?');\" title=\"Erase\"><i class=\"glyphicon glyphicon-trash\"></i></a>";
                         }
                         else
                         {
-                            this.objFItem.strDeleteLink = "<a class=\"btn erase-button top-right disabled\" title=\"Erase\"><i class=\"icon-trash\"></i></a>";
+                            this.objFItem.strDeleteLink = "<a class=\"btn btn-default erase-button top-right disabled\" title=\"Erase\"><i class=\"glyphicon glyphicon-trash\"></i></a>";
                         }
                         this.objFItem.strThumbImage = "img/ico/folder.png";
                         this.objFItem.strLink = "<a title=\"Open\" href=\"" + this.strCurrLink + "&currpath=" + this.objFItem.strPath + "\"><img class=\"directory-img\" src=\"" + this.objFItem.strThumbImage + "\" alt=\"folder\" /><h3>" + this.objFItem.strName + "</h3></a>";
                         this.arrLinks.Add(objFItem);
                     }
+
 
                     // load files
                     arrFiles = Directory.GetFiles(this.objConfig.strUploadPath + this.strCurrPath);
@@ -385,11 +386,11 @@ namespace TinyFileManager.NET
                             // get delete link
                             if (this.objConfig.boolAllowDeleteFile)
                             {
-                                this.objFItem.strDeleteLink = "<a href=\"" + this.strCurrLink + "&cmd=delfile&file=" + this.objFItem.strPath + "&currpath=" + this.strCurrPath + "\" class=\"btn erase-button\" onclick=\"return confirm('Are you sure to delete this file?');\" title=\"Erase\"><i class=\"icon-trash\"></i></a>";
+                                this.objFItem.strDeleteLink = "<a href=\"" + this.strCurrLink + "&cmd=delfile&file=" + this.objFItem.strPath + "&currpath=" + this.strCurrPath + "\" class=\"btn btn-default erase-button\" onclick=\"return confirm('Are you sure to delete this file?');\" title=\"Erase\"><i class=\"glyphicon glyphicon-trash\"></i></a>";
                             }
                             else
                             {
-                                this.objFItem.strDeleteLink = "<a class=\"btn erase-button disabled\" title=\"Erase\"><i class=\"icon-trash\"></i></a>";
+                                this.objFItem.strDeleteLink = "<a class=\"btn btn-default erase-button disabled\" title=\"Erase\"><i class=\"glyphicon glyphicon-trash\"></i></a>";
                             }
                             // get thumbnail image
                             if (this.objFItem.boolIsImage)
@@ -418,11 +419,11 @@ namespace TinyFileManager.NET
                             this.objFItem.strDownFormOpen = "<form action=\"dialog.aspx?cmd=download&file=" + this.objFItem.strPath + "\" method=\"post\" class=\"download-form\">";
                             if (this.objFItem.boolIsImage)
                             {
-                                this.objFItem.strPreviewLink = "<a class=\"btn preview\" title=\"Preview\" data-url=\"" + this.objConfig.strUploadURL + "/" + this.objFItem.strPath.Replace('\\', '/') + "\" data-toggle=\"lightbox\" href=\"#previewLightbox\"><i class=\"icon-eye-open\"></i></a>";
+                                this.objFItem.strPreviewLink = "<a class=\"btn btn-default  preview\" title=\"Preview\" data-url=\"" + this.objConfig.strUploadURL + "/" + this.objFItem.strPath.Replace('\\', '/') + "\" data-toggle=\"lightbox\" ><i class=\"glyphicon glyphicon-eye-open\"></i></a>";
                             }
                             else
                             {
-                                this.objFItem.strPreviewLink = "<a class=\"btn preview disabled\" title=\"Preview\"><i class=\"icon-eye-open\"></i></a>";
+                                this.objFItem.strPreviewLink = "<a class=\"btn btn-default preview disabled\" title=\"Preview\"><i class=\"glyphicon glyphicon-eye-open\"></i></a>";
                             }
                             if (strProfile == "notinymce")
                             { 
@@ -459,10 +460,10 @@ namespace TinyFileManager.NET
             string strTempPath = "";
             int intCount = 0;
 
-            strRet = "<li><a href=\"" + this.strCurrLink + "&currpath=\"><i class=\"icon-home\"></i></a>";
+            strRet = "<li><a href=\"" + this.strCurrLink + "&currpath=\"><i class=\"glyphicon glyphicon-home\"></i></a>";
             arrFolders = this.strCurrPath.Split('\\');
 
-            foreach (string strFolder in arrFolders) 
+            foreach (string strFolder in arrFolders)
             {
                 if (strFolder != "")
                 {
@@ -599,7 +600,7 @@ namespace TinyFileManager.NET
         {
             if (intColNum == 1)
             {
-                return "<div class=\"row-fluid\">";
+                return "<div class=\"row\">";
             }
             else
             {
