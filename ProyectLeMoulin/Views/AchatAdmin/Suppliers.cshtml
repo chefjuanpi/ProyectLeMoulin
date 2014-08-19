@@ -97,7 +97,7 @@
 
             </table>
         </div>
-        @Html.HiddenFor(s => s.SupplierId , new { id = "new123" })
+        @Html.HiddenFor(s => s.SupplierId , new { @id="new123" })
     </div>
     <br />
     <div class="row">
@@ -112,6 +112,11 @@
     @Scripts.Render("~/bundles/AdminButonsV2")
     <script>
         $(function () {
+            $.ajaxSetup({
+                // Disable caching of AJAX responses */
+                cache: false
+            });
+
             $("#btnSupr").click(function () {
                 $("#dialog-confirm").dialog({
                     resizable: false,

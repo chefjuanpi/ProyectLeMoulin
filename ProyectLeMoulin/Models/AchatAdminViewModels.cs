@@ -7,7 +7,7 @@ namespace EpicerieModel.Models
 {
     public class SupplierViewModel
     {
-        public Guid SupplierId { get; set; }
+        public string SupplierId { get; set; }
 
         [Required]
         [StringLength(150, ErrorMessage = "Nom trop long, max. 150 charactéres")]

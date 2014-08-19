@@ -49,7 +49,7 @@ namespace ProyectLeMoulin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Supplier(SupplierViewModel Supplier)
+        public ActionResult Suppliers(SupplierViewModel Supplier)
         {
             EpicerieEntities db = new EpicerieEntities();
             if (Supplier.SupplierId == null)
@@ -83,6 +83,7 @@ namespace ProyectLeMoulin.Controllers
                 modifsupplier.Ville = Supplier.SupplierCity;
                 db.SaveChanges();
             }
+            getSuppliers();
             return View();
         }
 
