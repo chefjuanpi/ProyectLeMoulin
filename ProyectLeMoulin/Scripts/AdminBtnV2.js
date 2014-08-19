@@ -26,8 +26,10 @@ $(function () {
         $("#boutons").show();
         $("#btnmodif").hide();
         $("#btnSupr").hide();
-        $("#Formulaire").hide();
         $("#btnAnuler").hide();
+        $("#Formulaire *").attr("disabled", "disabled").off('click');
+        $("#Formulaire").hide();
+        $("#ItemsList option[value='0']").prop('selected', true);
     });
 
     Templateitems = Handlebars.compile($("#itemsTemplate").html());
