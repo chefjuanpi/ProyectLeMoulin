@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ProyectLeMoulin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AchatAdminController : Controller
     {
         //
@@ -51,6 +52,7 @@ namespace ProyectLeMoulin.Controllers
         [HttpPost]
         public ActionResult Suppliers(SupplierViewModel Supplier)
         {
+            ViewBag.Title = "Fournisseurs";
             EpicerieEntities db = new EpicerieEntities();
             if (Supplier.SupplierId == null)
             {

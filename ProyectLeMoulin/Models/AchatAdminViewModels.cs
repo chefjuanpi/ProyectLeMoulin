@@ -5,8 +5,12 @@ using System.Web.Mvc;
 
 namespace EpicerieModel.Models
 {
+    /// <summary>
+    /// Modèle des données contenu dans Supplier
+    /// </summary>
     public class SupplierViewModel
     {
+
         public string SupplierId { get; set; }
 
         [Required]

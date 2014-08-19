@@ -1,6 +1,6 @@
 ﻿@model EpicerieModel.Models.SupplierViewModel
-@{
-    ViewBag.Title = "Fournisseurs";
+
+@{   
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
 
@@ -11,25 +11,33 @@
         <h3>@ViewBag.Message</h3>
     </div>
 </div>
+
 <br />
+
 <p>
     Selectionner un fournisseur dans la liste derulante pour le voir et le modifier, ou cliquer sur le bouton
     nouveau pour en ajouter un.
 </p>
+
 <div class="row">
     @Html.Partial("_AdminButonSansMCE")
 </div>
+
 <br />
 
 @using (Html.BeginForm("Suppliers", "AchatAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", 
     @id="Formulaire" }))
 {
+    
     @Html.AntiForgeryToken()
     <hr />
+    
    @Html.ValidationSummary("", new { @class = "text-danger" })
+    
     <div class="row">
         <div class="input-group">
             <table>
+
                 <tr>
                     <td>
                         @Html.LabelFor(s => s.SupplierName, new { @class = "input-group-addon", @style="width:160px" })
@@ -38,6 +46,7 @@
                         @Html.TextBoxFor(s => s.SupplierName, new { @class = "form-control", @id="name" })
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         @Html.LabelFor(s => s.SupplierContactName, new { @class = "input-group-addon", @style="width:160px" })
@@ -46,6 +55,7 @@
                         @Html.TextBoxFor(s => s.SupplierContactName, new { @class = "form-control", @id="contact" })
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         @Html.LabelFor(s => s.SupplierPhone, new { @class = "input-group-addon", @style="width:160px" })
@@ -54,6 +64,7 @@
                         @Html.TextBoxFor(s => s.SupplierPhone, new { @class = "form-control", @id="phone" })
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         @Html.LabelFor(s => s.SupplierFax, new { @class = "input-group-addon", @style="width:160px" })
@@ -62,6 +73,7 @@
                         @Html.TextBoxFor(s => s.SupplierFax, new { @class = "form-control", @id="fax" })
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         @Html.LabelFor(s => s.SupplierMail, new { @class = "input-group-addon", @style="width:160px" })
@@ -70,6 +82,7 @@
                        @Html.TextBoxFor(s => s.SupplierMail, new { @class = "form-control", @id="mail" })
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         @Html.LabelFor(s => s.SupplierAdress, new { @class = "input-group-addon", @style="width:160px" })
@@ -78,6 +91,7 @@
                         @Html.TextBoxFor(s => s.SupplierAdress, new { @class = "form-control", @id="adress" })
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         @Html.LabelFor(s => s.SupplierCity, new { @class = "input-group-addon", @style="width:160px" })
@@ -86,6 +100,7 @@
                         @Html.TextBoxFor(s => s.SupplierCity, new { @class = "form-control", @id="city" })
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         @Html.LabelFor(s => s.SupplierPostalCode, new { @class = "input-group-addon", @style="width:160px" })
@@ -97,23 +112,30 @@
 
             </table>
         </div>
-        @Html.HiddenFor(s => s.SupplierId , new { @id="new123" })
     </div>
+    
     <br />
+    
     <div class="row">
         <button type="submit" class="btn btn-success col-md-offset-3 col-md-2" id="save">
             <i class="fa fa-save"></i><b> Enregistrer </b>
         </button>
     </div>
+
+    @Html.HiddenFor(s => s.SupplierId, new { @id = "new123" })
 }
 
 @section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/AdminButonsV2")
+
     <script>
+
         $(function () {
+
             $.ajaxSetup({
-                // Disable caching of AJAX responses */
+                // Disable caching of AJAX responses
                 cache: false
             });
 
@@ -123,30 +145,37 @@
                     height: 200,
                     modal: true,
                     buttons: {
+
                         "Effacer": function () {
                             var x = $("#new123").val();
                             console.log(x);
                             window.open("/AchatAdmin/delSupplier?nID=" + x, "_self");
                             $(this).dialog("close");
                         },
-                        Anuler: function () {
+
+                        "Annuler": function () {
                             $(this).dialog("close");
                         }
                     }
-                });
-            });
+                }); // Fin dialog
+            }); // Fin btnSupr.click
             
             Templateitems = Handlebars.compile($("#itemsTemplate").html());
+
             $.getJSON("getSuppliers", null, function (data) {
+
                 var result = Templateitems(data);
                 $("#ItemsList").html(result);
+
                 $(".items").change(function () {
                     var id = $(this).children(":selected").attr("id");
+
                     if (id != 0) {
                         $("#btnmodif").show();
                         $("#btnSupr").show();
                         $("#Formulaire").show();
                         $("#new123").val(id);
+
                         $.getJSON("getSupplierDetails", { SupplierId: id }, function (data) {
                             $("#name").val(data.Nom);
                             $("#contact").val(data.contact);
@@ -156,11 +185,13 @@
                             $("#fax").val(data.fax);
                             $("#city").val(data.ville);
                             $("#postalcode").val(data.codepostal);
-                        });
-                    }
+                        }); // Fin getSupplierDetails
+
+                    } 
                     else $("#btnAnuler").click();
-                });
-            });
-        });
+
+                }); // Fin items .change
+            }); // Fin getSuppliers
+        }); // Fin des functions
     </script>
 }
