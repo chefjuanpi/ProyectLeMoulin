@@ -51,6 +51,7 @@
         //parametres de ouverture du tinymce
         tfm_path = '/tinyfilemanager.net';
         tinymce.init({
+            language : 'fr_FR',
             selector: "textarea#elm1",
             theme: "modern",
             height: 400,

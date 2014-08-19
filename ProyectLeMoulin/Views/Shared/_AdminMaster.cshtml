@@ -9,7 +9,12 @@
     @Styles.Render("~/Content/admincss")
     <link href="~/Content/fullcalendar.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/jquery")
-
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/AdminScript")
+    @Scripts.Render("~/bundles/AdminScript2")
+    @Scripts.Render("~/bundles/handlebars")
+    @RenderSection("scripts", required: false)
 
     <meta name="description" content="page de administration du site" />
 </head>
@@ -357,12 +362,7 @@
             <!-- /#wrapper -->
             <!-- Core Scripts - Include with every page -->
 
-    @Scripts.Render("~/bundles/jquery-ui")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/AdminScript")
-    @Scripts.Render("~/bundles/AdminScript2")
-    @Scripts.Render("~/bundles/handlebars")
-                @RenderSection("scripts", required:false)
+
             <!-- Page-Level Plugin Scripts - Blank -->
             <!-- SB Admin Scripts - Include with every page -->
             <!-- Page-Level Demo Scripts - Blank - Use for reference -->
