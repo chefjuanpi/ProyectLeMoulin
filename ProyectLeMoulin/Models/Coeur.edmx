@@ -84,6 +84,14 @@
           <Property Name="BlogId" Type="int" Nullable="false" />
           <Property Name="PictureId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Page_Section">
+          <Key>
+            <PropertyRef Name="idpage" />
+            <PropertyRef Name="idSection" />
+          </Key>
+          <Property Name="idpage" Type="int" Nullable="false" />
+          <Property Name="idSection" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Pages">
           <Key>
             <PropertyRef Name="PageID" />
@@ -96,6 +104,14 @@
           <Property Name="Principal" Type="bit" Nullable="false" />
           <Property Name="SousMenu" Type="int" />
           <Property Name="Poublier" Type="bit" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="idSection" />
+          </Key>
+          <Property Name="idSection" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Contenu" Type="varchar(max)" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_AppointmentDiary_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
@@ -157,6 +173,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Page_Section_Pages">
+          <End Role="Pages" Type="Self.Pages" Multiplicity="1" />
+          <End Role="Page_Section" Type="Self.Page_Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pages">
+              <PropertyRef Name="PageID" />
+            </Principal>
+            <Dependent Role="Page_Section">
+              <PropertyRef Name="idpage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Page_Section_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="Page_Section" Type="Self.Page_Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="idSection" />
+            </Principal>
+            <Dependent Role="Page_Section">
+              <PropertyRef Name="idSection" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Pages_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="Pages" Type="Self.Pages" Multiplicity="*" />
@@ -176,7 +216,9 @@
           <EntitySet Name="Evenements" EntityType="Self.Evenements" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nouvelles" EntityType="Self.Nouvelles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NouvellesPicture" EntityType="Self.NouvellesPicture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Page_Section" EntityType="Self.Page_Section" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pages" EntityType="Self.Pages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AppointmentDiary_AspNetUsers" Association="Self.FK_AppointmentDiary_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AppointmentDiary" EntitySet="AppointmentDiary" />
@@ -196,6 +238,14 @@
           <AssociationSet Name="FK_Nouvelles_AspNetUsers" Association="Self.FK_Nouvelles_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Nouvelles" EntitySet="Nouvelles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Page_Section_Pages" Association="Self.FK_Page_Section_Pages">
+            <End Role="Pages" EntitySet="Pages" />
+            <End Role="Page_Section" EntitySet="Page_Section" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Page_Section_Section" Association="Self.FK_Page_Section_Section">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Page_Section" EntitySet="Page_Section" />
           </AssociationSet>
           <AssociationSet Name="FK_Pages_AspNetUsers" Association="Self.FK_Pages_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -237,6 +287,11 @@
           <AssociationSet Name="FK_Pages_AspNetUsers" Association="IdentitySample.FK_Pages_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Page" EntitySet="Pages" />
+          </AssociationSet>
+          <EntitySet Name="Sections" EntityType="IdentitySample.Section" />
+          <AssociationSet Name="Page_Section" Association="IdentitySample.Page_Section">
+            <End Role="Page" EntitySet="Pages" />
+            <End Role="Section" EntitySet="Sections" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AppointmentDiary">
@@ -402,6 +457,7 @@
           <Property Name="SousMenu" Type="Int32" />
           <Property Name="Poublier" Type="Boolean" />
           <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_Pages_AspNetUsers" FromRole="Page" ToRole="AspNetUser" />
+          <NavigationProperty Name="Sections" Relationship="IdentitySample.Page_Section" FromRole="Page" ToRole="Section" />
         </EntityType>
         <Association Name="FK_Pages_AspNetUsers">
           <End Type="IdentitySample.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -414,6 +470,19 @@
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="idSection" />
+          </Key>
+          <Property Name="idSection" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Contenu" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pages" Relationship="IdentitySample.Page_Section" FromRole="Section" ToRole="Page" />
+        </EntityType>
+        <Association Name="Page_Section">
+          <End Type="IdentitySample.Page" Role="Page" Multiplicity="*" />
+          <End Type="IdentitySample.Section" Role="Section" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -519,6 +588,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="IdentitySample.Section">
+              <MappingFragment StoreEntitySet="Section">
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Contenu" ColumnName="Contenu" />
+                <ScalarProperty Name="idSection" ColumnName="idSection" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Page_Section" TypeName="IdentitySample.Page_Section" StoreEntitySet="Page_Section">
+            <EndProperty Name="Section">
+              <ScalarProperty Name="idSection" ColumnName="idSection" />
+            </EndProperty>
+            <EndProperty Name="Page">
+              <ScalarProperty Name="PageID" ColumnName="idpage" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

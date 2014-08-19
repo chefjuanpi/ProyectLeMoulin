@@ -32,5 +32,6 @@ namespace ProyectLeMoulin.Models
         public DbSet<NouvellesPicture> NouvellesPictures { get; set; }
         public DbSet<Evenement> Evenements { get; set; }
         public DbSet<Page> Pages { get; set; }
+        public DbSet<Section> Sections { get; set; }
     }
 }

@@ -37,6 +37,16 @@ namespace IdentitySample.Controllers
             }
             ViewBag.Photos = t;
 
+            ViewBag.Accueil = (from s in db.Sections
+                                   from p in s.Pages
+                                   where p.MenuName == "Accueil" & s.Nom == "AccueilContenu"
+                                   select s.Contenu).Single();
+
+            var x = (from s in db.Sections
+                              from p in s.Pages
+                              where p.MenuName == "Accueil" & s.Nom == "AccueilGauche"
+                              select s.Contenu).Single();
+            ViewBag.Gauche = "<h2>Suivez-Nous</h2>" + x;
             return View();
         }
 

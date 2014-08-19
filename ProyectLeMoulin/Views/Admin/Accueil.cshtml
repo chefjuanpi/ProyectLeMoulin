@@ -1,12 +1,11 @@
 ﻿@model IdentitySample.Models.AccueilViewModel
 @{
-    ViewBag.Title = "Modifier pages d'accueil";
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Pages", "Admin", FormMethod.Post, new
+@using (Html.BeginForm("Accueil", "Admin", FormMethod.Post, new
 {
     @class = "form-horizontal",
     role = "form",
@@ -18,8 +17,9 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
     <div class="input-group row">
-        @Html.LabelFor(m => m.Gauche, new { @class = "input-group-addon" })
-        @Html.TextAreaFor(m => m.Gauche, new { @class = "col-md-3 col-xs-3" })
+        @Html.LabelFor(m => m.Gauche, new { @for="social" })
+        @Html.TextAreaFor(m => m.Gauche, new { @class = "col-md-4 col-xs-4 form-control", @rows = "3", @id = "social"})
+        <p class="help-block">Coller ici le code Facebook pour lier la page, pour obtenir le code click <a href="https://developers.facebook.com/docs/plugins/like-box-for-pages " target="_blank">ICI</a>, il est plus simple prend l'option Iframe</p>
     </div>
     <br />
 
@@ -27,13 +27,58 @@
     <br />
 
     <div class="row">
-        @Html.TextAreaFor(m => m.Contenu, new { @id = "elm1", @name = "area", @class = "col-md-9 col-xs-9" })
+        @Html.LabelFor(m => m.Contenu, new { @for = "elm1" })
+        <textarea id="elm1" class="col-md-9 col-xs-9" name="Contenu">@Html.Raw(ViewBag.TinyAccueil)</textarea>
+
     </div>
     <br />
     <br />
     <div class="row alert alert-info">
-        <button type="submit" class="btn btn-danger col-md-offset-3 col-md-2" id="save">
-            <i class="fa fa-save"></i><b> Enregistrer sans publier</b>
+        <button type="submit" class="btn btn-success col-md-2" id="save">
+            <i class="fa fa-save"></i><b> Enregistrer les changements</b>
         </button>
     </div>
+    
+}
+
+@section Scripts {
+    <script type="text/javascript" src="../Content/plugins/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+
+            $("#social").html("@ViewBag.Gauche");
+            //parametres de ouverture du tinymce
+            tfm_path = '/tinyfilemanager.net';
+            tinymce.init({
+                language: 'fr_FR',
+                selector: "textarea#elm1",
+                theme: "modern",
+                height: 400,
+                plugins: [
+                     "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+                     "searchreplace wordcount visualblocks visualchars code insertdatetime media nonbreaking",
+                     "save table contextmenu directionality emoticons template paste textcolor "
+                ],
+                toolbar: "print preview searchreplace | undo redo paste | styleselect | bold italic underline | upload |" +
+                " alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink " +
+                "anchor image media | forecolor backcolor emoticons charmap hr | insertdatetime nonbreaking table |  pagebreak " +
+                " visualblocks visualchars code  ",
+                style_formats: [
+                     { title: 'Bold text', inline: 'b' },
+                     { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },
+                     { title: 'Red header', block: 'h1', styles: { color: '#ff0000' } },
+                     { title: 'Example 1', inline: 'span', classes: 'example1' },
+                     { title: 'Example 2', inline: 'span', classes: 'example2' },
+                     { title: 'Table styles' },
+                     { title: 'Table row 1', selector: 'tr', classes: 'tablerow1' }
+                ]
+            });
+
+
+
+
+
+        });
+</script>
 }

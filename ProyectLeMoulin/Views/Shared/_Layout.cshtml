@@ -11,6 +11,11 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/handlebars")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: false });
+        });
+    </script>
 </head>
 <body>
     <!-- Google Tag Manager -->

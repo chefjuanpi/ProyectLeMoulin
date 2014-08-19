@@ -14,6 +14,11 @@ namespace ProyectLeMoulin.Models
     
     public partial class Page
     {
+        public Page()
+        {
+            this.Sections = new HashSet<Section>();
+        }
+    
         public int PageID { get; set; }
         public string MenuName { get; set; }
         public string UserId { get; set; }
@@ -24,5 +29,6 @@ namespace ProyectLeMoulin.Models
         public Nullable<bool> Poublier { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual ICollection<Section> Sections { get; set; }
     }
 }

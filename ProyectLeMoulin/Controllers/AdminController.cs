@@ -40,35 +40,48 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        public ActionResult Accueil()
+        {
+            ViewBag.Title = "Modifier la page d'accueil";
+            ViewBag.Message = "Edition de la page accueil";
+
+            CoeurContainer db = new CoeurContainer();
+
+            ViewBag.TinyAccueil = (from s in db.Sections
+                               from p in s.Pages
+                               where p.MenuName == "Accueil" & s.Nom == "AccueilContenu"
+                               select s.Contenu).Single();
+
+            ViewBag.Gauche = (from s in db.Sections
+                              from p in s.Pages
+                              where p.MenuName == "Accueil" & s.Nom == "AccueilGauche"
+                              select s.Contenu).Single();
+            return View();
+        }
+
         // POST: //enregistrer changements dans la pages d'accueil
         [HttpPost]
         public async Task<ActionResult> Accueil(AccueilViewModel page)
         {
-            //CoeurContainer db = new CoeurContainer();
-            //string utilisateur = User.Identity.Name;
-            //string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            CoeurContainer db = new CoeurContainer();
 
-            //var Section = (from n in db.Pages
-            //               join ps in db.Page_Section
-            //               on n.PageID equals ps.idpage
+            var Gauche = (from s in db.Sections
+                          from p in s.Pages
+                          where p.MenuName == "Accueil" & s.Nom == "AccueilGauche"
+                          select s).Single();
+            
+            var contenu = (from s in db.Sections
+                           from p in s.Pages
+                           where p.MenuName == "Accueil" & s.Nom == "AccueilContenu"
+                           select s).Single();
 
+            Gauche.Contenu = page.Gauche;
+            contenu.Contenu = page.Contenu;
 
+            await db.SaveChangesAsync();
 
-            //                   select n).Single();
-            //modAccueil.UserId = guid;
-            //    modPage.Title = page.Titre;
-            //    modPage.Text = page.Contenu;
-            //    modPage.MenuName = page.MenuName;
-            //    modPage.Poublier = page.Publier;
-            //    if (page.Principal == false)
-            //    {
-            //        modPage.SousMenu = page.menuParent;
-            //    }
-            //    else
-            //    {
-            //        modPage.SousMenu = null;
-            //    }
-            //    await db.SaveChangesAsync();
+            ViewBag.TinyAccueil = page.Contenu;
+            ViewBag.Gauche = page.Gauche;
             return View();
         }
 

@@ -14,6 +14,11 @@
     @Scripts.Render("~/bundles/AdminScript")
     @Scripts.Render("~/bundles/AdminScript2")
     @Scripts.Render("~/bundles/handlebars")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: false });
+        });
+    </script>
     @RenderSection("scripts", required: false)
 
     <meta name="description" content="page de administration du site" />
@@ -295,8 +300,11 @@
                         </li>
 
                         <li>
-                            <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file fa-fw"></i> Pages</a>
-                        </li>
+                            <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Pages<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file fa-fw"></i> Pages</a>
+                                </li>
 
                         <li>
                             <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Groupe de achats<span class="fa arrow"></span></a>

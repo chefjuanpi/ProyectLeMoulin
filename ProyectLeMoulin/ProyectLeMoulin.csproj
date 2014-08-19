@@ -720,6 +720,9 @@
     <Compile Include="Models\Page.cs">
       <DependentUpon>Coeur.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Section.cs">
+      <DependentUpon>Coeur.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Shared.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Models\OrderDetails.cs">

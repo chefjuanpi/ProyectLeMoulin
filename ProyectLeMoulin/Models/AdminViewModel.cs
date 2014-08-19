@@ -162,7 +162,7 @@ namespace IdentitySample.Models
         [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
         [DataType(DataType.Html)]
         [AllowHtml]
-        [Display(Name = "Code de Facebook")]
+        [Display(Name = "Code du facebook")]
         public string Gauche { get; set; }
     }
 }

@@ -18,6 +18,8 @@
         <AssociationConnector Association="IdentitySample.FK_Evenements_AspNetUsers" />
         <EntityTypeShape EntityType="IdentitySample.Page" Width="1.5" PointX="3" PointY="9.375" />
         <AssociationConnector Association="IdentitySample.FK_Pages_AspNetUsers" />
+        <EntityTypeShape EntityType="IdentitySample.Section" Width="1.5" PointX="5.25" PointY="10" />
+        <AssociationConnector Association="IdentitySample.Page_Section" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
