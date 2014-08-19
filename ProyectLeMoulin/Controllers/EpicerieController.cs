@@ -13,9 +13,11 @@ using System.Web.Security;
 
 namespace ProyectLeMoulin.Controllers
 {
-
+    
     public class EpicerieController : Controller
     {
+        EpicerieEntities db = new EpicerieEntities();
+        
         public decimal Total = 0;
         public decimal TotTaxe = 0;
         public decimal GrandTot = 0;
@@ -32,7 +34,7 @@ namespace ProyectLeMoulin.Controllers
         //Récupérer les catégories de produits
         public JsonResult GetCategories()
         {
-            EpicerieEntities db = new EpicerieEntities();
+            //EpicerieEntities db = new EpicerieEntities();
             var category = (from c in db.Categories
                             select new
                             {
@@ -46,7 +48,7 @@ namespace ProyectLeMoulin.Controllers
         //Récupérer les produits selon la catégorie choisie
         public JsonResult GetProduits(int cat)
         {
-            EpicerieEntities db = new EpicerieEntities();
+            //EpicerieEntities db = new EpicerieEntities();
             //if (cat == db.Categories.CategoryId)
             //{
             
@@ -67,10 +69,10 @@ namespace ProyectLeMoulin.Controllers
         }
 
         //Remplir le Panier
-        public JsonResult Remplir_Le_Panier(int prod)
+        public JsonResult Remplir_Le_Panier(int prod, int qty)
         {
             Panier x = new Panier();
-            EpicerieEntities db = new EpicerieEntities();
+            //EpicerieEntities db = new EpicerieEntities();
             //if (produit == db.Products.ProductName)
             //{
                 
@@ -80,25 +82,32 @@ namespace ProyectLeMoulin.Controllers
                                join cp in db.CategoryProduct
                                on p.ProductId equals cp.ProductId
                                where p.ProductId == prod
-                               select new
+                               select new Panier()
                                {
                                     ProductID = w.ProductId,
                                     ProductName = p.ProductName,
-                                    //x.Qantity = w.Quantity,
+                                    Qantity = qty,
                                     Price = w.UnitPrice,
                                     CategoryID = cp.CategoryId
-                                    //x.TVQ = p.TVQ,
-                                    //x.TPS = p.TPS,
-                                    //x.Total = 0,
-                                    //x.Quebec = Quebec,
-                                    //x.Canada = Canada
                                }).ToList();
-                //Calculer_Prix_Total(p.TVQ, p.TPS, p.Price);
 
                 return Json(product, JsonRequestBehavior.AllowGet);
         }
 
-        
+        //public ActionResult delArticle(int prod)
+        //{
+        //    EpicerieEntities db = new EpicerieEntities();
+        //    var delsupplier = (from a in Panier
+        //                       where a.ProductId == prod
+        //                       select new Panier()
+        //                       ).ToList();
+        //    if (delArticle != null)
+        //    {
+        //        a.Remove(delArticle);
+        //        a.SaveChanges();
+        //    }
+        //    return Redirect("/Epicerie/Remplir_Le_Panier");
+        //}
 
         //public void Calculer_Prix_Total(bool tvq, bool tps, decimal price)
         //{
