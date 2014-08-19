@@ -97,23 +97,28 @@
 
 
     function AjouterPanier(id) {
+        var produit;
+        
         console.log(id);
         var nom = $("#Name" + id).html();
         var format = $("#Format" + id).html();
-        var prix = $("#Price" + id).html(); //enlever le $
+        var prix = $("#Price" + id).html();
         var qty = $("#Quantity" + id).val();
         console.log("hello 5 " + "," + nom + "," + format + "," + prix + "," + qty);
 
-        var produit = {
+        produit = {
             id:     id,
             nom:    nom,
             format: format,
             prix:   prix,
-            qty:    qty
+            qty: qty
         };
 
+        var total = total + produit.id;
         var result = templateCart(produit);
+        
         $("#CartOutput").append(result);
+        //$("#AddProduct'{{ProductID}}'").hide;
     }
 </script>
 }
