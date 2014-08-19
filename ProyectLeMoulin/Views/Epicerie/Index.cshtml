@@ -30,18 +30,6 @@
                 <input class="quantity" id={{ProductID}} type="text" text="1" /></h6>
             {{/each}}
         </div>
-        <div style="width:30px; float:left">
-            <h4>+</h4>
-            {{#each}}
-                <input class="addition" id={{ProductID}} type="submit" value="+" /></h6>
-            {{/each}}
-        </div>
-        <div style="width:30px; float:left">
-            <h4>-</h4>
-            {{#each}}
-                <input class="soustraction" id={{ProductID}} type="submit" value="-" /></h6>
-            {{/each}}
-        </div>
         <div style="width:50px; float:left">
             <h4>OK</h4>
             {{#each}}
@@ -106,8 +94,7 @@
                 var id = $(this).children(":selected").attr("id");
                 console.log(id);
                 $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
-                    $(".quantity").val(data.qty)
-                    console.log(data.length + "produits dans la cat " + id);
+                    console.log(data.length + " produits dans la cat " + id);
                     var result = templateProducts(data);
                     $("#ProductsOutput").html(result);
                     console.log("Hello 4");
@@ -116,11 +103,18 @@
                         console.log(this.id);
                         console.log("Hello 5");
                         $.getJSON("/Epicerie/Remplir_Le_Panier", { prod: id }, function (data) {
+                            //$(".quantity").val(data.qty)
                             var result = templateCart(data);
                             $("#CartOutput").html(result);
                             console.log("Hello 6");
-                        }) //Remplir Panier
-                    })//addcart click               
+                            $.getJSON("/Epicerie/Remplir_Le_Panier", { prod: id }, function (data) {
+                                $(".quantity").val(data.qty)
+                                $(".product").val(data.name);
+                                $(".price").val(data.price);
+                                console.log(data.name +" " + data.price + " " + data.qty + " " + "hello 7");
+                            });
+                        })//Remplir Panier
+                    })//addcart click
                 });//GetProducts
             })//GetCategories                               
     });
@@ -133,13 +127,13 @@
         <div id="Message"></div>
     </div>
     <div class="row">
-        <td><div id="CategoriesOutput" class="col-md-4">Cat/gories</div></td>
+        <div id="CategoriesOutput" class="col-md-4">Cat/gories</div>
  
-        <td><div id="ProductsOutput" class="col-md-5"></div></td>
+        <div id="ProductsOutput" class="col-md-5"></div>
     </div>
     <hr />
     <div class="row">
-        <td><div id="CartOutput" class="col-md-5" ></div></td>
+        <div id="CartOutput" class="col-md-5" ></div>
     </div>   
 
 
@@ -150,91 +144,4 @@
 
 
 
-    <script>
-        $(function () {
-            $("#btnSupr").click(function () {
-                $("#dialog-confirm").dialog({
-                    resizable: false,
-                    height: 200,
-                    modal: true,
-                    buttons: {
-                        "Effacer": function () {
-                            var x = $("#new123").val();
-                            console.log(x);
-                            window.open("/Admin/delEvenement?eID=" + x, "_self");
-                            $(this).dialog("close");
-                        },
-                        Anuler: function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-            });
-
-            $('#DateStart').datetimepicker({
-                lang: "fr",
-                format: 'Y/m/d',
-                onShow: function (ct) {
-                    this.setOptions({
-                        maxDate: $('#DateEnd').val() ? $('#DateEnd').val() : false
-                    })
-                },
-                timepicker: false
-            });
-            $('#DateEnd').datetimepicker({
-                lang: "fr",
-                format: 'Y/m/d',
-                onShow: function (ct) {
-                    this.setOptions({
-                        minDate: $('#DateStart').val() ? $('#DateStart').val() : false
-                    })
-                },
-                timepicker: false
-            });
-
-            $('.datetimepicker2').datetimepicker({
-                datepicker: false,
-                format: 'H:i'
-            });
-
-            Templateitems = Handlebars.compile($("#itemsTemplate").html());
-            $.getJSON("getEvenements", null, function (data) {
-                var result = Templateitems(data);
-                $("#ItemsList").html(result);
-                $(".items").change(function () {
-                    var id = $(this).children(":selected").attr("id");
-                    if (id != 0) {
-                        $("#btnmodif").show();
-                        $("#btnSupr").show();
-                        $("#Formulaire").show();
-                        tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
-                        $("#new123").val(id);
-                        $.getJSON("getEDetails", { IdEvenement: id }, function (data) {
-                            $("#photoPrincipal").val(data.image);
-                            $("#publier").prop('checked', data.publier);
-                            tinymce.editors[0].setContent(data.page);
-                            $("#titre").val(data.titre);
-                            $("#Lieu").val(data.lieu);
-                            $("#Adresse").val(data.adresse);
-                            var date = new Date(parseInt(data.dateStart.substr(6)))
-                            var m = date.getMonth() + 1;
-                            var mm = (m < 10) ? "0" + m : m;
-                            var dd = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
-                            $('#DateStart').val(date.getFullYear() + "/" + mm + "/" + dd);
-                            date = new Date(parseInt(data.dateEnd.substr(6)))
-                            m = date.getMonth() + 1;
-                            mm = (m < 10) ? "0" + m : m;
-                            dd = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
-                            $('#DateEnd').val(date.getFullYear() + "/" + mm + "/" + dd);
-                            var Endmin = (data.hourEnd.Minutes < 10) ? "0" + data.hourEnd.Minutes : data.hourEnd.Minutes;
-                            $('#HourEnd').val(data.hourEnd.Hours + ":" + Endmin);
-                            var startmin = (data.hourStart.Minutes < 10) ? "0" + data.hourStart.Minutes : data.hourStart.Minutes;
-                            $('#HourStart').val(data.hourStart.Hours + ":" + startmin);
-                            $("#publier").change();
-                        });
-                    }
-                    else $("#btnAnuler").click();
-                });
-            });
-        });
-    </script>
+   

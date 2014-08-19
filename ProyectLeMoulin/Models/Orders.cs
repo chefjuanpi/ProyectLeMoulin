@@ -25,6 +25,7 @@ namespace ProyectLeMoulin.Models
         public Nullable<System.DateTime> Date_Recuperation { get; set; }
         public bool Commande_Payee { get; set; }
         public string UserId { get; set; }
+        public Nullable<bool> Avaibleld { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual ICollection<OrderDetails> OrderDetails { get; set; }

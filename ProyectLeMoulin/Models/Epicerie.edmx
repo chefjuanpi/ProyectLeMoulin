@@ -114,6 +114,7 @@
           <Property Name="Date_Recuperation" Type="date" />
           <Property Name="Commande_Payee" Type="bit" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="Avaibleld" Type="bit" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -375,6 +376,7 @@
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="EpicerieModel.FK_Orders_AspNetUsers" FromRole="Orders" ToRole="AspNetUsers" />
           <NavigationProperty Name="OrderDetails" Relationship="EpicerieModel.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
+          <Property Type="Boolean" Name="Avaibleld" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -585,6 +587,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="EpicerieModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Avaibleld" ColumnName="Avaibleld" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Date_Fin_Commande" ColumnName="Date_Fin_Commande" />

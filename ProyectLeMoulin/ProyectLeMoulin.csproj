@@ -635,7 +635,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
-    <Compile Include="Controllers\Panier.cs" />
+    <Compile Include="Models\PanierViewModel.cs" />
     <Compile Include="Controllers\titreTextNouvelle.cs" />
     <Compile Include="Models\AspNetUserRoles.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>

@@ -48,7 +48,7 @@ namespace ProyectLeMoulin.Controllers
         //Récupérer les produits selon la catégorie choisie
         public JsonResult GetProduits(int cat)
         {
-            //EpicerieEntities db = new EpicerieEntities();
+            
             //if (cat == db.Categories.CategoryId)
             //{
             
@@ -68,35 +68,86 @@ namespace ProyectLeMoulin.Controllers
             //}
         }
 
-        //Remplir le Panier
-        public JsonResult Remplir_Le_Panier(int prod, int qty)
+        /// <summary>
+        /// Remplir le Panier
+        /// </summary>
+        /// <param name="prod">ProductID sélectionné</param>
+        /// <param name="qty">Quantité choisie</param>
+        /// <returns>retourne le contenu du panier</returns>
+        public JsonResult Remplir_Le_Panier(int prod)
         {
-            Panier x = new Panier();
-            //EpicerieEntities db = new EpicerieEntities();
-            //if (produit == db.Products.ProductName)
+            
+            
+            //if (prod == db.Products.)
             //{
-                
                 var product = (from w in db.Week
                                join p in db.Products
                                on w.ProductId equals p.ProductId
                                join cp in db.CategoryProduct
                                on p.ProductId equals cp.ProductId
                                where p.ProductId == prod
-                               select new Panier()
+                               join od in db.OrderDetails
+                               on w.ProductId equals od.ProductId
+                               join o in db.Orders
+                               on od.OrderId equals o.OrderId
+                               select new
                                {
-                                    ProductID = w.ProductId,
+                                    ProductId = w.ProductId,
                                     ProductName = p.ProductName,
-                                    Qantity = qty,
+                                    //Qantity = qty,
                                     Price = w.UnitPrice,
                                     CategoryID = cp.CategoryId
                                }).ToList();
 
                 return Json(product, JsonRequestBehavior.AllowGet);
+            //}
         }
 
+        [HttpPost]
+        public ActionResult Produit(Panier Supplier)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            if (Panier. == null)
+            {
+                Suppliers s = new Suppliers();
+                s.SupplierName = Supplier.SupplierName;
+                s.ContactName = Supplier.SupplierContactName;
+                s.Adress = Supplier.SupplierAdress;
+                s.E_Mail = Supplier.SupplierMail;
+                s.Phone = Supplier.SupplierPhone;
+                s.Fax = Supplier.SupplierFax;
+                s.PostalCode = Supplier.SupplierPostalCode;
+                s.Ville = Supplier.SupplierCity;
+
+                db.Suppliers.Add(s);
+                db.SaveChanges();
+            }
+            else
+            {
+                int x = Convert.ToInt16(Supplier.SupplierId);
+                var modifsupplier = (from s in db.Suppliers
+                                     where s.SupplierId == x
+                                     select s).Single();
+                modifsupplier.SupplierName = Supplier.SupplierName;
+                modifsupplier.ContactName = Supplier.SupplierContactName;
+                modifsupplier.Adress = Supplier.SupplierAdress;
+                modifsupplier.E_Mail = Supplier.SupplierMail;
+                modifsupplier.Phone = Supplier.SupplierPhone;
+                modifsupplier.Fax = Supplier.SupplierFax;
+                modifsupplier.PostalCode = Supplier.SupplierPostalCode;
+                modifsupplier.Ville = Supplier.SupplierCity;
+                db.SaveChanges();
+            }
+            return View();
+        }
+
+        /// <summary>
+        /// Supprimer un article du panier
+        /// </summary>
+        /// <param name="prod">ProductId sélectionné</param>
+        /// <returns>Contenu du panier après la supression</returns>
         //public ActionResult delArticle(int prod)
         //{
-        //    EpicerieEntities db = new EpicerieEntities();
         //    var delsupplier = (from a in Panier
         //                       where a.ProductId == prod
         //                       select new Panier()
@@ -140,8 +191,10 @@ namespace ProyectLeMoulin.Controllers
         //    }
         //}
 
-        //Afficher le panier d'épicerie
-        //public JsonResult Afficherer_Le_Panier()
+        /// <summary>
+        /// Affiche le contenu du panierpour confirmation
+        /// </summary>
+        //public JsonResult Afficher_Le_Panier()
         //{
         //    Panier p = new Panier();
 
@@ -150,46 +203,32 @@ namespace ProyectLeMoulin.Controllers
         //    return Json(panier, JsonRequestBehavior.AllowGet);
         //}
 
-        //Récupérer le GUID du membre connecté et son role au sein du groupe d'achats
-        //public JsonResult Recuperer_Membre()
-        //{
+        /// <summary>
+        /// Récupérer le GUID du membre connecté et son role au sein du groupe d'achats
+        /// </summary>
+       //public JsonResult Recuperer_Membre()
+       //{
+       //     string utilisateur    = User.Identity.Name;
+       //     string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
-        //    EpicerieEntities db   = new EpicerieEntities();
-        //    string utilisateur    = User.Identity.Name;
-        //    string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-
-        //    var membre = (from    m       in      db.AspNetUsers
-        //                  join    r       in      db.AspNetUserRoles
-        //                  on      m.Id    equals  r.UserId
-        //                  where   m.Id    ==      guid
-        //                  select new
-        //                  {
-        //                      MembreID        =   m.Id,
-        //                      UserFirstName   =   m.Prenom, 
-        //                      UserLastName    =   m.Nom,
-        //                      Role            =   r.RoleId
-        //                  }).ToList();
-        //    return Json(membre, JsonRequestBehavior.AllowGet); 
-        //}
+       //     var membre = (from    m       in      db.AspNetUsers
+       //                   join    r       in      db.AspNetUserRoles
+       //                   on      m.Id    equals  r.UserId
+       //                   where   m.Id    ==      guid
+       //                   select new
+       //                   {
+       //                       MembreID        =   m.Id,
+       //                       UserFirstName   =   m.Prenom, 
+       //                       UserLastName    =   m.Nom,
+       //                       Role            =   r.RoleId
+       //                   }).ToList();
+       //     return Json(membre, JsonRequestBehavior.AllowGet); 
+       // }
 
         //Afficher le message de l'administrateur du groupe D'achats
         //public JsonResult Afficher_Message()
         //{
 
         //}
-
-        //Valider la date de l'exercice d'achat en cours
-        //public JsonResult Validerer_Date()
-        //{
-        //    EpicerieEntities db = new EpicerieEntities();
-
-        //    var sem = (from w in db.Week
-        //                    select new
-        //                    {
-        //                        Semaine   =   w.DateSemaine,
-        //                    }).ToString;
-        //    return Json(sem, JsonRequestBehavior.AllowGet);
-        //}
-
     }
 }
