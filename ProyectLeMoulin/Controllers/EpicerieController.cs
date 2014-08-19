@@ -62,6 +62,7 @@ namespace ProyectLeMoulin.Controllers
                                {
                                    ProductID = p.ProductId,
                                    ProductName = p.ProductName,
+                                   Format = w.Format,
                                    Price = w.UnitPrice
                                }).ToList();
                 return Json(produit, JsonRequestBehavior.AllowGet);
