@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace ProyectLeMoulin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin groupe d'achats")]
     public class AchatAdminController : Controller
     {
         //
