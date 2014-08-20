@@ -39,12 +39,12 @@ namespace IdentitySample.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two factor provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "The phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Votre mot de passe est change avec success."
+                : message == ManageMessageId.SetPasswordSuccess ? "Votre mot de passe local à été crée avec success."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Votre controle double d'acess est configuré."
+                : message == ManageMessageId.Error ? "Un erreur est produire."
+                : message == ManageMessageId.AddPhoneSuccess ? "Numéro de téléphone ajouté."
+                : message == ManageMessageId.RemovePhoneSuccess ? "Numéro de téléphone suprimé."
                 : "";
 
             var model = new IndexViewModel
@@ -115,7 +115,7 @@ namespace IdentitySample.Controllers
                 var message = new IdentityMessage
                 {
                     Destination = model.Number,
-                    Body = "Your security code is: " + code
+                    Body = "votre code de securité est: " + code
                 };
                 await UserManager.SmsService.SendAsync(message);
             }

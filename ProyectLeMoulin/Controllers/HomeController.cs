@@ -60,38 +60,42 @@ namespace IdentitySample.Controllers
             for (int x = 0; x < nouvelles.Count(); x++)
             {
                 int i = nouvelles.Count();
-                int y;
-                string temp = "";
+                nouvelles[x].text = Nohtml(nouvelles[x].text) + " ...";
+            }
 
-                for (y = 0; y < nouvelles[x].text.Count() - 1; )
+            return Json(nouvelles, JsonRequestBehavior.AllowGet);
+        }
+
+        private string Nohtml(string tiny)
+        {
+            int y;
+            string temp = "";
+            for (y = 0; y < tiny.Count() - 1; )
+            {
+                if (tiny.IndexOf("<", y) > -1)
                 {
-                    if (nouvelles[x].text.IndexOf("<", y) > -1)
+                    int start = tiny.IndexOf("<", y);
+                    y = tiny.IndexOf(">", start) + 1;
+                    start = tiny.IndexOf("<", y);
+                    if ((start - y) > 0)
                     {
-                        int start = nouvelles[x].text.IndexOf("<", y);
-                        y = nouvelles[x].text.IndexOf(">", start) + 1;
-                        start = nouvelles[x].text.IndexOf("<", y);
-                        if ((start - y) > 0)
+                        string yupi = tiny.Substring(y, (start - y)).Trim();
+                        if (tiny.Substring(y, (start - y)) != "\r\n")
                         {
-                            string yupi = nouvelles[x].text.Substring(y, (start - y)).Trim();
-                            if (nouvelles[x].text.Substring(y, (start - y)) != "\r\n") 
-                            {    
-                                if (nouvelles[x].text.Substring(y, (start - y)).Trim() != "&nbsp;")
+                            if (tiny.Substring(y, (start - y)).Trim() != "&nbsp;")
+                            {
+                                temp += " " + tiny.Substring(y, (start - y));
+                                if (temp.Count() > 200)
                                 {
-                                    temp += " " + nouvelles[x].text.Substring(y, (start - y));
-                                    if (temp.Count() > 150)
-                                    {
-                                        temp = temp.Substring(0, 149);
-                                        break;
-                                    }
+                                    temp = temp.Substring(0, 199);
+                                    break;
                                 }
                             }
                         }
                     }
                 }
-                nouvelles[x].text = temp + " ...";
             }
-
-            return Json(nouvelles, JsonRequestBehavior.AllowGet);
+            return temp;
         }
 
         public ActionResult Pages(string pname)
@@ -113,11 +117,60 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        public ActionResult Evements()
+        public ActionResult Calendar()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Calendrier des évenements.";
 
             return View();
+        }
+
+        public ActionResult testcalendar()
+        {
+            ViewBag.Message = "Calendrier des évenements.";
+
+            return View();
+        }
+
+        public JsonResult events123()
+        {
+            CoeurContainer db = new CoeurContainer();
+            var calendar = (from e in db.Evenements
+                           select new evDisplay
+                           {
+                               date = e.DateStart,
+                               datefin = e.DateEnd,
+                               type = "evenement",
+                               heureStart = (TimeSpan)e.HourStart,
+                               heurefin = (TimeSpan)e.HourEnd,
+                               title = e.TitleEvenement,
+                               description = e.Text,
+                               url = "/Home/evenement?nom='"+e.TitleEvenement +"'"
+                           }).ToList();
+
+            for (int x = 0; x < calendar.Count(); x++)
+            {
+                int i = calendar.Count();
+                calendar[x].description = Nohtml(calendar[x].description) + " ...";
+                if(calendar[x].date != calendar[x].datefin)
+                {
+                    for (int ini = calendar[x].date.Day; ini < calendar[x].datefin.Day; ini++)
+                    {
+                        evDisplay temp = new evDisplay
+                        {
+                            date = calendar[x].date.AddDays(1),
+                            datefin = calendar[x].datefin,
+                            type = "evenement",
+                            heureStart = calendar[x].heureStart,
+                            heurefin = calendar[x].heurefin,
+                            title = "Continuation de : " + calendar[x].title,
+                            description = calendar[x].description,
+                            url = calendar[x].url
+                        };
+                        calendar.Add(temp);
+                    }
+                }
+            }
+            return Json(calendar, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GroupedAchats()

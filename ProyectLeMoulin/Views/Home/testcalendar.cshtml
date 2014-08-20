@@ -1,0 +1,47 @@
+﻿
+    <link rel="shortcut icon" href="../images/favicon.ico" />
+
+    <!-- Grid CSS File (only needed for demo page) -->
+    <link rel="stylesheet" href="../css/paragridma.css">
+
+    <!-- Core CSS File. The CSS code needed to make eventCalendar works -->
+    <link rel="stylesheet" href="../css/eventCalendar.css">
+
+    <!-- Theme CSS file: it makes eventCalendar nicer -->
+    <link rel="stylesheet" href="../css/eventCalendar_theme_responsive.css">
+
+
+
+    <hr />
+<div class="col-md-7">
+    <h2 class="h4">Localization</h2>
+    <p class="demoDesc">We have total control about the language of the plugin</p>
+    <div id="eventCalendarLocale"></div>
+    <script>
+        $(document).ready(function () {
+            console.log("hola");
+            $.getJSON('/home/events123', null, function (data) {
+                console.log(data);
+            });
+
+
+
+        });
+    </script>
+<pre>$(id).eventCalendar({
+  eventsjson: 'file.json',
+  monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ],
+  dayNames: [ 'Domingo','Lunes','Martes','Miércoles',
+    'Jueves','Viernes','Sabado' ],
+  dayNamesShort: [ 'Dom','Lun','Mar','Mie', 'Jue','Vie','Sab' ],
+  txt_noEvents: "No hay eventos para este periodo",
+  txt_SpecificEvents_prev: "",
+  txt_SpecificEvents_after: "eventos:",
+  txt_next: "siguiente",
+  txt_prev: "anterior",
+  txt_NextEvents: "Próximos eventos:",
+  txt_GoToEventUrl: "Ir al evento",
+}); </pre>
+</div>
+

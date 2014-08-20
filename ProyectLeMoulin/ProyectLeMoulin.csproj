@@ -165,10 +165,24 @@
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\plugins\tinymce\langs\fr_FR.js" />
     <Content Include="Content\plugins\tinymce\plugins\tinyfilemanager.net\plugin.min.js" />
+    <Content Include="css\eventCalendar.css" />
+    <Content Include="css\eventCalendar_theme.css" />
+    <Content Include="css\eventCalendar_theme_responsive.css" />
+    <Content Include="css\paragridma.css" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Images\attent.GIF" />
+    <Content Include="img\eventsCalendarIcon.png" />
+    <Content Include="img\eventsCalendarIcon_250.png" />
+    <Content Include="img\jaime.png" />
+    <Content Include="img\paradigmaLogo.png" />
+    <Content Include="img\PluginPage.png" />
+    <Content Include="js\jquery.eventCalendar.js" />
+    <Content Include="js\jquery.eventCalendar.min.js" />
+    <Content Include="js\jquery.timeago.js" />
+    <Content Include="js\old versions\jquery.eventCalendar_v01.js" />
+    <Content Include="js\old versions\jquery.eventCalendar_v02.js" />
     <Content Include="packages.config" />
     <Content Include="Scripts\AdminBtnModNew.js" />
     <Content Include="Scripts\customjs.js" />
@@ -386,7 +400,8 @@
     <Content Include="tinyfilemanager.net\resources\files\testdemuerte\ya dice.docx" />
     <Content Include="Views\Home\Pages.cshtml" />
     <Content Include="Views\Admin\Accueil.cshtml" />
-    <Content Include="Views\Home\Evements.cshtml" />
+    <Content Include="Views\Home\Calendar.cshtml" />
+    <Content Include="Views\Home\testcalendar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -635,6 +650,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\evDisplay.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Models\PanierViewModel.cs" />
     <Compile Include="Controllers\titreTextNouvelle.cs" />

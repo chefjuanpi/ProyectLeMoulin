@@ -47,7 +47,7 @@ namespace IdentitySample.Controllers
                         switch (parents[i].idParent)
                         {
                             case 2 :
-                                menu += "href='/Calendar'>" + parents[i].nom + "</a></li>";
+                                menu += "href='/Home/Calendar'>" + parents[i].nom + "</a></li>";
                                 break;
                             case 3:
                                 menu += "href='/Home/GroupedAchats'>" + parents[i].nom + "</a></li>";
