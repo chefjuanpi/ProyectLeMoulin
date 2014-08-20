@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="_admin.master.cs" Inherits="ProyectLeMoulin.tinyfilemanager.net._admin" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="_admin.master.cs" Inherits="IdentitySample.tinyfilemanager.net._admin" %>
 
 <!DOCTYPE html>
 

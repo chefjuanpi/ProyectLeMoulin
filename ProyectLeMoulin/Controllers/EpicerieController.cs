@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using ProyectLeMoulin.Models;
+using IdentitySample.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -11,7 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace ProyectLeMoulin.Controllers
+namespace IdentitySample.Controllers
 {
     
     public class EpicerieController : Controller

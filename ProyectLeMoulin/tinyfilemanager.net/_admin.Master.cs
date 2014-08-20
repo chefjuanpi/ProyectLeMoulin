@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace ProyectLeMoulin.tinyfilemanager.net
+namespace IdentitySample.tinyfilemanager.net
 {
     public partial class _admin : System.Web.UI.MasterPage
     {

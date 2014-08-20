@@ -6,9 +6,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="robots" content="noindex,nofollow">
             <%: System.Web.Optimization.Styles.Render("~/Content/admincss") %>
-        <%: System.Web.Optimization.Scripts.Render("~/bundles/jquery") %>
-    <%: System.Web.Optimization.Scripts.Render("~/bundles/modernizr") %>
-    <%: System.Web.Optimization.Scripts.Render("~/bundles/bootstrap") %>
+            <%: System.Web.Optimization.Scripts.Render("~/bundles/jquery") %>
+            <%: System.Web.Optimization.Scripts.Render("~/bundles/modernizr") %>
+            <%: System.Web.Optimization.Scripts.Render("~/bundles/bootstrap") %>
         <title>Tiny File Manager</title>
 
                <link href="css/ekko-lightbox.min.css" rel="stylesheet" type="text/css" />

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using IdentitySample.Models;
+using System;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using IdentitySample.Models;
 using System.Threading.Tasks;
-using ProyectLeMoulin.Models;
+using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
 {

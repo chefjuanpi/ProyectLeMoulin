@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProyectLeMoulin.Models
+namespace IdentitySample.Models
 {
     using System;
     using System.Collections.Generic;

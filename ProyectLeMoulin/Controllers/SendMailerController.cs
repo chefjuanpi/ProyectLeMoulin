@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using IdentitySample.Models;
 using System.Net.Mail;
-using System.Web;
 using System.Web.Mvc;
-using IdentitySample.Models;
 
-namespace LeMoulinDaCote.Controllers
+namespace IdentitySample.Controllers
 {
     public class SendMailerController : Controller
     {

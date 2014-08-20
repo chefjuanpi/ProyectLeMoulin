@@ -1,13 +1,10 @@
 ﻿using EpicerieModel.Models;
-using ProyectLeMoulin.Models;
+using IdentitySample.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
-namespace ProyectLeMoulin.Controllers
+namespace IdentitySample.Controllers
 {
     [Authorize(Roles = "Admin groupe d'achats")]
     public class AchatAdminController : Controller
