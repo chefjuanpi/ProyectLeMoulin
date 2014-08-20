@@ -21,8 +21,6 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-
-
         /// <summary>
         /// Permet d'ouvrir la vue pour NewOrder
         /// </summary>
