@@ -60,4 +60,34 @@ namespace EpicerieModel.Models
         [Display(Name = "Code Postal :")]
         public string SupplierPostalCode { get; set; }
     }
+
+    /// <summary>
+    /// Modèle des données contenu dans Week
+    /// </summary>
+    public class WeekViewModel
+    {
+        public string DateSemaine { get; set; }
+
+        public string ProductId { get; set; }
+
+        public string SupplierId { get; set; }
+
+        [Required]
+        [Range(1,1000)]
+        [DataType(DataType.Currency)]
+        [Display(Name = "Cout :")]
+        public decimal UnitPrice { get; set; }
+
+        [RegularExpression(@"^\d+$", ErrorMessage = "Nombre entier uniquement")]
+        [Required]
+        [StringLength(3, ErrorMessage = " Quantité trop élevé")]
+        [Display(Name = "Quantité minimum :")]
+        public int Quantity { get; set; }
+
+        [Required]
+        [StringLength(20, ErrorMessage = "Maximum 20 caractères")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Format :")]
+        public string Format { get; set; }
+    }
 }

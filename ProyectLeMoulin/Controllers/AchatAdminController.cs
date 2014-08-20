@@ -6,18 +6,27 @@ using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
 {
-    [Authorize(Roles = "Admin groupe d'achats")]
+    //[Authorize(Roles = "Admin groupe d'achats")]
     public class AchatAdminController : Controller
     {
-        //
-        // GET: /AchatAdmin/
+        /// <summary>
+        /// Permet d'ouvrir la vue pour Index
+        /// Index contient la page qui permet de gêrée la liste d'achats
+        /// </summary>
+        /// <returns>Une vue avec titre et message</returns>
         public ActionResult Index()
         {
-            ViewBag.Title = "Editeur du groupe d'achat";
+            ViewBag.Title = "Liste des produits";
             ViewBag.message = "Administration de la liste d'achat";
             return View();
         }
 
+
+
+        /// <summary>
+        /// Permet d'ouvrir la vue pour NewOrder
+        /// </summary>
+        /// <returns>Une vue avec titre et message</returns>
         public ActionResult NewOrder()
         {
             ViewBag.Title = "Nouvelle Commande";
@@ -25,6 +34,10 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Permet d'ouvrir la vue pour Products
+        /// </summary>
+        /// <returns>Une vue avec titre et message</returns>
         public ActionResult Products()
         {
             ViewBag.Title = "Produits";
@@ -32,6 +45,10 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Permet d'ouvrir la vue pour Suppliers
+        /// </summary>
+        /// <returns>Une vue avec titre et message</returns>
         public ActionResult Suppliers()
         {
             ViewBag.Title = "Fournisseurs";
@@ -39,20 +56,12 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        public ActionResult OldOrders()
-        {
-            ViewBag.Title = "Fournisseurs";
-            ViewBag.message = "Pour obtenir les rapports d'anciennes commandes";
-            return View();
-        }
-
-        public ActionResult MembersOrders()
-        {
-            ViewBag.Title = "Commandes des membres";
-            ViewBag.message = "Pour sortir les commandes des membres et leurs reçu";
-            return View();
-        }
-
+        /// <summary>
+        /// S'exécute au "Post" de la page Suppliers
+        /// Enregistre les Ajouts et Modifications
+        /// </summary>
+        /// <param name="Supplier">Model à utiliser</param>
+        /// <returns>Une vue</returns>
         [HttpPost]
         public ActionResult Suppliers(SupplierViewModel Supplier)
         {
@@ -92,6 +101,10 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Permet d'obtenir l'ID et le Nom des fournisseurs
+        /// </summary>
+        /// <returns>Json contenant les Suppliers</returns>
         public JsonResult getSuppliers()
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -105,6 +118,11 @@ namespace IdentitySample.Controllers
             return Json(suppliers, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Permet d'otenir les informations sur un fournisseur
+        /// </summary>
+        /// <param name="SupplierId">ID du fournisseur</param>
+        /// <returns>Json contenant les informations</returns>
         public JsonResult getSupplierDetails(int SupplierId)
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -125,6 +143,11 @@ namespace IdentitySample.Controllers
             return Json(supplier, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Permet d'effacer un fournisseur de la BD
+        /// </summary>
+        /// <param name="nID">ID du fournisseur</param>
+        /// <returns>Retourne à la selection</returns>
         public ActionResult delSupplier(int nID)
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -137,6 +160,29 @@ namespace IdentitySample.Controllers
                 db.SaveChanges();
             }
             return Redirect("/AchatAdmin/Suppliers");
+        }
+
+
+        /// <summary>
+        /// Permet d'ouvrir la vue pour OldOrders
+        /// </summary>
+        /// <returns>Une vue avec titre et message</returns>
+        public ActionResult OldOrders()
+        {
+            ViewBag.Title = "Fournisseurs";
+            ViewBag.message = "Pour obtenir les rapports d'anciennes commandes";
+            return View();
+        }
+
+        /// <summary>
+        /// Permet d'ouvrir la vue pour MembersOrders
+        /// </summary>
+        /// <returns>Une vue avec titre et message</returns>
+        public ActionResult MembersOrders()
+        {
+            ViewBag.Title = "Commandes des membres";
+            ViewBag.message = "Pour sortir les commandes des membres et leurs reçu";
+            return View();
         }
 
     }
