@@ -13,35 +13,42 @@ namespace IdentitySample.Controllers
         // GET: /AchatAdmin/
         public ActionResult Index()
         {
+            ViewBag.Title = "Editeur du groupe d'achat";
+            ViewBag.message = "Administration de la liste d'achat";
             return View();
         }
 
         public ActionResult NewOrder()
         {
-            ViewBag.message = "Pour faire une nouvelle commande";
+            ViewBag.Title = "Nouvelle Commande";
+            ViewBag.message = "Affiche la nouvelle commande";
             return View();
         }
 
         public ActionResult Products()
         {
+            ViewBag.Title = "Produits";
             ViewBag.message = "Administration des produits";
             return View();
         }
 
         public ActionResult Suppliers()
         {
+            ViewBag.Title = "Fournisseurs";
             ViewBag.message = "Administration des fournisseurs";
             return View();
         }
 
         public ActionResult OldOrders()
         {
+            ViewBag.Title = "Fournisseurs";
             ViewBag.message = "Pour obtenir les rapports d'anciennes commandes";
             return View();
         }
 
         public ActionResult MembersOrders()
         {
+            ViewBag.Title = "Commandes des membres";
             ViewBag.message = "Pour sortir les commandes des membres et leurs reçu";
             return View();
         }
@@ -49,7 +56,6 @@ namespace IdentitySample.Controllers
         [HttpPost]
         public ActionResult Suppliers(SupplierViewModel Supplier)
         {
-            ViewBag.Title = "Fournisseurs";
             EpicerieEntities db = new EpicerieEntities();
             if (Supplier.SupplierId == null)
             {
