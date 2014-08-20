@@ -3,7 +3,7 @@
 }
 
 <style>
-    .qty    {   width:58%; height:10%;  }
+    .textbox    {   width:58%; height:10%;  }
 </style>
 @section Scripts {
 <script type="text/x-handlebars-template" id="CategoriesTemplate" >
@@ -15,46 +15,44 @@
 </script>
 
 <script type="text/x-handlebars-template" id="ProductsTemplate" >
-    <div>
-        <div class="row" id=Product{{ProductID}}>
-            <div class="col-md-2">
-                <h4>Produits</h4>
-                {{#each}}
-                <div><h5 id="Name{{ProductID}}" style="margin-top:10%;" >{{ProductName}}</h5></div>
-                {{/each}}
-            </div>
-            <div class="col-md-3">
-                <h4>Format</h4>
-                {{#each}}
-                <div><h5 id="Format{{ProductID}}">{{Format}}</h5></div>
-                {{/each}}
-            </div>
-            <div class="col-md-2">
-                <h4>Prix $</h4>
-                {{#each}}
-                <div><h5 id="Price{{ProductID}}">{{Price}}</h5></div>
-                {{/each}}
-            </div>
-            <div class="col-md-2">
-                <h4>Qty</h4>
-                {{#each}}
-                <div><input class="qty" id="Quantity{{ProductID}}" type="text" value="0" /></div>
-                {{/each}}
-            </div>
-            <div class="col-md-3">
-                <h4>Ajouter</h4>
-                {{#each}}
-                <div><input id="AddProduct{{ProductID}}" type="submit" value="OK" onclick="AjouterPanier('{{ProductID}}')" /></div>
-                {{/each}}
-            </div> 
-        </div>        
+    <div class="row">
+        <h4 class="col-xs-4">Produits</h4>
+        <h4 class="col-xs-3">Format</h4>
+        <h4 class="col-xs-2">Prix $</h4>
+        <h4 class="col-xs-2">Qty</h4>
+        <h4 class="col-xs-1">Ajouter</h4>
+    </div>    
+    {{#each}}   
+    <div class="row" id=Product{{ProductID}}>
+        <div class="col-xs-4">
+            <h5 id="Name{{ProductID}}" >{{ProductName}}</h5>
+        </div>
+        <div class="col-xs-3">
+            <h5 id="Format{{ProductID}}">{{Format}}</h5>
+        </div>
+        <div class="col-xs-2">
+            <h5 id="Price{{ProductID}}" >{{Price}}</h5>
+        </div>
+        <div class="col-xs-2">
+            <input class="textbox" id="Quantity{{ProductID}}" type="text" value="0" />
+        </div>
+        <div class="col-xs-1">
+            <input id="AddProduct{{ProductID}}" type="submit" value="OK" class="btn btn-success" onclick="AjouterPanier('{{ProductID}}')" />
+        </div> 
+        </div>  
+    {{/each}}      
 </script>
 
 <script type="text/x-handlebars-template" id="CartTemplate">
-    <div class="row">
-        <div class="col-md-6" id="CartProduct{{id}}">{{nom}} {{format}} {{qty}} {{prix}}$</div>
-        <div class="col-md-2"><input id="Cartupdate{{ProductID}}" type="submit" value="Modifier" onclick="ModifierProduit('{{ProductID}}')" /></div>
-        <div class="col-md-2"><input id="Cartdelete{{ProductID}}" type="submit" value="Enlever" onclick="SupprimerProduit('{{ProductID}}')" /></div>
+     
+    <div id="prod{{id}}" class="row">
+        <div id="pname{{id}}" class="col-xs-3">{{nom}}</div>
+        <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
+        <div id="pprix{{id}}" class="col-xs-1">{{prix}} $</div>
+        <div id="pqty{{id}}" class="col-xs-1"><input class="textbox" id="CartQuantity{{id}}" type="text" value="{{qty}}" disabled="disabled" /></div>
+        <div id="psous{{id}}" class="col-xs-1">{{Soustotal}} $</div>
+        <div class="col-xs-1" ><input id="Cartupdate{{id}}" type="button" value="Modifier" onclick="ModifierProduit('{{id}}')" class="btn btn-warning" /></div>
+        <div class="col-xs-1"><input id="Cartdelete{{id}}" type="button" value="Enlever" onclick="SupprimerProduit('{{id}}')" class="btn btn-danger" /></div>
     </div>
     
 </script>
@@ -66,80 +64,124 @@
     templateCategories  = null;
     templateProducts    = null;
     templateCart        = null;
-
+    var total = 0;
     
     $(function () {
         templateCategories  = Handlebars.compile($("#CategoriesTemplate").html());
         templateProducts    = Handlebars.compile($("#ProductsTemplate").html());
         templateCart        = Handlebars.compile($("#CartTemplate").html());
-        console.log("Hello 1");
 
         $.getJSON("/Epicerie/GetCategories", null, function (data) {//console.log(data.legth);
             var result = templateCategories(data);
             $("#CategoriesOutput").html(result);
-            console.log("hello 2");
 
             //Afficher les catégories
-            $("#CategoryOutput").change(function () {
+            $("#CategoryOutput").change(function () {//doit d'abord changer de cat pour pouvoir afficher la 1 ère cat
                 var id = $(this).children(":selected").attr("id");
-                console.log(id);
                 $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
-                    console.log(data.length + " produits dans la cat " + id);
                     var result = templateProducts(data);
                     $("#ProductsOutput").html(result);
-                    console.log("Hello 4");
-                    
-                    
                 });//GetProducts
             })//GetCategories                               
         });
     });
 
-
     function AjouterPanier(id) {
-        var produit;
-        
-        console.log(id);
-        var nom = $("#Name" + id).html();
-        var format = $("#Format" + id).html();
-        var prix = $("#Price" + id).html();
-        var qty = $("#Quantity" + id).val();
-        console.log("hello 5 " + "," + nom + "," + format + "," + prix + "," + qty);
+        if ($("#Quantity" + id).val() > 0) {
+            console.log($("#Quantity" + id).val());
+            var p = $("#Price" + id).html();
+            var q = $("#Quantity" + id).val();
+            var sous = p * q;
+            var produit = {
+                id: id,
+                nom: $("#Name" + id).html(),
+                format: $("#Format" + id).html(),
+                prix: p,
+                qty: q,
+                Soustotal : sous
+            };
 
-        produit = {
-            id:     id,
-            nom:    nom,
-            format: format,
-            prix:   prix,
-            qty: qty
-        };
+            var result = templateCart(produit);
+            $("#CartOutput").append(result);
+            Caltotal(produit.Soustotal);
 
-        var total = total + produit.id;
-        var result = templateCart(produit);
-        
-        $("#CartOutput").append(result);
-        //$("#AddProduct'{{ProductID}}'").hide;
+            $("#AddProduct" + id).attr("disabled", "disabled");
+            $("#AddProduct" + id).attr("class", "btn btn-default");
+            $("#AddProduct" + id).val("Ajouté");
+            $("#Quantity" + id).attr("disabled", "disabled");
+            $("#Panier").attr("hidden", false);
+        }
+        else
+        {
+            alert("SVP veuillez indiquer une quantité");
+        }
+    }
+
+    function Caltotal(stotal) {
+        total += stotal;
+        $("#totalOutput").html(total);
+    };
+    function SupprimerProduit(id) {
+        total = total - $("#psous" + id).html()
+        $("#totalOutput").html(total);
+        $("#prod" + id).remove();
+        console.log("reste" + " " + $("#totalOutput").length);
+        $("#AddProduct" + id).attr("disabled", false);
+        $("#AddProduct" + id).attr("class", "btn btn-success");
+        $("#AddProduct" + id).val("OK");
+        $("#Quantity" + id).attr("disabled", false);
+        $("#Quantity" + id).val(0);
+        if ($("#totalOutput").length < 1) {
+            $("#Panier").attr("hidden", "hidden");
+        }
+    }
+    
+    function ModifierProduit(id) {
+        if ($("#Cartupdate" + id).val() == "Modifier") {
+            $("#Cartupdate" + id).val("OK");
+            $("#Cartupdate" + id).attr("class", "btn btn-success");
+            $("#CartQuantity" + id).attr("disabled", false);
+        } else {
+            if ($("#Cartupdate" + id).val() == "OK") {
+                $("#Cartupdate" + id).val("Modifier");
+                $("#Cartupdate" + id).attr("class", "btn btn-warning");
+                $("#CartQuantity" + id).attr("disabled", true);
+            }
+        }
     }
 </script>
 }
-<div class="container">
+
     <div class="row">
         <div id="Message"></div>
     </div>
     <div class="row">
         <div id="CategoriesOutput" class="col-md-4">Cat/gories</div>
  
-        <div id="ProductsOutput" class="col-md-5"></div>
+        <div id="ProductsOutput" class="col-md-6"></div>
     </div>
     <hr />
+<div class="container" id="Panier" hidden="hidden">
     <div class="row">
-        <div id="CartOutput" class="col-md-5" ></div>
-    </div>   
+        <div id="CartOutput" class="col-md-12">
+            <div class="row">
+                <h4 class="col-xs-3">Produits</h4>
+                <h4 class="col-xs-2">Format</h4>
+                <h4 class="col-xs-1">Prix $</h4>
+                <h4 class="col-xs-1">Qty</h4>
+                <h4 class="col-xs-1">Sous-Total</h4>
+                <h4 class="col-xs-1">Modifier</h4>
+                <h4 class="col-xs-1">Enlever</h4>
+            </div>
+        </div>
 
-
+    </div>
+    <div class="row"><div class="col-md-offset-9"><h4><b>total $</b></h4><div id="totalOutput">0</div></div></div>
+    <div id="go" class="col-xs-9"><input id="Envoyer" class="btn btn-primary" type="button" value="Envoyer" /></div>
+</div>
 <div style="height:200px; float:left;"></div>
 
-</div>
+
 
 
 
