@@ -1,12 +1,26 @@
-﻿@{
+﻿@model IdentitySample.Models.EvemPhoto
+@{
     ViewBag.Title = "Page d'accueil";
 }
 
     <div class="row">
         <div class="col-md-8">
-            <div class="fotorama" data-width="100%" data-ratio="700/467" data-max-width="100%"
-                 data-nav="thumbs" data-keyboard="true">
-                @Html.Raw(ViewBag.Photos)
+            <div class="fotorama" data-width="100%" data-ratio="700/467" data-max-width="100%" data-nav="thumbs" data-keyboard="true">
+                @foreach (var p in ViewBag.Photos )
+                {
+                    
+                    <div class="resp" data-img='../tinyfilemanager.net/resources/files/@p.photos' data-thumb='../tinyfilemanager.net/resources/thumbs/@p.photos'>
+                        <div>
+                            <div class=' cubobajatexto'></div>
+                            <a class='fotorama__select' href='/Evenements/Details?nom=@p.titre'>
+                                <div class='alert alert-info' style=' background:#464646; background-color: rgba(91, 192, 222, 0.5);'>
+                                    <h2>@p.titre</h2>
+                                    <h3>de @p.dateStart.ToLongDateString() au @p.dateEnd.ToLongDateString()</h3>
+                               </div>
+                            </a>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
 
@@ -18,14 +32,10 @@
         </div>
     </div>
 
-
-<br />
-<br/>
-
-
     <div class="row">
         <div class="col-md-3 ">
-                @Html.Raw(ViewBag.Gauche)
+            <h3>Suivez-Nous</h3>
+            @Html.Raw(ViewBag.Gauche)
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-8">
@@ -47,7 +57,14 @@
         </script>
         <script type="text/javascript">
             TemplateNews = Handlebars.compile($("#NewsTemplate").html());
+            if (screen.width < 1000) {
+                $(".resp").each(function () {
+                    console.log($(this).attr("data - thumb"));
+                    $(this).attr("data-img", $(this).attr(data - thumb));
+                });
+            }
             $(function () {
+                //cherche les nouvelles
                 $.getJSON("/Home/getNews", null, function (data) {
                     var result = TemplateNews(data);
                     $("#NContainer").html(result);
