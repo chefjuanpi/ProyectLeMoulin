@@ -45,14 +45,14 @@
 
 <script type="text/x-handlebars-template" id="CartTemplate">
      
-    <div id="prod{{id}}" class="row">
-        <div id="pname{{id}}" class="col-xs-3">{{nom}}</div>
+    <div id="prod{{id}}"        class="row">
+        <div id="pname{{id}}"   class="col-xs-3">{{nom}}</div>
         <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
-        <div id="pprix{{id}}" class="col-xs-1">{{prix}} $</div>
-        <div id="pqty{{id}}" class="col-xs-1"><input class="textbox" id="CartQuantity{{id}}" type="text" value="{{qty}}" disabled="disabled" /></div>
-        <div id="psous{{id}}" class="col-xs-1">{{Soustotal}} $</div>
-        <div class="col-xs-1" ><input id="Cartupdate{{id}}" type="button" value="Modifier" onclick="ModifierProduit('{{id}}')" class="btn btn-warning" /></div>
-        <div class="col-xs-1"><input id="Cartdelete{{id}}" type="button" value="Enlever" onclick="SupprimerProduit('{{id}}')" class="btn btn-danger" /></div>
+        <div id="pprix{{id}}"   class="col-xs-1">{{prix}} $</div>
+        <div id="pqty{{id}}"    class="col-xs-1"><input class="textbox" id="CartQuantity{{id}}" type="text" value="{{qty}}" disabled="disabled" /></div>
+        <div id="psous{{id}}"   class="col-xs-2">{{Soustotal}} $</div>
+        <div class="col-xs-1"><input id="Cartupdate{{id}}"  type="button" value="Modifier"  onclick="ModifierProduit('{{id}}')"     class="btn btn-warning" /></div>
+        <div class="col-xs-1"><input id="Cartdelete{{id}}"  type="button" value="Enlever"   onclick="SupprimerProduit('{{id}}')"    class="btn btn-danger" /></div>
     </div>
     
 </script>
@@ -88,7 +88,6 @@
 
     function AjouterPanier(id) {
         if ($("#Quantity" + id).val() > 0) {
-            console.log($("#Quantity" + id).val());
             var p = $("#Price" + id).html();
             var q = $("#Quantity" + id).val();
             var sous = p * q;
@@ -104,7 +103,7 @@
             var result = templateCart(produit);
             $("#CartOutput").append(result);
             Caltotal(produit.Soustotal);
-
+            
             $("#AddProduct" + id).attr("disabled", "disabled");
             $("#AddProduct" + id).attr("class", "btn btn-default");
             $("#AddProduct" + id).val("Ajouté");
@@ -118,21 +117,23 @@
     }
 
     function Caltotal(stotal) {
+        console.log(total + " " + stotal);
         total += stotal;
         $("#totalOutput").html(total);
     };
+
     function SupprimerProduit(id) {
+        console.log(("#psous").html);
         total = total - $("#psous" + id).html()
         $("#totalOutput").html(total);
         $("#prod" + id).remove();
-        console.log("reste" + " " + $("#totalOutput").length);
         $("#AddProduct" + id).attr("disabled", false);
         $("#AddProduct" + id).attr("class", "btn btn-success");
         $("#AddProduct" + id).val("OK");
         $("#Quantity" + id).attr("disabled", false);
         $("#Quantity" + id).val(0);
-        if ($("#totalOutput").length < 1) {
-            $("#Panier").attr("hidden", "hidden");
+        if (total < 1) {
+            $("#Panier").attr("hidden", true);
         }
     }
     
@@ -169,7 +170,7 @@
                 <h4 class="col-xs-2">Format</h4>
                 <h4 class="col-xs-1">Prix $</h4>
                 <h4 class="col-xs-1">Qty</h4>
-                <h4 class="col-xs-1">Sous-Total</h4>
+                <h4 class="col-xs-2">Sous-Total</h4>
                 <h4 class="col-xs-1">Modifier</h4>
                 <h4 class="col-xs-1">Enlever</h4>
             </div>
