@@ -21,7 +21,7 @@ regard que est possible apliquer plus de un classe a le meme balise ecrit les no
 <div class="classe1 classe2 row table classe25" ></div>  5 classes apliques dans cette div 
 
 ----------------------------------------------------------
-http://www.codeproject.com/Articles/638674/Full-calendar-A-complete-web-diary-system-for-jQue
+http://arshaw.com/fullcalendar
 
 full calendar, calendrier d'activites pour les evenements, guide d'utilisation, ets dejà personalise pour l'adapter au site
 
