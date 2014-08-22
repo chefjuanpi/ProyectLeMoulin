@@ -117,11 +117,14 @@
     }
 
     function Caltotal(stotal) {
-        console.log(total + " " + stotal);
-        total += stotal;
-        $("#totalOutput").html(total);
-    };
+        $('.produit').each(function () {
+            var prix = $(this).children().eq(3).val();
 
+            console.log(total + " " + stotal);
+            total += stotal;
+            $("#totalOutput").html(total);
+        });
+    };
     function SupprimerProduit(id) {
         console.log(("#psous").html);
         total = total - $("#psous" + id).html()
@@ -136,7 +139,7 @@
             $("#Panier").attr("hidden", true);
         }
     }
-    
+
     function ModifierProduit(id) {
         if ($("#Cartupdate" + id).val() == "Modifier") {
             $("#Cartupdate" + id).val("OK");
@@ -150,7 +153,34 @@
             }
         }
     }
+
+    $(function () {
+        $("#save").on("click", function () {
+            var panier = [];
+            var i = 0;
+
+            $('.produit').each(function () {
+                i++;
+                console.log("PRODUIT : ");
+                var id = $(this).attr("id");
+                var prix = $(this).children().eq(3).val();
+                var qty = $(this).children().eq(4).val();
+                console.log("id  : " + id);
+                console.log("prix  : " + prix);
+                console.log("qty  : " + qty);
+                var produit = {
+                    id: id,
+                    prix: prix,
+                    qty: qty,
+                };
+                panier[i] = panier;
+            });
+            console.log(produits);
+        });
+    });
+    
 </script>
+
 }
 
     <div class="row">
