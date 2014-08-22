@@ -1,8 +1,10 @@
-﻿
+﻿@model IdentitySample.Models.Evenement
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.evenement.TitleEvenement</h2>
+<div class="row">
+    <img class="col-md-9" src="../tinyfilemanager.net/resources/files/@ViewBag.evenement.PrincipalPhotoEvenement"></div>
   ici les details des evenements

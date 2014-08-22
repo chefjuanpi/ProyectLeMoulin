@@ -28,7 +28,7 @@ namespace IdentitySample
                       "~/Scripts/fotorama.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/calendar").Include(
-                "~/Scripts/fullcalendar.min.js"));
+                "~/Scripts/fullcalendar.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap*",

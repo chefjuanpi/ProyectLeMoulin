@@ -100,7 +100,7 @@
                         Response.Write(this.getStartOfLine(objF.intColNum));
 
                         // start of item
-                        Response.Write("<li class='col-md-2 ff-item-type-" + objF.strClassType + " list-group-item borderless '>");
+                        Response.Write("<li class='col-xs-2 ff-item-type-" + objF.strClassType + " list-group-item borderless '>");
                         Response.Write("<div class=\"boxes thumbnail \">");
                             
                         if (objF.boolIsFolder)

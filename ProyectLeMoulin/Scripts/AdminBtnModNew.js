@@ -1,11 +1,7 @@
 ﻿    $(function () {
         //initialisation des parts couvertes de la page, et disabilite le formulaire
-        $("#btnmodif").hide();
-        $("#btnSupr").hide();
-        $("#btnAnuler").hide();
         $("#Formulaire *").attr("disabled", "disabled").off('click');
-        $("#Formulaire").hide();
-        $("#dialog-confirm").hide();
+
         
         //bouton modifier, cacher la barre des boutons modifier, suprimer et nouveau, montre le bouton annuler et active la modification dans le formulaire
         $("#btnmodif").click(function () {

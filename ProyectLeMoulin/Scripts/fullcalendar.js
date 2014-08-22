@@ -1412,7 +1412,7 @@ function EventManager(options) { // assumed to be a calendar
 					rangeStart.clone(),
 					rangeEnd.clone(),
 					options.timezone,
-					function(events) {
+					function (events) {
 						callback(events);
 						popLoading();
 					}
@@ -1425,7 +1425,7 @@ function EventManager(options) { // assumed to be a calendar
 				callback();
 			}
 		}else{
-			var url = source.url;
+		    var url = source.url;
 			if (url) {
 				var success = source.success;
 				var error = source.error;
@@ -1435,11 +1435,11 @@ function EventManager(options) { // assumed to be a calendar
 				var customData;
 				if ($.isFunction(source.data)) {
 					// supplied as a function that returns a key/value object
-					customData = source.data();
+				    customData = source.data();
 				}
 				else {
 					// supplied as a straight key/value object
-					customData = source.data;
+				    customData = source.data;
 				}
 
 				// use a copy of the custom data so we can modify the parameters
@@ -1462,21 +1462,29 @@ function EventManager(options) { // assumed to be a calendar
 
 				pushLoading();
 				$.ajax($.extend({}, ajaxDefaults, source, {
-					data: data,
-					success: function(events) {
+				    data: data,
+				    success: function (events) {
+				        if (url == '/Evenements/getEvements')
+				        {
+				            var template = Handlebars.compile($("#CMT").html());
+				            var rs = template(events);
+				            $("#ceteMois").html(rs);
+				        }
+				        
 						events = events || [];
 						var res = applyAll(success, this, arguments);
 						if ($.isArray(res)) {
 							events = res;
 						}
 						callback(events);
+
 					},
 					error: function() {
 						applyAll(error, this, arguments);
 						callback();
 					},
 					complete: function() {
-						applyAll(complete, this, arguments);
+					    applyAll(complete, this, arguments);
 						popLoading();
 					}
 				}));

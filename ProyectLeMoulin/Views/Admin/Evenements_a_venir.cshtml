@@ -15,7 +15,7 @@
     @Html.Partial("_AdminButonModifNew")
 </div>
 
-@using (Html.BeginForm("Evenements_a_venir", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form",
+@using (Html.BeginForm("Evenements_a_venir", "Admin", FormMethod.Post, new { @class = "form-horizontal", @role = "form", @hidden = "hidden",
     @id="Formulaire" }))
 {
     @Html.AntiForgeryToken()

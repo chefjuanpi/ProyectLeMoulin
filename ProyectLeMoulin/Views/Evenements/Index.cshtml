@@ -6,75 +6,48 @@
 <link href="~/Content/fullcalendar.print.css" rel="stylesheet" media="print" />
 
 @section scripts{
+    <script type="text/x-handlebars-template" id="CMT">
+        <h2>Cette mois</h2>
+        {{#each}}
+        <div style="clear:both;">
+            <img style="float: left;" class="img-circle col-md-5" src='../tinyfilemanager.net/resources/thumbs/{{photo}}' />
+            &nbsp; <p> +  <b>{{title}}</b>{{description}}</p>
+            <a class="btn btn-default" href="{{url}}">Plus...</a>
+        </div>
+        <br />
+        {{/each}}
+    </script>
     <script src="~/Scripts/moment.min.js"></script>
     @Scripts.Render("~/bundles/calendar")
     <script src="~/Scripts/lang-all.js"></script>
     <script src="~/Scripts/gcal.js"></script>
     <script>
         $(document).ready(function () {
-            var currentLangCode = "fr-ca";
             $('#calendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
+                    right: 'month'
                 },
                 defaultView: 'month',
-                defaultDate: '2014-06-12',
-                lang: currentLangCode,
+                lang: "fr-ca",
                 buttonIcons: false, // show the prev/next text
                 weekNumbers: true,
                 editable: false,
-                eventSources: ['https://www.google.com/calendar/feeds/fr.canadian%23holiday%40group.v.calendar.google.com/public/basic',
-                               '/Evenements/getEvements']
+                eventSources: ['/Evenements/getEvements',
+                                'https://www.google.com/calendar/feeds/fr.canadian%23holiday%40group.v.calendar.google.com/public/basic'
+                ],
             });
         });
     </script>
 }
 
-
 <div class="row">
-
-    <div class="col-md-3">
-        <h2>Évenements en vedette</h2>
-        <p>
-            - <b>Titre evenement 1</b> ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development. <a class="btn btn-default" href="#">Plus...</a>
-        </p>
-        <br />
-        <p>
-            - <b>Outre Évenement</b> ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development. <a class="btn btn-default" href="#">Plus...</a>
-        </p>
-
-    </div>
-
     <div class="col-md-9">
         <div id='calendar'></div>
     </div>
-</div>
-
-
-
-<div id="popupEventForm" class="modal hide" style="display: none;">
-    <div class="modal-header"><h3>Add new event</h3></div>
-    <div class="modal-body">
-        <form id="EventForm" class="well">
-            <input type="hidden" id="eventID">
-            <label>Event title</label>
-            <input type="text" id="eventTitle" placeholder="Title here"><br />
-            <label>Scheduled date</label>
-            <input type="text" id="eventDate"><br />
-            <label>Scheduled time</label>
-            <input type="text" id="eventTime"><br />
-            <label>Appointment length (minutes)</label>
-            <input type="text" id="eventDuration" placeholder="15"><br />
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" id="btnPopupCancel" data-dismiss="modal" class="btn">Cancel</button>
-        <button type="button" id="btnPopupSave" data-dismiss="modal" class="btn btn-primary">Save event</button>
+    <div class="col-md-3" id="ceteMois">
+        <img class="image-preview" id="attent" src="~/Images/attent.gif" />
     </div>
 </div>
+

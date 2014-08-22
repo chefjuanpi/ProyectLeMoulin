@@ -19,5 +19,7 @@ namespace IdentitySample.Controllers
 
         public string backgroundColor { get; set; }
 
+        public string photo { get; set; }
+
     }
 }

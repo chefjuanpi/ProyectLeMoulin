@@ -17,8 +17,9 @@
 @using (Html.BeginForm("Evenements_a_venir", "Admin", FormMethod.Post, new
 {
     @class = "form-horizontal",
-    role = "form",
-    @id = "Formulaire"
+    @role = "form",
+    @id = "Formulaire",
+    @hidden = "hidden"
 }))
 {
     @Html.AntiForgeryToken()
@@ -150,7 +151,7 @@
                         tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
                         $("#new123").val(id);
                         $.getJSON("getEDetails", { IdEvenement: id }, function (data) {
-                            $("#demotextbox").val(data.image);
+                            $("#photoPrincipal").val(data.image);
                             $("#publier").prop('checked', data.publier);
                             tinymce.editors[0].setContent(data.page);
                             $("#titre").val(data.titre);

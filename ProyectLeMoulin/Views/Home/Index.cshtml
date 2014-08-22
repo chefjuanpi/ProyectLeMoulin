@@ -56,7 +56,7 @@
             {{/each}}
         </script>
         <script type="text/javascript">
-            TemplateNews = Handlebars.compile($("#NewsTemplate").html());
+            var TemplateNews = Handlebars.compile($("#NewsTemplate").html());
             if (screen.width < 1000) {
                 $(".resp").each(function () {
                     console.log($(this).attr("data - thumb"));

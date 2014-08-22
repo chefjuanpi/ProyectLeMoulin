@@ -13,9 +13,19 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        /// <summary>
+        /// function json qui permete recouperer de la bd les evenements dans un cicle presice de temp
+        /// la comunication ce fait directement sur full calendar et ces donnes apres sont evoyes a le
+        /// template handelbar pour le preview des pages
+        /// </summary>
+        /// <param name="start">date de commence du cicle</param>
+        /// <param name="end">date de fin</param>
+        /// <param name="ti">parametre optionel necesarie pour le plug in ful calendar</param>
+        /// <returns>l'ensemble des evenemets durant un periode precise</returns>
         public JsonResult getEvements(System.DateTime start, System.DateTime end, double ti = 0)
         {
             CoeurContainer db = new CoeurContainer();
+            //obtenir les evenements de un date superior ou égal à start
             var calendar = (from e in db.Evenements
                             where e.DateStart >= start & e.Poublier == true
                             select new t
@@ -29,32 +39,33 @@ namespace IdentitySample.Controllers
                                 photo = e.PrincipalPhotoEvenement
                             }).ToList();
 
+            //retire les evenement avec le date superior a le valeur de end
             calendar.RemoveAll(e => e.date > end);
 
+            //change le format des donnes au format desire.
             List<evDisplay> eve = new List<evDisplay>();
             for (int x = 0; x < calendar.Count(); x++)
             {
                 int i = calendar.Count();
                 calendar[x].description = Nohtml(calendar[x].description) + " ...";
 
-                string m = (calendar[x].date.Month > 9) ? calendar[x].date.Month.ToString() : "0" + calendar[x].date.Month;
-                string j = (calendar[x].date.Day > 9) ? calendar[x].date.Day.ToString() : "0" + calendar[x].date.Day;
-                string h = (calendar[x].heureStart.Hours > 9) ? calendar[x].heureStart.Hours.ToString() : "0" + calendar[x].heureStart.Hours;
-                string min = (calendar[x].heureStart.Minutes > 9) ? calendar[x].heureStart.Minutes.ToString() : "0" + calendar[x].heureStart.Minutes;
+                string s = String.Format("{0:yyyy-MM-dd}", calendar[x].date);
+                s += "T";
+                s += calendar[x].heureStart.ToString();
 
-                string mf = (calendar[x].datefin.Month > 9) ? calendar[x].datefin.Month.ToString() : "0" + calendar[x].datefin.Month;
-                string jf = (calendar[x].datefin.Day > 9) ? calendar[x].datefin.Day.ToString() : "0" + calendar[x].datefin.Day;
-                string hf = (calendar[x].heurefin.Hours > 9) ? calendar[x].heurefin.Hours.ToString() : "0" + calendar[x].heurefin.Hours;
-                string minf = (calendar[x].heurefin.Minutes > 9) ? calendar[x].heurefin.Minutes.ToString() : "0" + calendar[x].heurefin.Minutes;
+                string e = String.Format("{0:yyyy-MM-dd}", calendar[x].datefin);
+                e += "T";
+                e += calendar[x].heurefin.ToString();
 
                 evDisplay temp = new evDisplay
                 {
                     title = calendar[x].title,
-                    start = calendar[x].date.Year + "-" + m + "-" + j + "T" + h + ":" + min + ":" + "00",
-                    end = calendar[x].datefin.Year + "-" + mf + "-" + jf + "T" + hf + ":" + minf + ":" + "00",
-                    url = "/Evenements/Details?nom='" + calendar[x].title + "'",
+                    start = s,
+                    end = e,
+                    url = "/Evenements/Details?nom=" + calendar[x].title,
                     description = calendar[x].description,
-                    backgroundColor = "red"
+                    photo = calendar[x].photo,
+                    backgroundColor = "#009d28"
                 };
 
                 eve.Add(temp);
@@ -62,10 +73,15 @@ namespace IdentitySample.Controllers
             return Json(eve, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// function qui permet retirer le code html des donnes faits avec tinyMCE
+        /// </summary>
+        /// <param name="tiny">les données pour retirer le html</param>
+        /// <returns>Un string contenant texte pure</returns>
         private string Nohtml(string tiny)
         {
             int y;
-            string temp = "";
+            string t = "";
             for (y = 0; y < tiny.Count() - 1; )
             {
                 if (tiny.IndexOf("<", y) > -1)
@@ -80,10 +96,10 @@ namespace IdentitySample.Controllers
                         {
                             if (tiny.Substring(y, (start - y)).Trim() != "&nbsp;")
                             {
-                                temp += " " + tiny.Substring(y, (start - y));
-                                if (temp.Count() > 200)
+                                t += " " + tiny.Substring(y, (start - y));
+                                if (t.Count() > 200)
                                 {
-                                    temp = temp.Substring(0, 199);
+                                    t = t.Substring(0, 199);
                                     break;
                                 }
                             }
@@ -91,11 +107,22 @@ namespace IdentitySample.Controllers
                     }
                 }
             }
-            return temp;
+            return t;
         }
 
+        /// <summary>
+        /// control de la view qui affiche les details d'un evenement
+        /// </summary>
+        /// <param name="nom">string </param>
+        /// <returns>si le nom corresponde a un evenement existant retourne a la view les donnes 
+        /// correspondant sinon retourne la page vide</returns>
         public ActionResult Details(string nom)
         {
+            CoeurContainer db = new CoeurContainer();
+            Evenement ev = (from e in db.Evenements
+                            where e.Poublier == true & e.TitleEvenement == nom
+                            select e).SingleOrDefault();
+           ViewBag.evenement = (ev != null) ? ev: null;
             return View();
         }
     }

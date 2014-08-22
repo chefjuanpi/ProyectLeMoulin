@@ -435,6 +435,9 @@
     <Content Include="Views\Home\Pages.cshtml" />
     <Content Include="Views\Admin\Accueil.cshtml" />
     <Content Include="Views\Evenements\Details.cshtml" />
+    <Content Include="Scripts\fullcalendar.min.js.map">
+      <DependentUpon>fullcalendar.min.js</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
