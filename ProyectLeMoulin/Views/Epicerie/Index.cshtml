@@ -48,7 +48,7 @@
     <div id="prod{{id}}"        class="row">
         <div id="pname{{id}}"   class="col-xs-3">{{nom}}</div>
         <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
-        <div id="pprix{{id}}"   class="col-xs-1">{{prix}} $</div>
+        <div id="pprix{{id}}"   class="col-xs-1">{{prix}}</div>
         <div id="pqty{{id}}"    class="col-xs-1"><input class="textbox" id="CartQuantity{{id}}" type="text" value="{{qty}}" disabled="disabled" /></div>
         <div id="psous{{id}}"   class="col-xs-2">{{Soustotal}} $</div>
         <div class="col-xs-1"><input id="Cartupdate{{id}}"  type="button" value="Modifier"  onclick="ModifierProduit('{{id}}')"     class="btn btn-warning" /></div>
@@ -63,8 +63,11 @@
 
     templateCategories  = null;
     templateProducts    = null;
-    templateCart        = null;
+    templateCart = null;
+    var prix = 0;
+    var action = "";
     var total = 0;
+    var ancienprix = 0;
     
     $(function () {
         templateCategories  = Handlebars.compile($("#CategoriesTemplate").html());
@@ -101,8 +104,9 @@
             };
 
             var result = templateCart(produit);
+            action = "AJOUT";
             $("#CartOutput").append(result);
-            Caltotal(produit.Soustotal);
+            Caltotal(id);
             
             $("#AddProduct" + id).attr("disabled", "disabled");
             $("#AddProduct" + id).attr("class", "btn btn-default");
@@ -116,19 +120,33 @@
         }
     }
 
-    function Caltotal(stotal) {
-        $('.produit').each(function () {
-            var prix = $(this).children().eq(3).val();
-
-            console.log(total + " " + stotal);
-            total += stotal;
+    function Caltotal(id) {
+        if (action == "AJOUT") {
+            total = total + $("#psous" + id).val();
+            $("#totalOutput").html(prix);
+        }
+        if (action == "ENLEVER") {
+            total = total - $("#psous" + id).html()
             $("#totalOutput").html(total);
-        });
+        }
+        if (action == "MODIF") {
+            if (ancienprix > $("#psous" + id).val()) {
+                total = total + $("#psous" + id).val();
+                total = total - ancienprix;
+                $("#totalOutput").html(total);
+            }
+            if (ancienprix < $("#psous" + id).val()) {
+                total = total - ancienprix;
+                total = total + $("#psous" + id).val();
+                $("#totalOutput").html(total);
+            }
+            
+        }
     };
+
     function SupprimerProduit(id) {
-        console.log(("#psous").html);
-        total = total - $("#psous" + id).html()
-        $("#totalOutput").html(total);
+        action = "ENLEVER";
+        Caltotal(id);
         $("#prod" + id).remove();
         $("#AddProduct" + id).attr("disabled", false);
         $("#AddProduct" + id).attr("class", "btn btn-success");
@@ -145,11 +163,14 @@
             $("#Cartupdate" + id).val("OK");
             $("#Cartupdate" + id).attr("class", "btn btn-success");
             $("#CartQuantity" + id).attr("disabled", false);
+            ancienprix = $("#CartQuantity" + id).val();
         } else {
             if ($("#Cartupdate" + id).val() == "OK") {
                 $("#Cartupdate" + id).val("Modifier");
                 $("#Cartupdate" + id).attr("class", "btn btn-warning");
                 $("#CartQuantity" + id).attr("disabled", true);
+                action = "MODIF";
+                Caltotal(id);
             }
         }
     }
@@ -163,8 +184,8 @@
                 i++;
                 console.log("PRODUIT : ");
                 var id = $(this).attr("id");
-                var prix = $(this).children().eq(3).val();
-                var qty = $(this).children().eq(4).val();
+                var prix = $(this).children().eq(4).html();
+                var qty = $("#CartQuantity" + id).val();
                 console.log("id  : " + id);
                 console.log("prix  : " + prix);
                 console.log("qty  : " + qty);
@@ -175,7 +196,7 @@
                 };
                 panier[i] = panier;
             });
-            console.log(produits);
+            console.log(panier);
         });
     });
     
