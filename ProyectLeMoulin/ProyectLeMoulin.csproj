@@ -688,6 +688,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\t.cs" />
+    <Compile Include="Models\EpicerieViewModels.cs" />
     <Compile Include="Models\HomeViewModels.cs" />
     <Compile Include="Models\PanierViewModel.cs" />
     <Compile Include="Controllers\titreTextNouvelle.cs" />

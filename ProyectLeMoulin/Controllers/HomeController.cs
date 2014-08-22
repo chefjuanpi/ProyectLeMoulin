@@ -29,13 +29,13 @@ namespace IdentitySample.Controllers
             
             ViewBag.photos = photos;
 
-            //obtienne de la bd le texte principal de la page, et le envoie dans ViewBag.Accueil
+            //obtienne de la bd le contenu principal de la page
             ViewBag.Accueil = (from s in db.Sections
                                    from p in s.Pages
                                    where p.MenuName == "Accueil" & s.Nom == "AccueilContenu"
                                    select s.Contenu).Single();
 
-            //obtienne de la bd le code des plug-ins sociales, et le envoie dans ViewBag.Gauche
+            //obtienne de la bd le code des plug-ins sociales
             ViewBag.Gauche = (from s in db.Sections
                               from p in s.Pages
                               where p.MenuName == "Accueil" & s.Nom == "AccueilGauche"
@@ -73,7 +73,7 @@ namespace IdentitySample.Controllers
         /// function qui permet retirer le code html, de string retourné de la bd, cette champ a été fait avec tinyMCE
         /// </summary>
         /// <param name="tiny">texte a retirer le html</param>
-        /// <returns>un string avec les premiers 200 characteres de cette string</returns>
+        /// <returns>un string avec les premiers 200 characteres du parametre string</returns>
         private string Nohtml(string tiny)
         {
             int y;
@@ -90,9 +90,9 @@ namespace IdentitySample.Controllers
                         if (tiny.Substring(y, (start - y)).Trim() != "&nbsp;")
                         {
                             temp += " " + tiny.Substring(y, (start - y));
-                            if (temp.Count() > 300)
+                            if (temp.Count() > 200)
                             {
-                                temp = temp.Substring(0, 299);
+                                temp = temp.Substring(0, 199);
                                 break;
                             }
                         }
@@ -121,10 +121,6 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        /// <summary>
-        /// generation de la page Contacts
-        /// </summary>
-        /// <returns></returns>
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

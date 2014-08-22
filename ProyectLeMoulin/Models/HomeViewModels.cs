@@ -16,7 +16,7 @@ namespace IdentitySample.Models
         public DateTime dateEnd { get; set; }
     }
 
-    class evDisplay
+    public class evDisplay
     {
         public string title { get; set; }
 
@@ -33,4 +33,5 @@ namespace IdentitySample.Models
         public string photo { get; set; }
 
     }
+
 }

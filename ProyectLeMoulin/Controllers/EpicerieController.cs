@@ -31,6 +31,16 @@ namespace IdentitySample.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Index(test1234 panier)
+        {
+            //pour garder ou modifier la bd, async xq sea mas rapido para el utilisateur
+
+            ViewBag.Steeve = "ton panier";
+            return View();
+
+        }
+
         //Récupérer les catégories de produits
         public JsonResult GetCategories()
         {
