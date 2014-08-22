@@ -42,12 +42,16 @@ namespace IdentitySample.Controllers
             //retire les evenement avec le date superior a le valeur de end
             calendar.RemoveAll(e => e.date > end);
 
-            //change le format des donnes au format desire.
             List<evDisplay> eve = new List<evDisplay>();
+
+            //instancier un controleur pour utiliser la fonction NOHTML
+            HomeController nohtml = new HomeController();
+
+            //change le format des donnes au format desire et ajoute certain information.
             for (int x = 0; x < calendar.Count(); x++)
             {
                 int i = calendar.Count();
-                calendar[x].description = Nohtml(calendar[x].description) + " ...";
+                calendar[x].description = nohtml.Nohtml(calendar[x].description) + " ...";
 
                 string s = String.Format("{0:yyyy-MM-dd}", calendar[x].date);
                 s += "T";
@@ -74,43 +78,6 @@ namespace IdentitySample.Controllers
         }
 
         /// <summary>
-        /// function qui permet retirer le code html des donnes faits avec tinyMCE
-        /// </summary>
-        /// <param name="tiny">les données pour retirer le html</param>
-        /// <returns>Un string contenant texte pure</returns>
-        private string Nohtml(string tiny)
-        {
-            int y;
-            string t = "";
-            for (y = 0; y < tiny.Count() - 1; )
-            {
-                if (tiny.IndexOf("<", y) > -1)
-                {
-                    int start = tiny.IndexOf("<", y);
-                    y = tiny.IndexOf(">", start) + 1;
-                    start = tiny.IndexOf("<", y);
-                    if ((start - y) > 0)
-                    {
-                        string yupi = tiny.Substring(y, (start - y)).Trim();
-                        if (tiny.Substring(y, (start - y)) != "\r\n")
-                        {
-                            if (tiny.Substring(y, (start - y)).Trim() != "&nbsp;")
-                            {
-                                t += " " + tiny.Substring(y, (start - y));
-                                if (t.Count() > 200)
-                                {
-                                    t = t.Substring(0, 199);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return t;
-        }
-
-        /// <summary>
         /// control de la view qui affiche les details d'un evenement
         /// </summary>
         /// <param name="nom">string </param>
@@ -123,6 +90,8 @@ namespace IdentitySample.Controllers
                             where e.Poublier == true & e.TitleEvenement == nom
                             select e).SingleOrDefault();
            ViewBag.evenement = (ev != null) ? ev: null;
+
+            
             return View();
         }
     }

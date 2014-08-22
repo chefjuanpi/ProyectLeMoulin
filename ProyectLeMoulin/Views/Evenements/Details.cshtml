@@ -6,5 +6,39 @@
 
 <h2>@ViewBag.evenement.TitleEvenement</h2>
 <div class="row">
-    <img class="col-md-9" src="../tinyfilemanager.net/resources/files/@ViewBag.evenement.PrincipalPhotoEvenement"></div>
-  ici les details des evenements
+    <div class="container-fluid col-md-4">
+        <strong>Information de base sur l'évenement :</strong>
+
+        <div class="input-group">
+            <div class="input-group-addon">Lieu : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <label>@ViewBag.evenement.PlaceEvenement  </label>
+        </div>
+        <div class="input-group ">
+            <div class="input-group-addon">Adresse : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <label>@ViewBag.evenement.AdresseEvenement </label>
+        </div>
+        <div class="input-group ">
+            <div class="input-group-addon ">Commence : </div>
+            <label>
+                @ViewBag.evenement.DateStart.ToString(" yyyy MMMM dd")
+                à 
+                @ViewBag.evenement.HourStart.ToString(@"hh\:mm") 
+            </label>
+        </div>
+        <div class="input-group ">
+            <div class="input-group-addon">Termine  : &nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <label>
+                @ViewBag.evenement.DateEnd.ToString(" yyyy MMMM dd")
+                à
+            @ViewBag.evenement.HourEnd.ToString(@"hh\:mm")
+            </label>
+        </div>
+    </div>
+    <img class="col-md-8 img-responsive" src="../tinyfilemanager.net/resources/files/@ViewBag.evenement.PrincipalPhotoEvenement">
+</div>
+<br />
+<br />
+<div class="row">
+    @Html.Raw(ViewBag.evenement.Text)
+</div>
+

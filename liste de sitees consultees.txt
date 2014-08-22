@@ -35,10 +35,15 @@ config security asp.net
 http://weblogs.asp.net/gurusarkar/setting-authorization-rules-for-a-particular-page-or-folder-in-web-config
 
 relations tables entity
-
 http://smehrozalam.wordpress.com/2010/06/29/entity-framework-queries-involving-many-to-many-relationship-tables/
 
 metre invicible un div
-
 http://stackoverflow.com/questions/1992114/how-do-you-create-a-hidden-div-that-doesnt-create-a-line-break-or-horizontal-sp
 
+appel un function de un outre controlleur
+http://stackoverflow.com/questions/1296680/net-mvc-call-method-on-different-controller
+
+timespan to hours min string
+http://stackoverflow.com/questions/18482460/how-convert-timespan-to-24-hours-and-minutes-string
+
+detection de la resolution d'ecran

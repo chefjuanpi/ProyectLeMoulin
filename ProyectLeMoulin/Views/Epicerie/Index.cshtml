@@ -47,10 +47,11 @@
 <script type="text/x-handlebars-template" id="CartTemplate">
      
     <div id="prod{{id}}"        class="row">
+        <input type="hidden" name="{{name}}.PID" value="{{id}}" />
         <div id="pname{{id}}"   class="col-xs-3">{{nom}}</div>
         <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
         <div id="pprix{{id}}"   class="col-xs-1">{{prix}}</div>
-        <div id="pqty{{id}}"    class="col-xs-1"><input class="textbox" id="CartQuantity{{id}}" type="text" value="{{qty}}" name="{{name}}" /></div>
+        <input class="textbox col-xs-1" id="CartQuantity{{id}}" type="text" value="{{qty}}" name="{{name}}.qty" />
         <div id="psous{{id}}"   class="col-xs-2">{{Soustotal}} $</div>
         <div class="col-xs-1"><input id="Cartupdate{{id}}"  type="button" value="Modifier"  onclick="ModifierProduit('{{id}}')"     class="btn btn-warning" /></div>
         <div class="col-xs-1"><input id="Cartdelete{{id}}"  type="button" value="Enlever"   onclick="SupprimerProduit('{{id}}')"    class="btn btn-danger" /></div>
@@ -104,7 +105,7 @@
                 qty: q,
                 Soustotal: sous,
                 //le name va a creer la relation avec le objet dans le model comme obj[0], obj[1], etc...
-                name: "obj[" + i + "].qty"
+                name: "obj[" + i + "]"
             };
 
             //apres creer le objet produit se besoin monter l'indice, manque incluir dans les fonction modif et effacer

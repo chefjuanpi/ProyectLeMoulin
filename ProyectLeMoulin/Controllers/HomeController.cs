@@ -74,7 +74,7 @@ namespace IdentitySample.Controllers
         /// </summary>
         /// <param name="tiny">texte a retirer le html</param>
         /// <returns>un string avec les premiers 200 characteres du parametre string</returns>
-        private string Nohtml(string tiny)
+        public string Nohtml(string tiny)
         {
             int y;
             string temp = "";

@@ -5,10 +5,11 @@ using System.Web;
 
 namespace IdentitySample.Models
 {
-    //ici le model pour chaque produit
+    //ici le model pour chaque produit écrit le propietes a besoin
     public class listProducts
     {
         public int qty { get; set; }
+        public int PID { get; set; }
     }
 
     public class test1234
