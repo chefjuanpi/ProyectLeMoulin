@@ -686,8 +686,6 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\evDisplay.cs" />
-    <Compile Include="Controllers\EvemPhoto.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\t.cs" />
     <Compile Include="Models\HomeViewModels.cs" />

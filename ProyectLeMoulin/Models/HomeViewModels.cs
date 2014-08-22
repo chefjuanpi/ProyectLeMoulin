@@ -15,4 +15,22 @@ namespace IdentitySample.Models
 
         public DateTime dateEnd { get; set; }
     }
+
+    class evDisplay
+    {
+        public string title { get; set; }
+
+        public string start { get; set; }
+
+        public string end { get; set; }
+
+        public string url { get; set; }
+
+        public string description { get; set; }
+
+        public string backgroundColor { get; set; }
+
+        public string photo { get; set; }
+
+    }
 }
