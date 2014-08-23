@@ -5,10 +5,9 @@
 
     <div class="row">
         <div class="col-md-8">
-            <div class="fotorama" data-width="100%" data-ratio="700/467" data-max-width="100%" data-nav="thumbs" data-keyboard="true">
-                @foreach (var p in ViewBag.Photos )
+            <div class="fotorama" data-width="100%" data-ratio="700/467" data-max-width="100%" data-nav="thumbs" data-keyboard="true" data-loop="true">
+                @foreach (var p in ViewBag.Photos)
                 {
-                    
                     <div class="resp" data-img='../tinyfilemanager.net/resources/files/@p.photos' data-thumb='../tinyfilemanager.net/resources/thumbs/@p.photos'>
                         <div>
                             <div class=' cubobajatexto'></div>
@@ -16,12 +15,13 @@
                                 <div class='alert alert-info' style=' background:#464646; background-color: rgba(91, 192, 222, 0.5);'>
                                     <h2>@p.titre</h2>
                                     <h3>de @p.dateStart.ToLongDateString() au @p.dateEnd.ToLongDateString()</h3>
-                               </div>
+                                </div>
                             </a>
                         </div>
                     </div>
                 }
             </div>
+
         </div>
 
         <div class="col-md-4">

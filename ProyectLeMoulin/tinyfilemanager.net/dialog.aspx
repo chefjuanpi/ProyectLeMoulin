@@ -97,10 +97,10 @@
                     foreach (TinyFileManager.NET.clsFileItem objF in this.arrLinks)
                     {
                         //get start of line html, if necessary
-                        Response.Write(this.getStartOfLine(objF.intColNum));
+                        //Response.Write(this.getStartOfLine(objF.intColNum));
 
                         // start of item
-                        Response.Write("<li class='col-xs-2 ff-item-type-" + objF.strClassType + " list-group-item borderless '>");
+                        Response.Write("<li class='col-xs-4 col-md-2 ff-item-type-" + objF.strClassType + " list-group-item borderless '>");
                         Response.Write("<div class=\"boxes thumbnail \">");
                             
                         if (objF.boolIsFolder)
@@ -127,7 +127,7 @@
                         Response.Write("</li>");
                             
                         //get end of line html, if necessary
-                        Response.Write(this.getEndOfLine(objF.intColNum));                                    
+                        //Response.Write(this.getEndOfLine(objF.intColNum));                                    
                     }
                 %>
 
