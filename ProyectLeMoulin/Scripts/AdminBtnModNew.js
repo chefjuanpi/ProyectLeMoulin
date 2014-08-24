@@ -55,10 +55,10 @@
                  "searchreplace wordcount visualblocks visualchars code insertdatetime media nonbreaking",
                  "save table contextmenu directionality emoticons template paste textcolor "
             ],
-            toolbar: "print preview searchreplace | undo redo paste | styleselect | bold italic underline | upload |" +
+            toolbar: "print preview searchreplace tinyfilemanager.net  | undo redo paste | styleselect | bold italic underline | upload |" +
             " alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink " +
             "anchor image media | forecolor backcolor emoticons charmap hr | insertdatetime nonbreaking table |  pagebreak " +
-            " visualblocks visualchars code  ",
+            " visualblocks visualchars code ",
             style_formats: [
                  { title: 'Bold text', inline: 'b' },
                  { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },

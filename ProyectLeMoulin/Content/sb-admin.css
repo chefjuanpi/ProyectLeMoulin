@@ -7,9 +7,9 @@ body {
     background-color: #f8f8f8;
 }
 
-#side-menu {
-    overflow-y:auto;
-}
+/*#side-menu {
+    overflow-y:scroll;
+}*/
 
 @media(min-width:768px) {
     body {
@@ -155,17 +155,20 @@ body {
     }
 }
 
-@media(max-height:600px) and (max-width:767px) {
+/*@media(max-height:600px) and (max-width:767px) {
     .sidebar-collapse {
-        max-height: 300px;
+        max-height: 100%;
+        overflow-y:scroll;
     }
 }
 
 @media(max-height:400px) and (max-width:767px) {
     .sidebar-collapse {
-        max-height: 200px;
+        max-height: 100%;
+            overflow-y:scroll;
     }
-}
+}*/
+
 
 /* Buttons */
 

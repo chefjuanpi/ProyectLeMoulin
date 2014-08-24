@@ -36,7 +36,7 @@ namespace IdentitySample.Controllers
                 if (i == 5)
                 {
                     menu += "<li class='dropdown-submenu'><a>Outres";
-                    menu += "</a><ul class='dropdown-menu' >";
+                    menu += "</a><ul class='dropdown-menu' id='menuOutres' >";
                 }
 
                 if (enfants.Exists(a => a.parent == parents[i].idParent))
