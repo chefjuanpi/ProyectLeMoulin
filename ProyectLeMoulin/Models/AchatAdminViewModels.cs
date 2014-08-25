@@ -64,9 +64,9 @@ namespace EpicerieModel.Models
     /// <summary>
     /// Modèle des données contenu dans Week
     /// </summary>
-    public class WeekViewModel
+    public class WeekProductViewModel
     {
-        public DateTime DateSemaine { get; set; }
+        public int WeekId { get; set; }
 
         public int ProductId { get; set; }
 

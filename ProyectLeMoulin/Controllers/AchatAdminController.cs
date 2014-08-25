@@ -28,41 +28,42 @@ namespace IdentitySample.Controllers
         /// <param name="Week">Model à utiliser</param>
         /// <returns>Une vue</returns>
         [HttpPost]
-    //    public ActionResult Index(WeekViewModel Week)
-    //    {
-    //        EpicerieEntities db = new EpicerieEntities();
-    //        if (Week.ProductId == null)
-    //        {
-    //            Week w = new Week();
-    //            w.DateSemaine = Week.DateSemaine;
-    //            w.ProductId = Week.ProductId;
-    //            w.SupplierId = Week.SupplierId;
-    //            w.UnitPrice = Week.UnitPrice;
-    //            w.Quantity = Week.Quantity;
-    //            w.Format = Week.Format;
+        public ActionResult Index(WeekProductViewModel WeekProduct)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            if (WeekProduct.ProductId == null)
+            {
+                WeekProduct wp = new WeekProduct();
+                wp.WeekId = WeekProduct.WeekId;
+                wp.ProductId = WeekProduct.ProductId;
+                wp.SupplierId = WeekProduct.SupplierId;
+                wp.UnitPrice = WeekProduct.UnitPrice;
+                wp.Quantity = WeekProduct.Quantity;
+                wp.Format = WeekProduct.Format;
 
-    //            db.Week.Add(w);
-    //            db.SaveChanges();
-    //        }
-    //        else
-    //        {
-    //            int x = Convert.ToInt16(Week.ProductId);
-    //            var modifWeek = (from w in db.Week
-    //                                 where w.ProductId == x
-    ////                                 where w.DateSemaine 
-    //                                 select w).Single();
-    //            modifWeek.DateSemaine = Week.DateSemaine;
-    //            modifWeek.ProductId = Week.ProductId;
-    //            modifWeek.SupplierId = Week.SupplierId;
-    //            modifWeek.UnitPrice = Week.UnitPrice;
-    //            modifWeek.Quantity = Week.Quantity;
-    //            modifWeek.Format = Week.Format;
+                db.WeekProduct.Add(wp);
+                db.SaveChanges();
+            }
+            else
+            {
+                int x = Convert.ToInt16(WeekProduct.ProductId);
+                var modifWeekProduct = (from wp in db.WeekProduct
+                                 where wp.ProductId == x
+                                 where wp.WeekId == (from w in db.Weeks
+                                                     orderby w.WeekId descending
+                                                     select w.WeekId).First()
+                                 select wp).Single();
+                modifWeekProduct.ProductId = WeekProduct.ProductId;
+                modifWeekProduct.SupplierId = WeekProduct.SupplierId;
+                modifWeekProduct.UnitPrice = WeekProduct.UnitPrice;
+                modifWeekProduct.Quantity = WeekProduct.Quantity;
+                modifWeekProduct.Format = WeekProduct.Format;
 
-    //            db.SaveChanges();
-    //        }
-    //        //getWeeks();
-    //        return View();
-    //    }
+                db.SaveChanges();
+            }
+           // getWeeks();
+            return View();
+        }
 
         /// <summary>
         /// Permet d'ouvrir la vue pour NewOrder
