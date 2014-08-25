@@ -1,5 +1,6 @@
 ﻿using IdentitySample.Models;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -22,21 +23,10 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult Pages()
-        {
-            ViewBag.Title = "Editeur des Pages";
-            ViewBag.Message = "Edition des pages du site";
-
-            return View();
-        }
-
+        /// <summary>
+        /// function Get pour  modif accueil
+        /// </summary>
+        /// <returns>return de la bd la information enregistre</returns>
         public ActionResult Accueil()
         {
             ViewBag.Title = "Modifier la page d'accueil";
@@ -56,7 +46,11 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        // POST: //enregistrer changements dans la pages d'accueil
+        /// <summary>
+        /// Function Post qui permet sousgarder les changemetns fait dans  la page Accueil
+        /// </summary>
+        /// <param name="page"> reçu le model contenant l'information a modifier</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Accueil(AccueilViewModel page)
         {
@@ -82,8 +76,19 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        //
-        // POST: //enregistrer Pages
+
+        public ActionResult Pages()
+        {
+            ViewBag.Title = "Editeur des Pages";
+            ViewBag.Message = "Edition des pages du site";
+            ViewBag.ispostBack = false;
+            return View();
+        }
+
+        /// <summary>
+        /// function Post qui permet sousgarder ou modifier les pages du site
+        /// </summary>
+        /// <param name="page">est le modele</param>
         [HttpPost]
         public async Task<ActionResult> Pages(PagesViewModel page)
         {
@@ -91,49 +96,106 @@ namespace IdentitySample.Controllers
             CoeurContainer db = new CoeurContainer();
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            
+            //liste de titres de page déjà enregistrées dans la db
+            var listTitres = (from a in db.Pages select a.Title).ToList();
+            
+            //liste des nom de menu déjà enregistres dans la bd
+            var listmenus = (from a in db.Pages select a.MenuName).ToList();
+            string titre = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(page.Titre.ToLower());
+            string menu = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(page.MenuName.ToLower());
+
             if (page.PId == null)
             {
-                Page n = new Page();
-                n.MenuName = page.MenuName;
-                n.UserId = guid;
-                n.Title = page.Titre;
-                n.Text = page.Contenu;
-                n.Poublier = page.Publier;
-                n.Principal = page.Principal;
-                if(page.Principal == false)
+                if (listTitres.Contains(titre))
                 {
-                    n.SousMenu = page.menuParent;
+                    ViewBag.ispostBack = true;
+                    ModelState.AddModelError("", "Existe déjà un page avec ce Titre, changer le avant de continuer");
+                    return View();
                 }
-                else{
-                    n.SousMenu = null;
+                else
+                {
+                    if (listmenus.Contains(menu))
+                    {
+                        ViewBag.ispostBack = true;
+                        ModelState.AddModelError("", "Existe déjà un page avec ce Nom de menu, changer le avant de continuer");
+                        return View();
+                    }
+                    else
+                    {
+                        Page n = new Page();
+                        n.MenuName = menu;
+                        n.UserId = guid;
+                        n.Title = titre;
+                        n.Text = page.Contenu;
+                        n.Poublier = page.Publier;
+                        n.Principal = page.Principal;
+                        if (page.Principal == false)
+                        {
+                            n.SousMenu = page.menuParent;
+                        }
+                        else
+                        {
+                            n.SousMenu = null;
+                        }
+                        db.Pages.Add(n);
+                        await db.SaveChangesAsync();
+                    }
                 }
-                db.Pages.Add(n);
-                await db.SaveChangesAsync();
-                int lastId = db.Pages.Max(m => m.PageID);
-                int x = 0;
-                //continuer apres si marche le reste de la page en public
             }
             else
             {
                 int x = Convert.ToInt16(page.PId);
-                var modPage = (from n in db.Pages
-                                   where n.PageID == x
-                                   select n).Single();
-                modPage.UserId = guid;
-                modPage.Title = page.Titre;
-                modPage.Text = page.Contenu;
-                modPage.MenuName = page.MenuName;
-                modPage.Poublier = page.Publier;
-                if (page.Principal == false)
+
+                // actualise la liste titres pour ne prend en consideration dans la recherche le titre actuel
+                listTitres = (from a in db.Pages
+                              where a.PageID != x
+                              select a.Title).ToList();
+
+                //actualise la liste des menus pour ne prend en consideration dans la recherche le menu actuel
+                listmenus = (from a in db.Pages where a.PageID != x select a.MenuName).ToList();
+                if (listTitres.Contains(titre))
                 {
-                    modPage.SousMenu = page.menuParent;
+                    ViewBag.ispostBack = true;
+                    ModelState.AddModelError("", "Éxiste déjà un page avec ce Titre, changer le avant de continuer");
+                    return View();
                 }
                 else
                 {
-                    modPage.SousMenu = null;
+                    if (listmenus.Contains(menu))
+                    {
+                        ViewBag.ispostBack = true;
+                        ModelState.AddModelError("", "Existe déjà un page avec ce Nom de menu, changer le avant de continuer");
+                        return View();
+                    }
+                    else
+                    {
+                        var modPage = (from n in db.Pages
+                                       where n.PageID == x
+                                       select n).SingleOrDefault();
+                        //si éxiste la page fait l'edition
+                        if(modPage !=null)
+                        { 
+                            modPage.UserId = guid;
+                            modPage.Title = titre;
+                            modPage.Text = page.Contenu;
+                            modPage.MenuName = menu;
+                            modPage.Poublier = page.Publier;
+                            modPage.Principal = page.Principal;
+                            if (page.Principal == false)
+                            {
+                                modPage.SousMenu = page.menuParent;
+                            }
+                            else
+                            {
+                                modPage.SousMenu = null;
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                    }
                 }
-                await db.SaveChangesAsync();
             }
+            ViewBag.ispostBack = false;
             return View();
         }
 
@@ -156,6 +218,9 @@ namespace IdentitySample.Controllers
             return Json(nouvelles, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// function json qui permet recouperer la liste de pages qui sont menu principal
+        /// </summary>
         public JsonResult getparents()
         {
             CoeurContainer db = new CoeurContainer();
@@ -165,10 +230,14 @@ namespace IdentitySample.Controllers
                              {
                                  id = n.PageID,
                                  Titre = n.MenuName
-                             });
+                             }).ToList();
             return Json(nouvelles, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// funsion json qjui permet recouper le detail de un page
+        /// </summary>
+        /// <param name="pageId"></param>
         public JsonResult getPDetails(int pageId)
         {
             CoeurContainer db = new CoeurContainer();
@@ -183,22 +252,44 @@ namespace IdentitySample.Controllers
                                 principal = n.Principal,
                                 menuparent = n.SousMenu,
                                 menuName = n.MenuName
-                            }).Single();
+                            }).SingleOrDefault();
             return Json(nouvelle, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// action result qui permet effacer de la bd un page
+        /// </summary>
+        /// <param name="pID">Id de page a effacer</param>
+        /// <returns>return resultat</returns>
         public async Task<ActionResult> delPage(int pID)
         {
             CoeurContainer db = new CoeurContainer();
-            var delpage = (from n in db.Pages
-                                where n.PageID == pID
-                                select n).Single();
-            if (delpage != null)
+            var parentsList = (from a in db.Pages select a.SousMenu).ToList();
+            if (parentsList.Contains(pID))
             {
-                db.Pages.Remove(delpage);
-                await db.SaveChangesAsync();
+                ViewBag.ispostBack = true;
+                ModelState.AddModelError("", "Imposible de Effacer, cete page est menu principal pour outres pages, retirer les avent");
+                return View();
             }
-            return Redirect("/Admin/Pages");
+            else
+            { 
+                var delpage = (from n in db.Pages
+                                    where n.PageID == pID
+                                    select n).SingleOrDefault();
+                if (delpage != null)
+                {
+                    db.Pages.Remove(delpage);
+                    await db.SaveChangesAsync();
+                }
+                else
+                {
+                    ViewBag.ispostBack = true;
+                    ModelState.AddModelError("", "Un erreur est produit, la page n'été pas efface !, essai un outre fois");
+                    return View();
+                }
+            }
+            ViewBag.ispostBack = false;
+            return View();
         }
 
         public ActionResult Evenements_a_venir()
@@ -215,54 +306,90 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        //
-        // POST: //enregistrer nouveles Evenement  et modifié
+        /// <summary>
+        /// function Post qui permet sousgarder ou modifier les pages du site
+        /// </summary>
+        /// <param name="Evenement"> est le modele</param>
         [HttpPost]
         public async Task<ActionResult> Evenements_a_venir(EvenementsViewModel Evenement)
         {
             CoeurContainer db = new CoeurContainer();
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+
+            //lliste des titres de évenements dêjà existants
+            var listTitres = (from a in db.Evenements select a.TitleEvenement).ToList();
+            string titre = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Evenement.Titre.ToLower());
             if (Evenement.PId == null)
             {
-                Evenement n = new Evenement();
-                n.UserId = guid;
-                n.TitleEvenement = Evenement.Titre;
-                n.Text = Evenement.Contenu;
-                n.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
-                n.Poublier = Evenement.Publier;
-                n.DateStart = Evenement.DateStart;
-                n.HourStart = Evenement.HourStart;
-                n.DateEnd = Evenement.DateEnd;
-                n.HourEnd = Evenement.HourEnd;
-                n.PlaceEvenement = Evenement.Lieu;
-                n.AdresseEvenement = Evenement.Adresse;
-                db.Evenements.Add(n);
-                await db.SaveChangesAsync();
+                if (listTitres.Contains(titre))
+                {
+                    ViewBag.ispostBack = true;
+                    ModelState.AddModelError("", "Éxiste déjà un Évenement avec ce Titre, changer le avant de continuer");
+                    return View();
+                }
+                else
+                {
+                    Evenement n = new Evenement();
+                    n.UserId = guid;
+                    n.TitleEvenement = titre;
+                    n.Text = Evenement.Contenu;
+                    n.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
+                    n.Poublier = Evenement.Publier;
+                    n.DateStart = Evenement.DateStart;
+                    n.HourStart = Evenement.HourStart;
+                    n.DateEnd = Evenement.DateEnd;
+                    n.HourEnd = Evenement.HourEnd;
+                    n.PlaceEvenement = Evenement.Lieu;
+                    n.AdresseEvenement = Evenement.Adresse;
+                    db.Evenements.Add(n);
+                    await db.SaveChangesAsync();
+                }
             }
             else
             {
                 int x = Convert.ToInt16(Evenement.PId);
-                var modifEvenement = (from n in db.Evenements
-                                   where n.EventId == x
-                                   select n).Single();
+                listTitres = (from a in db.Evenements
+                              where a.EventId != x
+                              select a.TitleEvenement).ToList();
+                if (listTitres.Contains(titre))
+                {
 
-                modifEvenement.UserId = guid;
-                modifEvenement.TitleEvenement = Evenement.Titre;
-                modifEvenement.Text = Evenement.Contenu;
-                modifEvenement.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
-                modifEvenement.Poublier = Evenement.Publier;
-                modifEvenement.DateStart = Evenement.DateStart;
-                modifEvenement.HourStart = Evenement.HourStart;
-                modifEvenement.DateEnd = Evenement.DateEnd;
-                modifEvenement.HourEnd = Evenement.HourEnd;
-                modifEvenement.PlaceEvenement = Evenement.Lieu;
-                modifEvenement.AdresseEvenement = Evenement.Adresse;
-                await db.SaveChangesAsync();
+                    ViewBag.ispostBack = true;
+                    ModelState.AddModelError("", "Éxiste déjà un outre Évenement avec ce Titre, changer le avant de continuer");
+                    return View();
+                }
+                else
+                {
+                    var modifEvenement = (from n in db.Evenements
+                                          where n.EventId == x
+                                          select n).SingleOrDefault();
+
+                    if(modifEvenement != null)
+                    { 
+                    modifEvenement.UserId = guid;
+                    modifEvenement.TitleEvenement = titre;
+                    modifEvenement.Text = Evenement.Contenu;
+                    modifEvenement.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
+                    modifEvenement.Poublier = Evenement.Publier;
+                    modifEvenement.DateStart = Evenement.DateStart;
+                    modifEvenement.HourStart = Evenement.HourStart;
+                    modifEvenement.DateEnd = Evenement.DateEnd;
+                    modifEvenement.HourEnd = Evenement.HourEnd;
+                    modifEvenement.PlaceEvenement = Evenement.Lieu;
+                    modifEvenement.AdresseEvenement = Evenement.Adresse;
+                    await db.SaveChangesAsync();
+                    }
+                }
             }
+            ViewBag.ispostBack = false;
             return View();
         }
 
+        /// <summary>
+        /// function json qui permet recouperer la liste des evenements actuels et futures
+        /// </summary>
+        /// <returns></returns>
         public JsonResult getEvenements()
         {
             CoeurContainer db = new CoeurContainer();
@@ -277,6 +404,10 @@ namespace IdentitySample.Controllers
             return Json(Evenements, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// permet recouperer la liste des évenements passées
+        /// </summary>
+        /// <returns></returns>
         public JsonResult getEvenementsPasses()
         {
             CoeurContainer db = new CoeurContainer();
@@ -291,6 +422,11 @@ namespace IdentitySample.Controllers
             return Json(Evenements, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// permet recouperer les etails de un evenemet en special
+        /// </summary>
+        /// <param name="IdEvenement"> id de l'evenement</param>
+        /// <returns></returns>
         public JsonResult getEDetails(int IdEvenement)
         {
             CoeurContainer db = new CoeurContainer();
@@ -309,19 +445,24 @@ namespace IdentitySample.Controllers
                                 hourEnd = n.HourEnd,
                                 lieu = n.PlaceEvenement,
                                 adresse = n.AdresseEvenement,
-                            }).Single();
+                            }).SingleOrDefault();
 
            
             
             return Json(evement, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// function pour effacer un evenemet
+        /// </summary>
+        /// <param name="eID">id evenemetn a effacer</param>
+        /// <returns></returns>
         public async Task<ActionResult> delEvenement(int eID)
         {
             CoeurContainer db = new CoeurContainer();
             var delevenement = (from n in db.Evenements
                              where n.EventId == eID
-                             select n).Single();
+                             select n).SingleOrDefault();
             if (delevenement != null)
             {
                 db.Evenements.Remove(delevenement);
@@ -339,18 +480,25 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        //
-        // POST: //enregistrer Notices
+        /// <summary>
+        /// function qui permet sousgarder ou effacer les nouvelles
+        /// </summary>
+        /// <param name="notice">le modele</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Notice(NouvellesViewModel notice)
         {
             CoeurContainer db = new CoeurContainer();
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            // recoupere la liste des titres éxistants
             var listTitres = (from a in db.Nouvelles select a.NouvelleTitle).ToList();
+            string titre = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(notice.Nouvelletitre.ToLower());
+
             if (notice.PId == null)
             {
-                if (listTitres.Contains(notice.Nouvelletitre))
+                //valide si existe déjà un nouvelle avec le titre du modele
+                if (listTitres.Contains(titre))
                 {
                     ViewBag.ispostBack = true;
                     ModelState.AddModelError("", "Éxiste déjà un Nouvelle avec cette Titre, change le titre avant de continuer");
@@ -361,23 +509,24 @@ namespace IdentitySample.Controllers
                     Nouvelle n = new Nouvelle();
                     n.NouvelleDate = DateTime.Now;
                     n.UserId = guid;
-                    n.NouvelleTitle = notice.Nouvelletitre;
+                    n.NouvelleTitle = titre;
                     n.NouvelleText = notice.NouvelleText;
                     n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
                     n.Publier = notice.Publier;
-
+                    await db.SaveChangesAsync();
                     db.Nouvelles.Add(n);
                 }
             }
             else
             {
                 int x = Convert.ToInt16(notice.PId);
+
+                //actualise la liste pour ne prend en cosideration le titre actuel
                 listTitres = (from a in db.Nouvelles
                               where a.NouvelleId != x
                               select a.NouvelleTitle).ToList();
-                if (listTitres.Contains(notice.Nouvelletitre))
+                if (listTitres.Contains(titre))
                 {
-
                     ViewBag.ispostBack = true;
                     ModelState.AddModelError("", "Éxiste déjà un Nouvelle avec cette Titre, change le titre avant de continuer");
                     return View();
@@ -386,19 +535,26 @@ namespace IdentitySample.Controllers
                 {
                     var modifnotice = (from n in db.Nouvelles
                                        where n.NouvelleId == x
-                                       select n).Single();
+                                       select n).SingleOrDefault();
+                    if(modifnotice != null)
+                    { 
                     modifnotice.UserId = guid;
-                    modifnotice.NouvelleTitle = notice.Nouvelletitre;
+                    modifnotice.NouvelleTitle = titre;
                     modifnotice.NouvelleText = notice.NouvelleText;
                     modifnotice.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
                     modifnotice.Publier = notice.Publier;
+                    await db.SaveChangesAsync();
+                    }
                 }
             }
             ViewBag.ispostBack = false;
-            await db.SaveChangesAsync();
             return View();
         }
 
+        /// <summary>
+        /// function json qui permet recouperer la liste des nouvelles éxistants
+        /// </summary>
+        /// <returns></returns>
         public JsonResult getNouvelles()
         {
             CoeurContainer db = new CoeurContainer();
@@ -412,6 +568,11 @@ namespace IdentitySample.Controllers
             return Json(nouvelles, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// function json qui permet recouperer les details d'un nouvelle en particuliere
+        /// </summary>
+        /// <param name="NouvelleId">identificateur de un nouvelle</param>
+        /// <returns></returns>
         public JsonResult getNDetails(int NouvelleId)
         {
             CoeurContainer db = new CoeurContainer();
@@ -424,22 +585,34 @@ namespace IdentitySample.Controllers
                                  page = n.NouvelleText,
                                  image = n.NouvellePrincipalPhoto,
                                  publier = n.Publier
-                             }).Single();
+                             }).SingleOrDefault();
             return Json(nouvelle, JsonRequestBehavior.AllowGet);        
         }
 
+        /// <summary>
+        /// function pour effacer les nouvelles
+        /// </summary>
+        /// <param name="nID"></param>
+        /// <returns></returns>
         public async Task<ActionResult> delNews(int nID)
         {
             CoeurContainer db = new CoeurContainer();
             var delnotice = (from n in db.Nouvelles
                              where n.NouvelleId == nID
-                               select n).Single();
+                               select n).SingleOrDefault();
             if(delnotice != null)
             { 
                 db.Nouvelles.Remove(delnotice);
                 await db.SaveChangesAsync();
             }
             return Redirect("/Admin/Notice");
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
         }
     }
 }

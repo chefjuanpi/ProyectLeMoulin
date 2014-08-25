@@ -522,6 +522,9 @@
     <Content Include="Scripts\fullcalendar.min.js.map">
       <DependentUpon>fullcalendar.min.js</DependentUpon>
     </Content>
+    <Content Include="Views\Admin\Contact.cshtml" />
+    <Content Include="Views\Nouvelles\index.cshtml" />
+    <Content Include="Views\Nouvelles\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -686,10 +689,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
-    <Compile Include="Controllers\t.cs" />
+    <Compile Include="Controllers\NouvellesController.cs" />
     <Compile Include="Models\EpicerieViewModels.cs" />
     <Compile Include="Models\HomeViewModels.cs" />
     <Compile Include="Models\Panier.cs" />
+    <Compile Include="Models\PublicsViewModels.cs" />
     <Compile Include="Models\PanierViewModel.cs" />
     <Compile Include="Controllers\titreTextNouvelle.cs" />
     <Compile Include="Models\AspNetUserRoles.cs">

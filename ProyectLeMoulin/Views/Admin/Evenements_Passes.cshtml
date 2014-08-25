@@ -33,13 +33,20 @@
     <br />
 
     <div class="row">
-        <div class="form-group col-md-4  ">
+        <div class="col-md-4">
             @Html.LabelFor(m => m.PhotoPrincipal)
-            @Html.TextBoxFor(m => m.PhotoPrincipal, new { @class = "form-control", @id = "photoPrincipal", @size = "50" })
-            &nbsp;<button id="btnDemoTextBox">Choisissez un fichier</button>
-            <p class="help-block">Selectionne l'imagen Principal a montrer de l'evenement.</p>
+            <div class="row">
+                @Html.TextBoxFor(m => m.PhotoPrincipal, new { @class = "col-xs-10", @id = "photoPrincipal", @readonly = "readonly", @size = 50 })
+                <div class="col-xs-1 col-md-1 btn btn-danger" id="noPhoto" title="This is my tooltip"><b>-</b></div>
+            </div>
+            <div class="row">
+                <button id="btnDemoTextBox">Choisissez un fichier</button>
+                <p class="help-block">Selectionne l'imagen Principal a montrer de l'evenement.</p>
+            </div>
         </div>
-
+    </div>
+    
+    <div class="row">
         <div class="col-md-5">
             <strong>Information de base sur l'évenement :</strong>
 
@@ -91,6 +98,19 @@
         $(function () {
             $("#btnNew").html("");
             $("#btnNew").attr("class", "");
+
+            //detect le postBack
+            var pb = @ViewBag.ispostBack.ToString().ToLower() ;
+            if(pb)
+            {
+                $("#Formulaire").show();
+                $("#publier").publier12();
+                n();
+            }
+            else{
+                $("#Formulaire *").attr("disabled", "disabled");
+            }
+
             $("#boutons").attr("class", "");
             $("#btnSupr").click(function () {
                 $("#dialog-confirm").dialog({

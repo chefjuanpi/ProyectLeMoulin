@@ -75,6 +75,18 @@
     @Scripts.Render("~/bundles/AdminButons")
     <script>
         $(function () {
+            //detect le postBack
+            var pb = @ViewBag.ispostBack.ToString().ToLower() ;
+            if(pb)
+            {
+                $("#Formulaire").show();
+                $("#publier").publier12();
+                n();
+            }
+            else{
+                $("#Formulaire *").attr("disabled", "disabled");
+            }
+
             $("#btnSupr").click(function () {
                 $("#dialog-confirm").dialog({
                     resizable: false,

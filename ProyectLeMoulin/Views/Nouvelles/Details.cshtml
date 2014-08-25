@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = ViewBag.news.NouvelleTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewBag.news.NouvelleTitle</h1>
+
+
+<div class="col-md-12">
+    <div class="container-fluid">@Html.Raw(ViewBag.news.NouvelleText)</div>
+</div>
+
+<img class="img-responsive col-lg-offset-3" src="~/tinyfilemanager.net/resources/files/@ViewBag.news.NouvellePrincipalPhoto" />

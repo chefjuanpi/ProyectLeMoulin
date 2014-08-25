@@ -15,27 +15,39 @@
     @Html.Partial("_AdminButonModifNew")
 </div>
 
-@using (Html.BeginForm("Evenements_a_venir", "Admin", FormMethod.Post, new { @class = "form-horizontal", @role = "form", @hidden = "hidden",
-    @id="Formulaire" }))
+@using (Html.BeginForm("Evenements_a_venir", "Admin", FormMethod.Post, new
+{
+    @class = "form-horizontal",
+    @role = "form",
+    @hidden = "hidden",
+    @id = "Formulaire"
+}))
 {
     @Html.AntiForgeryToken()
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
-        <div class="input-group row">
-            @Html.LabelFor(m => m.Titre, new { @class = "input-group-addon" })
-            @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", @id = "titre", @placeholder = "Ex: Fêtê des Voinsins 2014"})
-        </div>
+    <div class="input-group row">
+        @Html.LabelFor(m => m.Titre, new { @class = "input-group-addon" })
+        @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", @id = "titre", @placeholder = "Ex: Fêtê des Voinsins 2014" })
+    </div>
     <br />
 
     <div class="row">
-        <div class="form-group col-md-4  ">
+        <div class="col-md-4">
             @Html.LabelFor(m => m.PhotoPrincipal)
-            @Html.TextBoxFor(m => m.PhotoPrincipal, new { @class = "form-control", @id = "photoPrincipal", @size = "50" })
-            &nbsp;<button id="btnDemoTextBox">Choisissez un fichier</button>
-            <p class="help-block">Selectionne l'imagen Principal a montrer de l'evenement.</p>
+            <div class="row">
+                @Html.TextBoxFor(m => m.PhotoPrincipal, new { @class = "col-xs-10", @id = "photoPrincipal", @readonly = "readonly", @size = 50 })
+                <div class="col-xs-1 col-md-1 btn btn-danger" id="noPhoto" title="This is my tooltip"><b>-</b></div>
+            </div>
+            <div class="row">
+                <button id="btnDemoTextBox">Choisissez un fichier</button>
+                <p class="help-block">Selectionne l'imagen Principal a montrer de l'evenement.</p>
+            </div>
         </div>
-
+    </div>
+    
+    <div class="row">
         <div class="col-md-5">
             <strong>Information de base sur l'évenement :</strong>
 
@@ -44,12 +56,12 @@
                 @Html.TextBoxFor(m => m.Lieu, new { @class = "form-control", @id = "Lieu", @placeholder = "Ex: Centre Saint Nom de Jésus" })
             </div>
             <div class="input-group ">
-                <div class = "input-group-addon" >Adresse : &nbsp &nbsp&nbsp</div>
+                <div class="input-group-addon">Adresse : &nbsp &nbsp&nbsp</div>
                 @Html.TextBoxFor(m => m.Adresse, new { @class = "form-control", @id = "Adresse", @placeholder = "123 rue Racine Est" })
             </div>
             <div class="input-group ">
                 <div class="input-group-addon ">Commence : </div>
-                @Html.TextBoxFor(m => m.DateStart, new { @id = "DateStart" , @placeholder = "Date" })
+                @Html.TextBoxFor(m => m.DateStart, new { @id = "DateStart", @placeholder = "Date" })
                 @Html.TextBoxFor(m => m.HourStart, new { @class = "datetimepicker2", @id = "HourStart", @placeholder = "Heure" })
             </div>
             <div class="input-group ">
@@ -85,6 +97,19 @@
     @Scripts.Render("~/bundles/AdminButons")
     <script>
         $(function () {
+            //detect le postBack
+            var pb = @ViewBag.ispostBack.ToString().ToLower() ;
+            if(pb)
+            {
+                $("#Formulaire").show();
+                $("#publier").publier12();
+                n();
+            }
+            else{
+                $("#Formulaire *").attr("disabled", "disabled");
+            }
+
+
             $("#btnSupr").click(function () {
                 $("#dialog-confirm").dialog({
                     resizable: false,
@@ -136,7 +161,7 @@
                 $("#ItemsList").html(result);
                 $(".items").change(function () {
                     var id = $(this).children(":selected").attr("id");
-                    if(id != 0){
+                    if (id != 0) {
                         $("#btnmodif").show();
                         $("#btnSupr").show();
                         $("#Formulaire").show();
