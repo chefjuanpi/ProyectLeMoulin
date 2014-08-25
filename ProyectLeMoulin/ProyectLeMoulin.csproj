@@ -686,7 +686,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
-    <Compile Include="Controllers\PartialPanier.cs" />
     <Compile Include="Controllers\t.cs" />
     <Compile Include="Models\EpicerieViewModels.cs" />
     <Compile Include="Models\HomeViewModels.cs" />
@@ -790,6 +789,12 @@
     <Compile Include="Models\Products.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WeekProduct.cs">
+      <DependentUpon>Epicerie.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Weeks.cs">
+      <DependentUpon>Epicerie.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Models\Suppliers.cs">
@@ -818,9 +823,6 @@
     </Compile>
     <Compile Include="tinyfilemanager.net\_admin.Master.designer.cs">
       <DependentUpon>_admin.Master</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Week.cs">
-      <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
