@@ -28,16 +28,25 @@ namespace IdentitySample.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Index(test1234 panier)
-        {
-            //pour garder ou modifier la bd, async xq sea mas rapido para el utilisateur
-           
+        //[HttpPost]
+        //public async Task<ActionResult> Index(test1234 panier)
+        //{
+        //    //pour garder ou modifier la bd, async xq sea mas rapido para el utilisateur
+        //   int i = 0;
 
-            ViewBag.Steeve = "ton panier";
-            return View();
+        //   for (i = 0; i < Task<ActionResult>.lenght; i++)
+        //   {
+        //       var panier = from o in db.Orders
+        //                    select new {
 
-        }
+        //                    }
+               
+        //   }
+
+        //    ViewBag.Steeve = "ton panier";
+        //    return View();
+
+        //}
 
         
         /// <summary>
