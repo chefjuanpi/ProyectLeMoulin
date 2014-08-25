@@ -61,8 +61,58 @@ namespace IdentitySample.Controllers
 
                 db.SaveChanges();
             }
-           // getWeeks();
+            getSuppliers();
+            //getCategories();
             return View();
+        }
+
+        /// <summary>
+        /// Permet d'otenir les informations sur le produit spécifié
+        /// pour la semaine courrante.
+        /// </summary>
+        /// <param name="ProductId">ID du fournisseur</param>
+        /// <returns>Json contenant les informations</returns>
+        public JsonResult getWeekProductDetails(int ProductId)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var weekProduct = (from wp in db.WeekProduct
+                               where wp.ProductId == ProductId
+                               where wp.WeekId == (from w in db.Weeks
+                                                   orderby w.WeekId descending
+                                                   select w.WeekId).First()
+                            select new
+                            {
+                                week = wp.WeekId,
+                                Product = wp.ProductId,
+                                Supplier = wp.SupplierId,
+                                UnitPrice = wp.UnitPrice,
+                                Format = wp.Format,
+                                Qty = wp.Quantity
+                            }).Single();
+
+            return Json(weekProduct, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Permet d'effacer un WeekProduct de la BD
+        /// </summary>
+        /// <param name="nID">ID du produit</param>
+        /// <returns>Retourne à la selection</returns>
+        public ActionResult delWeekProduct(int nID)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var delWeekProduct = (from wp in db.WeekProduct
+                                  where wp.ProductId == nID
+                                  where wp.WeekId == (from w in db.Weeks
+                                                      orderby w.WeekId descending
+                                                      select w.WeekId).First()
+                                  select wp).Single();
+            if (delWeekProduct != null)
+            {
+                db.WeekProduct.Remove(delWeekProduct); 
+                db.SaveChanges();
+            }
+            return Redirect("/AchatAdmin/Index");
         }
 
         /// <summary>
