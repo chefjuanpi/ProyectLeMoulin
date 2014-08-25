@@ -27,12 +27,7 @@
     </div>
 </div>
 
-<script type="text/x-handlebars-template" id="CategoriesTemplate">
-    <option selected="selected" id=0 value="0">Categories</option>
-    {{#each}}
-    <option id={{id}} value={{id}}>{{nom}}</option>
-    {{/each}}
-</script>
+<br />
 
 <div class="row">
     <div class="alert alert-warning" role="alert" id="boutons">
@@ -43,16 +38,60 @@
     </div>
 </div>
 
-<script type="text/x-handlebars-template" id="SupplierTemplate">
-    <option selected="selected" id=0 value="0">Fournisseurs</option>
-    {{#each}}
-    <option id={{id}} value={{id}}>{{nom}}</option>
-    {{/each}}
-</script>
+@using (Html.BeginForm("Indexs", "AchatAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", 
+    @id="Formulaire" }))
+{
+    
+    @Html.AntiForgeryToken()
+    <hr />
+    
+   @Html.ValidationSummary("", new { @class = "text-danger" })
+    
+    <div class="row">
+        <div class="input-group">
+            <table>
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(s => s.SupplierName, new { @class = "input-group-addon", @style="width:160px" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(s => s.SupplierName, new { @class = "form-control", @id="name" })
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    
+    <br />
+    
+    <div class="row">
+        <button type="submit" class="btn btn-success col-md-offset-3 col-md-2" id="save">
+            <i class="fa fa-save"></i><b> Enregistrer </b>
+        </button>
+    </div>
+
+    @Html.HiddenFor(s => s.SupplierId, new { @id = "new123" })
+}
 
 @section Scripts {
 
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/x-handlebars-template" id="CategoriesTemplate">
+        <option selected="selected" id=0 value="0">Categories</option>
+        {{#each}}
+        <option id={{id}} value={{id}}>{{nom}}</option>
+        {{/each}}
+    </script>
+
+    <script type="text/x-handlebars-template" id="SupplierTemplate">
+        <option selected="selected" id=0 value="0">Fournisseurs</option>
+        {{#each}}
+        <option id={{id}} value={{id}}>{{nom}}</option>
+        {{/each}}
+    </script>
 
     <script>
 

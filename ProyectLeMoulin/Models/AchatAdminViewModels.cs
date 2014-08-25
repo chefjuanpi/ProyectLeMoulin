@@ -66,11 +66,11 @@ namespace EpicerieModel.Models
     /// </summary>
     public class WeekViewModel
     {
-        public string DateSemaine { get; set; }
+        public DateTime DateSemaine { get; set; }
 
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
 
-        public string SupplierId { get; set; }
+        public int SupplierId { get; set; }
 
         [Required]
         [Range(1,1000)]

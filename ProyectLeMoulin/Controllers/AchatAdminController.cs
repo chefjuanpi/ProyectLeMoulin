@@ -22,6 +22,49 @@ namespace IdentitySample.Controllers
         }
 
         /// <summary>
+        /// S'exécute au "Post" de la page Index
+        /// Enregistre les Ajouts et Modifications
+        /// </summary>
+        /// <param name="Week">Model à utiliser</param>
+        /// <returns>Une vue</returns>
+        [HttpPost]
+        public ActionResult Index(WeekViewModel Week)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            if (Week.ProductId == null)
+            {
+                Week w = new Week();
+                w.DateSemaine = Week.DateSemaine;
+                w.ProductId = Week.ProductId;
+                w.SupplierId = Week.SupplierId;
+                w.UnitPrice = Week.UnitPrice;
+                w.Quantity = Week.Quantity;
+                w.Format = Week.Format;
+
+                db.Week.Add(w);
+                db.SaveChanges();
+            }
+            else
+            {
+                int x = Convert.ToInt16(Week.ProductId);
+                var modifWeek = (from w in db.Week
+                                     where w.ProductId == x
+    //                                 where w.DateSemaine 
+                                     select w).Single();
+                modifWeek.DateSemaine = Week.DateSemaine;
+                modifWeek.ProductId = Week.ProductId;
+                modifWeek.SupplierId = Week.SupplierId;
+                modifWeek.UnitPrice = Week.UnitPrice;
+                modifWeek.Quantity = Week.Quantity;
+                modifWeek.Format = Week.Format;
+
+                db.SaveChanges();
+            }
+            //getWeeks();
+            return View();
+        }
+
+        /// <summary>
         /// Permet d'ouvrir la vue pour NewOrder
         /// </summary>
         /// <returns>Une vue avec titre et message</returns>
