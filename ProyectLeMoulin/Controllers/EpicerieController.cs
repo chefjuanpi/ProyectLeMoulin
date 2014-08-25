@@ -36,9 +36,9 @@ namespace IdentitySample.Controllers
 
         //   for (i = 0; i < Task<ActionResult>.lenght; i++)
         //   {
-        //       var panier = from o in db.Orders
+        //       var client = from o in db.Orders
         //                    select new {
-
+        //                        o.
         //                    }
                
         //   }
@@ -77,9 +77,11 @@ namespace IdentitySample.Controllers
             //if (cat == db.Categories.CategoryId)
             //{
             
-                var produit = (from w in db.Week
+                var produit = (from w in db.Weeks
+                               join wp in db.WeekProduct
+                               on w.WeekId equals wp.WeekId
                                join p in db.Products
-                               on w.ProductId equals p.ProductId
+                               on wp.ProductId equals p.ProductId
                                join cp in db.CategoryProduct
                                on p.ProductId equals cp.ProductId
                                where cp.CategoryId == cat
@@ -87,8 +89,8 @@ namespace IdentitySample.Controllers
                                {
                                    ProductID = p.ProductId,
                                    ProductName = p.ProductName,
-                                   Format = w.Format,
-                                   Price = w.UnitPrice
+                                   Format = wp.Format,
+                                   Price = wp.UnitPrice
                                }).ToList();
                 return Json(produit, JsonRequestBehavior.AllowGet);
             //}

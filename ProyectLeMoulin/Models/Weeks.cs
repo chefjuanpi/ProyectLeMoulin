@@ -12,15 +12,20 @@ namespace IdentitySample.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class OrderDetails
+    public partial class Weeks
     {
-        public int OrderId { get; set; }
-        public int ProductId { get; set; }
-        public int WeekId { get; set; }
-        public int Quantite { get; set; }
-        public decimal UnitPrice { get; set; }
+        public Weeks()
+        {
+            this.WeekProduct = new HashSet<WeekProduct>();
+            this.Orders = new HashSet<Orders>();
+        }
     
-        public virtual Orders Orders { get; set; }
-        public virtual WeekProduct WeekProduct { get; set; }
+        public int WeekId { get; set; }
+        public Nullable<System.DateTime> Date_Debut { get; set; }
+        public Nullable<System.DateTime> Date_Fin { get; set; }
+        public Nullable<System.DateTime> Date_Recuperation { get; set; }
+    
+        public virtual ICollection<WeekProduct> WeekProduct { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }

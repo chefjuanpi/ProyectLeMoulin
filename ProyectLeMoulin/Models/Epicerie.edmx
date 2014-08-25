@@ -4,63 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EpicerieModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="EpicerieModelStoreContainer">
-          <EntitySet Name="AspNetUserRoles" EntityType="EpicerieModel.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="AspNetUsers" EntityType="EpicerieModel.Store.AspNetUsers" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Categories" EntityType="EpicerieModel.Store.Categories" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CategoryProduct" EntityType="EpicerieModel.Store.CategoryProduct" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="OrderDetails" EntityType="EpicerieModel.Store.OrderDetails" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Orders" EntityType="EpicerieModel.Store.Orders" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Products" EntityType="EpicerieModel.Store.Products" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Suppliers" EntityType="EpicerieModel.Store.Suppliers" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Week" EntityType="EpicerieModel.Store.Week" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_CategoryProduct_Categories" Association="EpicerieModel.Store.FK_CategoryProduct_Categories">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="CategoryProduct" EntitySet="CategoryProduct" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CategoryProduct_Products1" Association="EpicerieModel.Store.FK_CategoryProduct_Products1">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="CategoryProduct" EntitySet="CategoryProduct" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="EpicerieModel.Store.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Orders" Association="EpicerieModel.Store.FK_OrderDetails_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Week" Association="EpicerieModel.Store.FK_OrderDetails_Week">
-            <End Role="Week" EntitySet="Week" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_AspNetUsers" Association="EpicerieModel.Store.FK_Orders_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Week_Products1" Association="EpicerieModel.Store.FK_Week_Products1">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Week" EntitySet="Week" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Week_Suppliers" Association="EpicerieModel.Store.FK_Week_Suppliers">
-            <End Role="Suppliers" EntitySet="Suppliers" />
-            <End Role="Week" EntitySet="Week" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="EpicerieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetUserRoles">
           <Key>
             <PropertyRef Name="UserId" />
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
-          <Property Name="RoleId" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Nom" Type="nvarchar(max)" />
           <Property Name="Prenom" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
@@ -73,14 +30,14 @@
           <Property Name="LockoutEndDateUtc" Type="datetime" />
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryId" />
           </Key>
-          <Property Name="CategoryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryName" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="CategoryProduct">
@@ -96,11 +53,11 @@
           <Key>
             <PropertyRef Name="OrderId" />
             <PropertyRef Name="ProductId" />
-            <PropertyRef Name="DateSemaine" />
+            <PropertyRef Name="WeekId" />
           </Key>
           <Property Name="OrderId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="DateSemaine" Type="date" Nullable="false" />
+          <Property Name="WeekId" Type="int" Nullable="false" />
           <Property Name="Quantite" Type="int" Nullable="false" />
           <Property Name="UnitPrice" Type="money" Nullable="false" />
         </EntityType>
@@ -108,20 +65,17 @@
           <Key>
             <PropertyRef Name="OrderId" />
           </Key>
-          <Property Name="OrderId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="date" Nullable="false" />
-          <Property Name="Date_Fin_Commande" Type="date" Nullable="false" />
-          <Property Name="Date_Recuperation" Type="date" />
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WeekId" Type="int" />
           <Property Name="Commande_Payee" Type="bit" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
-          <Property Name="Avaibleld" Type="bit" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="ProductId" />
           </Key>
-          <Property Name="ProductId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="256" />
           <Property Name="TVQ" Type="bit" Nullable="false" />
           <Property Name="TPS" Type="bit" Nullable="false" />
@@ -131,31 +85,40 @@
           <Key>
             <PropertyRef Name="SupplierId" />
           </Key>
-          <Property Name="SupplierId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="SupplierName" Type="nvarchar" Nullable="false" MaxLength="256" />
-          <Property Name="ContactName" Type="nvarchar" Nullable="false" MaxLength="256" />
-          <Property Name="Adress" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="E-Mail" Type="nvarchar" MaxLength="256" />
-          <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Fax" Type="nvarchar" MaxLength="256" />
-          <Property Name="PostalCode" Type="nvarchar" Nullable="false" MaxLength="7" />
-          <Property Name="Ville" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="7" Nullable="false" />
+          <Property Name="Ville" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
-        <EntityType Name="Week">
+        <EntityType Name="WeekProduct">
           <Key>
-            <PropertyRef Name="DateSemaine" />
+            <PropertyRef Name="WeekId" />
             <PropertyRef Name="ProductId" />
           </Key>
-          <Property Name="DateSemaine" Type="date" Nullable="false" />
+          <Property Name="WeekId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="SupplierId" Type="int" Nullable="false" />
           <Property Name="UnitPrice" Type="money" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
-          <Property Name="Format" Type="nvarchar" Nullable="false" MaxLength="64" />
+          <Property Name="Format" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Weeks">
+          <Key>
+            <PropertyRef Name="WeekId" />
+          </Key>
+          <Property Name="WeekId" Type="int" Nullable="false" />
+          <Property Name="Date_Debut" Type="date" />
+          <Property Name="Date_Fin" Type="date" />
+          <Property Name="Date_Recuperation" Type="date" />
         </EntityType>
         <Association Name="FK_CategoryProduct_Categories">
-          <End Role="Categories" Type="EpicerieModel.Store.Categories" Multiplicity="1" />
-          <End Role="CategoryProduct" Type="EpicerieModel.Store.CategoryProduct" Multiplicity="*" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="CategoryProduct" Type="Self.CategoryProduct" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="CategoryId" />
@@ -166,8 +129,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CategoryProduct_Products1">
-          <End Role="Products" Type="EpicerieModel.Store.Products" Multiplicity="1" />
-          <End Role="CategoryProduct" Type="EpicerieModel.Store.CategoryProduct" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="CategoryProduct" Type="Self.CategoryProduct" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="ProductId" />
@@ -178,10 +141,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="EpicerieModel.Store.AspNetUsers" Multiplicity="1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AspNetUserRoles" Type="EpicerieModel.Store.AspNetUserRoles" Multiplicity="*" />
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -192,8 +155,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderDetails_Orders">
-          <End Role="Orders" Type="EpicerieModel.Store.Orders" Multiplicity="1" />
-          <End Role="OrderDetails" Type="EpicerieModel.Store.OrderDetails" Multiplicity="*" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="OrderId" />
@@ -204,22 +167,22 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderDetails_Week">
-          <End Role="Week" Type="EpicerieModel.Store.Week" Multiplicity="1" />
-          <End Role="OrderDetails" Type="EpicerieModel.Store.OrderDetails" Multiplicity="*" />
+          <End Role="WeekProduct" Type="Self.WeekProduct" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Week">
-              <PropertyRef Name="DateSemaine" />
+            <Principal Role="WeekProduct">
+              <PropertyRef Name="WeekId" />
               <PropertyRef Name="ProductId" />
             </Principal>
             <Dependent Role="OrderDetails">
-              <PropertyRef Name="DateSemaine" />
+              <PropertyRef Name="WeekId" />
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_AspNetUsers">
-          <End Role="AspNetUsers" Type="EpicerieModel.Store.AspNetUsers" Multiplicity="1" />
-          <End Role="Orders" Type="EpicerieModel.Store.Orders" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -229,30 +192,106 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Orders_Weeks">
+          <End Role="Weeks" Type="Self.Weeks" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Weeks">
+              <PropertyRef Name="WeekId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="WeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Week_Products1">
-          <End Role="Products" Type="EpicerieModel.Store.Products" Multiplicity="1" />
-          <End Role="Week" Type="EpicerieModel.Store.Week" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="WeekProduct" Type="Self.WeekProduct" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="ProductId" />
             </Principal>
-            <Dependent Role="Week">
+            <Dependent Role="WeekProduct">
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Week_Suppliers">
-          <End Role="Suppliers" Type="EpicerieModel.Store.Suppliers" Multiplicity="1" />
-          <End Role="Week" Type="EpicerieModel.Store.Week" Multiplicity="*" />
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="WeekProduct" Type="Self.WeekProduct" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
               <PropertyRef Name="SupplierId" />
             </Principal>
-            <Dependent Role="Week">
+            <Dependent Role="WeekProduct">
               <PropertyRef Name="SupplierId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WeekProduct_Weeks">
+          <End Role="Weeks" Type="Self.Weeks" Multiplicity="1" />
+          <End Role="WeekProduct" Type="Self.WeekProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Weeks">
+              <PropertyRef Name="WeekId" />
+            </Principal>
+            <Dependent Role="WeekProduct">
+              <PropertyRef Name="WeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EpicerieModelStoreContainer">
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryProduct" EntityType="Self.CategoryProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeekProduct" EntityType="Self.WeekProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Weeks" EntityType="Self.Weeks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CategoryProduct_Categories" Association="Self.FK_CategoryProduct_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="CategoryProduct" EntitySet="CategoryProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryProduct_Products1" Association="Self.FK_CategoryProduct_Products1">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="CategoryProduct" EntitySet="CategoryProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Week" Association="Self.FK_OrderDetails_Week">
+            <End Role="WeekProduct" EntitySet="WeekProduct" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_AspNetUsers" Association="Self.FK_Orders_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Weeks" Association="Self.FK_Orders_Weeks">
+            <End Role="Weeks" EntitySet="Weeks" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Week_Products1" Association="Self.FK_Week_Products1">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="WeekProduct" EntitySet="WeekProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Week_Suppliers" Association="Self.FK_Week_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="WeekProduct" EntitySet="WeekProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WeekProduct_Weeks" Association="Self.FK_WeekProduct_Weeks">
+            <End Role="Weeks" EntitySet="Weeks" />
+            <End Role="WeekProduct" EntitySet="WeekProduct" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -262,17 +301,10 @@
           <EntitySet Name="AspNetUsers" EntityType="EpicerieModel.AspNetUsers" />
           <EntitySet Name="Categories" EntityType="EpicerieModel.Categories" />
           <EntitySet Name="CategoryProduct" EntityType="EpicerieModel.CategoryProduct" />
-          <EntitySet Name="OrderDetails" EntityType="EpicerieModel.OrderDetails" />
-          <EntitySet Name="Orders" EntityType="EpicerieModel.Orders" />
           <EntitySet Name="Products" EntityType="EpicerieModel.Products" />
-          <EntitySet Name="Week" EntityType="EpicerieModel.Week" />
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="EpicerieModel.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_AspNetUsers" Association="EpicerieModel.FK_Orders_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_CategoryProduct_Categories" Association="EpicerieModel.FK_CategoryProduct_Categories">
             <End Role="Categories" EntitySet="Categories" />
@@ -282,22 +314,38 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="CategoryProduct" EntitySet="CategoryProduct" />
           </AssociationSet>
+          <EntitySet Name="Suppliers" EntityType="EpicerieModel.Suppliers" />
+          <EntitySet Name="WeekProduct" EntityType="EpicerieModel.WeekProduct" />
+          <AssociationSet Name="FK_Week_Products11" Association="EpicerieModel.FK_Week_Products11">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="WeekProduct" EntitySet="WeekProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Week_Suppliers1" Association="EpicerieModel.FK_Week_Suppliers1">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="WeekProduct" EntitySet="WeekProduct" />
+          </AssociationSet>
+          <EntitySet Name="Weeks" EntityType="EpicerieModel.Weeks" />
+          <AssociationSet Name="FK_WeekProduct_Weeks" Association="EpicerieModel.FK_WeekProduct_Weeks">
+            <End Role="Weeks" EntitySet="Weeks" />
+            <End Role="WeekProduct" EntitySet="WeekProduct" />
+          </AssociationSet>
+          <EntitySet Name="Orders" EntityType="EpicerieModel.Orders" />
+          <AssociationSet Name="FK_Orders_AspNetUsers" Association="EpicerieModel.FK_Orders_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Weeks" Association="EpicerieModel.FK_Orders_Weeks">
+            <End Role="Weeks" EntitySet="Weeks" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="OrderDetails" EntityType="EpicerieModel.OrderDetails" />
           <AssociationSet Name="FK_OrderDetails_Orders" Association="EpicerieModel.FK_OrderDetails_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Week" Association="EpicerieModel.FK_OrderDetails_Week">
-            <End Role="Week" EntitySet="Week" />
+            <End Role="WeekProduct" EntitySet="WeekProduct" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Week_Products1" Association="EpicerieModel.FK_Week_Products1">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Week" EntitySet="Week" />
-          </AssociationSet>
-          <EntitySet Name="Suppliers" EntityType="EpicerieModel.Suppliers" />
-          <AssociationSet Name="FK_Week_Suppliers" Association="EpicerieModel.FK_Week_Suppliers">
-            <End Role="Suppliers" EntitySet="Suppliers" />
-            <End Role="Week" EntitySet="Week" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetUserRoles">
@@ -350,34 +398,6 @@
           <NavigationProperty Name="Categories" Relationship="EpicerieModel.FK_CategoryProduct_Categories" FromRole="CategoryProduct" ToRole="Categories" />
           <NavigationProperty Name="Products" Relationship="EpicerieModel.FK_CategoryProduct_Products1" FromRole="CategoryProduct" ToRole="Products" />
         </EntityType>
-        <EntityType Name="OrderDetails">
-          <Key>
-            <PropertyRef Name="OrderId" />
-            <PropertyRef Name="ProductId" />
-            <PropertyRef Name="DateSemaine" />
-          </Key>
-          <Property Name="OrderId" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="DateSemaine" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Quantite" Type="Int32" Nullable="false" />
-          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="Orders" Relationship="EpicerieModel.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
-          <NavigationProperty Name="Week" Relationship="EpicerieModel.FK_OrderDetails_Week" FromRole="OrderDetails" ToRole="Week" />
-        </EntityType>
-        <EntityType Name="Orders">
-          <Key>
-            <PropertyRef Name="OrderId" />
-          </Key>
-          <Property Name="OrderId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Date_Fin_Commande" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Date_Recuperation" Type="DateTime" Precision="0" />
-          <Property Name="Commande_Payee" Type="Boolean" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="EpicerieModel.FK_Orders_AspNetUsers" FromRole="Orders" ToRole="AspNetUsers" />
-          <NavigationProperty Name="OrderDetails" Relationship="EpicerieModel.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
-          <Property Type="Boolean" Name="Avaibleld" />
-        </EntityType>
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -389,22 +409,7 @@
           <Property Name="TPS" Type="Boolean" Nullable="false" />
           <Property Name="Avaibled" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CategoryProduct" Relationship="EpicerieModel.FK_CategoryProduct_Products1" FromRole="Products" ToRole="CategoryProduct" />
-          <NavigationProperty Name="Week" Relationship="EpicerieModel.FK_Week_Products1" FromRole="Products" ToRole="Week" />
-        </EntityType>
-        <EntityType Name="Week">
-          <Key>
-            <PropertyRef Name="DateSemaine" />
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="DateSemaine" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="SupplierId" Type="Int32" Nullable="false" />
-          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="Format" Type="String" Nullable="false" MaxLength="64" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="OrderDetails" Relationship="EpicerieModel.FK_OrderDetails_Week" FromRole="Week" ToRole="OrderDetails" />
-          <NavigationProperty Name="Products" Relationship="EpicerieModel.FK_Week_Products1" FromRole="Week" ToRole="Products" />
-          <NavigationProperty Name="Suppliers" Relationship="EpicerieModel.FK_Week_Suppliers" FromRole="Week" ToRole="Suppliers" />
+          <NavigationProperty Name="WeekProduct" Relationship="EpicerieModel.FK_Week_Products11" FromRole="Products" ToRole="WeekProduct" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="EpicerieModel.AspNetUsers" Multiplicity="1">
@@ -416,18 +421,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_AspNetUsers">
-          <End Role="AspNetUsers" Type="EpicerieModel.AspNetUsers" Multiplicity="1" />
-          <End Role="Orders" Type="EpicerieModel.Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -456,44 +449,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderDetails_Orders">
-          <End Role="Orders" Type="EpicerieModel.Orders" Multiplicity="1" />
-          <End Role="OrderDetails" Type="EpicerieModel.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_Week">
-          <End Role="Week" Type="EpicerieModel.Week" Multiplicity="1" />
-          <End Role="OrderDetails" Type="EpicerieModel.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Week">
-              <PropertyRef Name="DateSemaine" />
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="DateSemaine" />
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Week_Products1">
-          <End Role="Products" Type="EpicerieModel.Products" Multiplicity="1" />
-          <End Role="Week" Type="EpicerieModel.Week" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="Week">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Suppliers">
           <Key>
             <PropertyRef Name="SupplierId" />
@@ -505,19 +460,146 @@
           <Property Type="String" Name="E_Mail" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Phone" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Fax" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Week" Relationship="EpicerieModel.FK_Week_Suppliers" FromRole="Suppliers" ToRole="Week" />
           <Property Type="String" Name="PostalCode" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Ville" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WeekProduct" Relationship="EpicerieModel.FK_Week_Suppliers1" FromRole="Suppliers" ToRole="WeekProduct" />
         </EntityType>
-        <Association Name="FK_Week_Suppliers">
+        <EntityType Name="WeekProduct">
+          <Key>
+            <PropertyRef Name="WeekId" />
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="WeekId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="SupplierId" Type="Int32" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Format" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="EpicerieModel.FK_Week_Products11" FromRole="WeekProduct" ToRole="Products" />
+          <NavigationProperty Name="Suppliers" Relationship="EpicerieModel.FK_Week_Suppliers1" FromRole="WeekProduct" ToRole="Suppliers" />
+          <NavigationProperty Name="Weeks" Relationship="EpicerieModel.FK_WeekProduct_Weeks" FromRole="WeekProduct" ToRole="Weeks" />
+          <NavigationProperty Name="OrderDetails" Relationship="EpicerieModel.FK_OrderDetails_Week" FromRole="WeekProduct" ToRole="OrderDetails" />
+        </EntityType>
+        <Association Name="FK_Week_Products11">
+          <End Type="EpicerieModel.Products" Role="Products" Multiplicity="1" />
+          <End Type="EpicerieModel.WeekProduct" Role="WeekProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="WeekProduct">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Week_Suppliers1">
           <End Type="EpicerieModel.Suppliers" Role="Suppliers" Multiplicity="1" />
-          <End Type="EpicerieModel.Week" Role="Week" Multiplicity="*" />
+          <End Type="EpicerieModel.WeekProduct" Role="WeekProduct" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
               <PropertyRef Name="SupplierId" />
             </Principal>
-            <Dependent Role="Week">
+            <Dependent Role="WeekProduct">
               <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Weeks">
+          <Key>
+            <PropertyRef Name="WeekId" />
+          </Key>
+          <Property Name="WeekId" Type="Int32" Nullable="false" />
+          <Property Name="Date_Debut" Type="DateTime" Precision="0" />
+          <Property Name="Date_Fin" Type="DateTime" Precision="0" />
+          <Property Name="Date_Recuperation" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="WeekProduct" Relationship="EpicerieModel.FK_WeekProduct_Weeks" FromRole="Weeks" ToRole="WeekProduct" />
+          <NavigationProperty Name="Orders" Relationship="EpicerieModel.FK_Orders_Weeks" FromRole="Weeks" ToRole="Orders" />
+        </EntityType>
+        <Association Name="FK_WeekProduct_Weeks">
+          <End Type="EpicerieModel.Weeks" Role="Weeks" Multiplicity="1" />
+          <End Type="EpicerieModel.WeekProduct" Role="WeekProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Weeks">
+              <PropertyRef Name="WeekId" />
+            </Principal>
+            <Dependent Role="WeekProduct">
+              <PropertyRef Name="WeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WeekId" Type="Int32" />
+          <Property Name="Commande_Payee" Type="Boolean" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EpicerieModel.FK_Orders_AspNetUsers" FromRole="Orders" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Weeks" Relationship="EpicerieModel.FK_Orders_Weeks" FromRole="Orders" ToRole="Weeks" />
+          <NavigationProperty Name="OrderDetails" Relationship="EpicerieModel.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
+        </EntityType>
+        <Association Name="FK_Orders_AspNetUsers">
+          <End Type="EpicerieModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="EpicerieModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Weeks">
+          <End Type="EpicerieModel.Weeks" Role="Weeks" Multiplicity="0..1" />
+          <End Type="EpicerieModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Weeks">
+              <PropertyRef Name="WeekId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="WeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="WeekId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="WeekId" Type="Int32" Nullable="false" />
+          <Property Name="Quantite" Type="Int32" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Orders" Relationship="EpicerieModel.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="WeekProduct" Relationship="EpicerieModel.FK_OrderDetails_Week" FromRole="OrderDetails" ToRole="WeekProduct" />
+        </EntityType>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Type="EpicerieModel.Orders" Role="Orders" Multiplicity="1" />
+          <End Type="EpicerieModel.OrderDetails" Role="OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Week">
+          <End Type="EpicerieModel.WeekProduct" Role="WeekProduct" Multiplicity="1" />
+          <End Type="EpicerieModel.OrderDetails" Role="OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeekProduct">
+              <PropertyRef Name="WeekId" />
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="WeekId" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -573,30 +655,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrderDetails">
-            <EntityTypeMapping TypeName="EpicerieModel.OrderDetails">
-              <MappingFragment StoreEntitySet="OrderDetails">
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="DateSemaine" ColumnName="DateSemaine" />
-                <ScalarProperty Name="Quantite" ColumnName="Quantite" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="EpicerieModel.Orders">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="Avaibleld" ColumnName="Avaibleld" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Date_Fin_Commande" ColumnName="Date_Fin_Commande" />
-                <ScalarProperty Name="Date_Recuperation" ColumnName="Date_Recuperation" />
-                <ScalarProperty Name="Commande_Payee" ColumnName="Commande_Payee" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="EpicerieModel.Products">
               <MappingFragment StoreEntitySet="Products">
@@ -606,18 +664,6 @@
                 <ScalarProperty Name="TVQ" ColumnName="TVQ" />
                 <ScalarProperty Name="TPS" ColumnName="TPS" />
                 <ScalarProperty Name="Avaibled" ColumnName="Avaibled" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Week">
-            <EntityTypeMapping TypeName="EpicerieModel.Week">
-              <MappingFragment StoreEntitySet="Week">
-                <ScalarProperty Name="DateSemaine" ColumnName="DateSemaine" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Format" ColumnName="Format" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -633,6 +679,49 @@
                 <ScalarProperty Name="ContactName" ColumnName="ContactName" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeekProduct">
+            <EntityTypeMapping TypeName="EpicerieModel.WeekProduct">
+              <MappingFragment StoreEntitySet="WeekProduct">
+                <ScalarProperty Name="Format" ColumnName="Format" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="WeekId" ColumnName="WeekId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Weeks">
+            <EntityTypeMapping TypeName="EpicerieModel.Weeks">
+              <MappingFragment StoreEntitySet="Weeks">
+                <ScalarProperty Name="Date_Recuperation" ColumnName="Date_Recuperation" />
+                <ScalarProperty Name="Date_Fin" ColumnName="Date_Fin" />
+                <ScalarProperty Name="Date_Debut" ColumnName="Date_Debut" />
+                <ScalarProperty Name="WeekId" ColumnName="WeekId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="EpicerieModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Commande_Payee" ColumnName="Commande_Payee" />
+                <ScalarProperty Name="WeekId" ColumnName="WeekId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="EpicerieModel.OrderDetails">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Quantite" ColumnName="Quantite" />
+                <ScalarProperty Name="WeekId" ColumnName="WeekId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -653,6 +742,7 @@
         <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
