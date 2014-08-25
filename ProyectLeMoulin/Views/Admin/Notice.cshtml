@@ -32,7 +32,7 @@
         <div class="form-group col-md-3  ">
             @Html.LabelFor(m => m.NouvellePhotoPrincipal)
             @Html.TextBoxFor(m => m.NouvellePhotoPrincipal, new { @class = "form-control", @id = "photoPrincipal", @size = "50" })
-            &nbsp;<button id="btnDemoTextBox">Choisissez un fichier</button>
+            &nbsp;<div id="btnDemoTextBox" class="btn btn-toolbar">Choisissez un fichier</div>
             <p class="help-block">Selectionne l'imagen Principal a montrer de la nouvelle.</p>
         </div>
     </div>
@@ -61,6 +61,23 @@
     @Scripts.Render("~/bundles/AdminButons")
     <script>
         $(function () {
+            //detect le postBack
+            var pb = @ViewBag.ispostBack.ToString().ToLower();
+            if(pb)
+            {
+                $("#Formulaire").show();
+                n();
+            }
+            else{
+                $("#Formulaire *").attr("disabled", "disabled").off('click');
+            }
+            //ouvre un écren avec le file manager pour selectione l'image principal.
+            $("#btnDemoTextBox").click(function () {
+                console.log("les details");
+                window.open('../tinyfilemanager.net/dialog.aspx?profile=notinymce', 'demo', 'toolbar=0,location=0,status=0,menubar=0,scrollbars=yes,resizable=1,width=900,height=600');
+                return false;
+            });
+
             $("#btnSupr").click(function () {
                 $("#dialog-confirm").dialog({
                     resizable: false,
@@ -79,7 +96,7 @@
                     }
                 });
             });
-            
+
             Templateitems = Handlebars.compile($("#itemsTemplate").html());
             $.getJSON("getNouvelles", null, function (data) {
                 var result = Templateitems(data);

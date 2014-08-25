@@ -47,3 +47,29 @@ timespan to hours min string
 http://stackoverflow.com/questions/18482460/how-convert-timespan-to-24-hours-and-minutes-string
 
 detection de la resolution d'ecran
+
+
+conversor hexa rgba
+http://hex2rgba.devoth.com/
+
+system globalization metre les choses dans la langue desirè
+http://msdn.microsoft.com/fr-fr/library/vstudio/system.globalization(v=vs.90).aspx
+
+donner focus a un div
+
+http://stackoverflow.com/questions/5965924/jquery-focus-to-div-is-not-working
+
+metre lisible les css et .js min ou obfusqué
+http://jsbeautifier.org/
+
+fait min le js
+http://jscompress.com/
+
+resource pour prend le loremipsum
+http://fr.lipsum.com/
+
+
+
+
+
+

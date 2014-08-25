@@ -335,7 +335,7 @@ namespace IdentitySample.Controllers
         public ActionResult Notice()
         {
             ViewBag.Message = "creer une notice";
-
+            ViewBag.ispostBack = false;
             return View();
         }
 
@@ -347,7 +347,16 @@ namespace IdentitySample.Controllers
             CoeurContainer db = new CoeurContainer();
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            var listTitres = (from a in db.Nouvelles select a.NouvelleTitle).ToList();
             if (notice.PId == null)
+            {
+                if (listTitres.Contains(notice.Nouvelletitre))
+                {
+                    ViewBag.ispostBack = true;
+                    ModelState.AddModelError("", "Éxiste déjà un Nouvelle avec cette Titre, change le titre avant de continuer");
+                    return View();
+                }
+                else
                 {
                     Nouvelle n = new Nouvelle();
                     n.NouvelleDate = DateTime.Now;
@@ -356,14 +365,25 @@ namespace IdentitySample.Controllers
                     n.NouvelleText = notice.NouvelleText;
                     n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
                     n.Publier = notice.Publier;
-                    
 
                     db.Nouvelles.Add(n);
-                    await db.SaveChangesAsync();                 
+                }
+            }
+            else
+            {
+                int x = Convert.ToInt16(notice.PId);
+                listTitres = (from a in db.Nouvelles
+                              where a.NouvelleId != x
+                              select a.NouvelleTitle).ToList();
+                if (listTitres.Contains(notice.Nouvelletitre))
+                {
+
+                    ViewBag.ispostBack = true;
+                    ModelState.AddModelError("", "Éxiste déjà un Nouvelle avec cette Titre, change le titre avant de continuer");
+                    return View();
                 }
                 else
                 {
-                    int x = Convert.ToInt16(notice.PId);
                     var modifnotice = (from n in db.Nouvelles
                                        where n.NouvelleId == x
                                        select n).Single();
@@ -372,8 +392,10 @@ namespace IdentitySample.Controllers
                     modifnotice.NouvelleText = notice.NouvelleText;
                     modifnotice.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
                     modifnotice.Publier = notice.Publier;
-                    await db.SaveChangesAsync();
                 }
+            }
+            ViewBag.ispostBack = false;
+            await db.SaveChangesAsync();
             return View();
         }
 
