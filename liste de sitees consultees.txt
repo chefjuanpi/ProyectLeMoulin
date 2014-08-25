@@ -69,6 +69,8 @@ resource pour prend le loremipsum
 http://fr.lipsum.com/
 
 
+erreurs git hub 
+http://stackoverflow.com/questions/1338728/delete-commits-from-a-branch-in-git
 
 
 
