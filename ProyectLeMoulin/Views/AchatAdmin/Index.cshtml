@@ -27,8 +27,6 @@
     </div>
 </div>
 
-<br />
-
 <div class="row">
     <div class="alert alert-warning" role="alert" id="boutons">
         <div class="col-md-3">
@@ -60,6 +58,24 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td>
+                        @Html.LabelFor(wp => wp.Format, new { @class = "input-group-addon", @style = "width:160px" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(wp => wp.Format, new { @class = "form-control", @id = "name" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(wp => wp.Quantity, new { @class = "input-group-addon", @style = "width:160px" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(wp => wp.Quantity, new { @class = "form-control", @id = "name" })
+                    </td>
+                </tr>
+
             </table>
         </div>
     </div>
@@ -86,7 +102,7 @@
         {{/each}}
     </script>
 
-    <script type="text/x-handlebars-template" id="SupplierTemplate">
+    <script type="text/x-handlebars-template" id="SuppliersTemplate">
         <option selected="selected" id=0 value="0">Fournisseurs</option>
         {{#each}}
         <option id={{id}} value={{id}}>{{nom}}</option>
@@ -94,7 +110,18 @@
     </script>
 
     <script>
+        $(function () {
+            $.ajaxSetup({
+                // Disable caching of AJAX responses
+                cache: false
+            });
 
+            TemplateCategories = Handlebars.compile($("#CategoriesTemplate").html());
+            TemplateSuppliers = Handlebars.compile($("#SuppliersTemplate").html());
+
+            $("#Formulaire").hide();
+
+        }); // Fin d'appel des fonctions       
     </script>
 
 }
