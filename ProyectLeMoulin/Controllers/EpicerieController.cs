@@ -111,27 +111,27 @@ namespace IdentitySample.Controllers
         }
 
         //[HttpPost]
-        public async Task<ActionResult> Index(test1234 panier)
-        {
-            //pour garder ou modifier la bd, async xq sea mas rapido para el utilisateur
-            EpicerieEntities db = new EpicerieEntities();
+        //public async Task<ActionResult> Index(test1234 panier)
+        //{
+        //    //pour garder ou modifier la bd, async xq sea mas rapido para el utilisateur
+        //    EpicerieEntities db = new EpicerieEntities();
             
-            int i = 0;
+        //    int i = 0;
 
-            foreach (List<listProducts>)
-           {
-               var client = from o in db.Orders
-                            select new listProducts
-                            {
+        //    foreach (List<listProducts>)
+        //   {
+        //       var client = from o in db.Orders
+        //                    select new listProducts
+        //                    {
 
-                            };
+        //                    };
 
-           }
+        //   }
 
-            ViewBag.Steeve = "ton panier";
-            return View();
+        //    ViewBag.Steeve = "ton panier";
+        //    return View();
 
-        }
+        //}
 
         
 
