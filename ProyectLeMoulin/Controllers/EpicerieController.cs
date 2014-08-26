@@ -57,8 +57,9 @@ namespace IdentitySample.Controllers
         {
             EpicerieEntities db = new EpicerieEntities();
                         
-                int weekID = (from    w in db.Weeks
-                              orderby w.WeekId descending
+            // besoin inscrire descendin dans order by pour le vrai mode    
+            int weekID = (from    w in db.Weeks
+                              orderby w.WeekId
                               select  w.WeekId
                               ).FirstOrDefault();
 
@@ -89,26 +90,24 @@ namespace IdentitySample.Controllers
         /// <param name="cart">ID de la semaine d'exercice en cours</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Index(List<listProducts> panier, test1234 cart)
+        public async Task<ActionResult> Index( test1234 cart)
         {
             EpicerieEntities db = new EpicerieEntities();
 
-            int WEEK = int.Parse(cart.week);
-            
-            var week = db.Weeks.SingleOrDefault(w => w.WeekId == WEEK).WeekId;
-            string utilisateur = User.Identity.Name;
-            string guid1 = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            //int weekbd = (from w in db.Weeks select w.WeekId).LastOrDefault();
 
+            //if (cart.week == weekbd)
+            //{ 
+                string utilisateur = User.Identity.Name;
+                string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
+                //Créer un Order et enregistrer l'Order dans la BD
+                Orders NewOrders = new Orders();
 
-            string guid = "estive";
-            //Créer un Order et enregistrer l'Order dans la BD
-            Orders NewOrders = new Orders();
-
-            NewOrders.UserId            =   guid;
-            NewOrders.WeekId            =   week;
-            NewOrders.Commande_Payee    =   false;
-            db.Orders.Add(NewOrders);
+                NewOrders.UserId            =   guid;
+                NewOrders.WeekId = cart.week;
+                NewOrders.Commande_Payee    =   false;
+                db.Orders.Add(NewOrders);
 
             await db.SaveChangesAsync();
 
@@ -116,26 +115,32 @@ namespace IdentitySample.Controllers
             int comID = (from o in db.Orders
                             where
                             o.UserId            ==  NewOrders.UserId &
-                            o.WeekId            ==  NewOrders.WeekId &
-                            o.Commande_Payee    ==  NewOrders.Commande_Payee
+                            o.WeekId            ==  NewOrders.WeekId 
                             select o.OrderId).Single();
-            NewOrders.OrderId = comID;
+
 
             //Créer et enregistrer l'OrderDetail dans la BD
-            foreach (var item in panier)
-            {
-                var price = db.WeekProduct.SingleOrDefault(p => p.ProductId == item.PID).UnitPrice;
+                foreach (var item in cart.obj)
+                {
+                    var price = db.WeekProduct.SingleOrDefault(p => p.ProductId == item.PID).UnitPrice;
 
-                OrderDetails NewOdersDetails    =   new OrderDetails();
-                NewOdersDetails.ProductId       =   item.PID;
-                NewOdersDetails.Orders          =   NewOrders;
-                NewOdersDetails.Quantite        =   item.qty;
-                NewOdersDetails.UnitPrice       =   price;
-                NewOdersDetails.WeekId          =   (int)NewOrders.WeekId;
-            }
-            await db.SaveChangesAsync();
+                    OrderDetails NewOdersDetails    =   new OrderDetails();
+                    NewOdersDetails.ProductId       =   item.PID;
+                    NewOdersDetails.OrderId          =   comID;
+                    NewOdersDetails.Quantite        =   item.qty;
+                    NewOdersDetails.UnitPrice       =   price;
+                    NewOdersDetails.WeekId          =   cart.week;
+                    db.OrderDetails.Add(NewOdersDetails);
+                }
+                await db.SaveChangesAsync();
 
-            ViewBag.Steeve = "ton panier";
+                ViewBag.Steeve = "ton panier";
+            //}
+            //else
+            //{
+            //    ViewBag.Steeve = "erreur";
+            //}
+
             return View();
 
         }

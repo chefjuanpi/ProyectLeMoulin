@@ -22,7 +22,7 @@ namespace IdentitySample.Models
         /// Modèle de la semaine, contient l'identifiant de la semmaine et la liste des produits
         /// </summary>
         public List<listProducts> obj { get; set; }
-        public string week { get; set; }
+        public int week { get; set; }
     }
 
     public class Commande

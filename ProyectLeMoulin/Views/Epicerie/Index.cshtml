@@ -50,7 +50,7 @@
         <div id="pname{{id}}"   class="col-xs-3">{{nom}}</div>
         <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
         <div id="pprix{{id}}"   class="col-xs-1">{{prix}}</div>
-        <input class=" col-xs-1" id="CartQuantity{{id}}" type="text" value="{{qty}}" name="{{name}}.qty" disabled="disabled" />
+        <input class=" col-xs-1" id="CartQuantity{{id}}" type="text" value="{{qty}}" name="{{name}}.qty" readonly="readonly" />
         <div id="psous{{id}}" class="col-xs-2">{{Soustotal}}</div>
         <div class="col-xs-1"><input id="Cartupdate{{id}}"  type="button" value="Modifier"  onclick="ModifierProduit('{{id}}')"     class="btn btn-warning" /></div>
         <div class="col-xs-1"><input id="Cartdelete{{id}}"  type="button" value="Enlever"   onclick="SupprimerProduit('{{id}}')"    class="btn btn-danger" /></div>
@@ -178,13 +178,13 @@
         if ($("#Cartupdate" + id).val() == "Modifier") {
             $("#Cartupdate" + id).val("OK");
             $("#Cartupdate" + id).attr("class", "btn btn-success");
-            $("#CartQuantity" + id).attr("disabled", false);
+            $("#CartQuantity" + id).attr("readonly", false);
             
         } else {
             if ($("#Cartupdate" + id).val() == "OK") {
                 $("#Cartupdate" + id).val("Modifier");
                 $("#Cartupdate" + id).attr("class", "btn btn-warning");
-                $("#CartQuantity" + id).attr("disabled", true);
+                $("#CartQuantity" + id).attr("readonly", true);
                 action = "MODIF";
                 Caltotal(id);
             }
@@ -193,7 +193,7 @@
 </script>
 
 }
-
+<div >@ViewBag.Steeve</div>
     <div class="row">
         <div id="Message"></div>
     </div>
