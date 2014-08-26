@@ -78,10 +78,12 @@
         $.getJSON("/Epicerie/GetCategories", null, function (data) {//console.log(data.legth);
             var result = templateCategories(data);
             $("#CategoriesOutput").html(result);
-
+            
             //Afficher les catégories
             $("#CategoryOutput").change(function () {//doit d'abord changer de cat pour pouvoir afficher la 1 ère cat
                 var id = $(this).children(":selected").attr("id");
+                $("#week123").val[0];
+                console.log(val[0]);
                 $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
                     var result = templateProducts(data);
                     $("#ProductsOutput").html(result);
@@ -186,32 +188,6 @@
             }
         }
     }
-
-    //$(function () {
-    //    $("#Envoyer").on("click", function () {
-    //        var panier = [];
-    //        var i = 0;
-
-    //        $('.produit').each(function () {
-    //            i++;
-    //            console.log("PRODUIT : ");
-    //            var id = $(this).attr("id");
-    //            var qty = $(this).children().eq(4).val();
-    //            console.log("id  : " + id);
-    //            console.log("qty  : " + qty);
-    //            var produit = {
-    //                id: id,
-    //                qty: qty,
-    //            };
-    //            panier[i] = panier;
-    //        });
-    //        //console.log(panier);
-    //    });
-    //});
-    //$.getJSON("Epicerie/Save_Panier", { Panier: panier }, function (data) {
-    //    console.log("Panier sauvé");
-    //});
-    
 </script>
 
 }

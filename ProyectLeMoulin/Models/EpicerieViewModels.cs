@@ -5,7 +5,10 @@ using System.Web;
 
 namespace IdentitySample.Models
 {
-    //ici le model pour chaque produit écrit le propietes a besoin
+    //
+    /// <summary>
+    /// Modèle de chaque produit
+    /// </summary>
     public class listProducts
     {
         public int qty { get; set; }
@@ -14,7 +17,10 @@ namespace IdentitySample.Models
 
     public class test1234
     {
-        //est le modelle pour la semaine, contien le semmaine et la liste des produits
+        //
+        /// <summary>
+        /// Modèle de la semaine, contient l'identifiant de la semmaine et la liste des produits
+        /// </summary>
         public List<listProducts> obj { get; set; }
         public string week { get; set; }
     }
