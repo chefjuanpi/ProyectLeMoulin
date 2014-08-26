@@ -691,13 +691,13 @@
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\NouvellesController.cs" />
     <Compile Include="Models\EpicerieViewModels.cs" />
+    <Compile Include="Models\PagePicture.cs">
+      <DependentUpon>Epicerie.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Panier.cs" />
     <Compile Include="Models\PublicsViewModels.cs" />
     <Compile Include="Models\PanierViewModel.cs" />
     <Compile Include="Controllers\titreTextNouvelle.cs" />
-    <Compile Include="Models\AspNetUserRoles.cs">
-      <DependentUpon>Epicerie.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\AspNetUsers.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
@@ -738,9 +738,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AchatAdminViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
-    <Compile Include="Models\AppointmentDiary.cs">
-      <DependentUpon>Coeur.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>Coeur.tt</DependentUpon>
     </Compile>
@@ -762,7 +759,6 @@
     <Compile Include="Models\Comment.cs">
       <DependentUpon>Coeur.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DiaryEvents.cs" />
     <Compile Include="Models\Evenement.cs">
       <DependentUpon>Coeur.tt</DependentUpon>
     </Compile>
@@ -782,7 +778,6 @@
       <DependentUpon>Coeur.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Shared.cs" />
-    <Compile Include="Models\Utils.cs" />
     <Compile Include="Models\OrderDetails.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>

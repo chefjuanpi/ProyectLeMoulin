@@ -5,18 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="IdentitySample.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AppointmentDiary">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="SomeImportantKey" Type="int" Nullable="false" />
-          <Property Name="DateTimeScheduled" Type="datetime" Nullable="false" />
-          <Property Name="AppointmentLength" Type="int" Nullable="false" />
-          <Property Name="StatusENUM" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
-        </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
@@ -113,18 +101,6 @@
           <Property Name="Contenu" Type="varchar(max)" />
           <Property Name="Nom" Type="varchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK_AppointmentDiary_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="AppointmentDiary" Type="Self.AppointmentDiary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AppointmentDiary">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_BlogPicture_Blogs">
           <End Role="Nouvelles" Type="Self.Nouvelles" Multiplicity="1" />
           <End Role="NouvellesPicture" Type="Self.NouvellesPicture" Multiplicity="*" />
@@ -210,7 +186,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="IdentitySampleStoreContainer">
-          <EntitySet Name="AppointmentDiary" EntityType="Self.AppointmentDiary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Evenements" EntityType="Self.Evenements" Schema="dbo" store:Type="Tables" />
@@ -219,10 +194,6 @@
           <EntitySet Name="Page_Section" EntityType="Self.Page_Section" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pages" EntityType="Self.Pages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_AppointmentDiary_AspNetUsers" Association="Self.FK_AppointmentDiary_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AppointmentDiary" EntitySet="AppointmentDiary" />
-          </AssociationSet>
           <AssociationSet Name="FK_BlogPicture_Blogs" Association="Self.FK_BlogPicture_Blogs">
             <End Role="Nouvelles" EntitySet="Nouvelles" />
             <End Role="NouvellesPicture" EntitySet="NouvellesPicture" />
@@ -257,15 +228,10 @@
     <edmx:ConceptualModels>
       <Schema Namespace="IdentitySample" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CoeurContainer" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="AppointmentDiaries" EntityType="IdentitySample.AppointmentDiary" />
           <EntitySet Name="AspNetUsers" EntityType="IdentitySample.AspNetUser" />
           <EntitySet Name="Comments" EntityType="IdentitySample.Comment" />
           <EntitySet Name="Nouvelles" EntityType="IdentitySample.Nouvelle" />
           <EntitySet Name="NouvellesPictures" EntityType="IdentitySample.NouvellesPicture" />
-          <AssociationSet Name="FK_AppointmentDiary_AspNetUsers" Association="IdentitySample.FK_AppointmentDiary_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AppointmentDiary" EntitySet="AppointmentDiaries" />
-          </AssociationSet>
           <AssociationSet Name="FK_Nouvelles_AspNetUsers" Association="IdentitySample.FK_Nouvelles_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Nouvelles" EntitySet="Nouvelles" />
@@ -294,19 +260,6 @@
             <End Role="Section" EntitySet="Sections" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="AppointmentDiary">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="SomeImportantKey" Type="Int32" Nullable="false" />
-          <Property Name="DateTimeScheduled" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AppointmentLength" Type="Int32" Nullable="false" />
-          <Property Name="StatusENUM" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_AppointmentDiary_AspNetUsers" FromRole="AppointmentDiary" ToRole="AspNetUsers" />
-        </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
@@ -325,7 +278,6 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="AppointmentDiaries" Relationship="IdentitySample.FK_AppointmentDiary_AspNetUsers" FromRole="AspNetUsers" ToRole="AppointmentDiary" />
           <NavigationProperty Name="Nouvelles" Relationship="IdentitySample.FK_Nouvelles_AspNetUsers" FromRole="AspNetUsers" ToRole="Nouvelles" />
           <NavigationProperty Name="Evenements" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="AspNetUser" ToRole="Evenement" />
           <NavigationProperty Name="Pages" Relationship="IdentitySample.FK_Pages_AspNetUsers" FromRole="AspNetUser" ToRole="Page" />
@@ -366,18 +318,6 @@
           <Property Name="PictureId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Nouvelle" Relationship="IdentitySample.FK_BlogPicture_Blogs" FromRole="NouvellesPicture" ToRole="Nouvelles" />
         </EntityType>
-        <Association Name="FK_AppointmentDiary_AspNetUsers">
-          <End Role="AspNetUsers" Type="IdentitySample.AspNetUser" Multiplicity="0..1" />
-          <End Role="AppointmentDiary" Type="IdentitySample.AppointmentDiary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AppointmentDiary">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Nouvelles_AspNetUsers">
           <End Role="AspNetUsers" Type="IdentitySample.AspNetUser" Multiplicity="1" />
           <End Role="Nouvelles" Type="IdentitySample.Nouvelle" Multiplicity="*" />
@@ -490,19 +430,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="IdentitySampleStoreContainer" CdmEntityContainer="CoeurContainer">
-          <EntitySetMapping Name="AppointmentDiaries">
-            <EntityTypeMapping TypeName="IdentitySample.AppointmentDiary">
-              <MappingFragment StoreEntitySet="AppointmentDiary">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="SomeImportantKey" ColumnName="SomeImportantKey" />
-                <ScalarProperty Name="DateTimeScheduled" ColumnName="DateTimeScheduled" />
-                <ScalarProperty Name="AppointmentLength" ColumnName="AppointmentLength" />
-                <ScalarProperty Name="StatusENUM" ColumnName="StatusENUM" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="IdentitySample.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
@@ -605,7 +532,7 @@
               <ScalarProperty Name="PageID" ColumnName="idpage" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

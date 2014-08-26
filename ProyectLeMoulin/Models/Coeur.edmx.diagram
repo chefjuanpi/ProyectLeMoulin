@@ -5,12 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="52e209c467d44b58b6c2313b6f96f057" Name="Diagram1">
-        <EntityTypeShape EntityType="IdentitySample.AppointmentDiary" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="IdentitySample.AspNetUser" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="IdentitySample.Comment" Width="1.5" PointX="8.375" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="IdentitySample.Nouvelle" Width="1.5" PointX="5.125" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="IdentitySample.NouvellesPicture" Width="1.5" PointX="8.75" PointY="7.25" IsExpanded="true" />
-        <AssociationConnector Association="IdentitySample.FK_AppointmentDiary_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="IdentitySample.FK_Nouvelles_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="IdentitySample.FK_Comments_Blogs" ManuallyRouted="false" />
         <AssociationConnector Association="IdentitySample.FK_BlogPicture_Blogs" ManuallyRouted="false" />

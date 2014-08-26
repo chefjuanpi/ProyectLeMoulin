@@ -5,12 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="635ddf5905d74f57b3250b9e8030bd68" Name="Diagramme1">
-        <EntityTypeShape EntityType="EpicerieModel.AspNetUserRoles" Width="1.5" PointX="11.5" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EpicerieModel.AspNetUsers" Width="1.5" PointX="9.625" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EpicerieModel.Categories" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EpicerieModel.CategoryProduct" Width="1.5" PointX="3.125" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EpicerieModel.Products" Width="1.5" PointX="0.5" PointY="3.375" IsExpanded="true" />
-        <AssociationConnector Association="EpicerieModel.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EpicerieModel.FK_CategoryProduct_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="EpicerieModel.FK_CategoryProduct_Products1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EpicerieModel.Suppliers" Width="1.5" PointX="5" PointY="1.25" />
@@ -25,7 +23,8 @@
         <EntityTypeShape EntityType="EpicerieModel.OrderDetails" Width="1.5" PointX="14.25" PointY="1.75" />
         <AssociationConnector Association="EpicerieModel.FK_OrderDetails_Orders" />
         <AssociationConnector Association="EpicerieModel.FK_OrderDetails_Week" />
-      </Diagram>
+        <EntityTypeShape EntityType="EpicerieModel.PagePicture" Width="1.5" PointX="16.75" PointY="16.625" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

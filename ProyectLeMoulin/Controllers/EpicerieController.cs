@@ -41,9 +41,9 @@ namespace IdentitySample.Controllers
             var category = (from c in db.Categories
                             select new
                             {
-                                CategoryID = c.CategoryId,
-                                CategoryName = c.CategoryName,
-                                Description = c.Description
+                                CategoryID      =   c.CategoryId,
+                                CategoryName    =   c.CategoryName,
+                                Description     =   c.Description
                             }).ToList();
             return Json(category, JsonRequestBehavior.AllowGet);
         }
@@ -57,35 +57,35 @@ namespace IdentitySample.Controllers
         {
             EpicerieEntities db = new EpicerieEntities();
 
-            //var category = (from c in db.Categories
-            //        where c.CategoryId == cat
-            //        select c.CategoryId
-            //        ).FirstOrDefault();
+            //var category = (from   c in db.Categories
+                    //        where  c.CategoryId == cat
+                    //        select c.CategoryId
+                    //        ).FirstOrDefault();
             //if (category == cat)
             //{
             
-                int weekID = (from w in db.Weeks
-                              orderby w.WeekId descending
-                              select w.WeekId
+                int weekID = (from    w in db.Weeks
+                              orderby w.WeekId
+                              select  w.WeekId
                               ).FirstOrDefault();
 
-                var produit = (from w in db.Weeks
-                               join wp in db.WeekProduct
-                               on w.WeekId equals wp.WeekId
-                               join p in db.Products
-                               on wp.ProductId equals p.ProductId
-                               join cp in db.CategoryProduct
-                               on p.ProductId equals cp.ProductId
-                               where cp.CategoryId == cat 
-                               && w.WeekId == weekID
-                               select new
-                               {
-                                   WeeK = weekID,
-                                   ProductID = p.ProductId,
-                                   ProductName = p.ProductName,
-                                   Format = wp.Format,
-                                   Price = wp.UnitPrice
-                               }).ToList();
+                var produit =   (from w in db.Weeks
+                                 join wp in db.WeekProduct
+                                 on w.WeekId equals wp.WeekId
+                                 join p in db.Products
+                                 on wp.ProductId equals p.ProductId
+                                 join cp in db.CategoryProduct
+                                 on p.ProductId equals cp.ProductId
+                                 where cp.CategoryId == cat
+                                 && w.WeekId == weekID
+                                 select new
+                                 {
+                                     WeeK = weekID,
+                                     ProductID = p.ProductId,
+                                     ProductName = p.ProductName,
+                                     Format = wp.Format,
+                                     Price = wp.UnitPrice
+                                 }).ToList();
                 return Json(produit, JsonRequestBehavior.AllowGet);
             //}
             //else {    }
@@ -94,21 +94,21 @@ namespace IdentitySample.Controllers
         /// <summary>
         /// Récupérer le GUID du membre connecté et son role au sein du groupe d'achats
         /// </summary>
-        public void Valider_Membre()
-        {
-            EpicerieEntities db = new EpicerieEntities();
+        //public void Valider_Membre()
+        //{
+        //    EpicerieEntities db = new EpicerieEntities();
 
-            string utilisateur = User.Identity.Name;
-            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+        //    string utilisateur = User.Identity.Name;
+        //    string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
-            var membre = (from m in db.AspNetUsers
-                          join r in db.AspNetUserRoles
-                          on m.Id equals r.UserId
-                          where m.Id == guid
-                          && r.RoleId == "1fa8e7cb-2dc9-41f5-aecf-a27a60e37423"// ID role Groupe d'achat
-                          select r.RoleId
-                         ).Single();
-        }
+        //    var membre = (from  m in db.AspNetUsers
+        //                  join  r in db.AspNetUserRoles
+        //                  on    m.Id equals r.UserId
+        //                  where m.Id       ==  guid
+        //                  &&    r.RoleId   ==  "1fa8e7cb-2dc9-41f5-aecf-a27a60e37423"// ID role Groupe d'achat
+        //                  select r.RoleId
+        //                 ).Single();
+        //}
 
         //[HttpPost]
         //public async Task<ActionResult> Index(test1234 panier)

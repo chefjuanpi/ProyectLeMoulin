@@ -82,10 +82,9 @@
             //Afficher les catégories
             $("#CategoryOutput").change(function () {//doit d'abord changer de cat pour pouvoir afficher la 1 ère cat
                 var id = $(this).children(":selected").attr("id");
-                $("#week123").val[0];
-                console.log(val[0]);
                 $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
                     var result = templateProducts(data);
+                    $("#week123").val(data[0].WeeK);
                     $("#ProductsOutput").html(result);
                 });//GetProducts
             })//GetCategories                               

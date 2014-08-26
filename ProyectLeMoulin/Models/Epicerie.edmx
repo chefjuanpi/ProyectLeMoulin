@@ -5,14 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EpicerieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AspNetUserRoles">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
@@ -69,6 +61,14 @@
           <Property Name="WeekId" Type="int" />
           <Property Name="Commande_Payee" Type="bit" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PagePicture">
+          <Key>
+            <PropertyRef Name="PageId" />
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="PageId" Type="int" Nullable="false" />
+          <Property Name="PictureId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -137,20 +137,6 @@
             </Principal>
             <Dependent Role="CategoryProduct">
               <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -241,12 +227,12 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EpicerieModelStoreContainer">
-          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryProduct" EntityType="Self.CategoryProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PagePicture" EntityType="Self.PagePicture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WeekProduct" EntityType="Self.WeekProduct" Schema="dbo" store:Type="Tables" />
@@ -258,10 +244,6 @@
           <AssociationSet Name="FK_CategoryProduct_Products1" Association="Self.FK_CategoryProduct_Products1">
             <End Role="Products" EntitySet="Products" />
             <End Role="CategoryProduct" EntitySet="CategoryProduct" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
             <End Role="Orders" EntitySet="Orders" />
@@ -297,15 +279,10 @@
     <edmx:ConceptualModels>
       <Schema Namespace="EpicerieModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="EpicerieEntities" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="AspNetUserRoles" EntityType="EpicerieModel.AspNetUserRoles" />
           <EntitySet Name="AspNetUsers" EntityType="EpicerieModel.AspNetUsers" />
           <EntitySet Name="Categories" EntityType="EpicerieModel.Categories" />
           <EntitySet Name="CategoryProduct" EntityType="EpicerieModel.CategoryProduct" />
           <EntitySet Name="Products" EntityType="EpicerieModel.Products" />
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="EpicerieModel.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
           <AssociationSet Name="FK_CategoryProduct_Categories" Association="EpicerieModel.FK_CategoryProduct_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="CategoryProduct" EntitySet="CategoryProduct" />
@@ -347,16 +324,8 @@
             <End Role="WeekProduct" EntitySet="WeekProduct" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="AspNetUserRoles">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
-          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="EpicerieModel.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUserRoles" ToRole="AspNetUsers" />
-        </EntityType>
+          <EntitySet Name="PagePicture" EntityType="EpicerieModel.PagePicture" />
+          </EntityContainer>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
@@ -375,7 +344,6 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="AspNetUserRoles" Relationship="EpicerieModel.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserRoles" />
           <NavigationProperty Name="Orders" Relationship="EpicerieModel.FK_Orders_AspNetUsers" FromRole="AspNetUsers" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Categories">
@@ -411,20 +379,6 @@
           <NavigationProperty Name="CategoryProduct" Relationship="EpicerieModel.FK_CategoryProduct_Products1" FromRole="Products" ToRole="CategoryProduct" />
           <NavigationProperty Name="WeekProduct" Relationship="EpicerieModel.FK_Week_Products11" FromRole="Products" ToRole="WeekProduct" />
         </EntityType>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="EpicerieModel.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="EpicerieModel.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CategoryProduct_Categories">
           <End Role="Categories" Type="EpicerieModel.Categories" Multiplicity="1" />
           <End Role="CategoryProduct" Type="EpicerieModel.CategoryProduct" Multiplicity="*" />
@@ -603,20 +557,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="PagePicture">
+          <Key>
+            <PropertyRef Name="PageId" />
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="PageId" Type="Int32" Nullable="false" />
+          <Property Name="PictureId" Type="Int32" Nullable="false" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EpicerieModelStoreContainer" CdmEntityContainer="EpicerieEntities">
-          <EntitySetMapping Name="AspNetUserRoles">
-            <EntityTypeMapping TypeName="EpicerieModel.AspNetUserRoles">
-              <MappingFragment StoreEntitySet="AspNetUserRoles">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="EpicerieModel.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
@@ -725,7 +679,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="PagePicture">
+            <EntityTypeMapping TypeName="EpicerieModel.PagePicture">
+              <MappingFragment StoreEntitySet="PagePicture">
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
