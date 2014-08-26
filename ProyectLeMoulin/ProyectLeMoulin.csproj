@@ -694,7 +694,6 @@
     <Compile Include="Models\PagePicture.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Panier.cs" />
     <Compile Include="Models\PublicsViewModels.cs" />
     <Compile Include="Models\PanierViewModel.cs" />
     <Compile Include="Controllers\titreTextNouvelle.cs" />

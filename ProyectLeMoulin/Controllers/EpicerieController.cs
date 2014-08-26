@@ -56,89 +56,94 @@ namespace IdentitySample.Controllers
         public JsonResult GetProduits(int cat)
         {
             EpicerieEntities db = new EpicerieEntities();
-
-            //var category = (from   c in db.Categories
-                    //        where  c.CategoryId == cat
-                    //        select c.CategoryId
-                    //        ).FirstOrDefault();
-            //if (category == cat)
-            //{
-            
+                        
                 int weekID = (from    w in db.Weeks
-                              orderby w.WeekId
+                              orderby w.WeekId descending
                               select  w.WeekId
                               ).FirstOrDefault();
 
-                var produit =   (from w in db.Weeks
-                                 join wp in db.WeekProduct
-                                 on w.WeekId equals wp.WeekId
-                                 join p in db.Products
-                                 on wp.ProductId equals p.ProductId
-                                 join cp in db.CategoryProduct
-                                 on p.ProductId equals cp.ProductId
-                                 where cp.CategoryId == cat
-                                 && w.WeekId == weekID
+                var produit =   (from   w               in      db.Weeks
+                                 join   wp              in      db.WeekProduct
+                                 on     w.WeekId        equals  wp.WeekId
+                                 join   p               in      db.Products
+                                 on     wp.ProductId    equals  p.ProductId
+                                 join   cp              in      db.CategoryProduct
+                                 on     p.ProductId     equals  cp.ProductId
+                                 where  cp.CategoryId   == cat
+                                 &&     w.WeekId        == weekID
                                  select new
                                  {
-                                     WeeK = weekID,
-                                     ProductID = p.ProductId,
-                                     ProductName = p.ProductName,
-                                     Format = wp.Format,
-                                     Price = wp.UnitPrice
+                                     WeeK           =   weekID,
+                                     ProductID      =   p.ProductId,
+                                     ProductName    =   p.ProductName,
+                                     Format         =   wp.Format,
+                                     Price          =   wp.UnitPrice
                                  }).ToList();
                 return Json(produit, JsonRequestBehavior.AllowGet);
-            //}
-            //else {    }
         }
-
-        /// <summary>
-        /// Récupérer le GUID du membre connecté et son role au sein du groupe d'achats
-        /// </summary>
-        //public void Valider_Membre()
-        //{
-        //    EpicerieEntities db = new EpicerieEntities();
-
-        //    string utilisateur = User.Identity.Name;
-        //    string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-
-        //    var membre = (from  m in db.AspNetUsers
-        //                  join  r in db.AspNetUserRoles
-        //                  on    m.Id equals r.UserId
-        //                  where m.Id       ==  guid
-        //                  &&    r.RoleId   ==  "1fa8e7cb-2dc9-41f5-aecf-a27a60e37423"// ID role Groupe d'achat
-        //                  select r.RoleId
-        //                 ).Single();
-        //}
-
-        //[HttpPost]
-        //public async Task<ActionResult> Index(test123 panier)
-        //{
-        //    //pour garder ou modifier la bd, async xq sea mas rapido para el utilisateur
-        //    EpicerieEntities db = new EpicerieEntities();
-            
-        //    int i = 0;
-
-        //    foreach (List<listProducts>)
-        //   {
-        //       var client = from o in db.Orders
-        //                    select new listProducts
-        //                    {
-
-        //                    };
-
-        //   }
-
-        //    ViewBag.Steeve = "ton panier";
-        //    return View();
-
-        //}
-
         
+        /// <summary>
+        /// Garder ou modifier la bd en async sans affecter la vitesse de l'utilisateur
+        /// </summary>
+        /// <param name="panier">Liste des produits commandées</param>
+        /// <param name="cart">ID de la semaine d'exercice en cours</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Index(List<listProducts> panier, test1234 cart)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+
+            int WEEK = int.Parse(cart.week);
+            
+            var week = db.Weeks.SingleOrDefault(w => w.WeekId == WEEK).WeekId;
+            string utilisateur = User.Identity.Name;
+            string guid1 = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+
+
+
+            string guid = "estive";
+            //Créer un Order et enregistrer l'Order dans la BD
+            Orders NewOrders = new Orders();
+
+            NewOrders.UserId            =   guid;
+            NewOrders.WeekId            =   week;
+            NewOrders.Commande_Payee    =   false;
+            db.Orders.Add(NewOrders);
+
+            await db.SaveChangesAsync();
+
+            //Sortir le OrderID pour créer la Order Detail
+            int comID = (from o in db.Orders
+                            where
+                            o.UserId            ==  NewOrders.UserId &
+                            o.WeekId            ==  NewOrders.WeekId &
+                            o.Commande_Payee    ==  NewOrders.Commande_Payee
+                            select o.OrderId).Single();
+            NewOrders.OrderId = comID;
+
+            //Créer et enregistrer l'OrderDetail dans la BD
+            foreach (var item in panier)
+            {
+                var price = db.WeekProduct.SingleOrDefault(p => p.ProductId == item.PID).UnitPrice;
+
+                OrderDetails NewOdersDetails    =   new OrderDetails();
+                NewOdersDetails.ProductId       =   item.PID;
+                NewOdersDetails.Orders          =   NewOrders;
+                NewOdersDetails.Quantite        =   item.qty;
+                NewOdersDetails.UnitPrice       =   price;
+                NewOdersDetails.WeekId          =   (int)NewOrders.WeekId;
+            }
+            await db.SaveChangesAsync();
+
+            ViewBag.Steeve = "ton panier";
+            return View();
+
+        }
 
         //Afficher le message de l'administrateur du groupe D'achats
         //public JsonResult Afficher_Message()
         //{
-
+                
         //}
 
     }
