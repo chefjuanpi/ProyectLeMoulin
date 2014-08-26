@@ -138,6 +138,23 @@ namespace IdentitySample.Controllers
         }
 
         /// <summary>
+        /// Permet d'obtenir l'ID et le Nom des Categories
+        /// </summary>
+        /// <returns>Json contenant les Suppliers</returns>
+        public JsonResult getCategories()
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var categories = (from c in db.Categories
+                             orderby c.CategoryName
+                             select new
+                             {
+                                 id = c.CategoryId,
+                                 nom = c.CategoryName
+                             });
+            return Json(categories, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// Permet d'ouvrir la vue pour Suppliers
         /// </summary>
         /// <returns>Une vue avec titre et message</returns>
