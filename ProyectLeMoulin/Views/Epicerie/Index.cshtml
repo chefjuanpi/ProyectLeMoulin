@@ -7,6 +7,7 @@
 @section Scripts {
 <script type="text/x-handlebars-template" id="CategoriesTemplate" >
         Catégories<select id="CategoryOutput" name="Categories" class="form-control">
+            <option selected="selected" id=0 value="0">Categories</option>
             {{#each}}
                 <option id={{CategoryID}}>{{CategoryName}}</option>
             {{/each}}
@@ -82,11 +83,13 @@
             //Afficher les catégories
             $("#CategoryOutput").change(function () {//doit d'abord changer de cat pour pouvoir afficher la 1 ère cat
                 var id = $(this).children(":selected").attr("id");
-                $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
-                    var result = templateProducts(data);
-                    $("#week123").val(data[0].WeeK);
-                    $("#ProductsOutput").html(result);
-                });//GetProducts
+                if (id != 0) {
+                    $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
+                        var result = templateProducts(data);
+                        $("#week123").val(data[0].WeeK);
+                        $("#ProductsOutput").html(result);
+                    });//GetProducts
+                }
             })//GetCategories                               
         });
     });

@@ -111,7 +111,7 @@ namespace IdentitySample.Controllers
         //}
 
         //[HttpPost]
-        //public async Task<ActionResult> Index(test1234 panier)
+        //public async Task<ActionResult> Index(test123 panier)
         //{
         //    //pour garder ou modifier la bd, async xq sea mas rapido para el utilisateur
         //    EpicerieEntities db = new EpicerieEntities();
