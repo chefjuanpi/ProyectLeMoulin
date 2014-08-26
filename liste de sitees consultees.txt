@@ -72,6 +72,24 @@ http://fr.lipsum.com/
 erreurs git hub 
 http://stackoverflow.com/questions/1338728/delete-commits-from-a-branch-in-git
 
+changer bar de navigation 
+http://twbscolor.smarchal.com/
 
+view code source in cellphones
+http://android.stackexchange.com/questions/5039/how-do-i-view-source-in-the-android-browser
+
+white backgroud in bootstrap
+http://stackoverflow.com/questions/21477101/white-background-class-in-bootstrap
+
+nav bar fix not sur le contenu
+http://stackoverflow.com/questions/10336194/twitter-bootstrap-top-nav-bar-blocking-top-content-of-the-page
+
+comme faire back ground gradient en Francais
+http://www.html5-css3.fr/css3/degrades-couleurs-css3-gradient
+en anglais
+http://www.w3schools.com/css/css3_gradients.asp
+
+generateur de css bckground gradient
+http://www.colorzilla.com/gradient-editor/
 
 

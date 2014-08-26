@@ -269,7 +269,7 @@ namespace IdentitySample.Controllers
             {
                 ViewBag.ispostBack = true;
                 ModelState.AddModelError("", "Imposible de Effacer, cete page est menu principal pour outres pages, retirer les avent");
-                return View();
+                return Redirect("/Admin/Pages");
             }
             else
             { 
@@ -285,11 +285,11 @@ namespace IdentitySample.Controllers
                 {
                     ViewBag.ispostBack = true;
                     ModelState.AddModelError("", "Un erreur est produit, la page n'été pas efface !, essai un outre fois");
-                    return View();
+                    return Redirect("/Admin/Pages");
                 }
             }
             ViewBag.ispostBack = false;
-            return View();
+            return Redirect("/Admin/Pages");
         }
 
         public ActionResult Evenements_a_venir()

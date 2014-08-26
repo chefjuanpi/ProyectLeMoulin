@@ -559,8 +559,8 @@
     <Content Include="Images\Chicoutimi.jpg" />
     <Content Include="Images\ecocartier.JPG" />
     <Content Include="Images\FileManager.png" />
-    <Content Include="Images\fotorama%402x.png" />
-    <Content Include="Images\fotorama.png" />
+    <Content Include="Content\fotorama%402x.png" />
+    <Content Include="Content\fotorama.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -691,7 +691,6 @@
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\NouvellesController.cs" />
     <Compile Include="Models\EpicerieViewModels.cs" />
-    <Compile Include="Models\HomeViewModels.cs" />
     <Compile Include="Models\Panier.cs" />
     <Compile Include="Models\PublicsViewModels.cs" />
     <Compile Include="Models\PanierViewModel.cs" />

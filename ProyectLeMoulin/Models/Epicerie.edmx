@@ -111,7 +111,7 @@
           <Key>
             <PropertyRef Name="WeekId" />
           </Key>
-          <Property Name="WeekId" Type="int" Nullable="false" />
+          <Property Name="WeekId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date_Debut" Type="date" />
           <Property Name="Date_Fin" Type="date" />
           <Property Name="Date_Recuperation" Type="date" />

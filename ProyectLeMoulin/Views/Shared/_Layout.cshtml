@@ -1,6 +1,14 @@
 ﻿<!DOCTYPE html>
 <html lang="fr-ca">
 <head>
+    <!--[if gte IE 9]>
+      <style type="text/css">
+        .gradient {
+           filter: none;
+        }
+      </style>
+    <![endif]-->
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="@ViewBag.Message" />
@@ -12,6 +20,87 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/handlebars")
     @RenderSection("scripts", required: false)
+
+    <style type="text/css">
+        body{
+            padding-top: 65px; 
+            background: #f8ffe8; /* Old browsers */
+            /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmOGZmZTgiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSI0MyUiIHN0b3AtY29sb3I9IiNlM2Y1YWIiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjYjdkZjJkIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+            background: -moz-radial-gradient(center, ellipse cover, #f8ffe8 0%, #e3f5ab 43%, #b7df2d 100%); /* FF3.6+ */
+            background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#f8ffe8), color-stop(43%,#e3f5ab), color-stop(100%,#b7df2d)); /* Chrome,Safari4+ */
+            background: -webkit-radial-gradient(center, ellipse cover, #f8ffe8 0%,#e3f5ab 43%,#b7df2d 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-radial-gradient(center, ellipse cover, #f8ffe8 0%,#e3f5ab 43%,#b7df2d 100%); /* Opera 12+ */
+            background: -ms-radial-gradient(center, ellipse cover, #f8ffe8 0%,#e3f5ab 43%,#b7df2d 100%); /* IE10+ */
+            background: radial-gradient(ellipse at center, #f8ffe8 0%,#e3f5ab 43%,#b7df2d 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8ffe8', endColorstr='#b7df2d',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+        }
+
+        .navbar-default {
+	        background-color: #b7dd33;
+	        border-color: #cfcb83;
+        }
+                navbar-default .navbar-brand {
+	        color: #f8fafa;
+        }
+        .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+	        color: #dd75b0;
+        }
+        .navbar-default .navbar-text {
+	        color: #f8fafa;
+        }
+        .navbar-default .navbar-nav > li > a {
+	        color: #f8fafa;
+        }
+        .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	        color: #dd75b0;
+        }
+        .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+	        color: #dd75b0;
+	        background-color: #cfcb83;
+        }
+        .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+	        color: #dd75b0;
+	        background-color: #cfcb83;
+        }
+        .navbar-default .navbar-toggle {
+	        border-color: #cfcb83;
+        }
+        .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+	        background-color: #cfcb83;
+        }
+        .navbar-default .navbar-toggle .icon-bar {
+	        background-color: #f8fafa;
+        }
+        .navbar-default .navbar-collapse,
+        .navbar-default .navbar-form {
+	        border-color: #f8fafa;
+        }
+        .navbar-default .navbar-link {
+	        color: #f8fafa;
+        }
+        .navbar-default .navbar-link:hover {
+	        color: #dd75b0;
+        }
+
+        @@media (max-width: 767px) {
+	        .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+		        color: #f8fafa;
+	        }
+	        .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+		        color: #dd75b0;
+	        }
+	        .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+		        color: #dd75b0;
+		        background-color: #cfcb83;
+	        }
+        }
+
+        .white-bg{
+            background:#ffffff;
+        }
+
+    </style>
     <script type="text/javascript">
         $(function () {
             $.ajaxSetup({ cache: false });
@@ -29,7 +118,7 @@
         });
     </script>
 </head>
-<body>
+<body style="filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr='#cc0000', startColorstr='#FFFFFF', gradientType='0');">
     <!-- Google Tag Manager -->
     <noscript>
         <iframe src="//www.googletagmanager.com/ns.html?id=GTM-5G9V7N"
@@ -45,7 +134,7 @@
             '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-5G9V7N');</script>
     <!-- End Google Tag Manager -->
-    <nav class="navbar navbar-default row" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top row" role="navigation">
         <div class="container-fluid">
             <a href="/Home/Index"> <img class="col-md-2 img-responsive" src="../Images/logo.png" alt="Le Moulin d'à côté'" /></a>
             <div class="navbar-header">
@@ -67,15 +156,15 @@
                     </ul>
                 </div>
             </div>
-      </div>
-</nav>
+        </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
-        <br/>
+        <br />
     </div>
-    <br/>
+    <br />
 
-    <div class="container-fluid" >
+    <div class="container-fluid">
         <hr />
         <div class="panel-footer">
             <footer>
