@@ -120,11 +120,7 @@ namespace IdentitySample.Controllers
 
             foreach (List<listProducts>)
            {
-               var client = from o in db.Orders
-                            select new listProducts
-                            {
-
-                            };
+              
 
            }
 
