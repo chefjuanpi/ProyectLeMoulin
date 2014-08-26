@@ -98,43 +98,42 @@ namespace IdentitySample.Controllers
 
             //if (cart.week == weekbd)
             //{ 
-                string utilisateur = User.Identity.Name;
-                string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            string utilisateur = User.Identity.Name;
+            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
-                //Créer un Order et enregistrer l'Order dans la BD
-                Orders NewOrders = new Orders();
+            //Créer un Order et enregistrer l'Order dans la BD
+            Orders NewOrders = new Orders();
 
-                NewOrders.UserId            =   guid;
-                NewOrders.WeekId = cart.week;
-                NewOrders.Commande_Payee    =   false;
-                db.Orders.Add(NewOrders);
+            NewOrders.UserId = guid;
+            NewOrders.WeekId = cart.week;
+            NewOrders.Commande_Payee = false;
+            db.Orders.Add(NewOrders);
 
             await db.SaveChangesAsync();
 
             //Sortir le OrderID pour créer la Order Detail
             int comID = (from o in db.Orders
-                            where
-                            o.UserId            ==  NewOrders.UserId &
-                            o.WeekId            ==  NewOrders.WeekId 
-                            select o.OrderId).Single();
-
+                         where
+                         o.UserId == NewOrders.UserId &
+                         o.WeekId == NewOrders.WeekId
+                         select o.OrderId).Single();
 
             //Créer et enregistrer l'OrderDetail dans la BD
-                foreach (var item in cart.obj)
-                {
-                    var price = db.WeekProduct.SingleOrDefault(p => p.ProductId == item.PID).UnitPrice;
+            foreach (var item in cart.obj)
+            {
+                var price = db.WeekProduct.SingleOrDefault(p => p.ProductId == item.PID).UnitPrice;
 
-                    OrderDetails NewOdersDetails    =   new OrderDetails();
-                    NewOdersDetails.ProductId       =   item.PID;
-                    NewOdersDetails.OrderId          =   comID;
-                    NewOdersDetails.Quantite        =   item.qty;
-                    NewOdersDetails.UnitPrice       =   price;
-                    NewOdersDetails.WeekId          =   cart.week;
-                    db.OrderDetails.Add(NewOdersDetails);
-                }
-                await db.SaveChangesAsync();
+                OrderDetails NewOdersDetails = new OrderDetails();
+                NewOdersDetails.ProductId = item.PID;
+                NewOdersDetails.OrderId = comID;
+                NewOdersDetails.Quantite = item.qty;
+                NewOdersDetails.UnitPrice = price;
+                NewOdersDetails.WeekId = cart.week;
+                db.OrderDetails.Add(NewOdersDetails);
+            }
+            await db.SaveChangesAsync();
 
-                ViewBag.Steeve = "ton panier";
+            ViewBag.Steeve = "ton panier";
             //}
             //else
             //{
@@ -142,7 +141,6 @@ namespace IdentitySample.Controllers
             //}
 
             return View();
-
         }
 
         //Afficher le message de l'administrateur du groupe D'achats
