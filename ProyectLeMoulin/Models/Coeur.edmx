@@ -23,7 +23,7 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="Suspendre" Type="bit" />
+          <Property Name="Suspendre" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -49,7 +49,7 @@
           <Property Name="HourStart" Type="time" Precision="7" />
           <Property Name="DateEnd" Type="date" Nullable="false" />
           <Property Name="HourEnd" Type="time" Precision="7" />
-          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Text" Type="text" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Poublier" Type="bit" />
         </EntityType>
@@ -89,7 +89,7 @@
           <Property Name="MenuName" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Text" Type="text" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Principal" Type="bit" Nullable="false" />
           <Property Name="SousMenu" Type="int" />
           <Property Name="Poublier" Type="bit" />
@@ -99,7 +99,7 @@
             <PropertyRef Name="idSection" />
           </Key>
           <Property Name="idSection" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Contenu" Type="varchar(max)" />
+          <Property Name="Contenu" Type="text" />
           <Property Name="Nom" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_BlogPicture_Blogs">
@@ -282,7 +282,7 @@
           <NavigationProperty Name="Nouvelles" Relationship="IdentitySample.FK_Nouvelles_AspNetUsers" FromRole="AspNetUsers" ToRole="Nouvelles" />
           <NavigationProperty Name="Evenements" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="AspNetUser" ToRole="Evenement" />
           <NavigationProperty Name="Pages" Relationship="IdentitySample.FK_Pages_AspNetUsers" FromRole="AspNetUser" ToRole="Page" />
-          <Property Name="Suspendre" Type="Boolean" />
+          <Property Name="Suspendre" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -369,7 +369,7 @@
           <Property Name="HourStart" Type="Time" Precision="7" />
           <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="HourEnd" Type="Time" Precision="7" />
-          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Poublier" Type="Boolean" />
           <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="Evenement" ToRole="AspNetUser" />
@@ -394,7 +394,7 @@
           <Property Name="MenuName" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Principal" Type="Boolean" Nullable="false" />
           <Property Name="SousMenu" Type="Int32" />
           <Property Name="Poublier" Type="Boolean" />

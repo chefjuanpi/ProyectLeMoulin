@@ -10,7 +10,7 @@ namespace IdentitySample.Models
         public string Id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [Display(Name = "RoleName")]
+        [Display(Name = "Nom de Rôle")]
         public string Name { get; set; }
     }
 
@@ -19,7 +19,7 @@ namespace IdentitySample.Models
         public string Id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [Display(Name = "Email")]
+        [Display(Name = "Courriel")]
         [EmailAddress]
         public string Email { get; set; }
 
@@ -54,10 +54,9 @@ namespace IdentitySample.Models
         public string NouvellePhotoPrincipal { get; set; }
 
         [Required]
-        [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
         [DataType(DataType.Html)]
         [AllowHtml]
-        [Display(Name = "Text")]
+        [Display(Name = "Contenu")]
         public string NouvelleText { get; set; }
 
         [Required]
@@ -70,6 +69,7 @@ namespace IdentitySample.Models
         public string PId { get; set; }
         
         [Required]
+        [StringLength(15, ErrorMessage = "Titre trop long, max. 15 charactéres")]
         public string MenuName { get; set; }
 
         [Required]
@@ -79,10 +79,9 @@ namespace IdentitySample.Models
         public string Titre { get; set; }
 
         [Required]
-        [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
         [DataType(DataType.Html)]
         [AllowHtml]
-        [Display(Name = "Text")]
+        [Display(Name = "Contenu")]
         public string Contenu { get; set; }
 
         [Required]
@@ -119,7 +118,7 @@ namespace IdentitySample.Models
         public string Lieu { get; set; }
 
         [Required]
-        [StringLength(150, ErrorMessage = "Adresse trop long, max. 300 charactéres")]
+        [StringLength(300, ErrorMessage = "Adresse trop long, max. 300 charactéres")]
         [DataType(DataType.Text)]
         [Display(Name = "Adresse :")]
         public string Adresse { get; set; }
@@ -139,7 +138,6 @@ namespace IdentitySample.Models
         public TimeSpan HourEnd { get; set; }
 
         [Required]
-        [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
         [DataType(DataType.Html)]
         [AllowHtml]
         [Display(Name = "Text")]
@@ -153,13 +151,11 @@ namespace IdentitySample.Models
     public class AccueilViewModel
     {
         [Required]
-        [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
         [DataType(DataType.Html)]
         [AllowHtml]
         [Display(Name = "Contenu de page d'accueil")]
         public string Contenu { get; set; }
 
-        [StringLength(4000, ErrorMessage = "Nouvelle trop long, max. 4000 charactéres")]  // valeur a confirmer
         [DataType(DataType.Html)]
         [AllowHtml]
         [Display(Name = "Code du facebook")]
