@@ -66,6 +66,47 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        public JsonResult getWeekProducts(int Id, string type)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+
+            var WeekProducts = (from wp in db.WeekProduct
+                                join p in db.Products
+                                on wp.ProductId equals p.ProductId
+                                join cp in db.CategoryProduct
+                                on p.ProductId equals cp.ProductId
+                                join c in db.Categories
+                                on cp.CategoryId equals c.CategoryId
+                                join s in db.Suppliers
+                                on wp.SupplierId equals s.SupplierId
+                                orderby p.ProductName
+                                where wp.WeekId == (from w in db.Weeks
+                                                    orderby w.WeekId descending
+                                                    select w.WeekId).First()
+                                select new
+                                {
+                                    CategoryId = c.CategoryId,
+                                    SupplierId = s.SupplierId,
+                                    ProductId = wp.ProductId,
+                                    ProductName = p.ProductName,
+                                    SupplierName = c.CategoryName,
+                                    UnitPrice = wp.UnitPrice,
+                                    Format = wp.Format,
+                                    Quantity = wp.Quantity
+                                });
+
+            if (type == "cat")
+            {
+                WeekProducts.Where(c => c.CategoryId == Id);
+            }
+            else if (type == "sup")
+            {
+                WeekProducts.Where(s => s.SupplierId == Id);
+            }
+
+            return Json(WeekProducts, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// Permet d'otenir les informations sur le produit spécifié
         /// pour la semaine courrante.

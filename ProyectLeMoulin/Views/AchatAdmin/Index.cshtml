@@ -23,7 +23,7 @@
         <div class="col-md-3">
             <select class="form-control items" id="CategoriesList"></select>
         </div>
-        @*<div class="btn btn-info col-md-offset-1" id="btnrechcat">Rechercher</div>*@
+        <div class="btn btn-info col-md-offset-1" id="btnrechcat">Rechercher</div>
     </div>
 </div>
 
@@ -32,33 +32,37 @@
         <div class="col-md-3">
             <select class="form-control items" id="SuppliersList"></select>
         </div>
-        @*<div class="btn btn-info col-md-offset-1" id="btnrechsupp">Rechercher</div>*@
+        <div class="btn btn-info col-md-offset-1" id="btnrechsupp">Rechercher</div>
     </div>
 </div>
 
 <div class="row">
-    <div id="WeekProductsList" class="col-md-4"></div>
+    <div id="WeekProductsList" class="col-md-6"></div>
 </div>
 
-@using (Html.BeginForm("Indexs", "AchatAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", 
-    @id="Formulaire" }))
+@using (Html.BeginForm("Indexs", "AchatAdmin", FormMethod.Post, new
 {
-    
+    @class = "form-horizontal",
+    role = "form",
+    @id = "Formulaire"
+}))
+{
+
     @Html.AntiForgeryToken()
     <hr />
-    
-   @Html.ValidationSummary("", new { @class = "text-danger" })
-    
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
     <div class="row">
         <div class="input-group">
             <table>
 
                 <tr>
                     <td>
-                        @Html.LabelFor(wp => wp.UnitPrice, new { @class = "input-group-addon", @style="width:160px" })
+                        @Html.LabelFor(wp => wp.UnitPrice, new { @class = "input-group-addon", @style = "width:160px" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(wp => wp.UnitPrice, new { @class = "form-control", @id="name" })
+                        @Html.TextBoxFor(wp => wp.UnitPrice, new { @class = "form-control", @id = "name" })
                     </td>
                 </tr>
 
@@ -83,9 +87,9 @@
             </table>
         </div>
     </div>
-    
+
     <br />
-    
+
     <div class="row">
         <button type="submit" class="btn btn-success col-md-offset-3 col-md-2" id="save">
             <i class="fa fa-save"></i><b> Enregistrer </b>
@@ -125,22 +129,22 @@
         {{#each}}
         <div class="row" id=Product{{WeekProductID}}>
             <div class="col-xs-3">
-                <h5 id="{{id}}">{{ProductName}}</h5>
+                <h5>{{ProductName}}</h5>
             </div>
             <div class="col-xs-3">
-                <h5 id="{{id}}">{{SupplierName}}</h5>
+                <h5 id="{{ProductId}}">{{SupplierName}}</h5>
             </div>
             <div class="col-xs-2">
-                <h5 id="{{id}}">{{UnitPrice}}</h5>
+                <h5 id="{{ProductId}}">{{UnitPrice}}</h5>
             </div>
             <div class="col-xs-2">
-                <h5 id="{{id}}">{{Format}}</h5>
+                <h5 id="{{ProductId}}">{{Format}}</h5>
             </div>
             <div class="col-xs-1">
-                <h5 id="{{id}}">{{Quantity}}</h5>
+                <h5 id="{{ProductId}}">{{Quantity}}</h5>
             </div>
             <div class="col-xs-1">
-                <div class="btn btn-info col-md-offset-1" id="btnModify">Modifier</div>
+                <div class="btn btn-info col-md-offset-1" id="btnModify" hidden="{{ProductId}}">Modifier</div>
             </div>
         </div>
         {{/each}}
@@ -152,6 +156,7 @@
 
             TemplateCategories = null;
             TemplateSuppliers = null;
+            TemplateWeekProducts = null;
 
             $.ajaxSetup({
                 // Disable caching of AJAX responses
@@ -160,6 +165,7 @@
 
             TemplateCategories = Handlebars.compile($("#CategoriesTemplate").html());
             TemplateSuppliers = Handlebars.compile($("#SuppliersTemplate").html());
+            TemplateWeekProducts = Handlebars.compile($("#WeekProductsTemplate").html());
 
             $("#Formulaire").hide();
 
@@ -186,19 +192,28 @@
                 $(".items").change(function () {
                     var id = $(this).children(":selected").attr("id");
 
-                    if(id != 0) {
+                    if (id != 0) {
                         getWeekProducts(id, "cat");
                     }
 
                 }); // Fin de Categories.items.change
             }); // Fin de getCategories
 
-            $(function getWeekProducts(id, type) {
+            function getWeekProducts(id, type) {
 
+                $.getJSON("getWeekProducts", { Id: id, type: type }, function (data) {
 
+                    var result = TemplateWeekProducts(data);
+                    $("#WeekProductsList").html(result);
 
-            }); // Fin de getWeekProducts
-        }); // Fin d'appel des fonctions       
+                    $("#bntModify").click(function () {
+                        var id = $(this).children(":selected").attr("hidden");
+                        console.log(id);
+                    })
+
+                }); // Fin de getWeekProducts
+            } // Fin de function getWeekProducts
+        }); // Fin d'appel des fonctions
     </script>
 
 }

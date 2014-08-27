@@ -204,12 +204,12 @@ namespace IdentitySample.Controllers
                         & w.WeekId == weekbd
                         select new
                         {
-                            Usager = u.Prenom + " " + u.Nom,
-                            OrderID = o.OrderId,
-                            Debut = w.Date_Debut,
-                            Fin = w.Date_Fin,
-                            DateRecup = w.Date_Recuperation,
-                            Date = DateTime.Today
+                            Usager      =   u.Prenom + " " + u.Nom,
+                            OrderID     =   o.OrderId,
+                            Debut       =   w.Date_Debut,
+                            Fin         =   w.Date_Fin,
+                            DateRecup   =   w.Date_Recuperation,
+                            Date        =   DateTime.Today
                         }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
@@ -224,6 +224,7 @@ namespace IdentitySample.Controllers
                           where     w.WeekId    ==  week 
                           select    w.WeekId
                           ).LastOrDefault();
+            
 
             var bill = (from    o               in      db.Orders
                         join    od              in      db.OrderDetails
@@ -243,7 +244,8 @@ namespace IdentitySample.Controllers
                             Quantite    =   od.Quantite,
                             Prix        =   od.UnitPrice,
                             SousTotal   =   od.Quantite * od.UnitPrice
-                        }).ToList();
+                            //Total       =   (od.Quantite * od.UnitPrice).sum
+            }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
     }

@@ -60,12 +60,12 @@
     @*Template des anciennes factures*@
     <script type="text/x-handlebars-template" id="OldBillTemplate">
     Factures
-    <select id="CategoryOutput" name="Categories" class="form-control">
-        <option selected="selected" id=0 value="0">Choisissez une date de facturation</option>
-        {{#each}}
+        <select id="OdlBillOutput" name="Categories" class="form-control">
+            <option selected="selected" id=0 value="0">Choisissez une date de facturation</option>
+            {{#each}}
             <option id={{OrderID}}>{{Debut}}</option>
-        {{/each}}
-    </select>
+            {{/each}}
+        </select>
 </script>
 
     @*Template d'entête de facture*@
@@ -258,6 +258,28 @@
             });
         });
 
+        $(function FactureAncienne() {
+            templateEntete = Handlebars.compile($("#EnteteTemplate").html());
+            templateDetail = Handlebars.compile($("#DetailTemplate").html());
+            templateBill = Handlebars.compile($("#OldBillTemplate").html());
+            
+            $.getJSON("/Epicerie/Afficher_Entete_Facture", null, function (data) {
+                //console.log(data.legth);
+                var result = templateBill(data);
+                $("#OdlBillOutput").html(result);
+				
+		        //Afficher la facture
+                $("#OldBillOutput").change(function () {
+                    var id = $(this).children(":selected").attr("id");
+                    if (id != 0) {
+                        
+                        $("#week123").val(data[0].WeeK);
+                        $("#BillOutput").html(result);
+                    }//Afficher_Facture
+                })//Afficher_Entete_Facture
+            });
+        });
+
         //Fonction permettant d'imprimer le DIV de la facture affichée à l'écran
         $(function PRINT() {
             $("#hrefPrint").click(function () {
@@ -279,8 +301,8 @@
     <div id="Message"></div>
 </div>
 <div class="container" id="Bill" >
-    <input id="Bill" name="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture" onclick="FactureCourrante">
-    <input id="Bill" name="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
+    <input id="NewBill" name="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture" onclick="FactureCourrante">
+    <input id="OldBill" name="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
     <div class="row"><div id="OldBillOutput" class="col-md-4"></div></div>
 </div>
 <div class="row">
