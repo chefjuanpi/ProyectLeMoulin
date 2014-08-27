@@ -7,7 +7,7 @@
     <script type="text/x-handlebars-template" id="CategoriesTemplate">
         Catégories
         <select id="CategoryOutput" name="Categories" class="form-control">
-            <option selected="selected" id=0 value="0">Categories</option>
+            <option selected="selected" id=0 value="0">Choisissez une categorie</option>
             {{#each}}
             <option id={{CategoryID}}>{{CategoryName}}</option>
             {{/each}}
@@ -44,19 +44,29 @@
         {{/each}}
     </script>
     @*Template du panier*@
-        <script type="text/x-handlebars-template" id="CartTemplate">
+    <script type="text/x-handlebars-template" id="CartTemplate">
 
-            <div id="prod{{id}}" class="row produit">
-                <input type="hidden" name="{{name}}.PID" value="{{id}}" />
-                <div id="pname{{id}}" class="col-xs-3">{{nom}}</div>
-                <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
-                <div id="pprix{{id}}" class="col-xs-1">{{prix}}</div>
-                <input class=" col-xs-1" id="CartQuantity{{id}}" type="text" value="{{qty}}" name="{{name}}.qty" readonly="readonly" />
-                <div id="psous{{id}}" class="col-xs-2">{{Soustotal}}</div>
-                <div class="col-xs-1"><input id="Cartupdate{{id}}" type="button" value="Modifier" onclick="ModifierProduit('{{id}}')" class="btn btn-warning" /></div>
-                <div class="col-xs-1"><input id="Cartdelete{{id}}" type="button" value="Enlever" onclick="SupprimerProduit('{{id}}')" class="btn btn-danger" /></div>
-            </div>
-        </script>
+        <div id="prod{{id}}" class="row produit">
+            <input type="hidden" name="{{name}}.PID" value="{{id}}" />
+            <div id="pname{{id}}" class="col-xs-3">{{nom}}</div>
+            <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
+            <div id="pprix{{id}}" class="col-xs-1">{{prix}}</div>
+            <input class=" col-xs-1" id="CartQuantity{{id}}" type="text" value="{{qty}}" name="{{name}}.qty" readonly="readonly" />
+            <div id="psous{{id}}" class="col-xs-2">{{Soustotal}}</div>
+            <div class="col-xs-1"><input id="Cartupdate{{id}}" type="button" value="Modifier" onclick="ModifierProduit('{{id}}')" class="btn btn-warning" /></div>
+            <div class="col-xs-1"><input id="Cartdelete{{id}}" type="button" value="Enlever" onclick="SupprimerProduit('{{id}}')" class="btn btn-danger" /></div>
+        </div>
+    </script>
+    @*Template des anciennes factures*@
+    <script type="text/x-handlebars-template" id="OldBillTemplate">
+    Factures
+    <select id="CategoryOutput" name="Categories" class="form-control">
+        <option selected="selected" id=0 value="0">Choisissez une date de facturation</option>
+        {{#each}}
+            <option id={{OrderID}}>{{Debut}}</option>
+        {{/each}}
+    </select>
+</script>
 
     @*Template d'entête de facture*@
     <script type="text/x-handlebars-template" id="EnteteTemplate">
@@ -232,7 +242,23 @@
             }
         }
 
-        //Fonction permettant d'imprimer la facture affichée à l'écran
+        $(function FactureCourrante() {
+            templateEntete = Handlebars.compile($("#EnteteTemplate").html());
+            templateDetail = Handlebars.compile($("#DetailTemplate").html());
+
+            $.getJSON("/Epicerie/Afficher_Entete_Facture", null, function (data) {
+                //console.log(data.legth);
+                var result = templateEntete(data);
+                $("#BillOutput").html(result);
+                $.getJSON("/Epicerie/Afficher_Facture", null, function (data) {
+                    //console.log(data.legth);
+                    var result = templateDetail(data);
+                    $("#BillOutput").html(result);
+                });
+            });
+        });
+
+        //Fonction permettant d'imprimer le DIV de la facture affichée à l'écran
         $(function PRINT() {
             $("#hrefPrint").click(function () {
                 // Print the DIV.
@@ -253,8 +279,8 @@
     <div id="Message"></div>
 </div>
 <div class="container" id="Bill" >
-    <input id="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture" onclick="FactureCourrante">
-    <input id="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
+    <input id="Bill" name="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture" onclick="FactureCourrante">
+    <input id="Bill" name="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
     <div class="row"><div id="OldBillOutput" class="col-md-4"></div></div>
 </div>
 <div class="row">

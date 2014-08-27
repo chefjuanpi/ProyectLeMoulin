@@ -23,6 +23,7 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Suspendre" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -345,6 +346,7 @@
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Orders" Relationship="EpicerieModel.FK_Orders_AspNetUsers" FromRole="AspNetUsers" ToRole="Orders" />
+          <Property Name="Suspendre" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -574,6 +576,7 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="EpicerieModel.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Suspendre" ColumnName="Suspendre" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
                 <ScalarProperty Name="Prenom" ColumnName="Prenom" />

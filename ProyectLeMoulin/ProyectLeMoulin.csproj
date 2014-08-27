@@ -250,6 +250,7 @@
     <Content Include="Scripts\customjs.js" />
     <Content Include="Scripts\gcal.js" />
     <Content Include="Scripts\habdlebars-2.0.0.js" />
+    <Content Include="Scripts\jquery-printPage.js" />
     <Content Include="Scripts\lang-all.js" />
     <Content Include="Scripts\lang\ar-ma.js" />
     <Content Include="Scripts\lang\ar-sa.js" />
