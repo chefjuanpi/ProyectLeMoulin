@@ -17,7 +17,7 @@
             <h4>Edition de fiche de membre</h4>
             <hr />
             @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Id, new { @id = "idsus" })
 
             <div class="form-group">
                 @Html.LabelFor(m => m.Prenom, new { @class = "col-md-2 control-label" })
@@ -54,8 +54,11 @@
             </div>
 
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <div class="col-md-offset-2">
                     <input type="submit" value="Enregistrer" class="btn btn-danger col-md-2" />
+                </div>
+                <div class="col-md-offset-2">
+                    <div id="btnSuspendre"  class="btn btn-warning col-md-2" >Suspendre</div>
                 </div>
             </div>
         </div>
@@ -71,4 +74,16 @@
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $(function () {
+        $("#btnSuspendre").click(function () {
+            var i = $("#idsus").val();
+
+            console.log(i);
+            $.getJSON("/UsersAdmin/Suspendre", { id: i }, function (data) {
+                $('#msg').html(data);
+            });
+        });
+    });
+        </script>
     }

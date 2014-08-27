@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="container">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="row">
                 <a href='@Url.Action("Index", "UsersAdmin")' class="btn btn-danger col-md-3">
                     <i class="fa fa-arrow-circle-left"></i> Liste
@@ -25,46 +25,43 @@
                     <hr />
                     @Html.ValidationSummary("", new { @class = "text-error" })
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Prenom, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
+                        @Html.LabelFor(m => m.Prenom, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
                             @Html.TextBoxFor(m => m.Prenom, new { @class = "form-control" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Nom, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
+                        @Html.LabelFor(m => m.Nom, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
                             @Html.TextBoxFor(m => m.Nom, new { @class = "form-control" })
                         </div>
                     </div>
-
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
+                        @Html.LabelFor(m => m.Phone, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                         </div>
                     </div>
-                    @*<div class="form-group">
-                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
-                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-                            </div>
-                        </div>*@
                     <div class="form-group">
-                        <label class="col-md-2 control-label">
-                            Select User Role
+                        <label class="col-md-3 control-label">
+                            Rôles de utilisateur
                         </label>
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             @foreach (var item in (SelectList)ViewBag.RoleId)
                             {
-                                <input type="checkbox" name="SelectedRoles" value="@item.Value" class="checkbox-inline" />
-                                @Html.Label(item.Value, new { @class = "control-label" })
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="SelectedRoles" value="@item.Value" class="checkbox" />
+                                        @item.Value.Trim()
+                                    </label>
+                                </div>
                             }
                         </div>
                     </div>
@@ -75,9 +72,16 @@
                     </div>
                 }
             </div>
+            <div class="help-block">
+                <p class="text-warning">
+                    Le mot de passe par defaut est <strong>Lemoulin@123 </strong> quand l'utilisateur entre pour premiere fois au site,
+                    se le demandera changer le code pour une personel et secret.<br />
+                    Il est toujours possible retablir ce mot de passe d'un utilisateur par l'écrean Modifier de la liste des utilisateurs.
+                </p>
+            </div>
         </div>
     </div>
 </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

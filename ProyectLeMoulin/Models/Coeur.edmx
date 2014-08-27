@@ -23,6 +23,7 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Suspendre" Type="bit" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -281,6 +282,7 @@
           <NavigationProperty Name="Nouvelles" Relationship="IdentitySample.FK_Nouvelles_AspNetUsers" FromRole="AspNetUsers" ToRole="Nouvelles" />
           <NavigationProperty Name="Evenements" Relationship="IdentitySample.FK_Evenements_AspNetUsers" FromRole="AspNetUser" ToRole="Evenement" />
           <NavigationProperty Name="Pages" Relationship="IdentitySample.FK_Pages_AspNetUsers" FromRole="AspNetUser" ToRole="Page" />
+          <Property Name="Suspendre" Type="Boolean" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -433,6 +435,7 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="IdentitySample.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Suspendre" ColumnName="Suspendre" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
                 <ScalarProperty Name="Prenom" ColumnName="Prenom" />

@@ -84,7 +84,7 @@ namespace IdentitySample.Controllers
                         }
                     }
                 }
-            if (parents.Count > 7)
+            if (parents.Count > 5)
             {
                 menu += "</ul></li>";
             }

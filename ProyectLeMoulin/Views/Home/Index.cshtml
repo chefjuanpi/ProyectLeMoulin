@@ -47,12 +47,11 @@
     @section Scripts {
          <script type="text/x-handlebars-template" id="NewsTemplate">
             {{#each}}
-            <p>
-                - <b>{{titre}}</b>
-                {{{text}}}
-                <a class="btn btn-default" href="/Nouvelles/Details?title={{titre}}">Plus...</a>
-            </p>
-            <br />
+             <div class="alert alert-warning">
+                 - <b>{{titre}}</b>
+                 {{{text}}}
+                 <a class="btn btn-default" href="/Nouvelles/Details?title={{titre}}">Plus...</a>
+             </div>
             {{/each}}
         </script>
         <script type="text/javascript">

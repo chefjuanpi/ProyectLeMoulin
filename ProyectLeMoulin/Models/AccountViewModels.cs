@@ -62,12 +62,14 @@ namespace IdentitySample.Models
     public class RegisterViewModel
     {
         [Required]
+        [RegularExpression("^[a-zA-Z ]*$")]
         [StringLength(150, ErrorMessage = "Prenom trop long, max. 150 charactéres")]
         [DataType(DataType.Text)]
         [Display(Name = "Prenom")]
         public string Prenom { get; set; }
 
         [Required]
+        [RegularExpression("^[a-zA-Z ]*$")]
         [StringLength(150, ErrorMessage = "Nom trop long, max. 150 charactéres")]
         [DataType(DataType.Text)]
         [Display(Name = "Nom")]
@@ -77,6 +79,11 @@ namespace IdentitySample.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [RegularExpression(@"^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$", 
+            ErrorMessage="Svp éntres le numéero dans le bon format: (123) 123-1234" )]
+        [Display(Name = "Téléphone")]
+        public string Phone { get; set; }
 
         //[Required]
         //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

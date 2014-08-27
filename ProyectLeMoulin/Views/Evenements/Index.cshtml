@@ -9,12 +9,11 @@
     <script type="text/x-handlebars-template" id="CMT">
         <h2>Cette mois</h2>
         {{#each}}
-        <div style="clear:both;">
+        <div style="clear:both;" class="alert alert-warning">
             <img style="float: left;" class="img-circle col-md-5" src='../tinyfilemanager.net/resources/thumbs/{{photo}}' />
             &nbsp; <p> +  <b>{{title}}</b>{{description}}</p>
             <a class="btn btn-default" href="{{url}}">Plus...</a>
         </div>
-        <br />
         {{/each}}
     </script>
     <script src="~/Scripts/moment.min.js"></script>
@@ -41,13 +40,14 @@
         });
     </script>
 }
-
-<div class="row">
-    <div class="col-md-9">
-        <div id='calendar'></div>
-    </div>
-    <div class="col-md-3" id="ceteMois">
-        <img class="image-preview" id="attent" src="~/Images/attent.gif" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9 white-bg">
+            <div id='calendar'></div>
+        </div> 
+        <div class="col-md-3 " id="ceteMois">
+            <img class="image-preview" id="attent" src="~/Images/attent.gif" />
+        </div>
     </div>
 </div>
 

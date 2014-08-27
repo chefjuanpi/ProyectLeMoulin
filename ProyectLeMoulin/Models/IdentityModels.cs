@@ -11,6 +11,7 @@ namespace IdentitySample.Models
     {
         public string Nom { get; set; }
         public string Prenom { get; set; }
+        public bool Suspendre { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

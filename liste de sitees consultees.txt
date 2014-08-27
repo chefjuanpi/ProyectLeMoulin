@@ -92,4 +92,9 @@ http://www.w3schools.com/css/css3_gradients.asp
 generateur de css bckground gradient
 http://www.colorzilla.com/gradient-editor/
 
+add valeurs dans le identity sans reinicier la bd
+http://blogs.msdn.com/b/webdev/archive/2013/10/16/customizing-profile-information-in-asp-net-identity-in-vs-2013-templates.aspx
+
+
+
 

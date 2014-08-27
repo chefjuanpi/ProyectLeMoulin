@@ -690,6 +690,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\NouvellesController.cs" />
+    <Compile Include="Migrations\201407141441556_InitialCreate.cs" />
+    <Compile Include="Migrations\201407141441556_InitialCreate.Designer.cs">
+      <DependentUpon>201407141441556_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201408262206064_extra.cs" />
+    <Compile Include="Migrations\201408262206064_extra.Designer.cs">
+      <DependentUpon>201408262206064_extra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EpicerieViewModels.cs" />
     <Compile Include="Models\PagePicture.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
@@ -827,6 +836,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="tinyfilemanager.net\bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201407141441556_InitialCreate.resx">
+      <DependentUpon>201407141441556_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201408262206064_extra.resx">
+      <DependentUpon>201408262206064_extra.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -7,9 +7,9 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        @if (User.IsInRole("Admin") )
+        @if (User.IsInRole("Administrateur") )
         {
-            <li class="alert-danger ">
+            <li class="alert-warning ">
                 <a href="/">Page Publique</a>
             </li>
             <li class="alert-info">

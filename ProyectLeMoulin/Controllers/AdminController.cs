@@ -295,14 +295,14 @@ namespace IdentitySample.Controllers
         public ActionResult Evenements_a_venir()
         {
             ViewBag.Message = "creer une nouvelle page";
-
+            ViewBag.ispostBack = false;
             return View();
         }
 
         public ActionResult Evenements_Passes()
         {
             ViewBag.Message = "creer une nouvelle page";
-
+            ViewBag.ispostBack = false;
             return View();
         }
 
@@ -468,6 +468,7 @@ namespace IdentitySample.Controllers
                 db.Evenements.Remove(delevenement);
                 await db.SaveChangesAsync();
             }
+            ViewBag.ispostBack = false;
             return Redirect("/Admin/Evenements");
         }
 
@@ -513,8 +514,9 @@ namespace IdentitySample.Controllers
                     n.NouvelleText = notice.NouvelleText;
                     n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
                     n.Publier = notice.Publier;
-                    await db.SaveChangesAsync();
                     db.Nouvelles.Add(n);
+                    await db.SaveChangesAsync();
+
                 }
             }
             else
@@ -605,6 +607,7 @@ namespace IdentitySample.Controllers
                 db.Nouvelles.Remove(delnotice);
                 await db.SaveChangesAsync();
             }
+            ViewBag.ispostBack = false;
             return Redirect("/Admin/Notice");
         }
 

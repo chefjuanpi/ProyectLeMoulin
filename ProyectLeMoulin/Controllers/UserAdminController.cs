@@ -90,7 +90,8 @@ namespace IdentitySample.Controllers
                     UserName = userViewModel.Email, 
                     Email = userViewModel.Email,
                     Prenom = userViewModel.Prenom,
-                    Nom = userViewModel.Nom
+                    Nom = userViewModel.Nom,
+                    PhoneNumber = userViewModel.Phone
                 };
                 var adminresult = await UserManager.CreateAsync(user, "Lemoulin@123");
 
@@ -231,6 +232,21 @@ namespace IdentitySample.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public JsonResult Suspendre(string id)
+        {
+            CoeurContainer db = new CoeurContainer();
+
+            AspNetUser s = (from r in db.AspNetUsers where r.Id == id select r).SingleOrDefault();
+
+            s.Suspendre = true;
+
+            db.SaveChanges();
+
+            string result = "ici le result";
+
+            return Json(result);
         }
     }
 }
