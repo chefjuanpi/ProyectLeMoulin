@@ -28,14 +28,14 @@ namespace IdentitySample.Models
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Le {0} doit contenir {2} charactères.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Nouveau mot de passe")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Confirmez un nouveau mot de passe")]
+        [Compare("Nouveau mot de passe", ErrorMessage = "Le nouveau mot de passe et la confirmation du mot de passe sont différents.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -43,18 +43,18 @@ namespace IdentitySample.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Mot de passe actuel")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Le {0} doit contenir {2} charactères.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Nouveau mot de passe")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Confirmez nouveau mot de passe")]
+        [Compare("Nouveau mot de passe", ErrorMessage = "Le nouveau mot de passe et la confirmation du mot de passe sont différents.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -63,7 +63,7 @@ namespace IdentitySample.Models
     {
         [Required]
         [Phone]
-        [Display(Name = "Phone Number")]
+        [Display(Name = "Numero de téléphone")]
         public string Number { get; set; }
     }
 
@@ -75,7 +75,7 @@ namespace IdentitySample.Models
 
         [Required]
         [Phone]
-        [Display(Name = "Phone Number")]
+        [Display(Name = "Numero de téléphone")]
         public string PhoneNumber { get; set; }
     }
 

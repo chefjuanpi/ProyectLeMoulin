@@ -3,6 +3,7 @@
 
 
 @section Scripts {
+    @*Template des Catégories*@
     <script type="text/x-handlebars-template" id="CategoriesTemplate">
         Catégories
         <select id="CategoryOutput" name="Categories" class="form-control">
@@ -13,6 +14,7 @@
         </select>
     </script>
 
+        @*Template des produits*@
     <script type="text/x-handlebars-template" id="ProductsTemplate">
         <div class="row">
             <h4 class="col-xs-4">Produits</h4>
@@ -41,23 +43,64 @@
         </div>
         {{/each}}
     </script>
+    @*Template du panier*@
+        <script type="text/x-handlebars-template" id="CartTemplate">
 
-    <script type="text/x-handlebars-template" id="CartTemplate">
+            <div id="prod{{id}}" class="row produit">
+                <input type="hidden" name="{{name}}.PID" value="{{id}}" />
+                <div id="pname{{id}}" class="col-xs-3">{{nom}}</div>
+                <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
+                <div id="pprix{{id}}" class="col-xs-1">{{prix}}</div>
+                <input class=" col-xs-1" id="CartQuantity{{id}}" type="text" value="{{qty}}" name="{{name}}.qty" readonly="readonly" />
+                <div id="psous{{id}}" class="col-xs-2">{{Soustotal}}</div>
+                <div class="col-xs-1"><input id="Cartupdate{{id}}" type="button" value="Modifier" onclick="ModifierProduit('{{id}}')" class="btn btn-warning" /></div>
+                <div class="col-xs-1"><input id="Cartdelete{{id}}" type="button" value="Enlever" onclick="SupprimerProduit('{{id}}')" class="btn btn-danger" /></div>
+            </div>
+        </script>
 
-        <div id="prod{{id}}" class="row produit">
-            <input type="hidden" name="{{name}}.PID" value="{{id}}" />
-            <div id="pname{{id}}" class="col-xs-3">{{nom}}</div>
-            <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
-            <div id="pprix{{id}}" class="col-xs-1">{{prix}}</div>
-            <input class=" col-xs-1" id="CartQuantity{{id}}" type="text" value="{{qty}}" name="{{name}}.qty" readonly="readonly" />
-            <div id="psous{{id}}" class="col-xs-2">{{Soustotal}}</div>
-            <div class="col-xs-1"><input id="Cartupdate{{id}}" type="button" value="Modifier" onclick="ModifierProduit('{{id}}')" class="btn btn-warning" /></div>
-            <div class="col-xs-1"><input id="Cartdelete{{id}}" type="button" value="Enlever" onclick="SupprimerProduit('{{id}}')" class="btn btn-danger" /></div>
+    @*Template d'entête de facture*@
+    <script type="text/x-handlebars-template" id="EnteteTemplate">
+        <div class="row">
+            <h4 class="col-xs-1">Date de la commande</h4>
+            <h4 class="col-xs-4">No. Facture</h4>
+            <h4 class="col-xs-3">Membre</h4>
+            <h4 class="col-xs-2">Semaine d'activité</h4>
+            <h4 class="col-xs-2">Date de récupération</h4>
         </div>
+        {{#each}}
+        <div class="row" id=Product{{OrderID}}>
+            <div class="col-xs-1">
+                <h5 id="Price{{OrderID}}">{{Date}}</h5>
+            </div>
+            <div class="col-xs-4">
+                <h5 id="Name{{OrderID}}">{{OrderID}}</h5>
+            </div>
+            <div class="col-xs-3">
+                <h5 id="Format{{OrderID}}">{{Usager}}</h5>
+            </div>
+            <div class="col-xs-2">
+                <h5 id="Price{{OrderID}}">{{Debut}} à {{Fin}}</h5>
+            </div>
+            <div class="col-xs-2">
+                <h5 id="Price{{OrderID}}">{{DateRecup}}</h5>
+            </div>
+        </div>
+        {{/each}}
     </script>
 
 
+    @*Template du détail de la facture*@
+    <script type="text/x-handlebars-template" id="DetailTemplate">
 
+        <div id="prod{{id}}" class="row produit">
+            <input type="hidden" name="{{name}}.PID" value="{{id}}" />
+            <div id="fname{{id}}" class="col-xs-3">{{Nom}}</div>
+            <div id="fformat{{id}}" class="col-xs-2">{{Format}} </div>
+            <div id="fprix{{id}}" class="col-xs-1">{{Prix}}</div>
+            <div id="fqty{{id}}" class="col-xs-1">{{Quantite}}</div>
+            <div id="fsous{{id}}" class="col-xs-2">{{SousTotal}}</div>
+        </div>
+    </script>
     <script type="text/javascript">
 
         templateCategories = null;
@@ -190,31 +233,43 @@
         }
 
         //Fonction permettant d'imprimer la facture affichée à l'écran
-        $(function () {
+        $(function PRINT() {
             $("#hrefPrint").click(function () {
                 // Print the DIV.
-                $("#printdiv").print();
+                $("#Facture").print();
                 return (false);
             });
+        });
+
+        $(function () {
+            templateEntete = Handlebars.compile($("#EnteteTemplate").html());
+            templateDetail = Handlebars.compile($("#DetailTemplate").html());
         });
     </script>
 
 }
-<div>@ViewBag.Steeve</div>
+
 <div class="row">
     <div id="Message"></div>
 </div>
+<div class="container" id="Bill" >
+    <input id="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture" onclick="FactureCourrante">
+    <input id="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
+    <div class="row"><div id="OldBillOutput" class="col-md-4"></div></div>
+</div>
 <div class="row">
-    <div id="CategoriesOutput" class="col-md-4">Cat/gories</div>
+    <div id="CategoriesOutput" class="col-md-4"></div>
 
     <div id="ProductsOutput" class="col-md-6"></div>
 </div>
+<div>@ViewBag.Steeve</div>
 <hr />
+
 <div class="container" id="Panier" hidden="hidden">
     <div class="row">
         @using (Html.BeginForm("Index", "Epicerie", FormMethod.Post, new { @class = "form-horizontal", role = "form", @id = "Formulaire" }))
         {
-            <!-- objet cachet qui garde le valeur de la semaine courrante metre le valeur avec le id-->
+        <!-- objet cachet qui garde le valeur de la semaine courrante metre le valeur avec le id-->
             @Html.HiddenFor(m => m.week, new { @Value = "test", @id = "week123" })
             <div id="CartOutput" class="col-md-12">
                 <div class="row">
@@ -227,7 +282,6 @@
                     <h4 class="col-xs-1">Enlever</h4>
                 </div>
             </div>
-
             <div class="col-md-12">
                 <div class="col-xs-7"></div>
                 <div class="col-xs-2">
@@ -235,22 +289,37 @@
                     <div class="col-xs-3" id="totalOutput">
                         <h3><b>0</b></h3>
                     </div>
-
                 </div><div class="col-xs-9"></div>
+                <!--Boutton pour envoyer le panier au serveur-->
                 <input type="submit" class="col-xs-2 btn btn-primary" value="Envoyer" />
             </div>
-
-            <!--Boutton pour envoyer le panier au serveur-->
-
-
-            //</div>
         }
     </div>
+</div>
 
-    <div class="container" id="Facture" hidden="hidden">
-
+<div class="container" id="Facture" hidden="hidden">
+    <div id="BillOutput" class="col-md-12">
+        <div class="row">
+            <h4 class="col-xs-3">Produits</h4>
+            <h4 class="col-xs-2">Format</h4>
+            <h4 class="col-xs-1">Prix $</h4>
+            <h4 class="col-xs-1">Qty</h4>
+            <h4 class="col-xs-2">Sous-Total</h4>
+        </div>
     </div>
-    <div style="height:600px; float:left;"></div>
+    <div class="col-md-12">
+        <div class="col-xs-7"></div>
+        <div class="col-xs-2">
+            <h3><b>total $</b></h3>
+            <div class="col-xs-3" id="FtotalOutput">
+                <h3><b>0</b></h3>
+            </div>
+        </div>
+    </div>
+    @*Bouton qui permet d'imprimer le DIV de la facture*@
+    <input id="hrefPrint" type="submit" class="col-xs-2 btn btn-primary" value="Imprimer" onclick="PRINT" />
+</div>
+<div style="height:600px; float:left;"></div>
 
 
 
