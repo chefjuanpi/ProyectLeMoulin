@@ -1,25 +1,15 @@
-﻿@model IdentitySample.Models.IndexViewModel
-@{
-    ViewBag.Title = "Modifier votre Compte";
+﻿@{
+    ViewBag.Title = "Gerer votre Compte";
 }
 
 <h2>@ViewBag.Title.</h2>
+<h4>Salut @ViewBag.nom</h4>
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-10">
         <p>
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Modifier votre mot de passe", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("creer un mot de passe local", "SetPassword")
-            }
-        </p>
-        <p>
-            Phone Number: @(Model.PhoneNumber ?? "None") [
-            @if (Model.PhoneNumber != null)
+            Numéro de téléphone @(ViewBag.PhoneNumber ?? "None") [
+            @if (ViewBag.PhoneNumber != null)
             {
                 @Html.ActionLink("Modifier", "AddPhoneNumber")
                 @: &nbsp;|&nbsp;
@@ -31,6 +21,13 @@
             }
             ]
         </p>
+        <br/>
+        <hr />
+
+        @Html.Partial("ChangePassword")
+
+
+
 
     </div>
 </div>

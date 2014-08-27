@@ -8,10 +8,13 @@ namespace IdentitySample.Models
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }
-        public IList<UserLoginInfo> Logins { get; set; }
+
         public string PhoneNumber { get; set; }
-        public bool TwoFactor { get; set; }
-        public bool BrowserRemembered { get; set; }
+
+        public string Nom { get; set; }
+        //public bool TwoFactor { get; set; }
+        //public bool BrowserRemembered { get; set; }
+        //public IList<UserLoginInfo> Logins { get; set; }
     }
 
     public class ManageLoginsViewModel
@@ -35,7 +38,7 @@ namespace IdentitySample.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmez un nouveau mot de passe")]
-        [Compare("Nouveau mot de passe", ErrorMessage = "Le nouveau mot de passe et la confirmation du mot de passe sont différents.")]
+        [Compare("NewPassword", ErrorMessage = "Le nouveau mot de passe et la confirmation du mot de passe sont différents.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -54,7 +57,7 @@ namespace IdentitySample.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmez nouveau mot de passe")]
-        [Compare("Nouveau mot de passe", ErrorMessage = "Le nouveau mot de passe et la confirmation du mot de passe sont différents.")]
+        [Compare("NewPassword", ErrorMessage = "Le nouveau mot de passe et la confirmation du mot de passe sont différents.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -75,7 +78,7 @@ namespace IdentitySample.Models
 
         [Required]
         [Phone]
-        [Display(Name = "Numero de téléphone")]
+        [Display(Name = "Numéro de téléphone")]
         public string PhoneNumber { get; set; }
     }
 

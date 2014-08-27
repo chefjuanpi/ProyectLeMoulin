@@ -29,13 +29,14 @@
             <td>@Html.TextAreaFor(m => m.Body)</td>
         </tr>
         <tr>
-            <td></td>
+            <td>
+                @Html.TextBoxFor(m => m.from)
+            </td>
             <td><input type="submit" value="Send" class="btn btn-default" /></td>
         </tr>
     </table>
         <br/>
-        @*<p>From: @Html.TextBoxFor(m => m.from)</p>*@
-        
+      
     }
 </fieldset>
 

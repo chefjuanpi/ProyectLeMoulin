@@ -1,4 +1,5 @@
 ﻿
+using System.Net.Mail;
 namespace IdentitySample.Models
 {
     public class MailModel

@@ -46,16 +46,17 @@ namespace IdentitySample.Controllers
                 : message == ManageMessageId.AddPhoneSuccess ? "Numéro de téléphone ajouté."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Numéro de téléphone suprimé."
                 : "";
+            CoeurContainer db = new CoeurContainer();
+            string id = User.Identity.GetUserId();
+            var user = (from u in db.AspNetUsers where u.Id == id select u).SingleOrDefault();
 
-            var model = new IndexViewModel
+            if(user != null)
             {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId()),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId()),
-                Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId()),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId())
-            };
-            return View(model);
+                ViewBag.nom = user.Prenom + " " + user.Nom;
+                ViewBag.PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId());
+            }
+
+            return View();
         }
 
         //
