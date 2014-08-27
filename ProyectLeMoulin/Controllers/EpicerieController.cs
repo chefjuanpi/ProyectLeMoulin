@@ -57,9 +57,8 @@ namespace IdentitySample.Controllers
         {
             EpicerieEntities db = new EpicerieEntities();
                         
-            // besoin inscrire descendin dans order by pour le vrai mode    
             int weekID = (from    w in db.Weeks
-                              orderby w.WeekId
+                              orderby w.WeekId descending
                               select  w.WeekId
                               ).FirstOrDefault();
 
@@ -70,8 +69,8 @@ namespace IdentitySample.Controllers
                                  on     wp.ProductId    equals  p.ProductId
                                  join   cp              in      db.CategoryProduct
                                  on     p.ProductId     equals  cp.ProductId
-                                 where  cp.CategoryId   == cat
-                                 &&     w.WeekId        == weekID
+                                 where  cp.CategoryId   ==  cat
+                                 &&     w.WeekId        ==  weekID
                                  select new
                                  {
                                      WeeK           =   weekID,
@@ -94,7 +93,7 @@ namespace IdentitySample.Controllers
         {
             EpicerieEntities db = new EpicerieEntities();
 
-            //int weekbd = (from w in db.Weeks select w.WeekId).LastOrDefault();
+            int week = (from w in db.Weeks select w.WeekId).LastOrDefault();
 
             //if (cart.week == weekbd)
             //{ 
@@ -104,9 +103,9 @@ namespace IdentitySample.Controllers
             //Créer un Order et enregistrer l'Order dans la BD
             Orders NewOrders = new Orders();
 
-            NewOrders.UserId = guid;
-            NewOrders.WeekId = cart.week;
-            NewOrders.Commande_Payee = false;
+            NewOrders.UserId            =   guid;
+            NewOrders.WeekId            =   week;
+            NewOrders.Commande_Payee    =   false;
             db.Orders.Add(NewOrders);
 
             await db.SaveChangesAsync();
@@ -124,11 +123,11 @@ namespace IdentitySample.Controllers
                 var price = db.WeekProduct.SingleOrDefault(p => p.ProductId == item.PID).UnitPrice;
 
                 OrderDetails NewOdersDetails = new OrderDetails();
-                NewOdersDetails.ProductId = item.PID;
-                NewOdersDetails.OrderId = comID;
-                NewOdersDetails.Quantite = item.qty;
-                NewOdersDetails.UnitPrice = price;
-                NewOdersDetails.WeekId = cart.week;
+                NewOdersDetails.ProductId   =   item.PID;
+                NewOdersDetails.OrderId     =   comID;
+                NewOdersDetails.Quantite    =   item.qty;
+                NewOdersDetails.UnitPrice   =   price;
+                NewOdersDetails.WeekId      =   week;
                 db.OrderDetails.Add(NewOdersDetails);
             }
             await db.SaveChangesAsync();
@@ -143,11 +142,69 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        //Afficher le message de l'administrateur du groupe D'achats
-        //public JsonResult Afficher_Message()
-        //{
-                
-        //}
+        public JsonResult Afficher_Entete_Facture(int week)
+        {
+            EpicerieEntities db = new EpicerieEntities();
 
+            string utilisateur = User.Identity.Name;
+            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            int weekbd = (from w in db.Weeks where w.WeekId == week select w.WeekId).LastOrDefault();
+
+            var bill = (from    u               in      db.AspNetUsers
+                        join    o               in      db.Orders
+                        on      u.Id            equals  o.UserId
+                        join    od              in      db.OrderDetails
+                        on      o.OrderId       equals  od.OrderId
+                        join    wp              in      db.WeekProduct
+                        on      od.WeekId       equals  wp.WeekId
+                        join    w               in      db.Weeks
+                        on      wp.WeekId       equals  w.WeekId
+                        where   u.Id            ==      guid 
+                        &       w.WeekId        ==      weekbd
+                        select new{
+                            Prenom          =   u.Prenom,
+                            Nom             =   u.Nom,
+                            OrderID         =   o.OrderId,
+                            DebutSemaine    =   w.Date_Debut,
+                            FinSemaine      =   w.Date_Fin,
+                            DateRecup       =   w.Date_Recuperation,
+                            Date            =   DateTime.Today
+                            //NomAdmin = 
+                            }).ToList();
+            return Json(bill, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Afficher_Facture(int week)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+
+            string utilisateur = User.Identity.Name;
+            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+            int weekbd = (from      w           in  db.Weeks 
+                          where     w.WeekId    ==  week 
+                          select    w.WeekId
+                          ).LastOrDefault();
+
+            var bill = (from    u               in      db.AspNetUsers
+                        join    o               in      db.Orders
+                        on      u.Id            equals  o.UserId
+                        join    od              in      db.OrderDetails
+                        on      o.OrderId       equals  od.OrderId
+                        join    wp              in      db.WeekProduct
+                        on      od.WeekId       equals  wp.WeekId
+                        join    w               in      db.Weeks
+                        on      wp.WeekId       equals  w.WeekId
+                        join    p               in      db.Products
+                        on      wp.ProductId    equals  p.ProductId
+                        join    cp              in      db.CategoryProduct
+                        on      p.ProductId     equals  cp.ProductId
+                        join    c               in      db.Categories
+                        on      cp.CategoryId   equals  c.CategoryId
+                        where   u.Id            ==      guid 
+                        &       w.WeekId        ==      weekbd
+                        select new{
+                        }).ToList();
+            return Json(bill, JsonRequestBehavior.AllowGet);
+        }
     }
 }

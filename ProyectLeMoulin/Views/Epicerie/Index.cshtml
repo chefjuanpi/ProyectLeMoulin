@@ -1,240 +1,258 @@
-﻿<!--Modelle dans epicerie view model manque editer a ton besoin-->
-
-@model IdentitySample.Models.test1234
+﻿@model IdentitySample.Models.test1234
 
 
 
 @section Scripts {
-<script type="text/x-handlebars-template" id="CategoriesTemplate" >
-        Catégories<select id="CategoryOutput" name="Categories" class="form-control">
+    <script type="text/x-handlebars-template" id="CategoriesTemplate">
+        Catégories
+        <select id="CategoryOutput" name="Categories" class="form-control">
             <option selected="selected" id=0 value="0">Categories</option>
             {{#each}}
-                <option id={{CategoryID}}>{{CategoryName}}</option>
+            <option id={{CategoryID}}>{{CategoryName}}</option>
             {{/each}}
         </select>
-</script>
+    </script>
 
-<script type="text/x-handlebars-template" id="ProductsTemplate" >
-    <div class="row">
-        <h4 class="col-xs-4">Produits</h4>
-        <h4 class="col-xs-3">Format</h4>
-        <h4 class="col-xs-2">Prix $</h4>
-        <h4 class="col-xs-2">Qty</h4>
-        <h4 class="col-xs-1">Ajouter</h4>
-    </div>    
-    {{#each}}   
-    <div class="row" id=Product{{ProductID}}>
-        <div class="col-xs-4">
-            <h5 id="Name{{ProductID}}" >{{ProductName}}</h5>
+    <script type="text/x-handlebars-template" id="ProductsTemplate">
+        <div class="row">
+            <h4 class="col-xs-4">Produits</h4>
+            <h4 class="col-xs-3">Format</h4>
+            <h4 class="col-xs-2">Prix $</h4>
+            <h4 class="col-xs-2">Qty</h4>
+            <h4 class="col-xs-1">Ajouter</h4>
         </div>
-        <div class="col-xs-3">
-            <h5 id="Format{{ProductID}}">{{Format}}</h5>
-        </div>
-        <div class="col-xs-2">
-            <h5 id="Price{{ProductID}}" >{{Price}}</h5>
-        </div>
-        <div class="col-xs-2">
-            <input class=" col-xs-12" id="Quantity{{ProductID}}" type="text" value="0" />
-        </div>
-        <div class="col-xs-1">
-            <input id="AddProduct{{ProductID}}" type="submit" value="OK" class="btn btn-success" onclick="AjouterPanier('{{ProductID}}')" />
-        </div> 
-        </div>  
-    {{/each}}      
-</script>
-
-<script type="text/x-handlebars-template" id="CartTemplate">
-     
-    <div id="prod{{id}}"        class="row produit">
-        <input type="hidden" name="{{name}}.PID" value="{{id}}" />
-        <div id="pname{{id}}"   class="col-xs-3">{{nom}}</div>
-        <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
-        <div id="pprix{{id}}"   class="col-xs-1">{{prix}}</div>
-        <input class=" col-xs-1" id="CartQuantity{{id}}" type="text" value="{{qty}}" name="{{name}}.qty" readonly="readonly" />
-        <div id="psous{{id}}" class="col-xs-2">{{Soustotal}}</div>
-        <div class="col-xs-1"><input id="Cartupdate{{id}}"  type="button" value="Modifier"  onclick="ModifierProduit('{{id}}')"     class="btn btn-warning" /></div>
-        <div class="col-xs-1"><input id="Cartdelete{{id}}"  type="button" value="Enlever"   onclick="SupprimerProduit('{{id}}')"    class="btn btn-danger" /></div>
-    </div>
-</script>
-
-
-
-<script type="text/javascript">
-
-    templateCategories  = null;
-    templateProducts    = null;
-    templateCart = null;
-    var prix = 0;
-    var action = "";
-    var total = 0;
-    var ancienprix = 0;
-    //variable tres important determine l'indice dans la liste objets
-    var i = 0;
-    
-    $(function () {
-        templateCategories  = Handlebars.compile($("#CategoriesTemplate").html());
-        templateProducts    = Handlebars.compile($("#ProductsTemplate").html());
-        templateCart        = Handlebars.compile($("#CartTemplate").html());
-
-        $.getJSON("/Epicerie/GetCategories", null, function (data) {//console.log(data.legth);
-            var result = templateCategories(data);
-            $("#CategoriesOutput").html(result);
-            
-            //Afficher les catégories
-            $("#CategoryOutput").change(function () {//doit d'abord changer de cat pour pouvoir afficher la 1 ère cat
-                var id = $(this).children(":selected").attr("id");
-                if (id != 0) {
-                    $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
-                        var result = templateProducts(data);
-                        $("#week123").val(data[0].WeeK);
-                        $("#ProductsOutput").html(result);
-                    });//GetProducts
-                }
-            })//GetCategories                               
-        });
-    });
-
-    function AjouterPanier(id) {
-        action = "AJOUT";
-        if ($("#Quantity" + id).val() > 0) {
-            var p = $("#Price" + id).html();
-            var q = $("#Quantity" + id).val();
-            var sous = p * q;
-            var produit = {
-                id: id,
-                nom: $("#Name" + id).html(),
-                format: $("#Format" + id).html(),
-                prix: p,
-                qty: q,
-                Soustotal: sous,
-                //le name va a creer la relation avec le objet dans le model comme obj[0], obj[1], etc...
-                name: "obj[" + i + "]"
-            };
-
-            //apres creer le objet produit se besoin monter l'indice, manque incluir dans les fonction modif et effacer
-            i += 1;
-            var result = templateCart(produit);
-            
-            $("#CartOutput").append(result);
-            Caltotal(id, p, q);
-            
-            $("#AddProduct" + id).attr("disabled", "disabled");
-            $("#AddProduct" + id).attr("class", "btn btn-default");
-            $("#AddProduct" + id).val("Ajouté");
-            $("#Quantity" + id).attr("disabled", "disabled");
-            $("#Panier").attr("hidden", false);
-        }
-        else
-        {
-            alert("SVP veuillez indiquer une quantité");
-        }
-    }
-
-    function Caltotal(id, p, q) {
-        if (action == "AJOUT") {
-            prix = p * q;
-            total += prix;
-            $("#totalOutput").html(total);
-        }
-        if (action == "ENLEVER") {
-            var montant = 0;
-            montant = $('#psous' + id).html();
-            total -= parseFloat(montant);
-            $("#totalOutput").html(total);
-        }
-        if (action == "MODIF") {
-            var ancien = 0;
-            var nprix = 0;
-            var qt = 0;
-            
-            ancien = $('#psous' + id).html();
-            ancienprix = parseFloat(ancien);
-            qt = $('#CartQuantity' + id).val();
-            nprix = $("#pprix" + id).html();
-            nprix = parseFloat(nprix);
-            prix = qt * nprix;
-            $('#psous' + id).html(prix);
-            total += prix;
-            total -= ancienprix;
-            $("#totalOutput").html(total);
-        }
-    };
-
-    function SupprimerProduit(id) {
-        action = "ENLEVER";
-        Caltotal(id);
-        $("#prod" + id).remove();
-        $("#AddProduct" + id).attr("disabled", false);
-        $("#AddProduct" + id).attr("class", "btn btn-success");
-        $("#AddProduct" + id).val("OK");
-        $("#Quantity" + id).attr("disabled", false);
-        $("#Quantity" + id).val(0);
-        if (total < 1) {
-            $("#Panier").attr("hidden", true);
-        }
-    }
-
-    function ModifierProduit(id) {
-        if ($("#Cartupdate" + id).val() == "Modifier") {
-            $("#Cartupdate" + id).val("OK");
-            $("#Cartupdate" + id).attr("class", "btn btn-success");
-            $("#CartQuantity" + id).attr("readonly", false);
-            
-        } else {
-            if ($("#Cartupdate" + id).val() == "OK") {
-                $("#Cartupdate" + id).val("Modifier");
-                $("#Cartupdate" + id).attr("class", "btn btn-warning");
-                $("#CartQuantity" + id).attr("readonly", true);
-                action = "MODIF";
-                Caltotal(id);
-            }
-        }
-    }
-</script>
-
-}
-<div >@ViewBag.Steeve</div>
-    <div class="row">
-        <div id="Message"></div>
-    </div>
-    <div class="row">
-        <div id="CategoriesOutput" class="col-md-4">Cat/gories</div>
- 
-        <div id="ProductsOutput" class="col-md-6"></div>
-    </div>
-    <hr />
-<div class="container" id="Panier" hidden="hidden">
-    <div class="row">
-        @using (Html.BeginForm("Index", "Epicerie", FormMethod.Post, new { @class = "form-horizontal", role = "form", @id="Formulaire" }))
-{
-            <!-- objet cachet qui garde le valeur de la semaine courrante metre le valeur avec le id-->
-            @Html.HiddenFor(m => m.week, new { @Value = "test", @id="week123" })
-        <div id="CartOutput" class="col-md-12">
-            <div class="row">
-                <h4 class="col-xs-3">Produits</h4>
-                <h4 class="col-xs-2">Format</h4>
-                <h4 class="col-xs-1">Prix $</h4>
-                <h4 class="col-xs-1">Qty</h4>
-                <h4 class="col-xs-2">Sous-Total</h4>
-                <h4 class="col-xs-1">Modifier</h4>
-                <h4 class="col-xs-1">Enlever</h4>
+        {{#each}}
+        <div class="row" id=Product{{ProductID}}>
+            <div class="col-xs-4">
+                <h5 id="Name{{ProductID}}">{{ProductName}}</h5>
+            </div>
+            <div class="col-xs-3">
+                <h5 id="Format{{ProductID}}">{{Format}}</h5>
+            </div>
+            <div class="col-xs-2">
+                <h5 id="Price{{ProductID}}">{{Price}}</h5>
+            </div>
+            <div class="col-xs-2">
+                <input class=" col-xs-12" id="Quantity{{ProductID}}" type="text" value="0" />
+            </div>
+            <div class="col-xs-1">
+                <input id="AddProduct{{ProductID}}" type="submit" value="OK" class="btn btn-success" onclick="AjouterPanier('{{ProductID}}')" />
             </div>
         </div>
+        {{/each}}
+    </script>
+
+    <script type="text/x-handlebars-template" id="CartTemplate">
+
+        <div id="prod{{id}}" class="row produit">
+            <input type="hidden" name="{{name}}.PID" value="{{id}}" />
+            <div id="pname{{id}}" class="col-xs-3">{{nom}}</div>
+            <div id="pformat{{id}}" class="col-xs-2">{{format}} </div>
+            <div id="pprix{{id}}" class="col-xs-1">{{prix}}</div>
+            <input class=" col-xs-1" id="CartQuantity{{id}}" type="text" value="{{qty}}" name="{{name}}.qty" readonly="readonly" />
+            <div id="psous{{id}}" class="col-xs-2">{{Soustotal}}</div>
+            <div class="col-xs-1"><input id="Cartupdate{{id}}" type="button" value="Modifier" onclick="ModifierProduit('{{id}}')" class="btn btn-warning" /></div>
+            <div class="col-xs-1"><input id="Cartdelete{{id}}" type="button" value="Enlever" onclick="SupprimerProduit('{{id}}')" class="btn btn-danger" /></div>
+        </div>
+    </script>
 
 
-    <div class="row"><div class="col-md-offset-9"><h4><b>total $</b></h4><div id="totalOutput">0</div></div></div>
-    <div id="go" class="col-xs-9"><input id="Envoyer"  /></div>
-            
-            <!--Boutton pour envoyer le panier au serveur-->
-    <input type="submit" class="btn btn-primary" value="Envoyer" />
+
+    <script type="text/javascript">
+
+        templateCategories = null;
+        templateProducts = null;
+        templateCart = null;
+        var prix = 0;
+        var action = "";
+        var total = 0;
+        var ancienprix = 0;
+        //variable tres important determine l'indice dans la liste objets
+        var i = 0;
+
+        $(function () {
+            templateCategories = Handlebars.compile($("#CategoriesTemplate").html());
+            templateProducts = Handlebars.compile($("#ProductsTemplate").html());
+            templateCart = Handlebars.compile($("#CartTemplate").html());
+
+            $.getJSON("/Epicerie/GetCategories", null, function (data) {//console.log(data.legth);
+                var result = templateCategories(data);
+                $("#CategoriesOutput").html(result);
+
+                //Afficher les catégories
+                $("#CategoryOutput").change(function () {//doit d'abord changer de cat pour pouvoir afficher la 1 ère cat
+                    var id = $(this).children(":selected").attr("id");
+                    if (id != 0) {
+                        $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
+                            var result = templateProducts(data);
+                            $("#week123").val(data[0].WeeK);
+                            $("#ProductsOutput").html(result);
+                        });//GetProducts
+                    }
+                })//GetCategories
+            });
+        });
+
+        function AjouterPanier(id) {
+            action = "AJOUT";
+            if ($("#Quantity" + id).val() > 0) {
+                var p = $("#Price" + id).html();
+                var q = $("#Quantity" + id).val();
+                var sous = p * q;
+                var produit = {
+                    id: id,
+                    nom: $("#Name" + id).html(),
+                    format: $("#Format" + id).html(),
+                    prix: p,
+                    qty: q,
+                    Soustotal: sous,
+                    //le name va a creer la relation avec le objet dans le model comme obj[0], obj[1], etc...
+                    name: "obj[" + i + "]"
+                };
+
+                //apres creer le objet produit se besoin monter l'indice, manque incluir dans les fonction modif et effacer
+                i += 1;
+                var result = templateCart(produit);
+
+                $("#CartOutput").append(result);
+                Caltotal(id, p, q);
+
+                $("#AddProduct" + id).attr("disabled", "disabled");
+                $("#AddProduct" + id).attr("class", "btn btn-default");
+                $("#AddProduct" + id).val("Ajouté");
+                $("#Quantity" + id).attr("disabled", "disabled");
+                $("#Panier").attr("hidden", false);
+            }
+            else {
+                alert("SVP veuillez indiquer une quantité");
+            }
+        }
+
+        function Caltotal(id, p, q) {
+            if (action == "AJOUT") {
+                prix = p * q;
+                total += prix;
+                $("#totalOutput").html(total);
+            }
+            if (action == "ENLEVER") {
+                var montant = 0;
+                montant = $('#psous' + id).html();
+                total -= parseFloat(montant);
+                $("#totalOutput").html(total);
+            }
+            if (action == "MODIF") {
+                var ancien = 0;
+                var nprix = 0;
+                var qt = 0;
+
+                ancien = $('#psous' + id).html();
+                ancienprix = parseFloat(ancien);
+                qt = $('#CartQuantity' + id).val();
+                nprix = $("#pprix" + id).html();
+                nprix = parseFloat(nprix);
+                prix = qt * nprix;
+                $('#psous' + id).html(prix);
+                total += prix;
+                total -= ancienprix;
+                $("#totalOutput").html(total);
+            }
+        };
+
+        function SupprimerProduit(id) {
+            action = "ENLEVER";
+            Caltotal(id);
+            $("#prod" + id).remove();
+            $("#AddProduct" + id).attr("disabled", false);
+            $("#AddProduct" + id).attr("class", "btn btn-success");
+            $("#AddProduct" + id).val("OK");
+            $("#Quantity" + id).attr("disabled", false);
+            $("#Quantity" + id).val(0);
+            if (total < 1) {
+                $("#Panier").attr("hidden", true);
+            }
+        }
+
+        function ModifierProduit(id) {
+            if ($("#Cartupdate" + id).val() == "Modifier") {
+                $("#Cartupdate" + id).val("OK");
+                $("#Cartupdate" + id).attr("class", "btn btn-success");
+                $("#CartQuantity" + id).attr("readonly", false);
+
+            } else {
+                if ($("#Cartupdate" + id).val() == "OK") {
+                    $("#Cartupdate" + id).val("Modifier");
+                    $("#Cartupdate" + id).attr("class", "btn btn-warning");
+                    $("#CartQuantity" + id).attr("readonly", true);
+                    action = "MODIF";
+                    Caltotal(id);
+                }
+            }
+        }
+
+        //Fonction permettant d'imprimer la facture affichée à l'écran
+        $(function () {
+            $("#hrefPrint").click(function () {
+                // Print the DIV.
+                $("#printdiv").print();
+                return (false);
+            });
+        });
+    </script>
+
 }
-                </div>
+<div>@ViewBag.Steeve</div>
+<div class="row">
+    <div id="Message"></div>
 </div>
-<div style="height:200px; float:left;"></div>
+<div class="row">
+    <div id="CategoriesOutput" class="col-md-4">Cat/gories</div>
+
+    <div id="ProductsOutput" class="col-md-6"></div>
+</div>
+<hr />
+<div class="container" id="Panier" hidden="hidden">
+    <div class="row">
+        @using (Html.BeginForm("Index", "Epicerie", FormMethod.Post, new { @class = "form-horizontal", role = "form", @id = "Formulaire" }))
+        {
+            <!-- objet cachet qui garde le valeur de la semaine courrante metre le valeur avec le id-->
+            @Html.HiddenFor(m => m.week, new { @Value = "test", @id = "week123" })
+            <div id="CartOutput" class="col-md-12">
+                <div class="row">
+                    <h4 class="col-xs-3">Produits</h4>
+                    <h4 class="col-xs-2">Format</h4>
+                    <h4 class="col-xs-1">Prix $</h4>
+                    <h4 class="col-xs-1">Qty</h4>
+                    <h4 class="col-xs-2">Sous-Total</h4>
+                    <h4 class="col-xs-1">Modifier</h4>
+                    <h4 class="col-xs-1">Enlever</h4>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-xs-7"></div>
+                <div class="col-xs-2">
+                    <h3><b>total $</b></h3>
+                    <div class="col-xs-3" id="totalOutput">
+                        <h3><b>0</b></h3>
+                    </div>
+
+                </div><div class="col-xs-9"></div>
+                <input type="submit" class="col-xs-2 btn btn-primary" value="Envoyer" />
+            </div>
+
+            <!--Boutton pour envoyer le panier au serveur-->
+
+
+            //</div>
+        }
+    </div>
+
+    <div class="container" id="Facture" hidden="hidden">
+
+    </div>
+    <div style="height:600px; float:left;"></div>
 
 
 
 
 
-
-   
