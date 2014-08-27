@@ -37,7 +37,7 @@
 </div>
 
 <div class="row">
-
+    <div id="WeekProductsList" class="col-md-4"></div>
 </div>
 
 @using (Html.BeginForm("Indexs", "AchatAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", 
@@ -110,6 +110,39 @@
         <option selected="selected" id=0 value="0">Fournisseurs</option>
         {{#each}}
         <option id={{id}} value={{id}}>{{nom}}</option>
+        {{/each}}
+    </script>
+
+    <script type="text/x-handlebars-template" id="WeekProductsTemplate">
+        <div class="row">
+            <h4 class="col-xs-3">Produits</h4>
+            <h4 class="col-xs-3">Fournisseur</h4>
+            <h4 class="col-xs-2">Prix $</h4>
+            <h4 class="col-xs-2">Format</h4>
+            <h4 class="col-xs-1">Minimum</h4>
+            <h4 class="col-xs-1"></h4>
+        </div>
+        {{#each}}
+        <div class="row" id=Product{{WeekProductID}}>
+            <div class="col-xs-3">
+                <h5 id="{{id}}">{{ProductName}}</h5>
+            </div>
+            <div class="col-xs-3">
+                <h5 id="{{id}}">{{SupplierName}}</h5>
+            </div>
+            <div class="col-xs-2">
+                <h5 id="{{id}}">{{UnitPrice}}</h5>
+            </div>
+            <div class="col-xs-2">
+                <h5 id="{{id}}">{{Format}}</h5>
+            </div>
+            <div class="col-xs-1">
+                <h5 id="{{id}}">{{Quantity}}</h5>
+            </div>
+            <div class="col-xs-1">
+                <div class="btn btn-info col-md-offset-1" id="btnModify">Modifier</div>
+            </div>
+        </div>
         {{/each}}
     </script>
 
