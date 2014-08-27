@@ -96,5 +96,8 @@ add valeurs dans le identity sans reinicier la bd
 http://blogs.msdn.com/b/webdev/archive/2013/10/16/customizing-profile-information-in-asp-net-identity-in-vs-2013-templates.aspx
 
 
+script pour effacer tous les tebles de un bd
+http://stackoverflow.com/questions/8439650/deleting-all-tables-in-a-database
+
 
 
