@@ -142,34 +142,28 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        public JsonResult Afficher_Entete_Facture(int week)
+        public JsonResult Afficher_Entete_Facture()
         {
             EpicerieEntities db = new EpicerieEntities();
 
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-            int weekbd = (from w in db.Weeks where w.WeekId == week select w.WeekId).LastOrDefault();
+            int weekbd = (from w in db.Weeks    select w.WeekId).LastOrDefault();
 
             var bill = (from    u               in      db.AspNetUsers
                         join    o               in      db.Orders
                         on      u.Id            equals  o.UserId
-                        join    od              in      db.OrderDetails
-                        on      o.OrderId       equals  od.OrderId
-                        join    wp              in      db.WeekProduct
-                        on      od.WeekId       equals  wp.WeekId
                         join    w               in      db.Weeks
-                        on      wp.WeekId       equals  w.WeekId
+                        on      o.WeekId        equals  w.WeekId
                         where   u.Id            ==      guid 
                         &       w.WeekId        ==      weekbd
                         select new{
-                            Prenom          =   u.Prenom,
-                            Nom             =   u.Nom,
+                            Usager          =   u.Prenom + " " + u.Nom, 
                             OrderID         =   o.OrderId,
-                            DebutSemaine    =   w.Date_Debut,
-                            FinSemaine      =   w.Date_Fin,
+                            Debut           =   w.Date_Debut,
+                            Fin             =   w.Date_Fin,
                             DateRecup       =   w.Date_Recuperation,
                             Date            =   DateTime.Today
-                            //NomAdmin = 
                             }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
