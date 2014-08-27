@@ -53,4 +53,11 @@ namespace IdentitySample.Models
         public string photo { get; set; }
     }
 
+    class titreTextNouvelle
+    {
+        public string titre { get; set; }
+
+        public string text { get; set; }
+    }
+
 }

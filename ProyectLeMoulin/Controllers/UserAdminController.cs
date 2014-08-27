@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrateur")]
     public class UsersAdminController : Controller
     {
         public UsersAdminController()

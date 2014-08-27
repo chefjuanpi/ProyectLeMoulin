@@ -707,7 +707,6 @@
     </Compile>
     <Compile Include="Models\PublicsViewModels.cs" />
     <Compile Include="Models\PanierViewModel.cs" />
-    <Compile Include="Controllers\titreTextNouvelle.cs" />
     <Compile Include="Models\AspNetUsers.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>

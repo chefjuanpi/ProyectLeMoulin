@@ -82,7 +82,7 @@ namespace IdentitySample.Controllers
         /// </summary>
         /// <param name="nom">string </param>
         /// <returns>si le nom corresponde a un evenement existant retourne a la view les donnes 
-        /// correspondant sinon retourne la page vide</returns>
+        /// correspondant sinon retourne une page vide</returns>
         public ActionResult Details(string nom)
         {
             CoeurContainer db = new CoeurContainer();

@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
 {
-    
+    [Authorize(Roles = "Administrateur")]
     public class AdminController : Controller
     {
         // GET: Admin

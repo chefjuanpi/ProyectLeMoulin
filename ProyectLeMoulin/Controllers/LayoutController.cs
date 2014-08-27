@@ -6,11 +6,14 @@ namespace IdentitySample.Controllers
 {
     public class LayoutController : Controller
     {
-        // GET: Layout
+        /// <summary>
+        /// function qui permet créer le contenu du menu de maniere dinamique pour le _Layout du site
+        /// </summary>
+        /// <returns>le code html du menu</returns>
         public ActionResult Menu()
         {
             CoeurContainer db = new CoeurContainer();
-            //function pour recouperer les pages princiales
+            //variable pour recouperer les pages princiales
             var parents = (from p in db.Pages
                          where p.Principal == true & p.PageID > 1 & p.Poublier == true
                          orderby p.PageID
@@ -20,6 +23,7 @@ namespace IdentitySample.Controllers
                              nom = p.MenuName
                          }).ToList();
 
+            //variable pour recoupere les pages enfants avec le id du parent
             var enfants = (from p in db.Pages
                            where p.SousMenu != null & p.Poublier == true
                            orderby p.SousMenu
@@ -33,6 +37,7 @@ namespace IdentitySample.Controllers
             ViewBag.menfants = enfants;
             string menu = "";
 
+            //creation du menu paremetrée
             for (int i = 0; i < parents.Count; i++)
             {
                 if (i == 5)
@@ -93,6 +98,7 @@ namespace IdentitySample.Controllers
                         }
                     }
                 }
+            //fermeture extra si le menu include Outres
             if (parents.Count > 5)
             {
                 menu += "</ul></li>";

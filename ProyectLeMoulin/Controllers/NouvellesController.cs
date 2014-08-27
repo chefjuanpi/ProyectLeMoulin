@@ -9,12 +9,17 @@ namespace IdentitySample.Controllers
 {
     public class NouvellesController : Controller
     {
-        // GET: Nouvelles
+        // GET: Nouvelles envoi la liste des nouvelles
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// function qui permet voir la page de un nouvelle en speciaux
+        /// </summary>
+        /// <param name="title">prend le titre de la nouvelle por la recherche</param>
+        /// <returns>la information de la nouvelle correcte</returns>
         public ActionResult Details(string title)
         {
             CoeurContainer db = new CoeurContainer();
@@ -30,7 +35,6 @@ namespace IdentitySample.Controllers
             ViewBag.news = news;
 
             return View();
-
         }
     }
 }
