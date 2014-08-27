@@ -74,14 +74,14 @@ namespace IdentitySample.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    if (model.Password == "Lemoulin@123") return RedirectToLocal("/Manage/ChangerPassword");
                     CoeurContainer db = new CoeurContainer();
                     var id = (from u in db.AspNetUsers
                                  where u.Email == model.Email
                                  select new { id = u.Id }).Single();
-                    string d;
                     var userRoles = UserManager.GetRoles(id.id);
-                    if (userRoles.Contains("Admin")) return  Redirect("../Admin");
-                    return RedirectToLocal(returnUrl);
+                    if (userRoles.Contains("Administrateur")) return  Redirect("../Admin");
+                    return RedirectToLocal("/Epicerie");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

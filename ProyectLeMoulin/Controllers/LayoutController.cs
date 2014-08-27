@@ -29,6 +29,8 @@ namespace IdentitySample.Controllers
                                nom = p.MenuName,
                                parent = p.SousMenu
                            }).ToList();
+            ViewBag.mparent = parents;
+            ViewBag.menfants = enfants;
             string menu = "";
 
             for (int i = 0; i < parents.Count; i++)
@@ -73,7 +75,14 @@ namespace IdentitySample.Controllers
                                 menu += "<li><a href='/Calendar'>" + parents[i].nom + "</a></li>";
                                 break;
                             case 3:
-                                menu += "<li><a href='/Home/GroupedAchats'>" + parents[i].nom + "</a></li>";
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    menu += "<li><a href='/Epicerie'>" + parents[i].nom + "</a></li>";
+                                }
+                                else
+                                {
+                                    menu += "<li><a href='/Home/GroupedAchats'>" + parents[i].nom + "</a></li>";
+                                }
                                 break;
                             case 4:
                                 menu += "<li><a href='/Home/Contact'>" + parents[i].nom + "</a></li>";

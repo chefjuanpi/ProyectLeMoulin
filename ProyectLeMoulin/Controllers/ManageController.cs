@@ -230,6 +230,13 @@ namespace IdentitySample.Controllers
         }
 
         //
+        // GET: /Manage/ChangerPassword change password sans layout
+        public ActionResult ChangerPassword()
+        {
+            return View();
+        }
+
+        //
         // POST: /Account/Manage
         [HttpPost]
         [ValidateAntiForgeryToken]

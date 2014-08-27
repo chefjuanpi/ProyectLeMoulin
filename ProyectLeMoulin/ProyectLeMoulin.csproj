@@ -525,6 +525,7 @@
     <Content Include="Views\Admin\Contact.cshtml" />
     <Content Include="Views\Nouvelles\index.cshtml" />
     <Content Include="Views\Nouvelles\Details.cshtml" />
+    <Content Include="Views\Manage\ChangerPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
