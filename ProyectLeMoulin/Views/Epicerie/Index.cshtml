@@ -120,6 +120,7 @@
         var action = "";
         var total = 0;
         var ancienprix = 0;
+        var fTotal = 0;
         //variable tres important determine l'indice dans la liste objets
         var i = 0;
 
@@ -158,7 +159,7 @@
                     format: $("#Format" + id).html(),
                     prix: p,
                     qty: q,
-                    Soustotal: sous,
+                    Soustotal: sous.toFixed(2),
                     //le name va a creer la relation avec le objet dans le model comme obj[0], obj[1], etc...
                     name: "obj[" + i + "]"
                 };
@@ -181,35 +182,6 @@
             }
         }
 
-        function Caltotal(id, p, q) {
-            if (action == "AJOUT") {
-                prix = p * q;
-                total += prix;
-                $("#totalOutput").html(total);
-            }
-            if (action == "ENLEVER") {
-                var montant = 0;
-                montant = $('#psous' + id).html();
-                total -= parseFloat(montant);
-                $("#totalOutput").html(total);
-            }
-            if (action == "MODIF") {
-                var ancien = 0;
-                var nprix = 0;
-                var qt = 0;
-
-                ancien = $('#psous' + id).html();
-                ancienprix = parseFloat(ancien);
-                qt = $('#CartQuantity' + id).val();
-                nprix = $("#pprix" + id).html();
-                nprix = parseFloat(nprix);
-                prix = qt * nprix;
-                $('#psous' + id).html(prix);
-                total += prix;
-                total -= ancienprix;
-                $("#totalOutput").html(total);
-            }
-        };
 
         function SupprimerProduit(id) {
             action = "ENLEVER";
@@ -246,6 +218,7 @@
             templateEntete = Handlebars.compile($("#EnteteTemplate").html());
             templateDetail = Handlebars.compile($("#DetailTemplate").html());
 
+            //$("#Facture").attr(hidden = false);
             $.getJSON("/Epicerie/Afficher_Entete_Facture", null, function (data) {
                 //console.log(data.legth);
                 var result = templateEntete(data);
@@ -253,7 +226,8 @@
                 $.getJSON("/Epicerie/Afficher_Facture", null, function (data) {
                     //console.log(data.legth);
                     var result = templateDetail(data);
-                    $("#BillOutput").html(result);
+                    $("#BillOutput").html(result.toFixed(2));
+                    CalculTotalFacture(id)
                 });
             });
         });
@@ -262,7 +236,7 @@
             templateEntete = Handlebars.compile($("#EnteteTemplate").html());
             templateDetail = Handlebars.compile($("#DetailTemplate").html());
             templateBill = Handlebars.compile($("#OldBillTemplate").html());
-            
+            //$("#Facture").attr(hidden = false);
             $.getJSON("/Epicerie/Afficher_Entete_Facture", null, function (data) {
                 //console.log(data.legth);
                 var result = templateBill(data);
@@ -289,10 +263,41 @@
             });
         });
 
-        $(function () {
-            templateEntete = Handlebars.compile($("#EnteteTemplate").html());
-            templateDetail = Handlebars.compile($("#DetailTemplate").html());
-        });
+        function Caltotal(id, p, q) {
+            if (action == "AJOUT") {
+                prix = p * q;
+                total += prix;
+                $("#totalOutput").html(total.toFixed(2));
+            }
+            if (action == "ENLEVER") {
+                var montant = 0;
+                montant = $('#psous' + id).html();
+                total -= parseFloat(montant);
+                $("#totalOutput").html(total.toFixed(2));
+            }
+            if (action == "MODIF") {
+                var ancien = 0;
+                var nprix = 0;
+                var qt = 0;
+
+                ancien = $('#psous' + id).html();
+                ancienprix = parseFloat(ancien);
+                qt = $('#CartQuantity' + id).val();
+                nprix = $("#pprix" + id).html();
+                nprix = parseFloat(nprix);
+                prix = qt * nprix;
+                $('#psous' + id).html(prix.toFixed(2));
+                total += prix;
+                total -= ancienprix;
+                $("#totalOutput").html(total.toFixed(2));
+            }
+        };
+
+        function CalculTotalFacture(id) {
+            
+            
+            fTotal = f + fsous{{id}};prod{{id}}
+        }
     </script>
 
 }
@@ -345,7 +350,7 @@
     </div>
 </div>
 
-<div class="container" id="Facture" hidden="hidden">
+<div class="container" id="Facture" >
     <div id="BillOutput" class="col-md-12">
         <div class="row">
             <h4 class="col-xs-3">Produits</h4>
