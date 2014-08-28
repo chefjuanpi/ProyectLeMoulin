@@ -136,29 +136,29 @@
             templateCart = Handlebars.compile($("#CartTemplate").html());
             $.getJSON("/Epicerie/ValiderWeek", null, function (data) {
                 if(data.val == true)
-                    {
-                    $.getJSON("/Epicerie/GetWeek", null, function (data) {
+                {
+                $.getJSON("/Epicerie/GetWeek", null, function (data) {
+                    var result = templateCategories(data);
+                    $("#CategoriesOutput").html(result);
+
+                    $.getJSON("/Epicerie/GetCategories", null, function (data) {
                         var result = templateCategories(data);
                         $("#CategoriesOutput").html(result);
 
-                        $.getJSON("/Epicerie/GetCategories", null, function (data) {
-                            var result = templateCategories(data);
-                            $("#CategoriesOutput").html(result);
-
-                            //Afficher les catégories
-                            $("#CategoryOutput").change(function () {
-                                var id = $(this).children(":selected").attr("id");
-                                if (id != 0) {
-                                    $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
-                                        var result = templateProducts(data);
-                                        $("#week123").val(data[0].WeeK);
-                                        $("#ProductsOutput").html(result);
-                                    });//GetProducts
-                                }
-                            })//GetCategories
-                        });
-                    })
-                }
+                        //Afficher les catégories
+                        $("#CategoryOutput").change(function () {
+                            var id = $(this).children(":selected").attr("id");
+                            if (id != 0) {
+                                $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
+                                    var result = templateProducts(data);
+                                    $("#week123").val(data[0].WeeK);
+                                    $("#ProductsOutput").html(result);
+                                });//GetProducts
+                            }
+                        })//GetCategories
+                    });
+                })
+            }});
         });
 
         function AjouterPanier(id) {
