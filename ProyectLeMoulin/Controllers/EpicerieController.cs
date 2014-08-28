@@ -35,6 +35,32 @@ namespace IdentitySample.Controllers
         /// Récupérer les catégories de produits
         /// </summary>
         /// <returns></returns>
+        public JsonResult GetWeek()
+        {
+            EpicerieEntities db = new EpicerieEntities();
+
+            var week = (from w in db.Weeks
+                        select new
+                        {
+                            Week = w.WeekId,
+                            Debut = w.Date_Debut,
+                            Fin = w.Date_Fin
+                        }).ToList();
+            return Json(week, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ValiderWeek()
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var week = (from w in db.Weeks select w.WeekId);
+            string fin = (from f in db.Weeks select f.Date_Fin).ToString();
+            bool valide = false;
+
+            if (DateTime.Today <= DateTime.Parse(fin))
+                valide = true;
+            
+            return Json(valide, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetCategories()
         {
             EpicerieEntities db = new EpicerieEntities();

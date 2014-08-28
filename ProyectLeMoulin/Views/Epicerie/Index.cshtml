@@ -3,9 +3,19 @@
 
 
 @section Scripts {
+    
+    @*Template du Week*@
+    <script type="text/x-handlebars-template" id="CategoriesTemplate">
+    <select id="CategoryOutput" name="Categories" class="form-control">
+        
+        
+        
+    </select>
+</script>
+    
     @*Template des Catégories*@
     <script type="text/x-handlebars-template" id="CategoriesTemplate">
-        Catégories
+        <h3>Période de commande: du {{Debut}} au {{Fin}}</h3>
         <select id="CategoryOutput" name="Categories" class="form-control">
             <option selected="selected" id=0 value="0">Choisissez une categorie</option>
             {{#each}}
@@ -124,23 +134,31 @@
             templateCategories = Handlebars.compile($("#CategoriesTemplate").html());
             templateProducts = Handlebars.compile($("#ProductsTemplate").html());
             templateCart = Handlebars.compile($("#CartTemplate").html());
+            $.getJSON("/Epicerie/ValiderWeek", null, function (data) {
+                if(data.val == true)
+                    {
+                    $.getJSON("/Epicerie/GetWeek", null, function (data) {
+                        var result = templateCategories(data);
+                        $("#CategoriesOutput").html(result);
 
-            $.getJSON("/Epicerie/GetCategories", null, function (data) {//console.log(data.legth);
-                var result = templateCategories(data);
-                $("#CategoriesOutput").html(result);
+                        $.getJSON("/Epicerie/GetCategories", null, function (data) {
+                            var result = templateCategories(data);
+                            $("#CategoriesOutput").html(result);
 
-                //Afficher les catégories
-                $("#CategoryOutput").change(function () {//doit d'abord changer de cat pour pouvoir afficher la 1 ère cat
-                    var id = $(this).children(":selected").attr("id");
-                    if (id != 0) {
-                        $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
-                            var result = templateProducts(data);
-                            $("#week123").val(data[0].WeeK);
-                            $("#ProductsOutput").html(result);
-                        });//GetProducts
-                    }
-                })//GetCategories
-            });
+                            //Afficher les catégories
+                            $("#CategoryOutput").change(function () {
+                                var id = $(this).children(":selected").attr("id");
+                                if (id != 0) {
+                                    $.getJSON("/Epicerie/GetProduits", { cat: id }, function (data) {
+                                        var result = templateProducts(data);
+                                        $("#week123").val(data[0].WeeK);
+                                        $("#ProductsOutput").html(result);
+                                    });//GetProducts
+                                }
+                            })//GetCategories
+                        });
+                    })
+                }
         });
 
         function AjouterPanier(id) {
