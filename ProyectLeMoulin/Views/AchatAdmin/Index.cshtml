@@ -169,7 +169,7 @@
 
             $("#Formulaire").hide();
 
-            $.getJSON("getSuppliers", null, function (data) {
+            $.getJSON("/AchatAdmin/getSuppliers", null, function (data) {
 
                 var result = TemplateSuppliers(data);
                 $("#SuppliersList").html(result);
@@ -184,7 +184,7 @@
                 }); // Fin de Suppliers.items.change
             }); // Fin de getSuppliers
 
-            $.getJSON("getCategories", null, function (data) {
+            $.getJSON("/AchatAdmin/getCategories", null, function (data) {
 
                 var result = TemplateCategories(data);
                 $("#CategoriesList").html(result);
@@ -201,7 +201,7 @@
 
             function getWeekProducts(id, type) {
 
-                $.getJSON("getWeekProducts", { Id: id, type: type }, function (data) {
+                $.getJSON("/AchatAdmin/getWeekProducts", { Id: id, type: type }, function (data) {
 
                     var result = TemplateWeekProducts(data);
                     $("#WeekProductsList").html(result);

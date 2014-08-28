@@ -6,7 +6,7 @@
     <meta name="description" content="@ViewBag.Message" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    <style type="text/css">
+    @*<style type="text/css">
          body
          {
              /*ordenes multi navigateur pour faire le fond degradé*/
@@ -103,10 +103,10 @@
              background:#ffffff;
          }
 
-         .white-t4{
-             background:rgba(255, 255, 255, 0.4);
+         .white-t8{
+             background:rgba(255, 255, 255, 0.8);
          }
-    </style>
+    </style>*@
 
     <!--[if gte IE 9]>
       <style type="text/css">
@@ -181,7 +181,7 @@
                 </ul>
             </div>
         </nav>
-        <div class="container alert white-t4">
+        <div class="container alert white-t8">
             @RenderBody()
         </div>
         <div class="push"></div>
