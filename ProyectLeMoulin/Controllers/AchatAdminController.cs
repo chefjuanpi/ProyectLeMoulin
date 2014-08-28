@@ -87,10 +87,10 @@ namespace IdentitySample.Controllers
                                 join s in db.Suppliers
                                 on wp.SupplierId equals s.SupplierId
                                 orderby p.ProductName
-                                where wp.WeekId == weekbd
+                                where wp.WeekId == 1
                                 select new
                                 {
-                                    CategoryId = c.CategoryId,
+                                    CategoryId = cp.CategoryId,
                                     SupplierId = s.SupplierId,
                                     ProductId = wp.ProductId,
                                     ProductName = p.ProductName,
@@ -100,16 +100,16 @@ namespace IdentitySample.Controllers
                                     Quantity = wp.Quantity
                                 }).ToList();
 
-            if (type == "cat")
-            {
-                WeekProducts.Where(c => c.CategoryId == Id);
-            }
-            else if (type == "sup")
-            {
-                WeekProducts.Where(s => s.SupplierId == Id);
-            }
+            //if (type == "cat")
+            //{
+            //    WeekProducts.Where(c => c.CategoryId == Id);
+            //}
+            //else if (type == "sup")
+            //{
+            //    WeekProducts.Where(s => s.SupplierId == Id);
+            //}
 
-            WeekProducts.ToList();
+            //WeekProducts.ToList();
 
             return Json(WeekProducts, JsonRequestBehavior.AllowGet);
         }
