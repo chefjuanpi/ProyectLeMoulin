@@ -3,16 +3,6 @@
 
 
 @section Scripts {
-    
-    @*Template du Week*@
-    <script type="text/x-handlebars-template" id="CategoriesTemplate">
-    <select id="CategoryOutput" name="Categories" class="form-control">
-        
-        
-        
-    </select>
-</script>
-    
     @*Template des Catégories*@
     <script type="text/x-handlebars-template" id="CategoriesTemplate">
         <h3>Période de commande: du {{Debut}} au {{Fin}}</h3>
@@ -312,11 +302,11 @@
             }
         };
 
-        function CalculTotalFacture(id) {
+        //function CalculTotalFacture(id) {
             
             
-            fTotal = f + fsous{{id}};prod{{id}}
-        }
+        //    fTotal = f + fsous{{id}};prod{{id}}
+        //}
     </script>
 
 }
@@ -324,16 +314,13 @@
 <div class="row">
     <div id="Message"></div>
 </div>
-<div class="container" id="Bill" >
-    <input id="NewBill" name="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture" onclick="FactureCourrante">
-    <input id="OldBill" name="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
-    <div class="row"><div id="OldBillOutput" class="col-md-4"></div></div>
-</div>
+
 <div class="row">
     <div id="CategoriesOutput" class="col-md-4"></div>
 
     <div id="ProductsOutput" class="col-md-6"></div>
 </div>
+
 <div>@ViewBag.Steeve</div>
 <hr />
 
@@ -368,9 +355,13 @@
         }
     </div>
 </div>
-
-<div class="container" id="Facture" >
-    <div><a href="/"> <img class="col-md-2 col-xs-6 img-responsive" src="../Images/logo.png" alt="Le Moulin d'à côté'" /></a></div>
+<div class="container" id="Bill">
+    <input id="NewBill" name="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture" onclick="FactureCourrante">
+    <input id="OldBill" name="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
+    <div class="row"><div id="OldBillOutput" class="col-md-4"></div></div>
+</div>
+<div class="container" hidden ="hidden" id="Facture" >
+    <div><img class="col-md-2 col-xs-6 img-responsive" src="../Images/logo.png" alt="Le Moulin d'à côté'" /></div>
     <div id="BillOutput" class="col-md-12">
         <div class="row">
             <h4 class="col-xs-3">Produits</h4>

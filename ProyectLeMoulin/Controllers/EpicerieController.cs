@@ -55,7 +55,7 @@ namespace IdentitySample.Controllers
             string fin = (from f in db.Weeks select f.Date_Fin).ToString();
             bool valide = false;
 
-            if (DateTime.Today <= DateTime.Parse(fin))
+            //if (DateTime.Today <= DateTime.Parse(fin))
                 valide = true;
             
             return Json(valide, JsonRequestBehavior.AllowGet);
