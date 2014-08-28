@@ -98,7 +98,7 @@ namespace IdentitySample.Controllers
                                     UnitPrice = wp.UnitPrice,
                                     Format = wp.Format,
                                     Quantity = wp.Quantity
-                                });
+                                }).ToList();
 
             if (type == "cat")
             {
@@ -186,6 +186,52 @@ namespace IdentitySample.Controllers
         }
 
         /// <summary>
+        /// Permet d'ouvrir la vue pour Categories
+        /// </summary>
+        /// <returns>Une vue avec titre et message</returns>
+        public ActionResult Categories()
+        {
+            ViewBag.Title = "Categories";
+            ViewBag.message = "Administration des catégories";
+            return View();
+        }
+
+        /// <summary>
+        /// S'exécute au "Post" de la page Categories
+        /// Enregistre les Ajouts et Modifications
+        /// </summary>
+        /// <param name="Category">Model à utiliser</param>
+        /// <returns>Une vue</returns>
+        [HttpPost]
+        public ActionResult Categories(CategoryViewModel category)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            if (category.CategoryId == null)
+            {
+                Categories c = new Categories();
+                c.CategoryName = category.CategoryName;
+                c.Description = category.Description;
+
+
+                db.Categories.Add(c);
+                db.SaveChanges();
+            }
+            else
+            {
+                int x = Convert.ToInt16(category.CategoryId);
+                var modifCategory = (from c in db.Categories
+                                     where c.CategoryId == x
+                                     select c).Single();
+                modifCategory.CategoryName = category.CategoryName;
+                modifCategory.Description = category.Description;
+
+                db.SaveChanges();
+            }
+            getCategories();
+            return View();
+        }
+
+        /// <summary>
         /// Permet d'obtenir l'ID et le Nom des Categories
         /// </summary>
         /// <returns>Json contenant les Suppliers</returns>
@@ -200,6 +246,44 @@ namespace IdentitySample.Controllers
                                  nom = c.CategoryName
                              });
             return Json(categories, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Permet d'otenir les informations sur une Categorie
+        /// </summary>
+        /// <param name="CategoryId">ID du fournisseur</param>
+        /// <returns>Json contenant les informations</returns>
+        public JsonResult getCategoryDetails(int CategoryId)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var category = (from c in db.Categories
+                            where c.CategoryId == CategoryId
+                            select new
+                            {
+                                id = c.CategoryId,
+                                Nom = c.CategoryName,
+                                description = c.Description,
+                            }).Single();
+            return Json(category, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Permet d'effacer une Categorie de la BD
+        /// </summary>
+        /// <param name="nID">ID de la categorie</param>
+        /// <returns>Retourne à la selection</returns>
+        public ActionResult delCategory(int nID)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var delcategory = (from c in db.Categories
+                               where c.CategoryId == nID
+                               select c).Single();
+            if (delcategory != null)
+            {
+                db.Categories.Remove(delcategory);
+                db.SaveChanges();
+            }
+            return Redirect("/AchatAdmin/Categories");
         }
 
         /// <summary>
@@ -318,7 +402,6 @@ namespace IdentitySample.Controllers
             }
             return Redirect("/AchatAdmin/Suppliers");
         }
-
 
         /// <summary>
         /// Permet d'ouvrir la vue pour OldOrders
