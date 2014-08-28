@@ -208,8 +208,7 @@ namespace IdentitySample.Controllers
                             OrderID     =   o.OrderId,
                             Debut       =   w.Date_Debut,
                             Fin         =   w.Date_Fin,
-                            DateRecup   =   w.Date_Recuperation,
-                            Date        =   DateTime.Today
+                            DateRecup   =   w.Date_Recuperation
                         }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
@@ -225,7 +224,6 @@ namespace IdentitySample.Controllers
                           select    w.WeekId
                           ).LastOrDefault();
             
-
             var bill = (from    o               in      db.Orders
                         join    od              in      db.OrderDetails
                         on      o.OrderId       equals  od.OrderId
@@ -244,7 +242,7 @@ namespace IdentitySample.Controllers
                             Quantite    =   od.Quantite,
                             Prix        =   od.UnitPrice,
                             SousTotal   =   od.Quantite * od.UnitPrice
-                            //Total       =   (od.Quantite * od.UnitPrice).sum
+                            //Total       =   sum(od.Quantite * od.UnitPrice)
             }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
