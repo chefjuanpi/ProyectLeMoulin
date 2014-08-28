@@ -270,10 +270,15 @@
 
         //Fonction permettant d'imprimer le DIV de la facture affichée à l'écran
         $(function PRINT() {
-            $("#hrefPrint").click(function () {
-                // Print the DIV.
-                $("#Facture").print();
-                return (false);
+            $.getJSON("/Epicerie/ValiderWeek", null, function (data) {
+                if(data.val == true)
+                {
+                    $("#hrefPrint").click(function () {
+                        // Print the DIV.
+                        $("#Facture").print();
+                        return (false);
+                    });
+                }
             });
         });
 
