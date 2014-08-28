@@ -613,8 +613,13 @@ namespace IdentitySample.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "modifier page des conntacts.";
 
+            return View();
+        }
+
+        public ActionResult Achats()
+        {
             return View();
         }
     }

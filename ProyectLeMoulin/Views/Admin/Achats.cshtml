@@ -1,11 +1,11 @@
-﻿@model IdentitySample.Models.AccueilViewModel
+﻿@model IdentitySample.Models.Pachats
 @{
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Accueil", "Admin", FormMethod.Post, new
+@using (Html.BeginForm("Achats", "Admin", FormMethod.Post, new
 {
     @class = "form-horizontal",
     role = "form",
@@ -17,8 +17,8 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
     <div class="input-group row">
-        @Html.LabelFor(m => m.Gauche, new { @for="social" })
-        @Html.TextAreaFor(m => m.Gauche, new { @class = "col-md-4 col-xs-4 form-control", @rows = "5", @id = "social"})
+        @Html.LabelFor(m => m.Titre)
+        @Html.TextBoxFor(m => m.Titre, new { @class = "col-md-4 col-xs-4 form-control"})
         <p class="help-block">Coller ici le code Facebook pour lier la page, pour obtenir le code click <a href="https://developers.facebook.com/docs/plugins/like-box-for-pages " target="_blank">ICI</a>, il est plus simple prend l'option Iframe</p>
     </div>
     <br />
@@ -46,6 +46,7 @@
     <script type="text/javascript" src="../Content/plugins/tinymce/tinymce.min.js"></script>
     <script type="text/javascript">
         $(function () {
+
 
             $("#social").html("@ViewBag.Gauche");
             //parametres de ouverture du tinymce

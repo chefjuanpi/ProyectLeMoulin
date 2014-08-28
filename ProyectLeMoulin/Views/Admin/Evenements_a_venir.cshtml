@@ -73,7 +73,7 @@
     </div>
     <br />
     <div class="row">
-        @Html.TextAreaFor(m => m.Contenu, new { @id = "elm1", @name = "area", @class = "col-md-12 col-xs-12" })
+        @Html.TextAreaFor(m => m.Contenu, new { @id = "elm1", @name = "area", @class = "col-md-12 col-xs-12 green-bg" })
     </div>
     <br />
     <br />
@@ -108,7 +108,6 @@
             else{
                 $("#Formulaire *").attr("disabled", "disabled");
             }
-
 
             $("#btnSupr").click(function () {
                 $("#dialog-confirm").dialog({

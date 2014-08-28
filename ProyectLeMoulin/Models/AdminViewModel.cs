@@ -95,6 +95,21 @@ namespace IdentitySample.Models
         public int menuParent { get; set; }
     }
 
+    public class Pachats
+    {
+        [Required]
+        [StringLength(150, ErrorMessage = "Titre trop long, max. 150 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Titre du page :")]
+        public string Titre { get; set; }
+
+        [Required]
+        [DataType(DataType.Html)]
+        [AllowHtml]
+        [Display(Name = "Presentation du Groupre de achats")]
+        public string Contenu { get; set; }
+    }
+
     public class EvenementsViewModel
     {
         public string PId { get; set; }

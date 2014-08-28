@@ -9,6 +9,7 @@
     <style type="text/css">
          body
          {
+             /*ordenes multi navigateur pour faire le fond degradé*/
             background: #b4e391; /* Old browsers */
             /* IE9 SVG, needs conditional override of 'filter' to 'none' */
             background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMTIlIiBzdG9wLWNvbG9yPSIjYjRlMzkxIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNTIlIiBzdG9wLWNvbG9yPSIjNjFjNDE5IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2I0ZTM5MSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9yYWRpYWxHcmFkaWVudD4KICA8cmVjdCB4PSItNTAiIHk9Ii01MCIgd2lkdGg9IjEwMSIgaGVpZ2h0PSIxMDEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
@@ -21,15 +22,7 @@
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4e391', endColorstr='#b4e391',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
          }
 
-         .white-bg
-         {
-             background:#ffffff;
-         }
-
-         .white-t4{
-             background:rgba(255, 255, 255, 0.4);
-         }
-
+         /*changer le couleur de default de la navbar*/
          .navbar-default {
              background-color: #94c44d;
              border-color: #8e44ad;
@@ -89,6 +82,30 @@
                  background-color: #8e44ad;
              }
          }
+         /*final section couleur navbar*/
+
+         /*sections desc orders pour faire sticky footer, le footer on bas de l'écran tôut le temp*/
+        html, body {
+	        height: 100%;
+        }
+        .wrapper {
+	        min-height: 100%;
+	        margin: 0 auto -50px; /* the bottom margin is the negative value of the footer's height */
+        }
+        footer, .push {
+	        height: 50px; /* '.push' must be the same height as 'footer' */
+        }
+        /*final sticky footer*/
+
+        /*classes pour donner couleur defs fond*/
+         .white-bg
+         {
+             background:#ffffff;
+         }
+
+         .white-t4{
+             background:rgba(255, 255, 255, 0.4);
+         }
     </style>
 
     <!--[if gte IE 9]>
@@ -105,6 +122,13 @@
     @Scripts.Render("~/bundles/handlebars")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
+        document.createElement('header');
+        document.createElement('footer');
+        document.createElement('section');
+        document.createElement('article');
+        document.createElement('aside');
+        document.createElement('nav');
+
         $(function () {
             $.ajaxSetup({ cache: false });
 
@@ -136,33 +160,34 @@
             '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-5G9V7N');</script>
     <!-- End Google Tag Manager -->
-
-    <nav class="navbar navbar-default container-fluid" role="navigation">
-        <a href="/"> <img class="col-md-2 col-xs-6 img-responsive" src="../Images/logo.png" alt="Le Moulin d'à côté'" /></a>
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+    <div class="wrapper">
+        <nav class="navbar nav-justified navbar-default" role="navigation">
+            <a href="/"> <img class="col-md-2 col-xs-6 img-responsive" src="../Images/logo.png" alt="Le Moulin d'à côté'" /></a>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="side-menu" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
+                    @Html.Action("Menu", "Layout")
+                    <li>
+                        @Html.Partial("_LoginPartial")
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container alert white-t4">
+            @RenderBody()
         </div>
-        <div class="navbar-collapse collapse" id="side-menu" role="navigation">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                @Html.Action("Menu", "Layout")
-                <li>
-                    @Html.Partial("_LoginPartial")
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container alert alert-info white-t4">
-       @RenderBody()
+        <div class="push"></div>
     </div>
-
-    <div class="panel-footer">
+    <footer class="panel-footer footer">
             <p>Le Moulin d'À Côté &copy; @DateTime.Now.Year - Crée par Pablo Aguilar-Lliguin, Steeve Bouchard et Michel Goyette</p>
-    </div>
+    </footer>
 </body>
 </html>

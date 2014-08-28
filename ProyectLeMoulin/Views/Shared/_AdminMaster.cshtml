@@ -8,6 +8,9 @@
     <title>@ViewBag.Title - Administration du site</title>
     @Styles.Render("~/Content/admincss")
     <link href="~/Content/fullcalendar.css" rel="stylesheet" />
+    <style type="text/css">
+        body.mceBlackBody {background:#000; color:#fff;}
+    </style>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jquery-ui")
     @Scripts.Render("~/bundles/handlebars")
@@ -299,18 +302,19 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Pages<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-file fa-fw"></i> Pages<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file fa-fw"></i> Pages</a>
+                                    <a href='@Url.Action("Accueil", "Admin")'><i class="fa fa-home fa-fw"></i> Page d'accueil</a>
                                 </li>
-
                                 <li>
-                                    <a href='@Url.Action("Configuration", "Admin")'><i class="fa fa-gear fa-fw"></i> Configuration de base</a>
+                                    <a href='@Url.Action("Contact", "Admin")'><i class="fa fa-map-marker fa-fw"></i> Contactez nous</a>
                                 </li>
-
                                 <li>
-                                    <a href='@Url.Action("Index", "RolesAdmin")'><i class="fa fa-gear fa-fw"></i> Gestion de Roles</a>
+                                    <a href='@Url.Action("Achats", "Admin")'><i class="fa fa-cutlery fa-fw"></i> Presentation G. achats</a>
+                                </li>
+                                <li>
+                                    <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file-o fa-fw"></i> Gestor des Pages</a>
                                 </li>
                             </ul>
                         <li>
@@ -342,6 +346,13 @@
                                 </li>
                             </ul>
                             @*<!-- /.nav-second-level -->*@
+                        </li>
+                        <li>
+                            <a href='@Url.Action("Configuration", "Admin")'><i class="fa fa-gear fa-fw"></i> Configuration de base</a>
+                        </li>
+
+                        <li>
+                            <a href='@Url.Action("Index", "RolesAdmin")'><i class="fa fa-gear fa-fw"></i> Gestion de Roles</a>
                         </li>
 
                     </ul>
