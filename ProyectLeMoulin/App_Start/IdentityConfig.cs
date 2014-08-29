@@ -4,10 +4,14 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.Configuration;
 using System.Data.Entity;
+using System.Diagnostics;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using Twilio;
 
 namespace IdentitySample.Models
 {
@@ -60,7 +64,10 @@ namespace IdentitySample.Models
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider =
-                    new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+                    new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"))
+                    {
+                        TokenLifespan = TimeSpan.FromHours(3)
+                    };
             }
             return manager;
         }
@@ -85,6 +92,24 @@ namespace IdentitySample.Models
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
+            MailMessage mail = new MailMessage();
+
+            mail.To.Add(message.Destination);
+            mail.From = new MailAddress(ConfigurationManager.AppSettings["mailAccount"]);
+            mail.Subject = message.Subject;
+            string Body = message.Body;
+            mail.Body = Body;
+            mail.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new System.Net.NetworkCredential
+            (ConfigurationManager.AppSettings["mailAccount"], 
+            ConfigurationManager.AppSettings["mailPassword"]);// Enter seders User name and password  
+            smtp.EnableSsl = true;
+            smtp.Send(mail);
+
             return Task.FromResult(0);
         }
     }
@@ -93,6 +118,18 @@ namespace IdentitySample.Models
     {
         public Task SendAsync(IdentityMessage message)
         {
+            var Twilio = new TwilioRestClient(
+         ConfigurationManager.AppSettings["TwilioSid"],
+         ConfigurationManager.AppSettings["TwilioToken"]
+     );
+            var result = Twilio.SendMessage(
+                ConfigurationManager.AppSettings["TwilioFromPhone"],
+               message.Destination, message.Body);
+
+            // Status is one of Queued, Sending, Sent, Failed or null if the number is not valid
+            Trace.TraceInformation(result.Status);
+
+            // Twilio doesn't currently have an async API, so return success.
             // Plug in your sms service here to send a text message.
             return Task.FromResult(0);
         }

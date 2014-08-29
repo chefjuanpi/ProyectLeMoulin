@@ -96,8 +96,15 @@ add valeurs dans le identity sans reinicier la bd
 http://blogs.msdn.com/b/webdev/archive/2013/10/16/customizing-profile-information-in-asp-net-identity-in-vs-2013-templates.aspx
 
 
-script pour effacer tous les tebles de un bd
+script pour effacer tous les tables de un bd
 http://stackoverflow.com/questions/8439650/deleting-all-tables-in-a-database
 
+
+Configuration recouperation mot de passe et confirmation courriel
+
+http://www.asp.net/identity/overview/features-api/account-confirmation-and-password-recovery-with-aspnet-identity
+
+plus de details sur configuration courriel admin
+http://www.asp.net/mvc/overview/getting-started/create-an-aspnet-mvc-5-web-app-with-email-confirmation-and-password-reset
 
 
