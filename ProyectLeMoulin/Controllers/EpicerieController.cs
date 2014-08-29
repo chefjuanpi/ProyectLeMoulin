@@ -35,6 +35,32 @@ namespace IdentitySample.Controllers
         /// Récupérer les catégories de produits
         /// </summary>
         /// <returns></returns>
+        public JsonResult GetWeek()
+        {
+            EpicerieEntities db = new EpicerieEntities();
+
+            var week = (from w in db.Weeks
+                        select new
+                        {
+                            Week = w.WeekId,
+                            Debut = w.Date_Debut,
+                            Fin = w.Date_Fin
+                        }).ToList();
+            return Json(week, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ValiderWeek()
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var week = (from w in db.Weeks select w.WeekId);
+            string fin = (from f in db.Weeks select f.Date_Fin).ToString();
+            bool valide = false;
+
+            //if (DateTime.Today <= DateTime.Parse(fin))
+                valide = true;
+            
+            return Json(valide, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetCategories()
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -208,8 +234,7 @@ namespace IdentitySample.Controllers
                             OrderID     =   o.OrderId,
                             Debut       =   w.Date_Debut,
                             Fin         =   w.Date_Fin,
-                            DateRecup   =   w.Date_Recuperation,
-                            Date        =   DateTime.Today
+                            DateRecup   =   w.Date_Recuperation
                         }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
@@ -225,7 +250,6 @@ namespace IdentitySample.Controllers
                           select    w.WeekId
                           ).LastOrDefault();
             
-
             var bill = (from    o               in      db.Orders
                         join    od              in      db.OrderDetails
                         on      o.OrderId       equals  od.OrderId
@@ -244,7 +268,7 @@ namespace IdentitySample.Controllers
                             Quantite    =   od.Quantite,
                             Prix        =   od.UnitPrice,
                             SousTotal   =   od.Quantite * od.UnitPrice
-                            //Total       =   (od.Quantite * od.UnitPrice).sum
+                            //Total       =   sum(od.Quantite * od.UnitPrice)
             }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }

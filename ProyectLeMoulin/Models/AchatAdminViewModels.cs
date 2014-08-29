@@ -6,6 +6,26 @@ using System.Web.Mvc;
 namespace EpicerieModel.Models
 {
     /// <summary>
+    /// Modèle des données contenu dans Category
+    /// </summary>
+    public class CategoryViewModel
+    {
+
+        public string CategoryId { get; set; }
+
+        [Required]
+        [StringLength(150, ErrorMessage = "Nom trop long, max. 50 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nom de la categorie :")]
+        public string CategoryName { get; set; }
+
+        [StringLength(100, ErrorMessage = "Nom du contact trop long, max. 200 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Courte description :")]
+        public string Description { get; set; }
+    }
+
+    /// <summary>
     /// Modèle des données contenu dans Supplier
     /// </summary>
     public class SupplierViewModel
