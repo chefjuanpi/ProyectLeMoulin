@@ -12,50 +12,27 @@ namespace IdentitySample.Controllers
 {
     public class SendMailerController : Controller
     {
-        //
-        // GET: /SendMailer/  
-        public ActionResult Index()
+       public static bool sendMailer(MailMessage mail)
         {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult _SendMail(MailModel obj)
-        {
-           
-            if (ModelState.IsValid)
+            try
             {
-                
-                MailMessage mail = new MailMessage();
-                mail.ReplyToList.Add(new MailAddress(obj.from));
-                mail.To.Add(obj.to);
-                mail.From = new MailAddress(obj.from);
-                mail.Subject = obj.Subject;
-                string Body = obj.Body;
-                mail.Body = Body;
-                mail.IsBodyHtml = true;
-                sendMailer(mail);
-                ViewBag.courriel = "- votre courriel à été envoyé";
-                return RedirectToAction(obj.adresse);
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new System.Net.NetworkCredential
+                (ConfigurationManager.AppSettings["mailAccount"],
+                ConfigurationManager.AppSettings["mailPassword"]);// Enter seders User name and password  
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+
+                return true;
             }
-            else
+            catch (Exception)
             {
-                ViewBag.courriel = "- votre courriel à été envoyé";
-                return RedirectToAction(obj.adresse);
+                return false;
+                throw;
             }
         }
-
-        public static void sendMailer(MailMessage mail)
-        {
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
-            smtp.Port = 587;
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new System.Net.NetworkCredential
-            (ConfigurationManager.AppSettings["mailAccount"],
-            ConfigurationManager.AppSettings["mailPassword"]);// Enter seders User name and password  
-            smtp.EnableSsl = true;
-            smtp.Send(mail);
-        }
-
     }
 }

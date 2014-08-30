@@ -30,6 +30,9 @@ namespace IdentitySample
             bundles.Add(new ScriptBundle("~/bundles/calendar").Include(
                 "~/Scripts/fullcalendar.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/form").Include(
+                "~/Scripts/jquery.form.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap*",
                       "~/fonts/font-awesome/css/font-awesome.css",

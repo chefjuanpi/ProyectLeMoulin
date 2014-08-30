@@ -1,7 +1,13 @@
 ﻿using IdentitySample.Models;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -312,7 +318,6 @@ namespace IdentitySample.Controllers
         /// </summary>
         /// <param name="Evenement"> est le modele</param>
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Evenements_a_venir(EvenementsViewModel Evenement)
         {
             CoeurContainer db = new CoeurContainer();
@@ -346,6 +351,9 @@ namespace IdentitySample.Controllers
                     n.AdresseEvenement = Evenement.Adresse;
                     db.Evenements.Add(n);
                     await db.SaveChangesAsync();
+                    string s = "<a " + ConfigurationManager.AppSettings["server"] + "Evenements/Details?nom=" 
+                                + n.TitleEvenement + "' ><b>" + n.TitleEvenement + "</b></a>";
+                    if (n.Poublier == true) publierFB(s, n.PrincipalPhotoEvenement, HomeController.Nohtml(n.Text));
                 }
             }
             else
@@ -363,24 +371,27 @@ namespace IdentitySample.Controllers
                 }
                 else
                 {
-                    var modifEvenement = (from n in db.Evenements
-                                          where n.EventId == x
-                                          select n).SingleOrDefault();
+                    var n = (from e in db.Evenements
+                             where e.EventId == x
+                             select e).SingleOrDefault();
 
-                    if(modifEvenement != null)
+                    if(n != null)
                     { 
-                    modifEvenement.UserId = guid;
-                    modifEvenement.TitleEvenement = titre;
-                    modifEvenement.Text = Evenement.Contenu;
-                    modifEvenement.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
-                    modifEvenement.Poublier = Evenement.Publier;
-                    modifEvenement.DateStart = Evenement.DateStart;
-                    modifEvenement.HourStart = Evenement.HourStart;
-                    modifEvenement.DateEnd = Evenement.DateEnd;
-                    modifEvenement.HourEnd = Evenement.HourEnd;
-                    modifEvenement.PlaceEvenement = Evenement.Lieu;
-                    modifEvenement.AdresseEvenement = Evenement.Adresse;
+                    n.UserId = guid;
+                    n.TitleEvenement = titre;
+                    n.Text = Evenement.Contenu;
+                    n.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
+                    n.Poublier = Evenement.Publier;
+                    n.DateStart = Evenement.DateStart;
+                    n.HourStart = Evenement.HourStart;
+                    n.DateEnd = Evenement.DateEnd;
+                    n.HourEnd = Evenement.HourEnd;
+                    n.PlaceEvenement = Evenement.Lieu;
+                    n.AdresseEvenement = Evenement.Adresse;
                     await db.SaveChangesAsync();
+                    string s = "<a " + ConfigurationManager.AppSettings["server"] + "Evenements/Details?nom="
+                            + n.TitleEvenement + "' ><b>" + n.TitleEvenement + "</b></a>";
+                    if (n.Poublier == true) publierFB(s, n.PrincipalPhotoEvenement, HomeController.Nohtml(n.Text));
                     }
                 }
             }
@@ -492,12 +503,13 @@ namespace IdentitySample.Controllers
         public async Task<ActionResult> Notice(NouvellesViewModel notice)
         {
             CoeurContainer db = new CoeurContainer();
+            
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
             // recoupere la liste des titres éxistants
             var listTitres = (from a in db.Nouvelles select a.NouvelleTitle).ToList();
             string titre = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(notice.Nouvelletitre.ToLower());
-
+            
             if (notice.PId == null)
             {
                 //valide si existe déjà un nouvelle avec le titre du modele
@@ -518,7 +530,9 @@ namespace IdentitySample.Controllers
                     n.Publier = notice.Publier;
                     db.Nouvelles.Add(n);
                     await db.SaveChangesAsync();
-
+                    string s = "<a " + ConfigurationManager.AppSettings["server"] + "Evenements/Details?nom="
+                            + n.NouvelleTitle + "' ><b>" + n.NouvelleTitle + "</b></a>";
+                    if (n.Publier == true) publierFB(s, n.NouvellePrincipalPhoto, HomeController.Nohtml(n.NouvelleText));
                 }
             }
             else
@@ -537,17 +551,20 @@ namespace IdentitySample.Controllers
                 }
                 else
                 {
-                    var modifnotice = (from n in db.Nouvelles
-                                       where n.NouvelleId == x
-                                       select n).SingleOrDefault();
-                    if(modifnotice != null)
+                    var n = (from e in db.Nouvelles
+                             where e.NouvelleId == x
+                             select e).SingleOrDefault();
+                    if(n != null)
                     { 
-                    modifnotice.UserId = guid;
-                    modifnotice.NouvelleTitle = titre;
-                    modifnotice.NouvelleText = notice.NouvelleText;
-                    modifnotice.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
-                    modifnotice.Publier = notice.Publier;
+                    n.UserId = guid;
+                    n.NouvelleTitle = titre;
+                    n.NouvelleText = notice.NouvelleText;
+                    n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
+                    n.Publier = notice.Publier;
                     await db.SaveChangesAsync();
+                    string s = "<a " + ConfigurationManager.AppSettings["server"] + "Evenements/Details?nom="
+                        + n.NouvelleTitle + "' ><b>" + n.NouvelleTitle + "</b></a>";
+                    if (n.Publier == true) publierFB(s, n.NouvellePrincipalPhoto, HomeController.Nohtml(n.NouvelleText));
                     }
                 }
             }
@@ -623,6 +640,25 @@ namespace IdentitySample.Controllers
         public ActionResult Achats()
         {
             return View();
+        }
+
+        /// <summary>
+        /// function qui permet envoyer par courriel une publication a une compte de facebbok cible
+        /// </summary>
+        /// <param name="sujet">sujet du courriel</param>
+        /// <param name="photo">path de photo dans le serveur</param>
+        /// <param name="resumen">300 charecteres du texte sans code html</param>
+        private void publierFB(string sujet, string photo, string resumen)
+        {
+            MailMessage mail = new MailMessage();
+            mail.To.Add(ConfigurationManager.AppSettings["fb"]);
+            mail.From = new MailAddress(ConfigurationManager.AppSettings["mailAccount"]);
+            mail.Subject = sujet + " " + resumen;
+            mail.Body = "";
+            mail.IsBodyHtml = true;
+            //mail.Attachments.Add(new Attachment(photo)); parler avec dave su ça
+            SendMailerController.sendMailer(mail);
+            throw new NotImplementedException();
         }
     }
 }

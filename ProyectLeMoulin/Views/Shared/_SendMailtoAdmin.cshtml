@@ -6,24 +6,17 @@
 }
 <h3>@ViewBag.Title</h3>
 
-
-@using (Html.BeginForm("_SendMail", "Home", FormMethod.Post, new
-    {
-        @class = "form-horizontal",
-        role = "form",
-        @id = "Formulaire"
-    }))
-{
+<form method="post" class="form-horizontal" role="form" id="sendMail">
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary("", new { @class = "text-error" })
-    <div class="text-success"> @ViewBag.courriel </div>
+    @Html.ValidationSummary("", new { @class = "text-danger", @id="validation" })
+    <div class="text-success" id="success"> @ViewBag.courriel </div>
     <div class="input-group row">
         @Html.LabelFor(m => m.to, new { @class = "input-group-addon" })
         @Html.TextBoxFor(m => m.to, new { @class = "form-control", @placeholder = "votrenom@courriel.com" })
     </div>
     <div class="input-group row">
         <p class="input-group-addon">sujet &nbsp; &nbsp; &nbsp;</p>
-           @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
     </div>
     <div class="input-group row">
         @Html.LabelFor(m => m.Body, new { @class = "input-group-addon" })
@@ -31,9 +24,22 @@
     </div>
     <input type="hidden" name="adresse" value="@ViewData["adresse"]" />
     <input type="submit" value="Envoyer" class="btn btn-success" />
-}
+</form>
 
-@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+    @Scripts.Render("~/bundles/form")
+    <script type="text/javascript">
+        $(function () {
+            $("#sendMail").ajaxForm({
+                url: "/Home/_SendMail?obj",
+                dataType: 'json',
+                success: processJson
+            });
 
+            function processJson(data) { 
+                // 'data' is the json object returned from the server 
+                $("#validation").html("");
+                $("#success").html(data);
+            }
+        });
+    </script>

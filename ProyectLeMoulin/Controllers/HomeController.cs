@@ -77,7 +77,7 @@ namespace IdentitySample.Controllers
         /// </summary>
         /// <param name="tiny">texte a retirer le html</param>
         /// <returns>un string avec les premiers 200 characteres du parametre string</returns>
-        public string Nohtml(string tiny)
+        public static string Nohtml(string tiny)
         {
             int y;
             string temp = "";
@@ -145,7 +145,7 @@ namespace IdentitySample.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult _SendMail(MailModel obj)
+        public JsonResult _SendMail(MailModel obj)
         {
             if (ModelState.IsValid)
             {
@@ -158,15 +158,12 @@ namespace IdentitySample.Controllers
                 string Body = "Courriel de " + obj.to + " Contenu:  " + obj.Body;
                 mail.Body = Body;
                 mail.IsBodyHtml = true;
-                SendMailerController.sendMailer(mail);
+                if (!SendMailerController.sendMailer(mail)) return Json("error", JsonRequestBehavior.AllowGet);
                 ViewBag.courriel = "- votre courriel à été envoyé";
-                return RedirectToAction(obj.adresse, "Home");
+                return Json("success", JsonRequestBehavior.AllowGet);  
             }
-            else
-            {
-                ViewBag.courriel = "- votre courriel à été envoyé";
-                return RedirectToAction("Contact", "Home");
-            }
+            return Json("error", JsonRequestBehavior.AllowGet); 
+
         }
     }
 }

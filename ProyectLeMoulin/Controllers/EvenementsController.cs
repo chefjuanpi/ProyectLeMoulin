@@ -45,14 +45,11 @@ namespace IdentitySample.Controllers
 
             List<evDisplay> eve = new List<evDisplay>();
 
-            //instancier un controleur pour utiliser la fonction NOHTML
-            HomeController nohtml = new HomeController();
-
             //change le format des donnes au format desire et ajoute certain information.
             for (int x = 0; x < calendar.Count(); x++)
             {
                 int i = calendar.Count();
-                calendar[x].description = nohtml.Nohtml(calendar[x].description) + " ...";
+                calendar[x].description = HomeController.Nohtml(calendar[x].description) + " ...";
 
                 string s = String.Format("{0:yyyy-MM-dd}", calendar[x].date);
                 s += "T";
