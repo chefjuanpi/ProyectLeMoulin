@@ -129,7 +129,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CategoryProduct_Products1">
+        <Association Name="FK_CategoryProduct_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="CategoryProduct" Type="Self.CategoryProduct" Multiplicity="*" />
           <ReferentialConstraint>
@@ -242,7 +242,7 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="CategoryProduct" EntitySet="CategoryProduct" />
           </AssociationSet>
-          <AssociationSet Name="FK_CategoryProduct_Products1" Association="Self.FK_CategoryProduct_Products1">
+          <AssociationSet Name="FK_CategoryProduct_Products" Association="Self.FK_CategoryProduct_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="CategoryProduct" EntitySet="CategoryProduct" />
           </AssociationSet>
