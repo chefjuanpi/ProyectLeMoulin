@@ -9,14 +9,14 @@
     <ul class="nav navbar-nav navbar-right">
         @if (User.IsInRole("Administrateur") )
         {
-            <li class="alert-warning ">
+            <li class="alert alert-warning ">
                 <a href="/">Page Publique</a>
             </li>
-            <li class="alert-info">
+            <li class="alert alert-info">
                 <a href="/Admin/Index" >Administration</a>
             </li>
         }
-        <li class="alert-success">
+        <li class="alert alert-success">
             @{
                 CoeurContainer db = new CoeurContainer();
                 var id = User.Identity.GetUserId();

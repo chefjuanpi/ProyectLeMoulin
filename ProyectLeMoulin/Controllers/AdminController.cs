@@ -312,6 +312,7 @@ namespace IdentitySample.Controllers
         /// </summary>
         /// <param name="Evenement"> est le modele</param>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Evenements_a_venir(EvenementsViewModel Evenement)
         {
             CoeurContainer db = new CoeurContainer();

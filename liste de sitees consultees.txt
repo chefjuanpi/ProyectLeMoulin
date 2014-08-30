@@ -108,3 +108,5 @@ plus de details sur configuration courriel admin
 http://www.asp.net/mvc/overview/getting-started/create-an-aspnet-mvc-5-web-app-with-email-confirmation-and-password-reset
 
 
+return value de partial view partial view result
+http://stackoverflow.com/questions/4050596/partial-asp-net-mvc-view-submit

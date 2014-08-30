@@ -1,7 +1,9 @@
 ﻿using IdentitySample.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net.Mail;
 using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
@@ -134,6 +136,37 @@ namespace IdentitySample.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        /// <summary>
+        /// FUnction pour envoyer courriel du site web au adminitrateur du site, avec un copie a le courriel de qui avez envoyé le courriel
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _SendMail(MailModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                MailMessage mail = new MailMessage();
+                mail.ReplyToList.Add(new MailAddress(obj.to));
+                mail.To.Add(ConfigurationManager.AppSettings["mailAccount"]);
+                mail.From = new MailAddress(ConfigurationManager.AppSettings["mailAccount"]);
+                mail.To.Add(new MailAddress(obj.to));
+                mail.Subject = "site web - " + obj.Subject;
+                string Body = "Courriel de " + obj.to + " Contenu:  " + obj.Body;
+                mail.Body = Body;
+                mail.IsBodyHtml = true;
+                SendMailerController.sendMailer(mail);
+                ViewBag.courriel = "- votre courriel à été envoyé";
+                return RedirectToAction(obj.adresse, "Home");
+            }
+            else
+            {
+                ViewBag.courriel = "- votre courriel à été envoyé";
+                return RedirectToAction("Contact", "Home");
+            }
         }
     }
 }

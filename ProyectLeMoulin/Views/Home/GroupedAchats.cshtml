@@ -11,7 +11,7 @@
     </div>
     <div class="panel-body">
         <p> ecris nous un message ou @Html.ActionLink("contactez-Nous", "Contact", "Home")</p>
-        @Html.Partial("SendMail")
+        @Html.Partial("_SendMailtoAdmin", new ViewDataDictionary(ViewData) { { "adresse", "GroupedAchats" } })
     </div>
 </div>
 

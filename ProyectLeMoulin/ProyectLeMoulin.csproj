@@ -690,9 +690,8 @@
     <Content Include="Views\Admin\Pages.cshtml" />
     <Content Include="Views\Evenements\Index.cshtml" />
     <Content Include="Views\Home\GroupedAchats.cshtml" />
-    <Content Include="Views\SendMailer\Index.cshtml" />
     <Content Include="Views\Shared\_AdminMaster.cshtml" />
-    <Content Include="Views\Shared\SendMail.cshtml" />
+    <Content Include="Views\Shared\_SendMailtoAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />

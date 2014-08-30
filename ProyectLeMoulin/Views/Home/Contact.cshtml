@@ -20,7 +20,7 @@
         </address>
 
         <section id="emailForm">
-            @Html.Partial("SendMail")
+            @Html.Partial("_SendMailtoAdmin", new ViewDataDictionary(ViewData) { { "adresse", "Contact" } })
         </section>
 
         </div>
