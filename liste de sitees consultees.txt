@@ -107,6 +107,7 @@ http://www.asp.net/identity/overview/features-api/account-confirmation-and-passw
 plus de details sur configuration courriel admin
 http://www.asp.net/mvc/overview/getting-started/create-an-aspnet-mvc-5-web-app-with-email-confirmation-and-password-reset
 
+controle certificats de secourité
+http://windows.microsoft.com/es-es/windows/import-export-certificates-private-keys#1TC=windows-7
 
-return value de partial view partial view result
-http://stackoverflow.com/questions/4050596/partial-asp-net-mvc-view-submit
+
