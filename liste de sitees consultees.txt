@@ -47,7 +47,7 @@ timespan to hours min string
 http://stackoverflow.com/questions/18482460/how-convert-timespan-to-24-hours-and-minutes-string
 
 detection de la resolution d'ecran
-
+in js screen.with();
 
 conversor hexa rgba
 http://hex2rgba.devoth.com/

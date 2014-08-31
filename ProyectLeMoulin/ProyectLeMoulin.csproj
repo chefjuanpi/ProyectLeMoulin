@@ -482,6 +482,7 @@
     <Content Include="tinyfilemanager.net\resources\files\1509057_407332502731526_1822018121_n.jpg" />
     <Content Include="tinyfilemanager.net\resources\files\297258_10151556305136562_67690510_n.jpg" />
     <Content Include="tinyfilemanager.net\resources\files\483212_366270143486563_1736725180_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\files\carre rouge.jpg" />
     <Content Include="tinyfilemanager.net\resources\files\desert.jpg" />
     <Content Include="tinyfilemanager.net\resources\files\gradient.psd" />
     <Content Include="tinyfilemanager.net\resources\files\Home Renovations.xlsx" />
@@ -498,6 +499,7 @@
     <Content Include="tinyfilemanager.net\resources\thumbs\1509057_407332502731526_1822018121_n.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\297258_10151556305136562_67690510_n.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\483212_366270143486563_1736725180_n.jpg" />
+    <Content Include="tinyfilemanager.net\resources\thumbs\carre rouge.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\desert.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\logo.jpg" />
     <Content Include="tinyfilemanager.net\resources\thumbs\main_img.png" />

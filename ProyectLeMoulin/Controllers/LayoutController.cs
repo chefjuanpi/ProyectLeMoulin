@@ -41,7 +41,7 @@ namespace IdentitySample.Controllers
             //creation du menu paremetrée
             for (int i = 0; i < parents.Count; i++)
             {
-                if (i == 5)
+                if (i == 4)
                 {
                     menu += "<li class='dropdown-submenu'><a>Autres<span class='caret'></span>";
                     menu += "</a><ul class='dropdown-menu' id='menuOutres' >";
@@ -100,7 +100,7 @@ namespace IdentitySample.Controllers
                     }
                 }
             //fermeture extra si le menu include Outres
-            if (parents.Count > 5)
+            if (parents.Count > 4)
             {
                 menu += "</ul></li>";
             }

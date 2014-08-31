@@ -3,96 +3,97 @@
 @{
     ViewBag.Title = "Page d'accueil";
 }
-    <div class="jumbotron container">
-        <div class="col-md-8">
-            <div class="fotorama" data-width="100%" data-ratio="700/467" data-auto="false"
-                 data-autoplay="true" data-swipe="true" data-keyboard="true" data-loop="true" data-allowfullscreen="true">
-                @foreach (var p in ViewBag.Photos)
-                {
-                    <div class="resp" data-img='../tinyfilemanager.net/resources/files/@p.photos' data-thumb='../tinyfilemanager.net/resources/thumbs/@p.photos'>
-                        
-                       <h2>@p.titre</h2>
-                       <h3>
-                           de @p.dateStart.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
-                           au @p.dateEnd.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
-                       </h3>
-                        <p>@Html.Raw(@p.details)</p>
-                       <a href='/Evenements/Details?nom=@p.titre'>
-                          <div class="btn btn-success"><i class="fa fa-binoculars"></i> <strong> Plus de details...</strong></div>
-                       </a>
-                    </div>
-                }
+    <div class="jumbotron">
+        <div class="container">
+            <div class="col-md-8">
+                <div class="fotorama" data-width="100%" data-ratio="700/467" data-auto="false"
+                     data-autoplay="true" data-swipe="true" data-keyboard="true" data-loop="true" data-allowfullscreen="true">
+                    @foreach (var p in ViewBag.Photos)
+                    {
+                        <div class="resp" data-img='../tinyfilemanager.net/resources/files/@p.photos' data-thumb='../tinyfilemanager.net/resources/thumbs/@p.photos'>
+
+                            <h3>@p.titre</h3>
+                            <h4>
+                                de @p.dateStart.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                                au @p.dateEnd.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                            </h4>
+                            <p>@Html.Raw(@p.details)</p>
+                            <a href='/Evenements/Details?nom=@p.titre'>
+                                <div class="btn btn-success"><strong><i class="fa fa-binoculars fa-lg"></i> Plus de details...</strong></div>
+                            </a>
+                        </div>
+                    }
+                </div>
+
             </div>
-
+            <div id="fotorama_info"></div>
         </div>
-        <div id="fotorama_info"></div>
-
     </div>
 
     <hr style="height:2px;border:none;color:#333;background-color:#333;" />
     <div class="row">
-        <h1 class="text-center">Nouvelles</h1>
-        <br />
-        <div id="NContainer">
-            <img class="image-preview" id="attent" src="~/Images/attent.gif" />
+        <div class="col-md-3">
+            <h1 class="text-center" style="color:darkblue;"><i class="fa fa-thumbs-o-up fa-lg"></i> Suivez-Nous</h1>
+            @Html.Raw(ViewBag.Gauche)
         </div>
-    </div>
-    <hr style="height:2px;border:none;color:#333;background-color:#333;" />
-
-
-    <div class="row">
-        <div class="col-md-4" style="margin-left:5px;">
-            <h3>Suivez-Nous</h3>
-            <div class="white-bg">
-                @Html.Raw(ViewBag.Gauche)
+        <div class="col-md-9">
+            <h1 class="text-center text-warning"><i class="fa fa-newspaper-o"></i> Nouvelles</h1>
+            <br />
+            <div id="NContainer">
+                <img class="image-preview" id="attent" src="~/Images/attent.gif" />
             </div>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-7">
-            @Html.Raw(ViewBag.Accueil)
-        </div>
     </div>
+    
+<hr style="height:2px;border:none;color:#333;background-color:#333;" />
+
+<br />
+<br />
+        <div class="row">
+            <div class="container col-md-offset-1 col-md-1">
+                @Html.Raw(ViewBag.Accueil)
+            </div>
+         </div>
 
 
-    @section Scripts {
-         <script type="text/x-handlebars-template" id="NewsTemplate">
-             <div class="col-md-1"></div>
-            {{#each}}
-             <div class="col-md-2">
-                 <img class="img-circle img-responsive" src='../tinyfilemanager.net/resources/thumbs/{{photo}}' />
-                 <b class="text-center">{{titre}}</b>
-                 <p class="text-center">{{{text}}}</p>
-                 <a class="btn btn-default col-xs-offset-4" href="/Nouvelles/Details?title={{titre}}">Plus...</a>
-             </div>
-             <div class="col-md-1"></div>
-            {{/each}}
-             <div class="col-md-2">
-                 <i class="fa fa-plus-circle fa-5x col-xs-offset-4" ></i><br />
-                 <b class="text-center">Toutes les nouvelles</b>
-                 <p class="text-center">la liste de toutes les nouvelles du site</p>
-                 <a class="btn btn-default col-xs-offset-4" href="/Nouvelles/">Click ici</a></div>
-        </script>
-        <script type="text/javascript">
-            var TemplateNews = null;
-            var TemplateNews = Handlebars.compile($("#NewsTemplate").html());
-
-            $(function () {
-                $('.fotorama').on('fotorama:show', function (e, fotorama) {
-                    //if (screen.width < 750) {
-                    //    $(".resp").each(function () {
-                    //        console.log($(this).attr("data - thumb"));
-                    //        $(this).attr("data-img", $(this).attr(data - thumb));
-                    //    });
-                    //}
-                    var a = fotorama.activeFrame.html;
-                    $("#fotorama_info").html(a);
-                      }).fotorama();
-
-                //cherche les nouvelles
-                $.getJSON("/Home/getNews", null, function (data) {
-                    var result = TemplateNews(data);
-                    $("#NContainer").html(result);
-                });
+@section Scripts {
+    <script type="text/x-handlebars-template" id="NewsTemplate">
+         <div class="col-md-1"></div>
+        {{#each}}
+         <div class="col-md-3">
+             <img class="img-circle img-responsive" src='../tinyfilemanager.net/resources/thumbs/{{photo}}' />
+             <b class="text-center">{{titre}}</b>
+             <p class="text-center">{{{text}}}</p>
+             <a class="btn btn-default col-xs-offset-4" href="/Nouvelles/Details?title={{titre}}">Plus...</a>
+         </div>
+        {{/each}}
+         <div class="col-md-2">
+             <h1><i class="fa fa-plus-circle fa-3x col-xs-offset-4 text-warning"></i></h1>
+             <b class="text-center">Toutes les nouvelles</b>
+             <p class="text-center">la liste de toutes les nouvelles du site</p>
+             <a class="btn btn-default col-xs-offset-4" href="/Nouvelles/">Click ici</a></div>
+    </script>
+    <script type="text/javascript">
+        var TemplateNews = null;
+        var TemplateNews = Handlebars.compile($("#NewsTemplate").html());
+    
+        $(function () {
+            $('.fotorama').on('fotorama:show', function (e, fotorama) {
+                //if (screen.width < 750) {
+                //    $(".resp").each(function () {
+                //        console.log($(this).attr("data - thumb"));
+                //        $(this).attr("data-img", $(this).attr(data - thumb));
+                //    });
+                //}
+                var a = fotorama.activeFrame.html;
+                $("#fotorama_info").html(a);
+            }).fotorama();
+    
+            //cherche les nouvelles
+            $.getJSON("/Home/getNews", null, function (data) {
+                var result = TemplateNews(data);
+                $("#NContainer").html(result);
             });
-        </script>
-    }
+        });
+    </script>
+}

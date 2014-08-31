@@ -22,8 +22,11 @@
         @Html.LabelFor(m => m.Body, new { @class = "input-group-addon" })
         @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "8" })
     </div>
-    <input type="hidden" name="adresse" value="@ViewData["adresse"]" />
-    <input type="submit" value="Envoyer" class="btn btn-success" />
+    <br />
+    <div class="input-group row">
+        <input type="hidden" name="adresse" value="@ViewData["adresse"]" />
+        <button type="submit" class="btn btn-success"><b><i class="fa fa-envelope"></i> Envoyer</b> </button>
+    </div>
 </form>
 
     @Scripts.Render("~/bundles/jqueryval")
