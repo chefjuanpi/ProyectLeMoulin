@@ -34,7 +34,7 @@ namespace IdentitySample
                 "~/Scripts/jquery.form.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/fonts/font-awesome/css/font-awesome.css",
+                //"~/fonts/font-awesome/css/font-awesome.css",
                 "~/Content/fotorama.css"
             ));
 
