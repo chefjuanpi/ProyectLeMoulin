@@ -81,6 +81,9 @@ http://android.stackexchange.com/questions/5039/how-do-i-view-source-in-the-andr
 white backgroud in bootstrap
 http://stackoverflow.com/questions/21477101/white-background-class-in-bootstrap
 
+custom coeur de bootstrap
+http://getbootstrap.com/customize/
+
 nav bar fix not sur le contenu
 http://stackoverflow.com/questions/10336194/twitter-bootstrap-top-nav-bar-blocking-top-content-of-the-page
 
@@ -109,5 +112,13 @@ http://www.asp.net/mvc/overview/getting-started/create-an-aspnet-mvc-5-web-app-w
 
 controle certificats de secourité
 http://windows.microsoft.com/es-es/windows/import-export-certificates-private-keys#1TC=windows-7
+
+sendmailer tutorial
+http://mvc4beginner.com/Sample-Code/MVC4-Sending-Email/ASP.NET-MVC4-Sending-Email-With-Attachment.html
+
+envoie de formulaire par ajax 
+http://jquery.malsup.com/form/#ajaxForm
+
+
 
 

@@ -14,6 +14,8 @@ namespace IdentitySample.Models
         public DateTime dateStart { get; set; }
 
         public DateTime dateEnd { get; set; }
+
+        public string details { get; set; }
     }
 
     public class evDisplay
@@ -58,6 +60,8 @@ namespace IdentitySample.Models
         public string titre { get; set; }
 
         public string text { get; set; }
+
+        public string photo { get; set; }
     }
 
 }

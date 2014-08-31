@@ -6,6 +6,7 @@
     <meta name="description" content="@ViewBag.Message" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/cssBOOT")
     <style type="text/css">
          /*sections desc orders pour faire sticky footer, le footer on bas de l'écran tôut le temp*/
         html, body {
@@ -20,6 +21,16 @@
         }
         /*final sticky footer*/
 
+        .orange-t5
+        {
+            background-image: linear-gradient(to bottom, #FFF2D8 ,rgba(248, 248, 248, 0.5) 100%);
+            background-color: rgba(248, 248, 248, 0.5);
+        }
+        .buttonBox {
+            position: absolute;
+            bottom:0;
+            right:0;
+        }
     </style>
 
     <!--[if gte IE 9]>
@@ -36,13 +47,6 @@
     @Scripts.Render("~/bundles/handlebars")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
-        document.createElement('header');
-        document.createElement('footer');
-        document.createElement('section');
-        document.createElement('article');
-        document.createElement('aside');
-        document.createElement('nav');
-
         $(function () {
             $.ajaxSetup({ cache: false });
 
@@ -84,9 +88,12 @@
             '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-5G9V7N');</script>
     <!-- End Google Tag Manager -->
+
+
     <div class="wrapper">
-        <nav class="navbar nav-justified navbar-default" role="navigation">
-            <a href="/"> <img class="col-md-2 col-xs-6 img-responsive" src="../Images/logo.png" alt="Le Moulin d'à côté'" /></a>
+
+        <nav class="navbar navbar-default orange-t5" role="navigation">
+            <a href="/"> <img class="col-md-2 col-lg-3 col-xs-6 img-responsive" src="../Images/logo.png" alt="Le Moulin d'à côté'" /></a>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -95,23 +102,30 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse" id="side-menu" role="navigation">
+            <div class="navbar-collapse collapse " id="side-menu" role="navigation">
+
                 <ul class="nav navbar-nav">
+
                     <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
                     @Html.Action("Menu", "Layout")
                     <li>
-                        @Html.Partial("_LoginPartial")
+                        <strong>
+                            @Html.Partial("_LoginPartial")
+                        </strong>
                     </li>
+
                 </ul>
+
             </div>
         </nav>
-        <div class="container alert white-t4">
+
+        <div class="container">
             @RenderBody()
         </div>
         <div class="push"></div>
     </div>
     <footer class="panel-footer footer">
-            <p>Le Moulin d'À Côté &copy; @DateTime.Now.Year - Crée par Pablo Aguilar-Lliguin, Steeve Bouchard et Michel Goyette</p>
+        <p>Le Moulin d'À Côté &copy; @DateTime.Now.Year - Crée par Pablo Aguilar-Lliguin, Steeve Bouchard et Michel Goyette</p>
     </footer>
 </body>
 </html>

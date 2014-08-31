@@ -43,7 +43,7 @@ namespace IdentitySample.Controllers
             {
                 if (i == 5)
                 {
-                    menu += "<li class='dropdown-submenu'><a>Outres";
+                    menu += "<li class='dropdown-submenu'><a>Autres<span class='caret'></span>";
                     menu += "</a><ul class='dropdown-menu' id='menuOutres' >";
                 }
 

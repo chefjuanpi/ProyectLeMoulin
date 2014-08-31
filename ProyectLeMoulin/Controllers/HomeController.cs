@@ -27,9 +27,15 @@ namespace IdentitySample.Controllers
                               photos = e.PrincipalPhotoEvenement,
                               titre = e.TitleEvenement,
                               dateStart = e.DateStart,
-                              dateEnd = e.DateEnd
+                              dateEnd = e.DateEnd,
+                              details =  e.Text
                           }).Take(5).ToList();
-            
+
+            for (int x = 0; x < photos.Count(); x++)
+            {
+                photos[x].details = Nohtml(photos[x].details) + " ...";
+            }
+
             ViewBag.photos = photos;
 
             //obtienne de la bd le contenu principal de la page
@@ -60,8 +66,9 @@ namespace IdentitySample.Controllers
                              select new titreTextNouvelle
                              {
                                  titre = n.NouvelleTitle,
-                                 text = n.NouvelleText
-                             }).Take(5).ToList();
+                                 text = n.NouvelleText,
+                                 photo = n.NouvellePrincipalPhoto
+                             }).Take(3).ToList();
 
             for (int x = 0; x < nouvelles.Count(); x++)
             {

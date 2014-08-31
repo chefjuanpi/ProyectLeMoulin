@@ -3,34 +3,42 @@
 @{
     ViewBag.Title = "Page d'accueil";
 }
-    <div class="row">
+    <div class="jumbotron container">
         <div class="col-md-8">
-            <div id="fotorama_info"></div>
-            <div class="fotorama" data-width="100%" data-ratio="700/467" data-nav="thumbs" data-auto="false"
+            <div class="fotorama" data-width="100%" data-ratio="700/467" data-auto="false"
                  data-autoplay="true" data-swipe="true" data-keyboard="true" data-loop="true" data-allowfullscreen="true">
                 @foreach (var p in ViewBag.Photos)
                 {
                     <div class="resp" data-img='../tinyfilemanager.net/resources/files/@p.photos' data-thumb='../tinyfilemanager.net/resources/thumbs/@p.photos'>
-                        <a class='fotorama__select' href='/Evenements/Details?nom=@p.titre'>
-                            <h2>@p.titre</h2>
-                            <h3>
-                                de @p.dateStart.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
-                                au @p.dateEnd.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
-                            </h3>
-                        </a>
+                        
+                       <h2>@p.titre</h2>
+                       <h3>
+                           de @p.dateStart.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                           au @p.dateEnd.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                       </h3>
+                        <p>@Html.Raw(@p.details)</p>
+                       <a href='/Evenements/Details?nom=@p.titre'>
+                          <div class="btn btn-success"><strong>Plus details...</strong></div>
+                       </a>
                     </div>
                 }
             </div>
 
         </div>
-        <div class="col-md-4">
-            <h2>Nouvelles</h2>
-            <div id="NContainer">
-                <img class="image-preview" id="attent" src="~/Images/attent.gif" />
-            </div>
+        <div id="fotorama_info"></div>
+
+    </div>
+
+    <hr style="height:2px;border:none;color:#333;background-color:#333;" />
+    <div class="row">
+        <h1 class="text-center">Nouvelles</h1>
+        <br />
+        <div id="NContainer">
+            <img class="image-preview" id="attent" src="~/Images/attent.gif" />
         </div>
     </div>
-<br/>
+    <hr style="height:2px;border:none;color:#333;background-color:#333;" />
+
 
     <div class="row">
         <div class="col-md-4" style="margin-left:5px;">
@@ -48,13 +56,21 @@
 
     @section Scripts {
          <script type="text/x-handlebars-template" id="NewsTemplate">
+             <div class="col-md-1"></div>
             {{#each}}
-             <div class="alert alert-info">
-                 - <b>{{titre}}</b>
-                 {{{text}}}
-                 <a class="btn btn-default" href="/Nouvelles/Details?title={{titre}}">Plus...</a>
+             <div class="col-md-2">
+                 <img class="img-circle img-responsive" src='../tinyfilemanager.net/resources/thumbs/{{photo}}' />
+                 <b class="text-center">{{titre}}</b>
+                 <p class="text-center">{{{text}}}</p>
+                 <a class="btn btn-default col-xs-offset-4" href="/Nouvelles/Details?title={{titre}}">Plus...</a>
              </div>
+             <div class="col-md-1"></div>
             {{/each}}
+             <div class="col-md-2">
+                 <i class="fa fa-plus-circle fa-5x col-xs-offset-4" ></i><br />
+                 <b class="text-center">Toutes les nouvelles</b>
+                 <p class="text-center">la liste de toutes les nouvelles du site</p>
+                 <a class="btn btn-default col-xs-offset-4" href="/Nouvelles/">Click ici</a></div>
         </script>
         <script type="text/javascript">
             var TemplateNews = null;

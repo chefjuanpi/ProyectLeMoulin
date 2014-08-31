@@ -658,7 +658,6 @@ namespace IdentitySample.Controllers
             mail.IsBodyHtml = true;
             //mail.Attachments.Add(new Attachment(photo)); parler avec dave su ça
             SendMailerController.sendMailer(mail);
-            throw new NotImplementedException();
         }
     }
 }

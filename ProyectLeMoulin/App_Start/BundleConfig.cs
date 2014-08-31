@@ -34,10 +34,13 @@ namespace IdentitySample
                 "~/Scripts/jquery.form.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap*",
-                      "~/fonts/font-awesome/css/font-awesome.css",
-                      "~/Content/fotorama.css"
-                      ));
+                "~/fonts/font-awesome/css/font-awesome.css",
+                "~/Content/fotorama.css"
+            ));
+
+            bundles.Add(new StyleBundle("~/Content/cssBOOT").Include(
+                "~/Content/bootstrap*"
+            ));
 
             bundles.Add(new StyleBundle("~/Content/admincss").Include(
                     "~/Content/Adminbootstrap.css",
