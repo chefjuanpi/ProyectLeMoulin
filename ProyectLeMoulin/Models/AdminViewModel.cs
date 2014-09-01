@@ -185,7 +185,6 @@ namespace IdentitySample.Models
         [Display(Name = "Presentation du Groupre de achats")]
         public string Contenu { get; set; }
 
-        [DataType(DataType.)]
         [Display(Name = "Partager sur Facebbok ")]
         public bool fb { get; set; }
     }
