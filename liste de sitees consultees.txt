@@ -119,6 +119,11 @@ http://mvc4beginner.com/Sample-Code/MVC4-Sending-Email/ASP.NET-MVC4-Sending-Emai
 envoie de formulaire par ajax 
 http://jquery.malsup.com/form/#ajaxForm
 
+Tutorial NUGET
+http://docs.nuget.org/docs/start-here/using-the-package-manager-console
 
+user login in asp.net
+http://stackoverflow.com/questions/6086529/how-to-check-user-is-logged-in-in-asp-net-c
 
-
+envoie model plein to view exaple checkbox on
+http://stackoverflow.com/questions/16435448/how-to-set-a-checkbox-by-default-checked-in-asp-net-mvc

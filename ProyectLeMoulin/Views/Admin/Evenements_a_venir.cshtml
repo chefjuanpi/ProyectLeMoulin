@@ -85,7 +85,7 @@
                 @Html.LabelFor(m => m.Publier)
             </div>
             <div class="checkbox" >
-                <input type="checkbox" checked = "checked" id = "fb1" name="fb" />
+                @Html.CheckBoxFor(m => m.fb, new {@checked = "checked", @id = "fb1"  })
                 @Html.LabelFor(m => m.fb)
             </div>
             @Html.HiddenFor(m => m.PId, new { @id = "new123" })

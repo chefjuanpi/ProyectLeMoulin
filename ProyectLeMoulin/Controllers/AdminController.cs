@@ -93,14 +93,14 @@ namespace IdentitySample.Controllers
 
             CoeurContainer db = new CoeurContainer();
 
-            ViewBag.TinyAccueil = (from p in db.Pages
-                                   where p.MenuName == "Groupe d'achats"
-                                   select p.Text).Single();
-
-            ViewBag.titre = (from p in db.Pages
-                             where p.MenuName == "Groupe d'achats"
-                             select p.Title).Single();
-            return View();
+            var a  = (from p in db.Pages
+                      where p.MenuName == "Groupe d'achats"
+                      select p).Single();
+            PachatsViewModel m = new PachatsViewModel();
+            m.Contenu = a.Text;
+            m.Titre = a.Title;
+            m.fb = true;
+            return View(m);
         }
 
         /// <summary>
@@ -123,8 +123,9 @@ namespace IdentitySample.Controllers
             await db.SaveChangesAsync();
             if(page.fb)
             {
-                string s = gAchats.Title + "  " + Server.MapPath("Home/GroupedAchats") + " Nouvelles dans le groupe d'achats éntre dans notre site por savoir plus... ";
-                publierFB(s, "/Images/logo.png");
+                string s = gAchats.Title + "  " + ": Sont des Nouvelles dans le groupe d'achats éntre dans notre site por savoir plus... "
+                    + ConfigurationManager.AppSettings["server"] + "Home/GroupedAchats";
+                publierFB(s, "/Images/logo.jpg");
             }
 
             return View();
@@ -194,6 +195,13 @@ namespace IdentitySample.Controllers
                         }
                         db.Pages.Add(n);
                         await db.SaveChangesAsync();
+                        if (n.Poublier == true && page.fb == true)
+                        {
+                            string p = "/Images/logo.jpg";
+                            string s = n.Title + "  " + " pour plus d'information sur cette événement, clic dans le lien "
+                                + ConfigurationManager.AppSettings["server"] + "Nouvelles/Details?title=" + n.Title.Replace(' ', '_');
+                            publierFB(s, p);
+                        }
                     }
                 }
             }
@@ -224,27 +232,34 @@ namespace IdentitySample.Controllers
                     }
                     else
                     {
-                        var modPage = (from n in db.Pages
-                                       where n.PageID == x
-                                       select n).SingleOrDefault();
+                        var n = (from a in db.Pages
+                                 where a.PageID == x
+                                 select a).SingleOrDefault();
                         //si éxiste la page fait l'edition
-                        if(modPage !=null)
+                        if(n !=null)
                         { 
-                            modPage.UserId = guid;
-                            modPage.Title = titre;
-                            modPage.Text = page.Contenu;
-                            modPage.MenuName = menu;
-                            modPage.Poublier = page.Publier;
-                            modPage.Principal = page.Principal;
+                            n.UserId = guid;
+                            n.Title = titre;
+                            n.Text = page.Contenu;
+                            n.MenuName = menu;
+                            n.Poublier = page.Publier;
+                            n.Principal = page.Principal;
                             if (page.Principal == false)
                             {
-                                modPage.SousMenu = page.menuParent;
+                                n.SousMenu = page.menuParent;
                             }
                             else
                             {
-                                modPage.SousMenu = null;
+                                n.SousMenu = null;
                             }
                             await db.SaveChangesAsync();
+                            if (n.Poublier == true && page.fb == true)
+                            {
+                                string p = "/Images/logo.jpg";
+                                string s = n.Title + "  " + " pour plus d'information sur cette événement, clic dans le lien "
+                                                + ConfigurationManager.AppSettings["server"] + "Nouvelles/Details?title=" + n.Title;
+                                publierFB(s, p);
+                            }
                         }
                     }
                 }
@@ -400,9 +415,9 @@ namespace IdentitySample.Controllers
                     await db.SaveChangesAsync();
                     if (n.Poublier == true && Evenement.fb == true)
                     {
-                        string p = (n.PrincipalPhotoEvenement == null) ? "/Images/logo.png" : "/tinyfilemanager.net/resources/files/" + n.PrincipalPhotoEvenement;
-                        string s = n.TitleEvenement + "  " + Server.MapPath("Nouvelles/Details?title=" + n.TitleEvenement)
-                            + " pour plus d'information sur cette événement, clic dans le lien";
+                        string p = (n.PrincipalPhotoEvenement == null) ? "/Images/logo.jpg" : "/tinyfilemanager.net/resources/files/" + n.PrincipalPhotoEvenement;
+                        string s = n.TitleEvenement + "  " + " pour plus d'information sur cette événement, clic dans le lien  "
+                            + ConfigurationManager.AppSettings["server"] + "Evenements/Details?title=" + n.TitleEvenement;
                         publierFB(s, p );
                     }
                 }
@@ -442,9 +457,9 @@ namespace IdentitySample.Controllers
                         await db.SaveChangesAsync();
                         if (n.Poublier == true && Evenement.fb == true)
                         {
-                            string p = (n.PrincipalPhotoEvenement == null) ? "/Images/logo.png" : "/tinyfilemanager.net/resources/files/" + n.PrincipalPhotoEvenement;
-                            string s = n.TitleEvenement + "  " + Server.MapPath("Nouvelles/Details?title=" + n.TitleEvenement)
-                                + " pour plus d'information sur cette événement, clic dans le lien";
+                            string p = (n.PrincipalPhotoEvenement == null) ? "/Images/logo.jpg" : "/tinyfilemanager.net/resources/files/" + n.PrincipalPhotoEvenement;
+                            string s = n.TitleEvenement + "  " + " pour plus d'information sur cette événement, clic dans le lien  "
+                            + ConfigurationManager.AppSettings["server"] + "Evenements/Details?title=" + n.TitleEvenement;
                             publierFB(s, p);
                         }
                     }
@@ -587,9 +602,9 @@ namespace IdentitySample.Controllers
                     await db.SaveChangesAsync();
                     if (n.Publier == true && notice.fb == true)
                     {
-                        string p = (n.NouvellePrincipalPhoto == null) ? "/Images/logo.png" : "/tinyfilemanager.net/resources/files/" + n.NouvellePrincipalPhoto;
-                        string s = n.NouvelleTitle + "  " + Server.MapPath("Nouvelles/Details?title=" + n.NouvelleTitle)
-                            + " pour plus d'information sur cette nouvelle, clic dans le lien";
+                        string p = (n.NouvellePrincipalPhoto == null) ? "/Images/logo.jpg" : "/tinyfilemanager.net/resources/files/" + n.NouvellePrincipalPhoto;
+                        string s = n.NouvelleTitle + "  " + " pour plus d'information sur cette nouvelle, clic dans le lien  "
+                            + ConfigurationManager.AppSettings["server"] + "Nouvelles/Details?title=" + n.NouvelleTitle;
                         publierFB(s, p);
                     }
                 }
@@ -623,9 +638,9 @@ namespace IdentitySample.Controllers
                         await db.SaveChangesAsync();
                         if (n.Publier == true && notice.fb == true)
                         {
-                            string p = (n.NouvellePrincipalPhoto == null) ? "/Images/logo.png" : "/tinyfilemanager.net/resources/files/" + n.NouvellePrincipalPhoto;
-                            string s = n.NouvelleTitle + "  " + Server.MapPath("Nouvelles/Details?title=" + n.NouvelleTitle)
-                                + " pour plus d'information sur cette nouvelle, clic dans le lien";
+                            string p = (n.NouvellePrincipalPhoto == null) ? "/Images/logo.jpg" : "/tinyfilemanager.net/resources/files/" + n.NouvellePrincipalPhoto;
+                            string s = n.NouvelleTitle + "  " + " pour plus d'information sur cette nouvelle, clic dans le lien  "
+                                + ConfigurationManager.AppSettings["server"] + "Nouvelles/Details?title=" + n.NouvelleTitle;
                             publierFB(s, p);
                         }
                     }

@@ -29,6 +29,7 @@
             tinymce.activeEditor.getBody().setAttribute('contenteditable', true);
             $("#menuparents option[value='0']").prop('selected', true);
             $("#fb1").prop('checked', true);
+            $("#fb1").val(true);
             $("#publier").prop('checked', false);
             $("#publier").publier12();
         });

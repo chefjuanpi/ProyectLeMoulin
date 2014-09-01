@@ -66,7 +66,7 @@ namespace IdentitySample.Controllers
                     title = calendar[x].title,
                     start = s,
                     end = e,
-                    url = "/Evenements/Details?title=" + calendar[x].title,
+                    url = "/Evenements/Details?title=" + calendar[x].title.Replace(' ','_'),
                     description = calendar[x].description,
                     photo = calendar[x].photo,
                     backgroundColor = "#009d28"
@@ -85,9 +85,10 @@ namespace IdentitySample.Controllers
         /// correspondant sinon retourne une page vide</returns>
         public ActionResult Details(string title)
         {
+            string t = title.Replace('_', ' ');
             CoeurContainer db = new CoeurContainer();
             Evenement ev = (from e in db.Evenements
-                            where e.Poublier == true & e.TitleEvenement == title
+                            where e.Poublier == true & e.TitleEvenement == t
                             select e).SingleOrDefault();
             if(ev == null)
             {

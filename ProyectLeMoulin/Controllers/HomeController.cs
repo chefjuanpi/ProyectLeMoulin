@@ -121,9 +121,10 @@ namespace IdentitySample.Controllers
         /// <returns>two viewBags avec l'information necesaire pour creer la page</returns>
         public ActionResult Pages(string pname)
         {
+            string x = pname.Replace('_', ' ');
             CoeurContainer db = new CoeurContainer();
             var page = (from p in db.Pages
-                        where p.Poublier == true & p.MenuName == pname
+                        where p.Poublier == true & p.MenuName == x
                         select p).FirstOrDefault();
             
             if (page == null)

@@ -24,9 +24,9 @@ namespace IdentitySample.Controllers
         public ActionResult Details(string title)
         {
             CoeurContainer db = new CoeurContainer();
-
+            string t = title.Replace('_', ' ');
             var news = (from n in db.Nouvelles
-                        where n.Publier == true & n.NouvelleTitle == title
+                        where n.Publier == true & n.NouvelleTitle == t
                         select n).SingleOrDefault();
             if (news == null)
             {

@@ -64,12 +64,12 @@ namespace IdentitySample.Controllers
                                 menu += "href='/Home/Contact'>" + parents[i].nom + "</a></li>";
                                 break;
                             default:
-                                menu += "href='/home/pages?pname=" + parents[i].nom + "' >" + parents[i].nom + "</a></li>";
+                                menu += "href='/home/pages?pname=" + parents[i].nom.Replace(' ', '_') + "' >" + parents[i].nom + "</a></li>";
                                 break;
                         }
                         for(int k = 0; k < eMenu.Count; k++)
                         {
-                            menu += "<li><a href='/home/pages?pname=" + eMenu[k].nom + "' >" + eMenu[k].nom + "</a></li>";
+                            menu += "<li><a href='/home/pages?pname=" + eMenu[k].nom.Replace(' ', '_') + "' >" + eMenu[k].nom + "</a></li>";
                         }
                         menu += "</ul></li>";
                     }
@@ -91,10 +91,10 @@ namespace IdentitySample.Controllers
                                 }
                                 break;
                             case 4:
-                                menu += "<li><a href='/Home/Contact'>" + parents[i].nom + "</a></li>";
+                                menu += "<li><a href='/Home/Contact'>" + parents[i].nom.Replace(' ', '_') + "</a></li>";
                                 break;
                             default :
-                                menu += "<li><a href='/home/pages?pname=" + parents[i].nom + "' >" + parents[i].nom + "</a></li>";
+                                menu += "<li><a href='/home/pages?pname=" + parents[i].nom.Replace(' ', '_') + "' >" + parents[i].nom + "</a></li>";
                                 break;
                         }
                     }
