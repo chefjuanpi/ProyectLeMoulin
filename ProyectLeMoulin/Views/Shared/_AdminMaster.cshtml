@@ -43,7 +43,6 @@
 
 
 
-                        <ul class="nav navbar-top-links navbar-right">
                         @Html.Partial("_LoginPartial")
             @*<li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -254,23 +253,24 @@
         <!-- /.dropdown-user -->
     </li>*@
         <!-- /.dropdown -->
-    </ul>
+
             <!-- /.navbar-top-links -->
 
             <div class="navbar-static-side nav-stacked container" role="navigation">
                 <div class="sidebar-collapse navbar-collapse collapse" id="side-menu">
                     <ul class="nav">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Rechercher...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
+                        <!-- search bar 
+                             <li class="sidebar-search">
+                              <div class="input-group custom-search-form">
+                                  <input type="text" class="form-control" placeholder="Rechercher...">
+                                  <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button">
+                                          <i class="fa fa-search"></i>
+                                      </button>
+                                  </span>
+                              </div>
+
+                          </li>  -->
                         <li>
                             <a href='@Url.Action("Index", "Admin")'><i class="fa fa-dashboard fa-fw"></i> Accueil</a>
                         </li>
@@ -317,6 +317,7 @@
                                     <a href='@Url.Action("Pages", "Admin")'><i class="fa fa-file-o fa-fw"></i> Gestor des Pages</a>
                                 </li>
                             </ul>
+                        </li>
                         <li>
                             <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Groupe de achats<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

@@ -1,4 +1,4 @@
-﻿@model IdentitySample.Models.Pachats
+﻿@model IdentitySample.Models.PachatsViewModel
 @{
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
@@ -17,9 +17,8 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
     <div class="input-group row">
-        @Html.LabelFor(m => m.Titre)
-        @Html.TextBoxFor(m => m.Titre, new { @class = "col-md-4 col-xs-4 form-control"})
-        <p class="help-block">Coller ici le code Facebook pour lier la page, pour obtenir le code click <a href="https://developers.facebook.com/docs/plugins/like-box-for-pages " target="_blank">ICI</a>, il est plus simple prend l'option Iframe</p>
+        @Html.LabelFor(m => m.Titre, new { @class = "input-group-addon" })
+        @Html.TextBoxFor(m => m.Titre, new { @class = "col-md-4 col-xs-4 form-control", @id="titre"})
     </div>
     <br />
 
@@ -34,6 +33,10 @@
     <br />
     <br />
     <div class="row alert alert-info">
+        <div class="checkbox">
+            <input type="checkbox" checked="checked" id="fb1" name="fb" />
+            @Html.LabelFor(m => m.fb)
+        </div>
         <button type="submit" class="btn btn-success col-md-3" id="save">
             <i class="fa fa-save"></i><b> Enregistrer les changements</b>
         </button>
@@ -48,7 +51,7 @@
         $(function () {
 
 
-            $("#social").html("@ViewBag.Gauche");
+            $("#titre").html("@ViewBag.titre");
             //parametres de ouverture du tinymce
             tfm_path = '/tinyfilemanager.net';
             tinymce.init({

@@ -28,11 +28,17 @@ namespace IdentitySample.Controllers
             var news = (from n in db.Nouvelles
                         where n.Publier == true & n.NouvelleTitle == title
                         select n).SingleOrDefault();
+            if (news == null)
+            {
+                ViewBag.errorMessage = "Le lien démandé marche pas, SVP vous devez aller a la page d'accueil pour continuer ";
+                return View("Error");
+            }
+
             var ID = news.UserId;
             var user = (from n in db.AspNetUsers
                         where n.Id == ID
                         select n).SingleOrDefault();
-            ViewBag.author = user.Prenom + user.Nom;
+            ViewBag.author = user.Prenom + " " + user.Nom;
             ViewBag.news = news;
 
             return View();

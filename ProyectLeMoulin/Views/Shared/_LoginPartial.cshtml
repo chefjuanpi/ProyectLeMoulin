@@ -6,25 +6,25 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        @if (User.IsInRole("Administrateur") )
+    <ul class="nav navbar-nav navbar-top-links navbar-right">
+        @if (User.IsInRole("Administrateur"))
         {
             <li class="alert-warning ">
                 <a href="/">Page Publique</a>
             </li>
             <li class="alert-info">
-                <a href="/Admin/Index" >Administration</a>
+                <a href="/Admin/Index">Administration</a>
             </li>
         }
         <li class="alert-success">
             @{
-                CoeurContainer db = new CoeurContainer();
-                var id = User.Identity.GetUserId();
-                var nomUtilisateur = (from u in db.AspNetUsers
-                                where u.Id == id
-                                select u.Prenom).Single();
-              }
-            <a href="/Manage/Index">Allo <b > @nomUtilisateur </b> !</a>
+        CoeurContainer db = new CoeurContainer();
+        var id = User.Identity.GetUserId();
+        var nomUtilisateur = (from u in db.AspNetUsers
+                              where u.Id == id
+                              select u.Prenom).Single();
+            }
+            <a href="/Manage/Index">Allo <b> @nomUtilisateur </b> !</a>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Sortir</a></li>
     </ul>

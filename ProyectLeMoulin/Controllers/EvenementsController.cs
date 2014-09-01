@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
@@ -64,7 +66,7 @@ namespace IdentitySample.Controllers
                     title = calendar[x].title,
                     start = s,
                     end = e,
-                    url = "/Evenements/Details?nom=" + calendar[x].title,
+                    url = "/Evenements/Details?title=" + calendar[x].title,
                     description = calendar[x].description,
                     photo = calendar[x].photo,
                     backgroundColor = "#009d28"
@@ -81,15 +83,19 @@ namespace IdentitySample.Controllers
         /// <param name="nom">string </param>
         /// <returns>si le nom corresponde a un evenement existant retourne a la view les donnes 
         /// correspondant sinon retourne une page vide</returns>
-        public ActionResult Details(string nom)
+        public ActionResult Details(string title)
         {
             CoeurContainer db = new CoeurContainer();
             Evenement ev = (from e in db.Evenements
-                            where e.Poublier == true & e.TitleEvenement == nom
+                            where e.Poublier == true & e.TitleEvenement == title
                             select e).SingleOrDefault();
-           ViewBag.evenement = (ev != null) ? ev: null;
+            if(ev == null)
+            {
+                ViewBag.errorMessage = "Le lien démandé marche pas, SVP vous devez aller a la page d'accueil pour continuer ";
+                return View("Error");
+            }
 
-            
+           ViewBag.evenement = ev;
             return View();
         }
     }

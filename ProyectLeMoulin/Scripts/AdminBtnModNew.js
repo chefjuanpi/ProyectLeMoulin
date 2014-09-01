@@ -24,11 +24,13 @@
             $("#Formulaire").show();
             $("#btnAnuler").show();
             $("#Formulaire").find("input[type=text], textarea, input[type=hidden]").val("");
-            $("#publier").prop('checked', false);
             tinymce.editors[0].setContent("");
             $("#Formulaire *").attr("disabled", false);
             tinymce.activeEditor.getBody().setAttribute('contenteditable', true);
             $("#menuparents option[value='0']").prop('selected', true);
+            $("#fb1").prop('checked', true);
+            $("#publier").prop('checked', false);
+            $("#publier").publier12();
         });
 
         //Bouton annuler metre vide le formulaire, le cacher et montre, la barre des boutons modifier, suprimer et nouveau,
@@ -82,12 +84,20 @@
 
         //function pour controler si le checkbox publier est selectionne.
         $.fn.publier12 = function () {
+            console.log($(this));
             if ($(this).is(":checked")) {
-                $("#save").attr("class", "btn btn-success col-md-offset-3 col-md-2");
+                $("#save").attr("class", "btn btn-success col-md-offset-1");
                 $("#save").html('<i class="fa fa-save"></i><b> Enregistrer</b>');
+                $("#fb1").attr("disabled", false);
             } else {
-                $("#save").attr("class", "btn btn-danger col-md-offset-3 col-md-2");
+                $("#fb1").attr("disabled", true);
+                $("#save").attr("class", "btn btn-danger col-md-offset-1");
                 $("#save").html('<i class="fa fa-save"></i><b> Enregistrer sans publier</b>');
+
+            }
+            if ($(this).is(":disabled")) {
+                $("#fb1").prop('checked', 'checked');
+                $("#fb1").attr("disabled", true);
             }
         };
 

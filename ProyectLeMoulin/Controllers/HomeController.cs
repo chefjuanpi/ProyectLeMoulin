@@ -39,16 +39,18 @@ namespace IdentitySample.Controllers
             ViewBag.photos = photos;
 
             //obtienne de la bd le contenu principal de la page
-            ViewBag.Accueil = (from s in db.Sections
-                                   from p in s.Pages
-                                   where p.MenuName == "Accueil" & s.Nom == "AccueilContenu"
-                                   select s.Contenu).Single();
+            var a = (from s in db.Sections
+                     from p in s.Pages
+                     where p.MenuName == "Accueil" & s.Nom == "AccueilContenu"
+                     select s.Contenu).Single();
+            ViewBag.Accueil = a;
 
             //obtienne de la bd le code des plug-ins sociales
             ViewBag.Gauche = (from s in db.Sections
                               from p in s.Pages
                               where p.MenuName == "Accueil" & s.Nom == "AccueilGauche"
                               select s.Contenu).Single();
+            ViewBag.Message = Nohtml(a);
              
             return View();
         }
@@ -75,7 +77,6 @@ namespace IdentitySample.Controllers
                 int i = nouvelles.Count();
                 nouvelles[x].text = Nohtml(nouvelles[x].text) + " ...";
             }
-
             return Json(nouvelles, JsonRequestBehavior.AllowGet);
         }
 
@@ -110,7 +111,6 @@ namespace IdentitySample.Controllers
                 }
                 y = (y == 0) ? tiny.IndexOf(">", start) + 1 : y;
             }
-
             return temp;
         }
 
@@ -125,9 +125,15 @@ namespace IdentitySample.Controllers
             var page = (from p in db.Pages
                         where p.Poublier == true & p.MenuName == pname
                         select p).FirstOrDefault();
-            if (page == null) return Redirect("/");
+            
+            if (page == null)
+            {
+                ViewBag.errorMessage = "Le lien démandé marche pas, SVP vous devez aller a la page d'accueil pour continuer ";
+                return View("Error");
+            }
             ViewBag.Title = page.Title;
             ViewBag.contenu = page.Text;
+            ViewBag.Message = Nohtml(page.Text);
             return View();
         }
 
@@ -140,7 +146,19 @@ namespace IdentitySample.Controllers
 
         public ActionResult GroupedAchats()
         {
-            ViewBag.Message = "Your contact page.";
+            CoeurContainer db = new CoeurContainer();
+            var page = (from p in db.Pages
+                        where p.MenuName == "Groupe d'achats"
+                        select p).Single();
+
+            if (page == null)
+            {
+                ViewBag.errorMessage = "Le lien démandé marche pas, SVP vous devez aller a la page d'accueil pour continuer ";
+                return View("Error");
+            }
+            ViewBag.Title = page.Title;
+            ViewBag.contenu = page.Text;
+            ViewBag.Message = Nohtml(page.Text);
 
             return View();
         }
@@ -170,7 +188,6 @@ namespace IdentitySample.Controllers
                 return Json("success", JsonRequestBehavior.AllowGet);  
             }
             return Json("error", JsonRequestBehavior.AllowGet); 
-
         }
     }
 }

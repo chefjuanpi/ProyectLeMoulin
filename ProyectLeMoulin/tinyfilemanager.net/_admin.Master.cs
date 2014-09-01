@@ -4,6 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Routing;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Helpers;
 
 namespace IdentitySample.tinyfilemanager.net
 {
@@ -12,6 +17,7 @@ namespace IdentitySample.tinyfilemanager.net
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            
         }
     }
 }

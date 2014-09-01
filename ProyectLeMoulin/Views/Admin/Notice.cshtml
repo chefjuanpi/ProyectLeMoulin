@@ -54,9 +54,13 @@
                 @Html.CheckBoxFor(m => m.Publier, new { @id = "publier" })
                 @Html.LabelFor(m => m.Publier)
             </div>
+            <div class="checkbox">
+                <input type="checkbox" checked="checked" id="fb1" name="fb" />
+                @Html.LabelFor(m => m.fb)
+            </div>
             @Html.HiddenFor(m => m.PId, new { @id = "new123" })
         </div>
-        <button type="submit" class="btn btn-danger col-md-offset-3 col-md-2" id="save">
+        <button type="submit" class="btn btn-danger col-md-offset-3 col-md-3" id="save">
             <i class="fa fa-save"></i><b> Enregistrer sans publier</b>
         </button>
     </div>
@@ -111,7 +115,7 @@
                         tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
                         $("#new123").val(id);
                         $.getJSON("getNDetails", { NouvelleId: id }, function (data) {
-                            $("#demotextbox").val(data.image);
+                            $("#photoPrincipal").val(data.image);
                             $("#publier").prop('checked', data.publier);
                             tinymce.editors[0].setContent(data.page);
                             $("#titre").val(data.Titre);

@@ -41,7 +41,10 @@
             <div class="checkbox">
                 @Html.CheckBoxFor(m => m.Principal, new { @id = "menuPrincipal" })
                 @Html.LabelFor(m => m.Principal)
-                
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" checked="checked" id="fb1" name="fb" />
+                @Html.LabelFor(m => m.fb)
             </div>
             <div class="col-md-4">
                 @Html.DropDownListFor(m => m.menuParent, new SelectList(new string[] {"soccer"}), ( new {@class="form-control", @id="menuparents"}))

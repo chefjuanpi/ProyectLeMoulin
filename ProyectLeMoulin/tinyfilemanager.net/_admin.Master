@@ -1,4 +1,7 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="_admin.master.cs" Inherits="IdentitySample.tinyfilemanager.net._admin" %>
+﻿
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="_admin.master.cs" Inherits="IdentitySample.tinyfilemanager.net._admin" %>
+
+<%@ Import Namespace="IdentitySample.Models" %>
 
 <!DOCTYPE html>
 
@@ -30,6 +33,37 @@
                 </button>
                 <p class="navbar-brand" >Panel d'administration</p>
             </div>
+                        <!-- /.navbar-header -->
+            <ul class="nav navbar-top-links navbar-right">
+                <asp:LoginView ID="LoginView1" runat="server" ViewStateMode="Enabled">
+                    <RoleGroups>
+                        <asp:RoleGroup Roles="Administrateur">
+                            <ContentTemplate>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="alert-warning ">
+                                        <a href="/">Page Publique</a>
+                                    </li>
+                                    <li class="alert-info">
+                                        <a href="/Admin/Index">Administration</a>
+                                    </li>
+                                    <li class="alert-success">
+                                        <% 
+                                            CoeurContainer db = new CoeurContainer();
+                                            var id = HttpContext.Current.User.Identity.Name;
+                                            var nomUtilisateur = (from u in db.AspNetUsers
+                                                                  where u.Email == id
+                                                                  select u.Prenom).Single();
+                                        %>
+                                        <a href="/Manage/Index">Allo <b> <%= nomUtilisateur %> </b> !</a>
+                                    </li>
+                                    <li><a href="/Account/getOut">Sortir</a></li>
+                                </ul>
+                            </ContentTemplate>
+                        </asp:RoleGroup>
+                    </RoleGroups>
+                </asp:LoginView>
+            </ul>
+            <!-- /.navbar-top-links -->
 
              <div class=" navbar-static-side" role="navigation">
                 <div class="sidebar-collapse">
@@ -69,36 +103,53 @@
                             <a href='../UsersAdmin/Index'><i class="fa fa-users fa-fw"></i> Membres &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</a>
                         </li>
                         <li>
-                            <a href='../Admin/Pages'><i class="fa fa-file fa-fw"></i> Pages</a>
+                            <a href="#"><i class="fa fa-file fa-fw"></i> Pages<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href='../Admin/Accueil'><i class="fa fa-home fa-fw"></i> Page d'accueil</a>
+                                </li>
+                                <li>
+                                    <a href='../Admin/Contact'><i class="fa fa-map-marker fa-fw"></i> Contactez nous</a>
+                                </li>
+                                <li>
+                                    <a href='../Admin/Achats'><i class="fa fa-cutlery fa-fw"></i> Presentation G. achats</a>
+                                </li>
+                                <li>
+                                    <a href='../Admin/Pages'><i class="fa fa-file-o fa-fw"></i> Gestor des Pages</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Groupe de achats<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html"><i class="fa fa-pencil-square fa-fw"></i> Nouvelle Comande <span class="fa arrow"></span></a>
+                                    <a href="flot.html"><i class="fa fa-pencil-square fa-fw"></i> Commande de la semaine <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="morris.html"><i class="fa fa-pencil-square-o fa-fw"></i> Écrit comande</a>
+                                            <a href='../AchatAdmin/NewOrder'><i class="fa fa-pencil-square-o fa-fw"></i> Commande globale</a>
                                         </li>
                                         <li>
-                                            <a href="morris.html"><i class="fa fa-align-left fa-fw"></i> listes d'achat</a>
+                                            <a href='../AchatAdmin/Index'><i class="fa fa-align-left fa-fw"></i> listes des produits</a>
                                         </li>
                                         <li>
-                                            <a href="morris.html"><i class="fa fa-file-text-o fa-fw"></i> Reçus du membres</a>
+                                            <a href='../AchatAdmin/MembersOrders'><i class="fa fa-file-text-o fa-fw"></i> Reçus des membres</a>
                                         </li>
                                     </ul>
                                 </li>
+
                                 <li>
-                                    <a href="morris.html"><i class="fa fa-coffee"></i> Produits</a>
+                                    <a href='../AchatAdmin/Categories'><i class="fa fa-truck"></i> Categories</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html"><i class="fa fa-truck"></i> Fourniseurs</a>
+                                    <a href='../AchatAdmin/Products'><i class="fa fa-coffee"></i> Produits</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html"><i class="fa fa-database"></i> Anciennes Comandes</a>
+                                    <a href='../AchatAdmin/Suppliers'><i class="fa fa-truck"></i> Fourniseurs</a>
+                                </li>
+                                <li>
+                                    <a href='../AchatAdmin/OldOrders'><i class="fa fa-database"></i> Anciennes Commandes</a>
                                 </li>
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href='../Admin/Configuration'><i class="fa fa-gear fa-fw"></i> Configuration de base</a>
@@ -117,6 +168,7 @@
         </nav>
         <div id="page-wrapper">
             <div class="row">
+                <br />
                 <div class="col-lg-12">
 
 
@@ -140,4 +192,5 @@
    
 
 </body>
+
 </html>

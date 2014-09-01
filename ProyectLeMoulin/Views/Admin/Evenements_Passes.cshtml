@@ -83,6 +83,10 @@
                 @Html.CheckBoxFor(m => m.Publier, new { @id = "publier" })
                 @Html.LabelFor(m => m.Publier)
             </div>
+            <div class="checkbox" >
+                <input type="checkbox" checked="checked" id="fb1" name="fb" />
+                @Html.LabelFor(m => m.fb)
+            </div>
             @Html.HiddenFor(m => m.PId, new { @id = "new123" })
         </div>
         <button type="submit" class="btn btn-danger col-md-offset-3 col-md-2" id="save">

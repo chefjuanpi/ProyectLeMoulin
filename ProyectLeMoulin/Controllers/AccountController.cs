@@ -75,7 +75,7 @@ namespace IdentitySample.Controllers
             {
                 if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                 {
-                    ViewBag.errorMessage = "You must have a confirmed email to log on.";
+                    ViewBag.errorMessage = "Vouz devez confirmer votre courriel avent de continuer ";
                     return View("Error");
                 }
             }
@@ -376,6 +376,16 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+
+        //
+        // POST: /Account/LogOff
+        [RequireHttps]
+        [Authorize(Roles = "Administrateur")]
+        public ActionResult getOut()
         {
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");

@@ -38,31 +38,19 @@ namespace IdentitySample.Models
         public IEnumerable<SelectListItem> RolesList { get; set; }
     }
 
-    public class NouvellesViewModel
+    public class AccueilViewModel
     {
-        public string PId { get; set; }
-
-        [Required]
-        [StringLength(150, ErrorMessage = "Titre trop long, max. 150 charactéres")]
-        [DataType(DataType.Text)]
-        [Display(Name = "Titre du Notice :")]
-        public string Nouvelletitre { get; set; }
-
-        [StringLength(300, ErrorMessage = "Nom d'image trop long, max. 300 charactéres")]
-        [DataType(DataType.Text)]
-        [Display(Name = "Image Principal")]
-        public string NouvellePhotoPrincipal { get; set; }
-
         [Required]
         [DataType(DataType.Html)]
         [AllowHtml]
-        [Display(Name = "Contenu")]
-        public string NouvelleText { get; set; }
+        [Display(Name = "Contenu de page d'accueil")]
+        public string Contenu { get; set; }
 
-        [Required]
-        [Display(Name = "Publier cette nouvelle ")]
-        public bool Publier { get; set; }
-   }
+        [DataType(DataType.Html)]
+        [AllowHtml]
+        [Display(Name = "Code du facebook")]
+        public string Gauche { get; set; }
+    }
 
     public class PagesViewModel
     {
@@ -93,21 +81,9 @@ namespace IdentitySample.Models
         public bool Principal { get; set; }
 
         public int menuParent { get; set; }
-    }
 
-    public class Pachats
-    {
-        [Required]
-        [StringLength(150, ErrorMessage = "Titre trop long, max. 150 charactéres")]
-        [DataType(DataType.Text)]
-        [Display(Name = "Titre du page :")]
-        public string Titre { get; set; }
-
-        [Required]
-        [DataType(DataType.Html)]
-        [AllowHtml]
-        [Display(Name = "Presentation du Groupre de achats")]
-        public string Contenu { get; set; }
+        [Display(Name = "Partager sur Facebbok ")]
+        public bool fb { get; set; }
     }
 
     public class EvenementsViewModel
@@ -161,19 +137,56 @@ namespace IdentitySample.Models
         [Required]
         [Display(Name = "Metre publique l'evenement ")]
         public bool Publier { get; set; }
+
+        [Display(Name = "Partager sur Facebbok ")]
+        public bool fb { get; set; }
     }
 
-    public class AccueilViewModel
+    public class NouvellesViewModel
     {
+        public string PId { get; set; }
+
+        [Required]
+        [StringLength(150, ErrorMessage = "Titre trop long, max. 150 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Titre du Notice :")]
+        public string Nouvelletitre { get; set; }
+
+        [StringLength(300, ErrorMessage = "Nom d'image trop long, max. 300 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Image Principal")]
+        public string NouvellePhotoPrincipal { get; set; }
+
         [Required]
         [DataType(DataType.Html)]
         [AllowHtml]
-        [Display(Name = "Contenu de page d'accueil")]
-        public string Contenu { get; set; }
+        [Display(Name = "Contenu")]
+        public string NouvelleText { get; set; }
 
+        [Required]
+        [Display(Name = "Publier cette nouvelle ")]
+        public bool Publier { get; set; }
+
+        [Display(Name = "Partager sur Facebbok ")]
+        public bool fb { get; set; }
+    }
+
+    public class PachatsViewModel
+    {
+        [Required]
+        [StringLength(150, ErrorMessage = "Titre trop long, max. 150 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Titre du page :")]
+        public string Titre { get; set; }
+
+        [Required]
         [DataType(DataType.Html)]
         [AllowHtml]
-        [Display(Name = "Code du facebook")]
-        public string Gauche { get; set; }
+        [Display(Name = "Presentation du Groupre de achats")]
+        public string Contenu { get; set; }
+
+        [DataType(DataType.)]
+        [Display(Name = "Partager sur Facebbok ")]
+        public bool fb { get; set; }
     }
 }

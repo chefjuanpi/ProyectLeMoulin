@@ -22,6 +22,15 @@ namespace IdentitySample.tinyfilemanager.net {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
+        /// Contrôle LoginView1.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LoginView LoginView1;
+        
+        /// <summary>
         /// Contrôle ContentPlaceHolder1.
         /// </summary>
         /// <remarks>

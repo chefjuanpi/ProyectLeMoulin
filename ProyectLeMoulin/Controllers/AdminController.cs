@@ -10,6 +10,9 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 
 namespace IdentitySample.Controllers
 {
@@ -31,7 +34,7 @@ namespace IdentitySample.Controllers
         }
 
         /// <summary>
-        /// function Get pour  modif accueil
+        /// function Get pour  recouperer accueil
         /// </summary>
         /// <returns>return de la bd la information enregistre</returns>
         public ActionResult Accueil()
@@ -80,6 +83,50 @@ namespace IdentitySample.Controllers
 
             ViewBag.TinyAccueil = page.Contenu;
             ViewBag.Gauche = page.Gauche;
+            return View();
+        }
+
+        public ActionResult Achats()
+        {
+            ViewBag.Title = "Modifier la page d'accueil";
+            ViewBag.Message = "Edition de la page accueil";
+
+            CoeurContainer db = new CoeurContainer();
+
+            ViewBag.TinyAccueil = (from p in db.Pages
+                                   where p.MenuName == "Groupe d'achats"
+                                   select p.Text).Single();
+
+            ViewBag.titre = (from p in db.Pages
+                             where p.MenuName == "Groupe d'achats"
+                             select p.Title).Single();
+            return View();
+        }
+
+        /// <summary>
+        /// Function Post qui permet sousgarder les changemetns fait dans  la page de presentation du groupe d'achats
+        /// </summary>
+        /// <param name="page"> reçu le model contenant l'information a modifier</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Achats(PachatsViewModel page)
+        {
+            CoeurContainer db = new CoeurContainer();
+
+            var gAchats = (from p in db.Pages
+                              where p.MenuName == "Groupe d'achats"
+                              select p).Single();
+
+            gAchats.Text = page.Contenu;
+            gAchats.Title = page.Titre;
+
+            await db.SaveChangesAsync();
+            if(page.fb)
+            {
+                string s = gAchats.Title + "  " + Server.MapPath("Home/GroupedAchats") + " Nouvelles dans le groupe d'achats éntre dans notre site por savoir plus... ";
+                publierFB(s, "/Images/logo.png");
+            }
+
             return View();
         }
 
@@ -351,9 +398,13 @@ namespace IdentitySample.Controllers
                     n.AdresseEvenement = Evenement.Adresse;
                     db.Evenements.Add(n);
                     await db.SaveChangesAsync();
-                    string s = "<a " + ConfigurationManager.AppSettings["server"] + "Evenements/Details?nom=" 
-                                + n.TitleEvenement + "' ><b>" + n.TitleEvenement + "</b></a>";
-                    if (n.Poublier == true) publierFB(s, n.PrincipalPhotoEvenement, HomeController.Nohtml(n.Text));
+                    if (n.Poublier == true && Evenement.fb == true)
+                    {
+                        string p = (n.PrincipalPhotoEvenement == null) ? "/Images/logo.png" : "/tinyfilemanager.net/resources/files/" + n.PrincipalPhotoEvenement;
+                        string s = n.TitleEvenement + "  " + Server.MapPath("Nouvelles/Details?title=" + n.TitleEvenement)
+                            + " pour plus d'information sur cette événement, clic dans le lien";
+                        publierFB(s, p );
+                    }
                 }
             }
             else
@@ -366,7 +417,7 @@ namespace IdentitySample.Controllers
                 {
 
                     ViewBag.ispostBack = true;
-                    ModelState.AddModelError("", "Éxiste déjà un outre Évenement avec ce Titre, changer le avant de continuer");
+                    ModelState.AddModelError("", "Éxiste déjà un autre Événement avec ce Titre, changer le avant de continuer");
                     return View();
                 }
                 else
@@ -377,21 +428,25 @@ namespace IdentitySample.Controllers
 
                     if(n != null)
                     { 
-                    n.UserId = guid;
-                    n.TitleEvenement = titre;
-                    n.Text = Evenement.Contenu;
-                    n.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
-                    n.Poublier = Evenement.Publier;
-                    n.DateStart = Evenement.DateStart;
-                    n.HourStart = Evenement.HourStart;
-                    n.DateEnd = Evenement.DateEnd;
-                    n.HourEnd = Evenement.HourEnd;
-                    n.PlaceEvenement = Evenement.Lieu;
-                    n.AdresseEvenement = Evenement.Adresse;
-                    await db.SaveChangesAsync();
-                    string s = "<a " + ConfigurationManager.AppSettings["server"] + "Evenements/Details?nom="
-                            + n.TitleEvenement + "' ><b>" + n.TitleEvenement + "</b></a>";
-                    if (n.Poublier == true) publierFB(s, n.PrincipalPhotoEvenement, HomeController.Nohtml(n.Text));
+                        n.UserId = guid;
+                        n.TitleEvenement = titre;
+                        n.Text = Evenement.Contenu;
+                        n.PrincipalPhotoEvenement = Evenement.PhotoPrincipal;
+                        n.Poublier = Evenement.Publier;
+                        n.DateStart = Evenement.DateStart;
+                        n.HourStart = Evenement.HourStart;
+                        n.DateEnd = Evenement.DateEnd;
+                        n.HourEnd = Evenement.HourEnd;
+                        n.PlaceEvenement = Evenement.Lieu;
+                        n.AdresseEvenement = Evenement.Adresse;
+                        await db.SaveChangesAsync();
+                        if (n.Poublier == true && Evenement.fb == true)
+                        {
+                            string p = (n.PrincipalPhotoEvenement == null) ? "/Images/logo.png" : "/tinyfilemanager.net/resources/files/" + n.PrincipalPhotoEvenement;
+                            string s = n.TitleEvenement + "  " + Server.MapPath("Nouvelles/Details?title=" + n.TitleEvenement)
+                                + " pour plus d'information sur cette événement, clic dans le lien";
+                            publierFB(s, p);
+                        }
                     }
                 }
             }
@@ -516,7 +571,7 @@ namespace IdentitySample.Controllers
                 if (listTitres.Contains(titre))
                 {
                     ViewBag.ispostBack = true;
-                    ModelState.AddModelError("", "Éxiste déjà un Nouvelle avec cette Titre, change le titre avant de continuer");
+                    ModelState.AddModelError("", "Éxiste déjà un Nouvelle avec cette Titre, changer le avant de continuer");
                     return View();
                 }
                 else
@@ -530,9 +585,13 @@ namespace IdentitySample.Controllers
                     n.Publier = notice.Publier;
                     db.Nouvelles.Add(n);
                     await db.SaveChangesAsync();
-                    string s = "<a " + ConfigurationManager.AppSettings["server"] + "Evenements/Details?nom="
-                            + n.NouvelleTitle + "' ><b>" + n.NouvelleTitle + "</b></a>";
-                    if (n.Publier == true) publierFB(s, n.NouvellePrincipalPhoto, HomeController.Nohtml(n.NouvelleText));
+                    if (n.Publier == true && notice.fb == true)
+                    {
+                        string p = (n.NouvellePrincipalPhoto == null) ? "/Images/logo.png" : "/tinyfilemanager.net/resources/files/" + n.NouvellePrincipalPhoto;
+                        string s = n.NouvelleTitle + "  " + Server.MapPath("Nouvelles/Details?title=" + n.NouvelleTitle)
+                            + " pour plus d'information sur cette nouvelle, clic dans le lien";
+                        publierFB(s, p);
+                    }
                 }
             }
             else
@@ -546,7 +605,7 @@ namespace IdentitySample.Controllers
                 if (listTitres.Contains(titre))
                 {
                     ViewBag.ispostBack = true;
-                    ModelState.AddModelError("", "Éxiste déjà un Nouvelle avec cette Titre, change le titre avant de continuer");
+                    ModelState.AddModelError("", "Éxiste déjà un Nouvelle avec cette Titre, changer le avant de continuer");
                     return View();
                 }
                 else
@@ -556,15 +615,19 @@ namespace IdentitySample.Controllers
                              select e).SingleOrDefault();
                     if(n != null)
                     { 
-                    n.UserId = guid;
-                    n.NouvelleTitle = titre;
-                    n.NouvelleText = notice.NouvelleText;
-                    n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
-                    n.Publier = notice.Publier;
-                    await db.SaveChangesAsync();
-                    string s = "<a " + ConfigurationManager.AppSettings["server"] + "Evenements/Details?nom="
-                        + n.NouvelleTitle + "' ><b>" + n.NouvelleTitle + "</b></a>";
-                    if (n.Publier == true) publierFB(s, n.NouvellePrincipalPhoto, HomeController.Nohtml(n.NouvelleText));
+                        n.UserId = guid;
+                        n.NouvelleTitle = titre;
+                        n.NouvelleText = notice.NouvelleText;
+                        n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
+                        n.Publier = notice.Publier;
+                        await db.SaveChangesAsync();
+                        if (n.Publier == true && notice.fb == true)
+                        {
+                            string p = (n.NouvellePrincipalPhoto == null) ? "/Images/logo.png" : "/tinyfilemanager.net/resources/files/" + n.NouvellePrincipalPhoto;
+                            string s = n.NouvelleTitle + "  " + Server.MapPath("Nouvelles/Details?title=" + n.NouvelleTitle)
+                                + " pour plus d'information sur cette nouvelle, clic dans le lien";
+                            publierFB(s, p);
+                        }
                     }
                 }
             }
@@ -632,15 +695,11 @@ namespace IdentitySample.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "modifier page des conntacts.";
+            ViewBag.Message = "modifier la page des conntacts.";
 
             return View();
         }
 
-        public ActionResult Achats()
-        {
-            return View();
-        }
 
         /// <summary>
         /// function qui permet envoyer par courriel une publication a une compte de facebbok cible
@@ -648,16 +707,17 @@ namespace IdentitySample.Controllers
         /// <param name="sujet">sujet du courriel</param>
         /// <param name="photo">path de photo dans le serveur</param>
         /// <param name="resumen">300 charecteres du texte sans code html</param>
-        private void publierFB(string sujet, string photo, string resumen)
+        private void publierFB(string sujet, string photo)
         {
             MailMessage mail = new MailMessage();
             mail.To.Add(ConfigurationManager.AppSettings["fb"]);
             mail.From = new MailAddress(ConfigurationManager.AppSettings["mailAccount"]);
-            mail.Subject = sujet + " " + resumen;
+            mail.Subject = sujet;
             mail.Body = "";
             mail.IsBodyHtml = true;
-            //mail.Attachments.Add(new Attachment(photo)); parler avec dave su ça
+            mail.Attachments.Add(new Attachment(Server.MapPath(photo)));
             SendMailerController.sendMailer(mail);
         }
+
     }
 }
