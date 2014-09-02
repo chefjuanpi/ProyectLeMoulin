@@ -48,17 +48,20 @@ namespace IdentitySample.Controllers
                         }).ToList();
             return Json(week, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult ValiderWeek()
-        {
-            EpicerieEntities db = new EpicerieEntities();
-            var week = (from w in db.Weeks select w.WeekId);
-            DateTime fin = (DateTime)(from f in db.Weeks select f.Date_Fin).SingleOrDefault();
-            bool valide = false;
+        //public JsonResult ValiderWeek()
+        //{
+        //    EpicerieEntities db = new EpicerieEntities();
+        //    var week = (from w in db.Weeks select w.WeekId);
+        //    DateTime fin = (DateTime)(from f in db.Weeks 
+        //                              where f.WeekId == week 
+        //                              select f.Date_Fin
+        //                              ).SingleOrDefault();
+        //    bool valide = false;
 
-            if (DateTime.Today <= fin)
-                valide = true;
-            return Json(valide, JsonRequestBehavior.AllowGet);
-        }
+        //    if (DateTime.Today <= (DateTime)fin)
+        //        valide = true;
+        //    return Json(valide, JsonRequestBehavior.AllowGet);
+        //}
 
         public JsonResult GetCategories()
         {
