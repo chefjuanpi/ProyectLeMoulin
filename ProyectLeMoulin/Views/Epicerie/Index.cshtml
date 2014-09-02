@@ -259,19 +259,18 @@
         });
 
         //Fonction permettant d'imprimer le DIV de la facture affichée à l'écran
-        $(function PRINT() {
-            $.getJSON("/Epicerie/ValiderWeek", null, function (data) {
-                if(data.val == true)
-                {
-                    $("#hrefPrint").click(function () {
-                        // Print the DIV.
-                        $("#Facture").print();
-                        return (false);
-                    });
-                }
-            });
+       
+        $("#PrintButton").live("click", function () {
+            var divContents = $("#Facture").html();
+            var printWindow = window.open('', '', 'height=400,width=800');
+            printWindow.document.write('<html><head><title>DIV Contents</title>');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(divContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
         });
-
+        
         function Caltotal(id, p, q) {
             if (action == "AJOUT") {
                 prix = p * q;
@@ -350,12 +349,13 @@
                     </div>
                 </div><div class="col-xs-9"></div>
                 <!--Boutton pour envoyer le panier au serveur-->
+                <h1><b>En cliquant sur le bouton "Envoyez" vous ne pourrez pus effectuer de changement</b></h1>
                 <input type="submit" class="col-xs-2 btn btn-primary" value="Envoyer" />
             </div>
         }
     </div>
 </div>
-<div class="container" id="Bill">
+<div class="container" hidden="hidden" id="Bill">
     <input id="NewBill" name="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture" onclick="FactureCourrante">
     <input id="OldBill" name="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
     <div class="row"><div id="OldBillOutput" class="col-md-4"></div></div>
@@ -381,7 +381,7 @@
         </div>
     </div>
     @*Bouton qui permet d'imprimer le DIV de la facture*@
-    <input id="hrefPrint" type="submit" class="col-xs-2 btn btn-primary" value="Imprimer" onclick="PRINT" />
+    <input id="PrintButton" type="submit" class="col-xs-2 btn btn-primary" value="Imprimer" onclick="PRINT" />
 </div>
 <div style="height:600px; float:left;"></div>
 
