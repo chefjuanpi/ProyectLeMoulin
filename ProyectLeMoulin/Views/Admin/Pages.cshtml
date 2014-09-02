@@ -7,14 +7,21 @@
 <p>
     Selectionne une page dans la liste derulante pour le voir et modifier, ou click sur le bouton
 </p>
+
+<h3 class="text-success">@ViewBag.success</h3>
 <br />
 
 <div class="row">
     @Html.Partial("_AdminButonModifNew")
 </div>
 
-@using (Html.BeginForm("Pages", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", @hidden = "hidden",
-    @id="Formulaire" }))
+@using (Html.BeginForm("Pages", "Admin", FormMethod.Post, new
+{
+    @class = "form-horizontal",
+    role = "form",
+    @hidden = "hidden",
+    @id = "Formulaire"
+}))
 {
     @Html.AntiForgeryToken()
     <hr />
@@ -22,7 +29,7 @@
 
     <div class="input-group row">
         @Html.LabelFor(m => m.Titre, new { @class = "input-group-addon" })
-        @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", @id = "titre", @placeholder = "Ex: Fêtê des Voinsins 2014"})
+        @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", @id = "titre", @placeholder = "Ex: Fêtê des Voinsins 2014" })
     </div>
     <br />
 
@@ -43,15 +50,15 @@
                 @Html.LabelFor(m => m.Principal)
             </div>
             <div class="col-md-4">
-                @Html.DropDownListFor(m => m.menuParent, new SelectList(new string[] {"soccer"}), ( new {@class="form-control", @id="menuparents"}))
+                @Html.DropDownListFor(m => m.menuParent, new SelectList(new string[] { "ERROR!!" }), new { @class = "form-control", @id = "menuparents" })
             </div>
         </div>
     </div>
-            <br />
+    <br />
 
-            <div class="row">
-                @Html.TextAreaFor(m => m.Contenu, new { @id = "elm1", @name = "area", @class = "col-md-12 col-xs-12" })
-            </div>
+    <div class="row">
+        @Html.TextAreaFor(m => m.Contenu, new { @id = "elm1", @name = "area", @class = "col-md-12 col-xs-12" })
+    </div>
     <br />
     <br />
     <div class="row alert alert-info">
@@ -63,7 +70,7 @@
             </div>
 
             <div class="checkbox">
-                @Html.CheckBoxFor(m => m.fb, new {@checked="checked", @id="fb1" })
+                @Html.CheckBoxFor(m => m.fb, new { @checked = "checked", @id = "fb1" })
                 @Html.LabelFor(m => m.fb)
             </div>
             @Html.HiddenFor(m => m.PId, new { @id = "new123" })
@@ -108,8 +115,8 @@
                             },
                             Anuler: function () {
                                 $(this).dialog("close");
+                            }
                         }
-                    }
                 });
             });
 
@@ -117,8 +124,6 @@
                 var result = Templateitems(data);
                 $("#menuparents").html(result);
             });
-
-
 
             $.getJSON("getPages", null, function (data) {
                 var result = Templateitems(data);

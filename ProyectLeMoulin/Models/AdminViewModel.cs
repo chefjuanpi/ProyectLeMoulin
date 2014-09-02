@@ -36,6 +36,8 @@ namespace IdentitySample.Models
         public string Nom { get; set; }
 
         public IEnumerable<SelectListItem> RolesList { get; set; }
+
+        public bool susp { get; set; }
     }
 
     public class AccueilViewModel

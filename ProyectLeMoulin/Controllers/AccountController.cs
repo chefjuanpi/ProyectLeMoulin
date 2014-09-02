@@ -75,7 +75,14 @@ namespace IdentitySample.Controllers
             {
                 if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                 {
-                    ViewBag.errorMessage = "Vouz devez confirmer votre courriel avent de continuer ";
+                    // Pour plus d'informations sur l'activation de la confirmation du compte et la réinitialisation du mot de passe, consultez http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Envoyer un message électronique avec ce lien
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirmez votre compte", "Confirmez votre compte en cliquant <a href=\"" + callbackUrl + "\">ici</a>");
+                    
+                    ViewBag.errorMessage = "Vouz devez confirmer votre courriel avant de continuer, nous viend d'envoyer un nouvelle code a votre courriel. " 
+                                           + "SVP aller a votre courriel pour confirmer votre compte ";
                     return View("Error");
                 }
             }
@@ -90,7 +97,12 @@ namespace IdentitySample.Controllers
                     CoeurContainer db = new CoeurContainer();
                     var id = (from u in db.AspNetUsers
                                  where u.Email == model.Email
-                                 select new { id = u.Id }).Single();
+                                 select new { id = u.Id, susp = u.Suspendre }).Single();
+                    if (id.susp)
+                    {
+                        ViewBag.errorMessage = "Cete compte a été suspendu cumuniques avec le collective pour plus d'information ";
+                        return View("Error");
+                    }
                     var userRoles = UserManager.GetRoles(id.id);
                     if (userRoles.Contains("Administrateur")) return  Redirect("../Admin");
                     return RedirectToLocal("/Epicerie");

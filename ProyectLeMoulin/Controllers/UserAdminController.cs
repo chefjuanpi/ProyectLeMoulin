@@ -150,6 +150,7 @@ namespace IdentitySample.Controllers
                 Email = user.Email,
                 Prenom = user.Prenom,
                 Nom = user.Nom,
+                susp = user.Suspendre,
                 RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
                 {
                     Selected = userRoles.Contains(x.Name),
@@ -240,19 +241,27 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        public JsonResult Suspendre(string id)
+        public JsonResult Suspendre(string id, string type)
         {
             CoeurContainer db = new CoeurContainer();
 
             AspNetUser s = (from r in db.AspNetUsers where r.Id == id select r).SingleOrDefault();
-
-            s.Suspendre = true;
-
+            string result = "un error, SVP essai un outre fois";
+            if(s !=null)
+            { 
+                if (type == "Activer")
+                { 
+                    s.Suspendre = false;
+                    result = "L'utilisateur a été re-activé, et est capable d'entrer au site";
+                }
+                if (type == "Suspendre")
+                {
+                    s.Suspendre = true;
+                    result = "L'utilisateur a été suspendu, et ne posede pas plus d'access au site";
+                }
+            }
             db.SaveChanges();
-
-            string result = "ici le result";
-
-            return Json(result);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 <h2>Attention</h2>
 
+<h4 class="text-success" id="msg"></h4>
 <div class="form-horizontal alert alert-danger">
 
     @using (Html.BeginForm())
@@ -53,37 +54,53 @@
                 </span>
             </div>
 
-            <div class="form-group">
+            <div class="row">
                 <div class="col-md-offset-2">
                     <input type="submit" value="Enregistrer" class="btn btn-danger col-md-2" />
                 </div>
-                <div class="col-md-offset-2">
-                    <div id="btnSuspendre"  class="btn btn-warning col-md-2" >Suspendre</div>
-                </div>
-            </div>
+                @{
+                    if (Model.susp)
+                    {
+                        <div id="btnSuspendre" class="btn btn-info col-md-2 col-md-offset-1">Activer</div>
+                   }
+                   else {
+                        <div id="btnSuspendre" class="btn btn-warning col-md-2 col-md-offset-1">Suspendre</div>
+                    }
+                }
         </div>
-    }
-
     </div>
+                }
 
-    <div class="row">
-        <a href='@Url.Action("Index", "UsersAdmin")' class="btn btn-success col-md-1">
-            <i class="fa fa-arrow-circle-left"></i> Liste
-        </a>
-    </div>
+</div>
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-<script type="text/javascript">
-    $(function () {
-        $("#btnSuspendre").click(function () {
-            var i = $("#idsus").val();
+                    <div class="row">
+                        <a href='@Url.Action("Index", "UsersAdmin")' class="btn btn-success col-md-1">
+                            <i class="fa fa-arrow-circle-left"></i> Liste
+                        </a>
+                    </div>
 
-            console.log(i);
-            $.getJSON("/UsersAdmin/Suspendre", { id: i }, function (data) {
-                $('#msg').html(data);
-            });
-        });
-    });
-        </script>
-    }
+                    @section Scripts {
+                        @Scripts.Render("~/bundles/jqueryval")
+                        <script type="text/javascript">
+                            $(function () {
+                                $("#btnSuspendre").click(function () {
+                                    var i = $("#idsus").val();
+                                    var t = $("#btnSuspendre").html();
+                                    $.getJSON("/UsersAdmin/Suspendre", { id: i, type : t }, function (data) {
+                                        $('#msg').html(data);
+                                        if(t == "Suspendre")
+                                        {
+                                            $("#btnSuspendre").removeClass("btn-warning");
+                                            $("#btnSuspendre").addClass("btn-info");
+                                            $("#btnSuspendre").html("Activer");
+                                        }
+                                        else {
+                                            $("#btnSuspendre").removeClass("btn-info");
+                                            $("#btnSuspendre").addClass("btn-warning");
+                                            $("#btnSuspendre").html("Suspendre");
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                    }

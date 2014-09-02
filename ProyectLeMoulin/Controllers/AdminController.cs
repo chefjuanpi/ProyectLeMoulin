@@ -39,21 +39,22 @@ namespace IdentitySample.Controllers
         /// <returns>return de la bd la information enregistre</returns>
         public ActionResult Accueil()
         {
-            ViewBag.Title = "Modifier la page d'accueil";
+
             ViewBag.Message = "Edition de la page accueil";
 
             CoeurContainer db = new CoeurContainer();
 
-            ViewBag.TinyAccueil = (from s in db.Sections
+            AccueilViewModel a = new AccueilViewModel();
+            a.Contenu = (from s in db.Sections
                                from p in s.Pages
                                where p.MenuName == "Accueil" & s.Nom == "AccueilContenu"
                                select s.Contenu).Single();
 
-            ViewBag.Gauche = (from s in db.Sections
+            a.Gauche = (from s in db.Sections
                               from p in s.Pages
                               where p.MenuName == "Accueil" & s.Nom == "AccueilGauche"
                               select s.Contenu).Single();
-            return View();
+            return View(a);
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace IdentitySample.Controllers
             contenu.Contenu = page.Contenu;
 
             await db.SaveChangesAsync();
-
+            ViewBag.success = "Information sousgarde!!";
             ViewBag.TinyAccueil = page.Contenu;
             ViewBag.Gauche = page.Gauche;
             return View();
@@ -88,7 +89,7 @@ namespace IdentitySample.Controllers
 
         public ActionResult Achats()
         {
-            ViewBag.Title = "Modifier la page d'accueil";
+            ViewBag.Title = "Modifier la page de presentation du groupe d'achats";
             ViewBag.Message = "Edition de la page accueil";
 
             CoeurContainer db = new CoeurContainer();
@@ -121,11 +122,13 @@ namespace IdentitySample.Controllers
             gAchats.Title = page.Titre;
 
             await db.SaveChangesAsync();
+            ViewBag.success = "Information sousgarde!!";
             if(page.fb)
             {
-                string s = gAchats.Title + "  " + ": Sont des Nouvelles dans le groupe d'achats éntre dans notre site por savoir plus... "
-                    + ConfigurationManager.AppSettings["server"] + "Home/GroupedAchats";
-                publierFB(s, "/Images/logo.jpg");
+                string s = gAchats.Title + "  \"" +
+                    ConfigurationManager.AppSettings["server"] + "Home/GroupedAchats \" "  
+                    + " Éxisten des Nouvelles dans le groupe d'achats, click sur le lien por savoir plus... ";
+                publierFB(s, Server.MapPath("/Images/logo.jpg"));
             }
 
             return View();
@@ -195,12 +198,12 @@ namespace IdentitySample.Controllers
                         }
                         db.Pages.Add(n);
                         await db.SaveChangesAsync();
+                        ViewBag.success = "Information sousgarde!!";
                         if (n.Poublier == true && page.fb == true)
                         {
-                            string p = "/Images/logo.jpg";
-                            string s = n.Title + "  " + " pour plus d'information sur cette événement, clic dans le lien "
-                                + ConfigurationManager.AppSettings["server"] + "Nouvelles/Details?title=" + n.Title.Replace(' ', '_');
-                            publierFB(s, p);
+                            string s = n.Title + "  \"" + ConfigurationManager.AppSettings["server"] + "home/pages?pname=" + n.MenuName.Replace(' ', '_')
+                                + "\"  Nous avons actualise l'information dans notre site web pour plus de details clic dans le lien ";
+                            publierFB(s, Server.MapPath("/Images/logo.jpg"));
                         }
                     }
                 }
@@ -208,6 +211,13 @@ namespace IdentitySample.Controllers
             else
             {
                 int x = Convert.ToInt16(page.PId);
+                var parentsList = (from a in db.Pages select a.SousMenu).ToList();
+                if (parentsList.Contains(x) & page.Principal == false)
+                {
+                    ViewBag.ispostBack = true;
+                    ModelState.AddModelError("", "Imposible de changer cette page a sous-menu, cete page est menu principal pour outres pages, retirer les avant");
+                    return View();
+                }
 
                 // actualise la liste titres pour ne prend en consideration dans la recherche le titre actuel
                 listTitres = (from a in db.Pages
@@ -253,12 +263,12 @@ namespace IdentitySample.Controllers
                                 n.SousMenu = null;
                             }
                             await db.SaveChangesAsync();
+                            ViewBag.success = "Information sousgarde!!";
                             if (n.Poublier == true && page.fb == true)
                             {
-                                string p = "/Images/logo.jpg";
-                                string s = n.Title + "  " + " pour plus d'information sur cette événement, clic dans le lien "
-                                                + ConfigurationManager.AppSettings["server"] + "Nouvelles/Details?title=" + n.Title;
-                                publierFB(s, p);
+                                string s = n.Title + "  \"" + ConfigurationManager.AppSettings["server"] + "home/pages?pname=" + n.MenuName.Replace(' ', '_')
+                                    + "\" Nous avons actualise l'information dans notre site web pour plus de details clic dans le lien ";
+                                publierFB(s, Server.MapPath("/Images/logo.jpg"));
                             }
                         }
                     }
@@ -349,12 +359,13 @@ namespace IdentitySample.Controllers
                 {
                     db.Pages.Remove(delpage);
                     await db.SaveChangesAsync();
+                    ViewBag.success = "Information sousgarde!!";
                 }
                 else
                 {
                     ViewBag.ispostBack = true;
                     ModelState.AddModelError("", "Un erreur est produit, la page n'été pas efface !, essai un outre fois");
-                    return Redirect("/Admin/Pages");
+                    return Redirect("/Admin/Pages"); 
                 }
             }
             ViewBag.ispostBack = false;
@@ -413,11 +424,12 @@ namespace IdentitySample.Controllers
                     n.AdresseEvenement = Evenement.Adresse;
                     db.Evenements.Add(n);
                     await db.SaveChangesAsync();
+                    ViewBag.success = "Information sousgarde!!";
                     if (n.Poublier == true && Evenement.fb == true)
                     {
-                        string p = (n.PrincipalPhotoEvenement == null) ? "/Images/logo.jpg" : "/tinyfilemanager.net/resources/files/" + n.PrincipalPhotoEvenement;
-                        string s = n.TitleEvenement + "  " + " pour plus d'information sur cette événement, clic dans le lien  "
-                            + ConfigurationManager.AppSettings["server"] + "Evenements/Details?title=" + n.TitleEvenement;
+                        string p = (n.PrincipalPhotoEvenement == null) ? Server.MapPath("/Images/logo.jpg") : Server.MapPath("/tinyfilemanager.net/resources/files/" + n.PrincipalPhotoEvenement);
+                        string s = n.TitleEvenement + "  \"" + ConfigurationManager.AppSettings["server"] + "Evenements/Details?title=" + n.TitleEvenement.Replace(' ', '_')
+                            + "\" pour plus d'information sur cette événement, clic dans le lien  ";
                         publierFB(s, p );
                     }
                 }
@@ -455,11 +467,12 @@ namespace IdentitySample.Controllers
                         n.PlaceEvenement = Evenement.Lieu;
                         n.AdresseEvenement = Evenement.Adresse;
                         await db.SaveChangesAsync();
+                        ViewBag.success = "Information sousgarde!!";
                         if (n.Poublier == true && Evenement.fb == true)
                         {
-                            string p = (n.PrincipalPhotoEvenement == null) ? "/Images/logo.jpg" : "/tinyfilemanager.net/resources/files/" + n.PrincipalPhotoEvenement;
-                            string s = n.TitleEvenement + "  " + " pour plus d'information sur cette événement, clic dans le lien  "
-                            + ConfigurationManager.AppSettings["server"] + "Evenements/Details?title=" + n.TitleEvenement;
+                            string p = (n.PrincipalPhotoEvenement == null) ? Server.MapPath("/Images/logo.jpg") : Server.MapPath("/tinyfilemanager.net/resources/files/" + n.PrincipalPhotoEvenement);
+                            string s = n.TitleEvenement + "  \"" + ConfigurationManager.AppSettings["server"] + "Evenements/Details?title=" + n.TitleEvenement.Replace(' ', '_')
+                                + "\" pour plus d'information sur cette événement, clic dans le lien  ";
                             publierFB(s, p);
                         }
                     }
@@ -550,6 +563,7 @@ namespace IdentitySample.Controllers
             {
                 db.Evenements.Remove(delevenement);
                 await db.SaveChangesAsync();
+                ViewBag.success = "Information sousgarde!!";
             }
             ViewBag.ispostBack = false;
             return Redirect("/Admin/Evenements");
@@ -600,11 +614,12 @@ namespace IdentitySample.Controllers
                     n.Publier = notice.Publier;
                     db.Nouvelles.Add(n);
                     await db.SaveChangesAsync();
+                    ViewBag.success = "Information sousgarde!!";
                     if (n.Publier == true && notice.fb == true)
                     {
-                        string p = (n.NouvellePrincipalPhoto == null) ? "/Images/logo.jpg" : "/tinyfilemanager.net/resources/files/" + n.NouvellePrincipalPhoto;
-                        string s = n.NouvelleTitle + "  " + " pour plus d'information sur cette nouvelle, clic dans le lien  "
-                            + ConfigurationManager.AppSettings["server"] + "Nouvelles/Details?title=" + n.NouvelleTitle;
+                        string p = (n.NouvellePrincipalPhoto == null) ? Server.MapPath("/Images/logo.jpg") : Server.MapPath("/tinyfilemanager.net/resources/files/" + n.NouvellePrincipalPhoto);
+                        string s = n.NouvelleTitle + "  \"" + ConfigurationManager.AppSettings["server"] + "Nouvelles/Details?title=" + n.NouvelleTitle.Replace(' ', '_')
+                            + "\" pour plus d'information sur cette nouvelle, clic dans le lien  ";
                         publierFB(s, p);
                     }
                 }
@@ -636,11 +651,12 @@ namespace IdentitySample.Controllers
                         n.NouvellePrincipalPhoto = notice.NouvellePhotoPrincipal;
                         n.Publier = notice.Publier;
                         await db.SaveChangesAsync();
+                        ViewBag.success = "Information sousgarde!!";
                         if (n.Publier == true && notice.fb == true)
                         {
-                            string p = (n.NouvellePrincipalPhoto == null) ? "/Images/logo.jpg" : "/tinyfilemanager.net/resources/files/" + n.NouvellePrincipalPhoto;
-                            string s = n.NouvelleTitle + "  " + " pour plus d'information sur cette nouvelle, clic dans le lien  "
-                                + ConfigurationManager.AppSettings["server"] + "Nouvelles/Details?title=" + n.NouvelleTitle;
+                            string p = (n.NouvellePrincipalPhoto == null) ? Server.MapPath("/Images/logo.jpg") : Server.MapPath("/tinyfilemanager.net/resources/files/" + n.NouvellePrincipalPhoto);
+                            string s = n.NouvelleTitle + "  \"" + ConfigurationManager.AppSettings["server"] + "Nouvelles/Details?title=" + n.NouvelleTitle.Replace(' ', '_')
+                                + "\" pour plus d'information sur cette nouvelle, clic dans le lien  ";
                             publierFB(s, p);
                         }
                     }
@@ -703,6 +719,7 @@ namespace IdentitySample.Controllers
             { 
                 db.Nouvelles.Remove(delnotice);
                 await db.SaveChangesAsync();
+                ViewBag.success = "Information sousgarde!!";
             }
             ViewBag.ispostBack = false;
             return Redirect("/Admin/Notice");
@@ -725,12 +742,13 @@ namespace IdentitySample.Controllers
         private void publierFB(string sujet, string photo)
         {
             MailMessage mail = new MailMessage();
+            mail.Attachments.Add(new Attachment(photo));
+
             mail.To.Add(ConfigurationManager.AppSettings["fb"]);
+
             mail.From = new MailAddress(ConfigurationManager.AppSettings["mailAccount"]);
             mail.Subject = sujet;
-            mail.Body = "";
-            mail.IsBodyHtml = true;
-            mail.Attachments.Add(new Attachment(Server.MapPath(photo)));
+
             SendMailerController.sendMailer(mail);
         }
 
