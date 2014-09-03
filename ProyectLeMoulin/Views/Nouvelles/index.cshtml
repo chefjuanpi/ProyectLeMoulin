@@ -1,6 +1,6 @@
-﻿@model IdentitySample.Models.
+﻿@using System.Globalization
 
-
+@model IdentitySample.Models.newslistViewModel
 
 @{
     ViewBag.Title = "Liste des nouvelles";
@@ -18,8 +18,19 @@
             Date
         </th>
     </tr>
-    @*@foreach (var m in model)
+    @foreach (var i in ViewBag.listNo)
     {
         <tr>
             <td>
-                @Html.DisplayFor(m=>m.)*@
+                @i.id
+            </td>
+            <td>
+                <a href="/Nouvelles/Details?title=@i.titre.Replace(' ', '_')">@i.titre</a>
+            </td>
+            <td>
+                @i.date.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+            </td>
+        </tr>
+    }
+
+</table>

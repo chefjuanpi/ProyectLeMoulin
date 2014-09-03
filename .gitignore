@@ -14,7 +14,7 @@ Thumbs.db
 *.sln.docstates
 *.tlb
 *.tlh
-*.bak
+
 *.cache
 *.ilk
 *.log

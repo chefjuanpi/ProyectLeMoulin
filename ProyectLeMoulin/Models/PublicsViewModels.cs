@@ -5,14 +5,6 @@ using System.Web;
 
 namespace IdentitySample.Models
 {
-    class newslistViewModel
-    {
-        public int id { get; set; }
-
-        public string titre { get; set; }
-
-        public DateTime? date { get; set; }
-    }
 
     public class EvemPhoto
     {
@@ -25,6 +17,15 @@ namespace IdentitySample.Models
         public DateTime dateEnd { get; set; }
 
         public string details { get; set; }
+    }
+
+    public class newslistViewModel
+    {
+        public int id { get; set; }
+
+        public string titre { get; set; }
+
+        public DateTime date { get; set; }
     }
 
     public class evDisplay

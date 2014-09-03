@@ -18,7 +18,7 @@
                                 au @p.dateEnd.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
                             </h4>
                             <p>@Html.Raw(@p.details)</p>
-                            <a href='/Evenements/Details?title=@p.titre.Replace(' ', '_')'>
+                            <a href='/Evenements/Details?title=@p.titre'>
                                 <div class="btn btn-success"><strong><i class="fa fa-binoculars fa-lg"></i> Plus de details...</strong></div>
                             </a>
                         </div>
@@ -37,7 +37,7 @@
             @Html.Raw(ViewBag.Gauche)
         </div>
         <div class="col-md-9">
-            <h1 class="text-center text-warning"><i class="fa fa-newspaper-o"></i> Nouvelles</h1>
+            <a href="~/Nouvelles/"><h1 class="text-center text-warning"><i class="fa fa-newspaper-o"></i> Nouvelles</h1></a>
             <br />
             <div id="NContainer">
                 <img class="image-preview" id="attent" src="~/Images/attent.gif" />

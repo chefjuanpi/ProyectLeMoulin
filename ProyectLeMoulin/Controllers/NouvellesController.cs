@@ -15,14 +15,17 @@ namespace IdentitySample.Controllers
         {
             CoeurContainer db = new CoeurContainer();
             var a = (from n in db.Nouvelles
+                     where n.Publier == true
+                     orderby n.NouvelleDate descending
                      select new newslistViewModel
                      {
                          id = n.NouvelleId,
                          titre = n.NouvelleTitle,
-                         date = n.NouvelleDate
+                         date = (DateTime)n.NouvelleDate
                      }).ToList();
             ViewBag.message = "Liste de tous les nouvelles poublies dans le site web";
-            return View(a);
+            ViewBag.listNo = a;
+            return View();
         }
 
         /// <summary>
