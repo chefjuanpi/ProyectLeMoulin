@@ -101,14 +101,14 @@
     <div class="row">
         <div class="input-group">
             <table>
-                @*<tr>
-                    <td>
+                <tr>
+                    @*<td>
                         @Html.LabelFor(wp => wp.SupplierId, new { @class = "input-group-addon", @style = "width:160px" })
                     </td>
                     <td>
                         @Html.DropDownListFor(wp => wp.SupplierId, new SelectList(s.SupplierId, "SupplierId", "SupplierName"), "Select Supplier", new { @class = "form-control", @id = "Supplier", @onchange = "SupplierChange()" })
-                    </td>
-                </tr>*@
+                    </td>*@
+                </tr>
                 <tr>
                     <td>
                         @Html.LabelFor(wp => wp.UnitPrice, new { @class = "input-group-addon", @style = "width:160px" })

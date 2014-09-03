@@ -808,6 +808,9 @@
     <Compile Include="Models\Products.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Taxes.cs">
+      <DependentUpon>Epicerie.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WeekProduct.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
