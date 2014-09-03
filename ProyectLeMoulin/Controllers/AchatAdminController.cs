@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
 {
-    //[Authorize(Roles = "Admin groupe d'achats")]
+    [Authorize(Roles = "Administrateur")]
     public class AchatAdminController : Controller
     {
         /// <summary>
@@ -25,7 +25,7 @@ namespace IdentitySample.Controllers
         /// S'exécute au "Post" de la page Index
         /// Enregistre les Ajouts et Modifications
         /// </summary>
-        /// <param name="Week">Model à utiliser</param>
+        /// <param name="WeekProduct">Model à utiliser</param>
         /// <returns>Une vue</returns>
         [HttpPost]
         public ActionResult Index(WeekProductViewModel WeekProduct)
@@ -49,11 +49,13 @@ namespace IdentitySample.Controllers
             {
                 int x = Convert.ToInt16(WeekProduct.ProductId);
 
+                var Week = (from w in db.Weeks
+                            orderby w.WeekId descending
+                            select w.WeekId).First();
+
                 var modifWeekProduct = (from wp in db.WeekProduct
                                  where wp.ProductId == x
-                                 where wp.WeekId == (from w in db.Weeks
-                                                     orderby w.WeekId descending
-                                                     select w.WeekId).First()
+                                 where wp.WeekId == Week
                                  select wp).Single();
 
                 modifWeekProduct.ProductId = WeekProduct.ProductId;
@@ -69,7 +71,7 @@ namespace IdentitySample.Controllers
             return View();
         }
 
-        public JsonResult getWeekProducts(int Id, string type)
+        public JsonResult getWeekProducts(int Id)
         {
             EpicerieEntities db = new EpicerieEntities();
 
@@ -88,7 +90,7 @@ namespace IdentitySample.Controllers
                                 on wp.SupplierId equals s.SupplierId
                                 orderby p.ProductName
                                 where wp.WeekId == 1
-                                //where s.SupplierId == Id
+                                where c.CategoryId == Id
                                 select new
                                 {
                                     CategoryId = cp.CategoryId,
@@ -100,17 +102,6 @@ namespace IdentitySample.Controllers
                                     Format = wp.Format,
                                     Quantity = wp.Quantity
                                 }).ToList();
-
-            if (type == "cat")
-            {
-                WeekProducts.Where(c => c.CategoryId == Id);
-            }
-            else if (type == "sup")
-            {
-                WeekProducts.Where(s => s.SupplierId == Id);
-            }
-
-            WeekProducts.ToList();
 
             return Json(WeekProducts, JsonRequestBehavior.AllowGet);
         }
@@ -124,20 +115,23 @@ namespace IdentitySample.Controllers
         public JsonResult getWeekProductDetails(int ProductId)
         {
             EpicerieEntities db = new EpicerieEntities();
-            var weekProduct = (from wp in db.WeekProduct
-                               where wp.ProductId == ProductId
-                               where wp.WeekId == (from w in db.Weeks
-                                                   orderby w.WeekId descending
-                                                   select w.WeekId).First()
-                            select new
-                            {
-                                week = wp.WeekId,
-                                Product = wp.ProductId,
-                                Supplier = wp.SupplierId,
-                                UnitPrice = wp.UnitPrice,
-                                Format = wp.Format,
-                                Qty = wp.Quantity
-                            }).Single();
+
+            var Week = (from w in db.Weeks
+                        orderby w.WeekId descending
+                        select w.WeekId).First();
+
+            var weekProduct = ( from wp in db.WeekProduct
+                                where wp.ProductId == ProductId
+                                where wp.WeekId == Week
+                                select new
+                                {
+                                    week = wp.WeekId,
+                                    Product = wp.ProductId,
+                                    Supplier = wp.SupplierId,
+                                    UnitPrice = wp.UnitPrice,
+                                    Format = wp.Format,
+                                    Qty = wp.Quantity
+                                }).Single();
 
             return Json(weekProduct, JsonRequestBehavior.AllowGet);
         }
@@ -150,11 +144,14 @@ namespace IdentitySample.Controllers
         public ActionResult delWeekProduct(int nID)
         {
             EpicerieEntities db = new EpicerieEntities();
+
+            var Week = (from w in db.Weeks
+                        orderby w.WeekId descending
+                        select w.WeekId).First();
+
             var delWeekProduct = (from wp in db.WeekProduct
                                   where wp.ProductId == nID
-                                  where wp.WeekId == (from w in db.Weeks
-                                                      orderby w.WeekId descending
-                                                      select w.WeekId).First()
+                                  where wp.WeekId == Week
                                   select wp).Single();
             if (delWeekProduct != null)
             {
@@ -451,7 +448,7 @@ namespace IdentitySample.Controllers
                              {
                                  id = s.SupplierId,
                                  nom = s.SupplierName
-                             });
+                             }).ToList();
             return Json(suppliers, JsonRequestBehavior.AllowGet);
         }
 
