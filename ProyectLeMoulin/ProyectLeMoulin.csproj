@@ -603,6 +603,7 @@
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Views\Nouvelles\_NList.cshtml" />
     <Content Include="Views\AchatAdmin\Taxes.cshtml" />
+    <Content Include="Views\Epicerie\test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

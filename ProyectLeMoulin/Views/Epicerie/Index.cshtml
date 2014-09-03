@@ -1,8 +1,8 @@
 ﻿@model IdentitySample.Models.test1234
 @using System.Globalization
 
-
-@section Scripts {
+@section Scripts 
+{
 
     @*Template des Catégories*@
     <script type="text/x-handlebars-template" id="CategoriesTemplate">
@@ -58,9 +58,9 @@
         </div>
     </script>
     @*Template des anciennes factures*@
-    <script type="text/x-handlebars-template" id="OldBillTemplate">
+    <script type="text/x-handlebars-template" id="BillTemplate">
         Factures
-        <select id="OdlBillOutput" name="Categories" class="form-control">
+        <select id="BillOutput" name="Categories" class="form-control">
             <option selected="selected" id=0 value="0">Choisissez une date de facturation</option>
             {{#each}}
             <option id={{OrderID}}>{{Debut}}</option>
@@ -93,7 +93,6 @@
         </div>
         {{/each}}
     </script>
-
 
     @*Template du détail de la facture*@
     <script type="text/x-handlebars-template" id="DetailTemplate">
@@ -252,12 +251,25 @@
 
         };
 
-        function FactureCourrante() {
-            templateEntete = Handlebars.compile($("#EnteteTemplate").html());
-            templateDetail = Handlebars.compile($("#DetailTemplate").html());
+        $("#NewBill").click(function () {
+            console.log("clic");
+            ViderEcran();
+            FactureCourrante();
+        });
 
+        function ViderEcran() {
+            console.log("reclic");
+            $("#Cat").attr("disabled", "disabled");
             $("#Cat").attr("hidden", "hidden");
             $("#Facture").attr("hidden", false);
+        };
+
+        function FactureCourrante() {
+
+            ViderEcran();
+
+            templateEntete = Handlebars.compile($("#EnteteTemplate").html());
+            templateDetail = Handlebars.compile($("#DetailTemplate").html());
 
             $.getJSON("/Epicerie/Afficher_Entete_Facture", null, function (data) {
                 //console.log(data.legth);
@@ -272,74 +284,33 @@
             });
         };
 
-        //$("#NewBill").onclick(function FactureCourrante() {
-        //    templateEntete = Handlebars.compile($("#EnteteTemplate").html());
-        //    templateDetail = Handlebars.compile($("#DetailTemplate").html());
-
-        //    $("#Cat").attr("hidden", "hidden");
-        //    $("#Facture").attr("hidden", false);
-
-        //    $.getJSON("/Epicerie/Afficher_Entete_Facture", null, function (data) {
-        //        //console.log(data.legth);
-        //        var result = templateEntete(data);
-        //        $("#BillOutput").html(result);
-        //        $.getJSON("/Epicerie/Afficher_Facture", null, function (data) {
-        //            //console.log(data.legth);
-        //            var result = templateDetail(data);
-        //            $("#BillOutput").html(result.toFixed(2));
-        //            CalculTotalFacture(id)
-        //        });
-        //    });
-        //});
-
-        //$("#OldBill")function FactureAncienne() {
-        //    templateEntete = Handlebars.compile($("#EnteteTemplate").html());
-        //    templateDetail = Handlebars.compile($("#DetailTemplate").html());
-        //    templateBill = Handlebars.compile($("#OldBillTemplate").html());
-        //    //$("#Facture").attr(hidden = false);
-        //    $.getJSON("/Epicerie/Afficher_Entete_Facture", null, function (data) {
-        //        //console.log(data.legth);
-        //        var result = templateBill(data);
-        //        $("#OdlBillOutput").html(result);
-
-        //        //Afficher la facture
-        //        $("#OldBillOutput").change(function () {
-        //            var id = $(this).children(":selected").attr("id");
-        //            if (id != 0) {
-
-        //                $("#week123").val(data[0].WeeK);
-        //                $("#BillOutput").html(result);
-        //            }//Afficher_Facture
-        //        })//Afficher_Entete_Facture
-        //    });
-        //});
-
         //Fonction permettant d'imprimer le DIV de la facture affichée à l'écran
-        $("#PrintButton").live("click", function () {
-            var divContents = $("#Facture").html();
-            var printWindow = window.open('', '', 'height=400,width=800');
-            printWindow.document.write('<html><head><title>DIV Contents</title>');
-            printWindow.document.write('</head><body >');
-            printWindow.document.write(divContents);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
-        });
+        //$("#PrintButton").live("click", function () {
+        //    console.log("print");
+        //    var divContents = $("#Facture").html();
+        //    var printWindow = window.open('', '', 'height=400,width=800');
+        //    printWindow.document.write('<html><head><title>DIV Contents</title>');
+        //    printWindow.document.write('</head><body >');
+        //    printWindow.document.write(divContents);
+        //    printWindow.document.write('</body></html>');
+        //    printWindow.document.close();
+        //    printWindow.print();
+        //});
     </script>
-
 }
 
 <div class="row">
     <div id="Message"></div>
 </div>
 
-<div class="row">
-    <div id="PeriodOutput" class="col-md-12"></div>
+<div class="container" id="BillButtons">
+    <input id="NewBill" name="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture">
+    <input id="OldBill" name="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
 </div>
 
 <div id="Cat" class="Container">
     <div class="col-md-4">
-        <div class="col-md-12">
+        @*<div class="col-md-12">
             @foreach (var p in ViewBag.Period)
             {
                 <h4>
@@ -350,13 +321,10 @@
                     Récupération le        @p.Recup.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
                 </h4>
             }
-        </div>
+        </div>*@
         <div id="CategoriesOutput" class="col-md-12"></div>
     </div>
     <div id="ProductsOutput" class="col-md-6"></div>
-
-
-
 
     <div>@ViewBag.Steeve</div>
     <hr />
@@ -390,9 +358,7 @@
                     <div class="row col-md-12">
                         <!--Boutton pour envoyer le panier au serveur-->
                         <div style="text-align:center"><h3><b>En cliquant sur le bouton "Envoyez" vous ne pourrez pus effectuer de changement</b></h3></div>
-                        <div class="col-xs-5"></div><input type="submit" class="col-xs-2 btn btn-primary" value="Envoyer" />
-
-
+                        <div class="col-xs-5"></div><input id="NewBill" type="submit" class="col-xs-2 btn btn-primary" value="Envoyer" />
                     </div>
                 </div>
             }
@@ -400,17 +366,9 @@
     </div>
 </div>
 
-
-<div class="container" hidden="hidden" id="BillButtons">
-    <input id="NewBill" name="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture" onclick="FactureCourrante">
-    <input id="OldBill" name="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
-    <div class="row"><div id="OldBillOutput" class="col-md-4"></div></div>
-</div>
-
-
-<div class="container" hidden="hidden" id="Facture">
+<div class="container" id="Facture">
     <div><img class="col-md-2 col-xs-6 img-responsive" src="../Images/logo.png" alt="Le Moulin d'à côté'" /></div>
-    <div id="BillOutput" class="col-md-12">
+    
         <div class="row">
             <h4 class="col-xs-3">Produits</h4>
             <h4 class="col-xs-2">Format</h4>
@@ -418,7 +376,7 @@
             <h4 class="col-xs-1">Qty</h4>
             <h4 class="col-xs-2">Sous-Total</h4>
         </div>
-    </div>
+    
     <div class="col-md-12">
         <div class="col-xs-7"></div>
         <div class="col-xs-2">
@@ -428,7 +386,8 @@
             </div>
         </div>
     </div>
-
+    
     @*Bouton qui permet d'imprimer le DIV de la facture*@
     <input id="PrintButton" type="submit" class="col-xs-2 btn btn-primary" value="Imprimer" />
 </div>
+<div id="BillOutput" class="col-md-12"></div>

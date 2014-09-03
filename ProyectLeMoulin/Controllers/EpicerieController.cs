@@ -34,6 +34,10 @@ namespace IdentitySample.Controllers
 
             return View();
         }
+        public ActionResult test()
+        {
+            return View();
+        }
 
         /// <summary>
         /// Afficher le message de l'administrateur du groupe D'achats
@@ -238,6 +242,18 @@ namespace IdentitySample.Controllers
                             Date = DateTime.Today
                         }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetBill()
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var category = (from w in db.Weeks
+                            orderby w.WeekId descending
+                            select new
+                            {
+                                WeekId  =   w.WeekId
+                            }).ToList();
+            return Json(category, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Afficher_Entete_Facture(int week)
