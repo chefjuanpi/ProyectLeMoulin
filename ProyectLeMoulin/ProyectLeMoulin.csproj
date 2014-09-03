@@ -722,9 +722,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EpicerieViewModels.cs" />
-    <Compile Include="Models\PagePicture.cs">
-      <DependentUpon>Epicerie.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PublicsViewModels.cs" />
     <Compile Include="Models\PanierViewModel.cs" />
     <Compile Include="Models\AspNetUsers.cs">
@@ -785,9 +782,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Coeur.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Comment.cs">
-      <DependentUpon>Coeur.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Evenement.cs">
       <DependentUpon>Coeur.tt</DependentUpon>
     </Compile>
@@ -795,9 +789,6 @@
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Nouvelle.cs">
-      <DependentUpon>Coeur.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NouvellesPicture.cs">
       <DependentUpon>Coeur.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Page.cs">

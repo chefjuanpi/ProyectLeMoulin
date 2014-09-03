@@ -13,7 +13,16 @@ namespace IdentitySample.Controllers
         // GET: Nouvelles envoi la liste des nouvelles
         public ActionResult Index()
         {
-            return View();
+            CoeurContainer db = new CoeurContainer();
+            var a = (from n in db.Nouvelles
+                     select new newslistViewModel
+                     {
+                         id = n.NouvelleId,
+                         titre = n.NouvelleTitle,
+                         date = n.NouvelleDate
+                     }).ToList();
+            ViewBag.message = "Liste de tous les nouvelles poublies dans le site web";
+            return View(a);
         }
 
         /// <summary>

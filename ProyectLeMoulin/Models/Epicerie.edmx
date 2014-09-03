@@ -63,14 +63,6 @@
           <Property Name="Commande_Payee" Type="bit" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
-        <EntityType Name="PagePicture">
-          <Key>
-            <PropertyRef Name="PageId" />
-            <PropertyRef Name="PictureId" />
-          </Key>
-          <Property Name="PageId" Type="int" Nullable="false" />
-          <Property Name="PictureId" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -233,7 +225,6 @@
           <EntitySet Name="CategoryProduct" EntityType="Self.CategoryProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PagePicture" EntityType="Self.PagePicture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WeekProduct" EntityType="Self.WeekProduct" Schema="dbo" store:Type="Tables" />
@@ -325,7 +316,6 @@
             <End Role="WeekProduct" EntitySet="WeekProduct" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
-          <EntitySet Name="PagePicture" EntityType="EpicerieModel.PagePicture" />
           </EntityContainer>
         <EntityType Name="AspNetUsers">
           <Key>
@@ -559,14 +549,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="PagePicture">
-          <Key>
-            <PropertyRef Name="PageId" />
-            <PropertyRef Name="PictureId" />
-          </Key>
-          <Property Name="PageId" Type="Int32" Nullable="false" />
-          <Property Name="PictureId" Type="Int32" Nullable="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -679,14 +661,6 @@
                 <ScalarProperty Name="WeekId" ColumnName="WeekId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PagePicture">
-            <EntityTypeMapping TypeName="EpicerieModel.PagePicture">
-              <MappingFragment StoreEntitySet="PagePicture">
-                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
-                <ScalarProperty Name="PageId" ColumnName="PageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

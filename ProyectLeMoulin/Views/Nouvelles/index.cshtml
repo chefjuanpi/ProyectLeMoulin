@@ -1,8 +1,25 @@
-﻿
+﻿@model IdentitySample.Models.
+
+
+
 @{
-    ViewBag.Title = "index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Liste des nouvelles";
 }
 
-<h2>index</h2>
+<h2>@ViewBag.Title</h2>
 
+<table class="table alert alert-warning">
+    <tr>
+        <th>ID</th>
+        <th>
+            Titre
+        </th>
+        <th>
+            Date
+        </th>
+    </tr>
+    @*@foreach (var m in model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(m=>m.)*@

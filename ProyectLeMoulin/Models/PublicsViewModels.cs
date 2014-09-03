@@ -5,6 +5,15 @@ using System.Web;
 
 namespace IdentitySample.Models
 {
+    class newslistViewModel
+    {
+        public int id { get; set; }
+
+        public string titre { get; set; }
+
+        public DateTime? date { get; set; }
+    }
+
     public class EvemPhoto
     {
         public string photos { get; set; }

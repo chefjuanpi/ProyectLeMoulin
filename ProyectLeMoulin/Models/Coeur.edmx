@@ -25,17 +25,6 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Suspendre" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Comments">
-          <Key>
-            <PropertyRef Name="CommentId" />
-          </Key>
-          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BlogId" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Date" Type="date" Nullable="false" />
-          <Property Name="Comment" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Validate" Type="bit" Nullable="false" />
-        </EntityType>
         <EntityType Name="Evenements">
           <Key>
             <PropertyRef Name="EventId" />
@@ -64,14 +53,6 @@
           <Property Name="NouvelleDate" Type="date" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Publier" Type="bit" />
-        </EntityType>
-        <EntityType Name="NouvellesPicture">
-          <Key>
-            <PropertyRef Name="BlogId" />
-            <PropertyRef Name="PictureId" />
-          </Key>
-          <Property Name="BlogId" Type="int" Nullable="false" />
-          <Property Name="PictureId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Page_Section">
           <Key>
@@ -102,30 +83,6 @@
           <Property Name="Contenu" Type="text" />
           <Property Name="Nom" Type="varchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK_BlogPicture_Blogs">
-          <End Role="Nouvelles" Type="Self.Nouvelles" Multiplicity="1" />
-          <End Role="NouvellesPicture" Type="Self.NouvellesPicture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Nouvelles">
-              <PropertyRef Name="NouvelleId" />
-            </Principal>
-            <Dependent Role="NouvellesPicture">
-              <PropertyRef Name="BlogId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comments_Blogs">
-          <End Role="Nouvelles" Type="Self.Nouvelles" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Nouvelles">
-              <PropertyRef Name="NouvelleId" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="BlogId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Evenements_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="Evenements" Type="Self.Evenements" Multiplicity="*" />
@@ -188,21 +145,11 @@
         </Association>
         <EntityContainer Name="IdentitySampleStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Evenements" EntityType="Self.Evenements" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nouvelles" EntityType="Self.Nouvelles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="NouvellesPicture" EntityType="Self.NouvellesPicture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Page_Section" EntityType="Self.Page_Section" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pages" EntityType="Self.Pages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_BlogPicture_Blogs" Association="Self.FK_BlogPicture_Blogs">
-            <End Role="Nouvelles" EntitySet="Nouvelles" />
-            <End Role="NouvellesPicture" EntitySet="NouvellesPicture" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_Blogs" Association="Self.FK_Comments_Blogs">
-            <End Role="Nouvelles" EntitySet="Nouvelles" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
           <AssociationSet Name="FK_Evenements_AspNetUsers" Association="Self.FK_Evenements_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Evenements" EntitySet="Evenements" />
@@ -230,20 +177,10 @@
       <Schema Namespace="IdentitySample" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CoeurContainer" p1:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetUsers" EntityType="IdentitySample.AspNetUser" />
-          <EntitySet Name="Comments" EntityType="IdentitySample.Comment" />
           <EntitySet Name="Nouvelles" EntityType="IdentitySample.Nouvelle" />
-          <EntitySet Name="NouvellesPictures" EntityType="IdentitySample.NouvellesPicture" />
           <AssociationSet Name="FK_Nouvelles_AspNetUsers" Association="IdentitySample.FK_Nouvelles_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Nouvelles" EntitySet="Nouvelles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_Blogs" Association="IdentitySample.FK_Comments_Blogs">
-            <End Role="Nouvelles" EntitySet="Nouvelles" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BlogPicture_Blogs" Association="IdentitySample.FK_BlogPicture_Blogs">
-            <End Role="Nouvelles" EntitySet="Nouvelles" />
-            <End Role="NouvellesPicture" EntitySet="NouvellesPictures" />
           </AssociationSet>
           <EntitySet Name="Evenements" EntityType="IdentitySample.Evenement" />
           <AssociationSet Name="FK_Evenements_AspNetUsers" Association="IdentitySample.FK_Evenements_AspNetUsers">
@@ -284,18 +221,6 @@
           <NavigationProperty Name="Pages" Relationship="IdentitySample.FK_Pages_AspNetUsers" FromRole="AspNetUser" ToRole="Page" />
           <Property Name="Suspendre" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="Comment">
-          <Key>
-            <PropertyRef Name="CommentId" />
-          </Key>
-          <Property Name="CommentId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="BlogId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Comment1" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
-          <Property Name="Validate" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Nouvelle" Relationship="IdentitySample.FK_Comments_Blogs" FromRole="Comments" ToRole="Nouvelles" />
-        </EntityType>
         <EntityType Name="Nouvelle">
           <Key>
             <PropertyRef Name="NouvelleId" />
@@ -308,17 +233,6 @@
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
           <Property Name="Publier" Type="Boolean" />
           <NavigationProperty Name="AspNetUser" Relationship="IdentitySample.FK_Nouvelles_AspNetUsers" FromRole="Nouvelles" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Comments" Relationship="IdentitySample.FK_Comments_Blogs" FromRole="Nouvelles" ToRole="Comments" />
-          <NavigationProperty Name="NouvellesPictures" Relationship="IdentitySample.FK_BlogPicture_Blogs" FromRole="Nouvelles" ToRole="NouvellesPicture" />
-        </EntityType>
-        <EntityType Name="NouvellesPicture">
-          <Key>
-            <PropertyRef Name="BlogId" />
-            <PropertyRef Name="PictureId" />
-          </Key>
-          <Property Name="BlogId" Type="Int32" Nullable="false" />
-          <Property Name="PictureId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Nouvelle" Relationship="IdentitySample.FK_BlogPicture_Blogs" FromRole="NouvellesPicture" ToRole="Nouvelles" />
         </EntityType>
         <Association Name="FK_Nouvelles_AspNetUsers">
           <End Role="AspNetUsers" Type="IdentitySample.AspNetUser" Multiplicity="1" />
@@ -329,30 +243,6 @@
             </Principal>
             <Dependent Role="Nouvelles">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comments_Blogs">
-          <End Role="Nouvelles" Type="IdentitySample.Nouvelle" Multiplicity="1" />
-          <End Role="Comments" Type="IdentitySample.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Nouvelles">
-              <PropertyRef Name="NouvelleId" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="BlogId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BlogPicture_Blogs">
-          <End Role="Nouvelles" Type="IdentitySample.Nouvelle" Multiplicity="1" />
-          <End Role="NouvellesPicture" Type="IdentitySample.NouvellesPicture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Nouvelles">
-              <PropertyRef Name="NouvelleId" />
-            </Principal>
-            <Dependent Role="NouvellesPicture">
-              <PropertyRef Name="BlogId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -453,18 +343,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Comments">
-            <EntityTypeMapping TypeName="IdentitySample.Comment">
-              <MappingFragment StoreEntitySet="Comments">
-                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Comment1" ColumnName="Comment" />
-                <ScalarProperty Name="Validate" ColumnName="Validate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Nouvelles">
             <EntityTypeMapping TypeName="IdentitySample.Nouvelle">
               <MappingFragment StoreEntitySet="Nouvelles">
@@ -475,14 +353,6 @@
                 <ScalarProperty Name="NouvelleDate" ColumnName="NouvelleDate" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Publier" ColumnName="Publier" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NouvellesPictures">
-            <EntityTypeMapping TypeName="IdentitySample.NouvellesPicture">
-              <MappingFragment StoreEntitySet="NouvellesPicture">
-                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
-                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

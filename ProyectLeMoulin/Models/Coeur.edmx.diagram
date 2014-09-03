@@ -4,19 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="52e209c467d44b58b6c2313b6f96f057" Name="Diagram1">
+      <Diagram DiagramId="52e209c467d44b58b6c2313b6f96f057" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="IdentitySample.AspNetUser" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="IdentitySample.Comment" Width="1.5" PointX="8.375" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="IdentitySample.Nouvelle" Width="1.5" PointX="5.125" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="IdentitySample.NouvellesPicture" Width="1.5" PointX="8.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IdentitySample.Nouvelle" Width="1.5" PointX="6.875" PointY="5.125" IsExpanded="true" />
         <AssociationConnector Association="IdentitySample.FK_Nouvelles_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="IdentitySample.FK_Comments_Blogs" ManuallyRouted="false" />
-        <AssociationConnector Association="IdentitySample.FK_BlogPicture_Blogs" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="IdentitySample.Evenement" Width="1.5" PointX="3" PointY="1.625" />
+        <EntityTypeShape EntityType="IdentitySample.Evenement" Width="1.5" PointX="4.375" PointY="2.5" />
         <AssociationConnector Association="IdentitySample.FK_Evenements_AspNetUsers" />
-        <EntityTypeShape EntityType="IdentitySample.Page" Width="1.5" PointX="3" PointY="9.375" />
+        <EntityTypeShape EntityType="IdentitySample.Page" Width="1.5" PointX="3.125" PointY="8" />
         <AssociationConnector Association="IdentitySample.FK_Pages_AspNetUsers" />
-        <EntityTypeShape EntityType="IdentitySample.Section" Width="1.5" PointX="5.25" PointY="10" />
+        <EntityTypeShape EntityType="IdentitySample.Section" Width="1.5" PointX="7.875" PointY="8.25" />
         <AssociationConnector Association="IdentitySample.Page_Section" />
       </Diagram>
     </edmx:Diagrams>

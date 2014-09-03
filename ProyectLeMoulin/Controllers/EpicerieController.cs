@@ -186,9 +186,9 @@ namespace IdentitySample.Controllers
                 //{
                 //    ViewBag.Steeve = "erreur";
                 //}
-
-                return View();
             }
+                return View();
+
         }
 
         public JsonResult GetOldBill()
