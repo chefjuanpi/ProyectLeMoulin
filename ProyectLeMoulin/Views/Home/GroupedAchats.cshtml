@@ -1,21 +1,23 @@
 ﻿
-<h2>@ViewBag.Title.</h2>
+<h2 class="col-md-offset-2">@ViewBag.Title.</h2>
 <div class="row">
-    <div class="col-md-12">
-        <div class="container">@Html.Raw(ViewBag.contenu)</div>
+    <div class="col-md-10">
+        @Html.Raw(ViewBag.contenu)
     </div>
 </div>
 <br />
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Vous aimerrais devenir membre?</h3>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Vous aimerrais devenir membre?</h3>
+        </div>
+        <div class="panel-body">
+            <p> ecris nous un message ou @Html.ActionLink("contactez-Nous", "Contact", "Home")</p>
+            @Html.Partial("_SendMailtoAdmin", new ViewDataDictionary(ViewData) { { "adresse", "GroupedAchats" } })
+        </div>
     </div>
-    <div class="panel-body">
-        <p> ecris nous un message ou @Html.ActionLink("contactez-Nous", "Contact", "Home")</p>
-        @Html.Partial("_SendMailtoAdmin", new ViewDataDictionary(ViewData) { { "adresse", "GroupedAchats" } })
-    </div>
+    <div class="fb-comments" data-href="https://lemoulin.azurewebsites.net/Home/GroupedAchats"
+         data-width="100%" data-numposts="5" data-colorscheme="light"></div>
 </div>
-<div class="fb-comments" data-href="https://lemoulin.azurewebsites.net/Home/GroupedAchats"
-     data-width="100%" data-numposts="5" data-colorscheme="light"></div>
 
 
