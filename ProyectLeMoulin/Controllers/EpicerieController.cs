@@ -137,57 +137,58 @@ namespace IdentitySample.Controllers
         /// <param name="cart">ID de la semaine d'exercice en cours</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Index( test1234 cart)
+        public async Task<ActionResult> Index(test1234 cart)
         {
             EpicerieEntities db = new EpicerieEntities();
 
-            var week = (from w in db.Weeks select w.WeekId).LastOrDefault();
+            var weekbd = (from w in db.Weeks select w.WeekId).LastOrDefault();
 
-            //if (cart.week == weekbd)
-            //{ 
-            string utilisateur = User.Identity.Name;
-            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-
-            //Créer un Order et enregistrer l'Order dans la BD
-            Orders NewOrders = new Orders();
-
-            NewOrders.UserId            =   guid;
-            NewOrders.WeekId            =   (int)week;
-            NewOrders.Commande_Payee    =   false;
-            db.Orders.Add(NewOrders);
-
-            await db.SaveChangesAsync();
-
-            //Sortir le OrderID pour créer le Order Detail
-            int comID = (from o in db.Orders
-                         where
-                         o.UserId == NewOrders.UserId &
-                         o.WeekId == NewOrders.WeekId
-                         select o.OrderId).Single();
-
-            //Créer et enregistrer l'OrderDetail dans la BD
-            foreach (var item in cart.obj)
+            if (cart.week == weekbd)
             {
-                var price = db.WeekProduct.SingleOrDefault(p => p.ProductId == item.PID).UnitPrice;
+                string utilisateur = User.Identity.Name;
+                string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
-                OrderDetails NewOdersDetails    =   new OrderDetails();
-                NewOdersDetails.ProductId       =   item.PID;
-                NewOdersDetails.OrderId         =   comID;
-                NewOdersDetails.Quantite        =   item.qty;
-                NewOdersDetails.UnitPrice       =   price;
-                NewOdersDetails.WeekId          =   week;
-                db.OrderDetails.Add(NewOdersDetails);
+                //Créer un Order et enregistrer l'Order dans la BD
+                Orders NewOrders = new Orders();
+
+                NewOrders.UserId = guid;
+                NewOrders.WeekId = cart.week;
+                NewOrders.Commande_Payee = false;
+                db.Orders.Add(NewOrders);
+
+                await db.SaveChangesAsync();
+
+                //Sortir le OrderID pour créer le Order Detail
+                int comID = (from o in db.Orders
+                             where
+                             o.UserId == NewOrders.UserId &
+                             o.WeekId == NewOrders.WeekId
+                             select o.OrderId).Single();
+
+                //Créer et enregistrer l'OrderDetail dans la BD
+                foreach (var item in cart.obj)
+                {
+                    var price = db.WeekProduct.SingleOrDefault(p => p.ProductId == item.PID).UnitPrice;
+
+                    OrderDetails NewOdersDetails = new OrderDetails();
+                    NewOdersDetails.ProductId = item.PID;
+                    NewOdersDetails.OrderId = comID;
+                    NewOdersDetails.Quantite = item.qty;
+                    NewOdersDetails.UnitPrice = price;
+                    NewOdersDetails.WeekId = cart.week;
+                    db.OrderDetails.Add(NewOdersDetails);
+                }
+                await db.SaveChangesAsync();
+
+                ViewBag.Steeve = "ton panier";
+                //}
+                //else
+                //{
+                //    ViewBag.Steeve = "erreur";
+                //}
+
+                return View();
             }
-            await db.SaveChangesAsync();
-
-            ViewBag.Steeve = "ton panier";
-            //}
-            //else
-            //{
-            //    ViewBag.Steeve = "erreur";
-            //}
-
-            return View();
         }
 
         public JsonResult GetOldBill()
