@@ -18,8 +18,6 @@
 
 <br />
 
-
-
 <div class="row">
     <div class="alert alert-warning" role="alert" id="boutons" style="height:65px;">
         <div class="col-md-3" style="height:auto;">
@@ -27,8 +25,6 @@
         </div>
     </div>
 </div>
-
-
 
 <div class="row">
     <div id="WeekProductsList" class="col-md-6"></div>
@@ -98,7 +94,6 @@
         </button>
     </div>
 
-
 }
 
 @section Scripts {
@@ -156,8 +151,6 @@
 
         $(function () {
 
-
-
             $.ajaxSetup({
                 // Disable caching of AJAX responses
                 cache: false
@@ -210,10 +203,7 @@
                 $("#Format").val(data.Format);
                 $("#Quantity").val(data.Qty);
                 $("#new123").val(data.Product);
-                //var valeur = data.SupplierId;
-                //$('#SuppliersList[value=' + valeur + ']').attr("selected", "selected");
-
-
+                $("SuppliersList option[value='" + data.Supplier + "']").prop('selected', true);
 
             }); // Fin getWeekProductDetails
         } // Fin de ModifyWeekProduct
