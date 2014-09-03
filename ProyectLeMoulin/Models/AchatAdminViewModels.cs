@@ -14,7 +14,7 @@ namespace EpicerieModel.Models
         public string CategoryId { get; set; }
 
         [Required]
-        [StringLength(150, ErrorMessage = "Nom trop long, max. 50 charactéres")]
+        [StringLength(100, ErrorMessage = "Nom trop long, max. 100 charactéres")]
         [DataType(DataType.Text)]
         [Display(Name = "Nom de la categorie :")]
         public string CategoryName { get; set; }
@@ -24,6 +24,33 @@ namespace EpicerieModel.Models
         [Display(Name = "Courte description :")]
         public string Description { get; set; }
     }
+
+    /// <summary>
+    /// Modèle des données contenu dans Products
+    /// </summary>
+    public class ProductViewModel
+    {
+
+        public string ProductId { get; set; }
+
+        [Required]
+        [StringLength(150, ErrorMessage = "Nom trop long, max. 100 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nom du produit :")]
+        public string ProductName { get; set; }
+
+        [StringLength(100, ErrorMessage = "Nom du contact trop long, max. 200 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Courte description :")]
+        public string Description { get; set; }
+
+        [Display(Name = "Appliquer la TVQ :")]
+        public bool TVQ { get; set; }
+
+        [Display(Name = "Appliquer la TPS :")]
+        public bool TPS { get; set; }
+    }
+
 
     /// <summary>
     /// Modèle des données contenu dans Supplier
@@ -110,4 +137,18 @@ namespace EpicerieModel.Models
         [Display(Name = "Format :")]
         public string Format { get; set; }
     }
+
+    /// <summary>
+    /// Modèle des données contenu dans Taxes
+    /// </summary>
+    public class TaxesViewModel
+    {
+        public string Taxe { get; set; }
+
+        [Required]
+        [Range(0, 100)]
+        [Display(Name = "%")]
+        public float Value { get; set; }
+    }
+
 }

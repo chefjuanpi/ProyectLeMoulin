@@ -18,23 +18,68 @@
 
 <br />
 
+<script type="text/x-handlebars-template" id="CategoriesTemplate">
+    <option selected="selected" id=0 value="0">Categories</option>
+    {{#each}}
+    <option id={{id}} value={{id}}>{{nom}}</option>
+    {{/each}}
+</script>
+
 <div class="row">
-    <div class="alert alert-warning" role="alert" id="boutons">
-        <div class="col-md-3">
-            <select class="form-control items" id="CategoriesList"></select>
+    <div class="alert alert-warning" role="alert" id="boutons" style="height:65px;">
+        <div class="col-md-3" style="height:auto;">
+            <select class="form-control cats" id="CategoriesList"></select>
         </div>
-        <div class="btn btn-info col-md-offset-1" id="btnrechcat">Rechercher</div>
     </div>
 </div>
 
+<script type="text/x-handlebars-template" id="SuppliersTemplate">
+    <option selected="selected" id=0 value="0">Fournisseurs</option>
+    {{#each}}
+    <option id={{id}} value={{id}}>{{nom}}</option>
+    {{/each}}
+</script>
+
 <div class="row">
-    <div class="alert alert-warning" role="alert" id="boutons">
-        <div class="col-md-3">
-            <select class="form-control items" id="SuppliersList"></select>
+    <div class="alert alert-warning" role="alert" id="boutons" style="height:65px;">
+        <div class=" col-md-3">
+            <select class="form-control sups" id="SuppliersList"></select>
         </div>
-        <div class="btn btn-info col-md-offset-1" id="btnrechsupp">Rechercher</div>
     </div>
 </div>
+
+<script type="text/x-handlebars-template" id="WeekProductsTemplate">
+    <div class="row">
+        <h4 class="col-xs-4">Produits</h4>
+        <h4 class="col-xs-4">Fournisseur</h4>
+        <h4 class="col-xs-1">Prix $</h4>
+        <h4 class="col-xs-1">Format</h4>
+        <h4 class="col-xs-1">Minimum</h4>
+        <h4 class="col-xs-1"></h4>
+    </div>
+    {{#each}}
+    <div class="row" id=Product{{ProductId}}>
+        <div class="col-xs-4">
+            <h5>{{ProductName}}</h5>
+        </div>
+        <div class="col-xs-4">
+            <h5 id="{{ProductId}}">{{SupplierName}}</h5>
+        </div>
+        <div class="col-xs-1">
+            <h5 id="{{ProductId}}">{{UnitPrice}}</h5>
+        </div>
+        <div class="col-xs-1">
+            <h5 id="{{ProductId}}">{{Format}}</h5>
+        </div>
+        <div class="col-xs-1">
+            <h5 id="{{ProductId}}">{{Quantity}}</h5>
+        </div>
+        <div class="col-xs-1">
+            <input id="btnModify" type="button" value="Modifier" onclick="ModifyWeekProduct('{{ProductId}}');" class="btn btn-info col-md-offset-1" />
+        </div>
+    </div>
+    {{/each}}
+</script>
 
 <div class="row">
     <div id="WeekProductsList" class="col-md-6"></div>
@@ -56,13 +101,20 @@
     <div class="row">
         <div class="input-group">
             <table>
-
+                @*<tr>
+                    <td>
+                        @Html.LabelFor(wp => wp.SupplierId, new { @class = "input-group-addon", @style = "width:160px" })
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(wp => wp.SupplierId, new SelectList(s.SupplierId, "SupplierId", "SupplierName"), "Select Supplier", new { @class = "form-control", @id = "Supplier", @onchange = "SupplierChange()" })
+                    </td>
+                </tr>*@
                 <tr>
                     <td>
                         @Html.LabelFor(wp => wp.UnitPrice, new { @class = "input-group-addon", @style = "width:160px" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(wp => wp.UnitPrice, new { @class = "form-control", @id = "name" })
+                        @Html.TextBoxFor(wp => wp.UnitPrice, new { @class = "form-control", @id = "UnitPrice" })
                     </td>
                 </tr>
 
@@ -71,7 +123,7 @@
                         @Html.LabelFor(wp => wp.Format, new { @class = "input-group-addon", @style = "width:160px" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(wp => wp.Format, new { @class = "form-control", @id = "name" })
+                        @Html.TextBoxFor(wp => wp.Format, new { @class = "form-control", @id = "Format" })
                     </td>
                 </tr>
 
@@ -80,7 +132,7 @@
                         @Html.LabelFor(wp => wp.Quantity, new { @class = "input-group-addon", @style = "width:160px" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(wp => wp.Quantity, new { @class = "form-control", @id = "name" })
+                        @Html.TextBoxFor(wp => wp.Quantity, new { @class = "form-control", @id = "Quantity" })
                     </td>
                 </tr>
 
@@ -102,53 +154,6 @@
 @section Scripts {
 
     @Scripts.Render("~/bundles/jqueryval")
-
-    <script type="text/x-handlebars-template" id="CategoriesTemplate">
-        <option selected="selected" id=0 value="0">Categories</option>
-        {{#each}}
-        <option id={{id}} value={{id}}>{{nom}}</option>
-        {{/each}}
-    </script>
-
-    <script type="text/x-handlebars-template" id="SuppliersTemplate">
-        <option selected="selected" id=0 value="0">Fournisseurs</option>
-        {{#each}}
-        <option id={{id}} value={{id}}>{{nom}}</option>
-        {{/each}}
-    </script>
-
-    <script type="text/x-handlebars-template" id="WeekProductsTemplate">
-        <div class="row">
-            <h4 class="col-xs-3">Produits</h4>
-            <h4 class="col-xs-3">Fournisseur</h4>
-            <h4 class="col-xs-2">Prix $</h4>
-            <h4 class="col-xs-2">Format</h4>
-            <h4 class="col-xs-1">Minimum</h4>
-            <h4 class="col-xs-1"></h4>
-        </div>
-        {{#each}}
-        <div class="row" id=Product{{ProductId}}>
-            <div class="col-xs-3">
-                <h5>{{ProductName}}</h5>
-            </div>
-            <div class="col-xs-3">
-                <h5 id="{{ProductId}}">{{SupplierName}}</h5>
-            </div>
-            <div class="col-xs-2">
-                <h5 id="{{ProductId}}">{{UnitPrice}}</h5>
-            </div>
-            <div class="col-xs-2">
-                <h5 id="{{ProductId}}">{{Format}}</h5>
-            </div>
-            <div class="col-xs-1">
-                <h5 id="{{ProductId}}">{{Quantity}}</h5>
-            </div>
-            <div class="col-xs-1">
-                <div class="btn btn-info col-md-offset-1" id="btnModify" hidden="{{ProductId}}">Modifier</div>
-            </div>
-        </div>
-        {{/each}}
-    </script>
 
     <script>
 
@@ -174,7 +179,7 @@
                 var result = TemplateSuppliers(data);
                 $("#SuppliersList").html(result);
 
-                $(".items").change(function () {
+                $(".sups").change(function () {
                     var id = $(this).children(":selected").attr("id");
 
                     if (id != 0) {
@@ -189,7 +194,7 @@
                 var result = TemplateCategories(data);
                 $("#CategoriesList").html(result);
 
-                $(".items").change(function () {
+                $(".cats").change(function () {
                     var id = $(this).children(":selected").attr("id");
 
                     if (id != 0) {
@@ -206,14 +211,28 @@
                     var result = TemplateWeekProducts(data);
                     $("#WeekProductsList").html(result);
 
-                    //$("#bntModify").click(function () {
-                    //    var id = $(this).children(":selected").attr("hidden");
-                    //    console.log(id);
-                    //})
-
                 }); // Fin de getWeekProducts
             } // Fin de function getWeekProducts
-        }); // Fin d'appel des fonctions
+
+            function ModifyWeekProduct(id) {
+                var Id = id;
+                $("#Formulaire").show();
+
+                $.getJSON("/AchetAdmin/getWeekProductDetails", { ProductId: Id }, function (data) {
+                    $("#UnitPrice").val(data.UnitPrice);
+                    $("#Format").val(data.Format);
+                    $("#Quantity").val(data.Quantity);
+
+                    //$.getJSON("/AchatAdmin/getSuppliers", null , function (data) {
+
+                    //    $.each(data, function (index, optionData) {
+                    //        $("#Supplier").append("<option value='" + optionData.Value + "'>" + optionData.Text + "</option>");
+                    //    });
+                    //});
+
+                }); // Fin getWeekProductDetails
+            } // Fin de ModifyWeekProduct
+        }); // Fin du DOM Load
 
     </script>
 }
