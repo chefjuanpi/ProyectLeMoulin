@@ -141,10 +141,10 @@ namespace IdentitySample.Controllers
         {
             EpicerieEntities db = new EpicerieEntities();
 
-            //var weekbd = (from w in db.Weeks select w.WeekId).LastOrDefault();
+            var weekbd = (from w in db.Weeks select w.WeekId).LastOrDefault();
 
-           // if (cart.week == weekbd)
-            //{
+            if (cart.week == weekbd)
+            {
                 string utilisateur = User.Identity.Name;
                 string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
@@ -163,8 +163,8 @@ namespace IdentitySample.Controllers
                              where
                              o.UserId == NewOrders.UserId &
                              o.WeekId == NewOrders.WeekId
-                             select o.OrderId).LastOrDefault();
-
+                             select o.OrderId).Single();
+                //int OID = int.Parse()
                 //Créer et enregistrer l'OrderDetail dans la BD
                 foreach (var item in cart.obj)
                 {
@@ -186,15 +186,9 @@ namespace IdentitySample.Controllers
                 //{
                 //    ViewBag.Steeve = "erreur";
                 //}
-<<<<<<< HEAD
-
-                return View();
-            //}
-=======
             }
                 return View();
 
->>>>>>> origin/master
         }
 
         public JsonResult GetOldBill()
