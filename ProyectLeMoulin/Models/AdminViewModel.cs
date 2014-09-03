@@ -54,6 +54,51 @@ namespace IdentitySample.Models
         public string Gauche { get; set; }
     }
 
+    public class ContactViewModel
+    {
+        [DataType(DataType.Html)]
+        [AllowHtml]
+        [Display(Name = "Code du map :")]
+        public string map { get; set; }
+
+
+        [StringLength(150, ErrorMessage = "Adresse trop long, max. 150 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Addresse :")]
+        public string addresse { get; set; }
+
+
+        [StringLength(150, ErrorMessage = "Nom de Ville trop long, max. 150 charactéres")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Ville :")]
+        public string ville { get; set; }
+
+
+        [StringLength(100, ErrorMessage = "error dans le nom de province")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Province :")]
+        public string prov { get; set; }
+
+        [StringLength(6, ErrorMessage = "error dans le format")]
+        [DataType(DataType.Text)]
+        [DisplayFormat(DataFormatString = "{ L9L9L9L9}", ApplyFormatInEditMode = true, ConvertEmptyStringToNull = true, HtmlEncode = true)]
+        [RegularExpression("([A-Z]\\d){3}", ErrorMessage="le code postal doit correspopnde a G7Y6U8")]
+        [Display(Name = "Code Postal :")]
+        public string codPos { get; set; }
+
+        [RegularExpression(@"^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$",
+    ErrorMessage = "Svp éntres le numéero dans le bon format: (123) 123-1234")]
+        [Phone]
+        [DisplayFormat(DataFormatString = "{(999) 999-9999}", ApplyFormatInEditMode = true, ConvertEmptyStringToNull= true, HtmlEncode= true)]
+        [Display(Name = "Téléphone")]
+        public string Phone { get; set; }
+
+        [EmailAddress]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Courriel")]
+        public string Email { get; set; }
+    }
+
     public class PagesViewModel
     {
         public string PId { get; set; }

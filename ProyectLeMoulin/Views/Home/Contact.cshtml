@@ -1,22 +1,20 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contactez-nous";
 }
 <h2>@ViewBag.Title.</h2>
 
 <div class="row">
     <div class="col-md-4">
-        <h3>@ViewBag.Message</h3>
+        <h5>Ici notres coordonées</h5>
 
         <address>
-            One Microsoft Way<br />
-            Redmond, WA 98052-6399<br />
-            <abbr title="Phone">P:</abbr>
-            425.555.0100
+            @ViewBag.Caddresse <br />
+            @ViewBag.Cville , @ViewBag.Cprov @ViewBag.CcodPos <br />
+            <abbr title="Phone">P :</abbr> @ViewBag.CPhone
         </address>
 
         <address>
-            <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-            <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+            <strong>Courriel : </strong>   <a href="@ViewBag.CEmail">@ViewBag.CEmail</a><br />
         </address>
 
         <section id="emailForm">
@@ -24,5 +22,5 @@
         </section>
 
         </div>
-        <iframe class="col-md-8 col-xs-12" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10591.118875486032!2d-71.01821979602902!3d48.42237320277072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sca!4v1403884242831" width="600" height="450" frameborder="0" style="border:0"></iframe>
+         @Html.Raw(ViewBag.Cmap)
     </div>

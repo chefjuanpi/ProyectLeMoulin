@@ -1,8 +1,89 @@
-﻿
+﻿@model IdentitySample.Models.ContactViewModel
 @{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Édition du Page contactez-nous";
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
 
-<h2>Contact</h2>
+<h2>@ViewBag.Title</h2>
 
+<h3 class="text-success">@ViewBag.success</h3>
+
+@using (Html.BeginForm("Contact", "Admin", FormMethod.Post, new
+{
+    @class = "alert alert-warning",
+    role = "form",
+    @id = "Formulaire"
+}))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                @Html.LabelFor(m => m.map, new { @for = "social" })
+                @Html.TextAreaFor(m => m.map, new { @class = "col-md-4 col-xs-4 form-control", @rows = "5", @id = "social" })
+                <p class="help-block">
+                    Coller ici le code d'integration de maps de google, pour obtenir le code click
+                    <a href="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10591.118875486032!2d-71.01821979602902!3d48.42237320277072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sca!4v1403884242831"
+                       target="_blank">ICI</a>
+                    apres dans options, en partager e  integrer la carte, copier le code d'integration
+                </p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group">
+                @Html.LabelFor(m => m.addresse, new { @class = "input-group-addon" })
+                @Html.TextBoxFor(m => m.addresse, new { @class = "form-control col-md-8", @placeholder = "123 rue racine" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group  ">
+                @Html.LabelFor(m => m.ville, new { @class = "input-group-addon" })
+                @Html.TextBoxFor(m => m.ville, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group ">
+                @Html.LabelFor(m => m.prov, new { @class = "input-group-addon" })
+                @Html.TextBoxFor(m => m.prov, new { @class = "form-control" })
+            </div>
+        </div>
+   </div>
+    <br />
+   <div class="row">
+        <div class="col-md-4">
+            <div class="input-group ">
+                @Html.LabelFor(m => m.codPos, new { @class = "input-group-addon" })
+                @Html.TextBoxFor(m => m.codPos, new { @class = "form-control", @placeholder = "G3H2H2" })
+            </div>
+        </div>
+        <div class="col-md-4">
+           <div class="input-group ">
+               @Html.LabelFor(m => m.Phone, new { @class = "input-group-addon" })
+               @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "(418) 9999-9999" })
+           </div>
+        </div>
+        <div class="col-md-4">
+           <div class="input-group">
+               @Html.LabelFor(m => m.Email, new { @class = "input-group-addon" })
+               @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "votre@courriel.com" })
+           </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success col-md-3" id="save">
+            <i class="fa fa-save"></i><b> Enregistrer les changements</b>
+        </button>
+    </div>
+    <br />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

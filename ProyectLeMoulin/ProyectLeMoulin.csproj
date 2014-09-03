@@ -601,6 +601,7 @@
     <Content Include="Views\Admin\Achats.cshtml" />
     <Content Include="Views\AchatAdmin\Categories.cshtml" />
     <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Views\Nouvelles\_NList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -711,7 +712,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\NouvellesController.cs" />
-    <Compile Include="Controllers\TranslatorContainer.cs" />
     <Compile Include="Migrations\201407141441556_InitialCreate.cs" />
     <Compile Include="Migrations\201407141441556_InitialCreate.Designer.cs">
       <DependentUpon>201407141441556_InitialCreate.cs</DependentUpon>

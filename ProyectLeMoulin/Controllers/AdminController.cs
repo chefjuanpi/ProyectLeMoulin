@@ -134,6 +134,73 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        /// <summary>
+        /// function get pour appeler la page pour etiter contactez-nous
+        /// </summary>
+        /// <returns>donnes actuels de la page</returns>
+        public ActionResult Contact()
+        {
+            CoeurContainer db = new CoeurContainer();
+            ContactViewModel c = new ContactViewModel();
+            ViewBag.Message = "modifier la page des conntacts.";
+            var b = (from a in db.Pages where a.MenuName == "Contactez-Nous" select a).SingleOrDefault();
+            c.addresse = b.Title;
+            c.map = b.Text;
+
+            var s = (from a in db.Pages
+                     from r in a.Sections
+                     where a.MenuName == "Contactez-Nous"
+                     select r).ToList();
+            
+            foreach (Section r in s)
+            {
+                switch (r.Nom)
+                {
+                    case "ville"    : c.ville  = r.Contenu; break;
+                    case "province" : c.prov   = r.Contenu; break;
+                    case "phone"    : c.Phone  = r.Contenu; break;
+                    case "email"    : c.Email  = r.Contenu; break;
+                    case "codpos"   : c.codPos = r.Contenu; break;
+                }
+            }
+            return View(c);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Contact(ContactViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            CoeurContainer db = new CoeurContainer();
+            ViewBag.Message = "modifier la page des conntacts.";
+            var b = (from a in db.Pages where a.MenuName == "Contactez-Nous" select a).SingleOrDefault();
+            b.Text = model.map;
+            b.Title = model.addresse;
+
+            var s = (from a in db.Pages
+                     from r in a.Sections
+                     where a.MenuName == "Contactez-Nous"
+                     select r).ToList();
+
+            foreach (Section r in s)
+            {
+                switch (r.Nom)
+                {
+                    case "ville"    : r.Contenu = model.ville ; break;
+                    case "province" : r.Contenu = model.prov  ; break;
+                    case "phone"    : r.Contenu = model.Phone ; break;
+                    case "email"    : r.Contenu = model.Email ; break;
+                    case "codpos"   : r.Contenu = model.codPos; break;
+                }
+            }
+            await db.SaveChangesAsync();
+            ViewBag.success = "Information sousgarde!!";
+            return View();
+        }
+
 
         public ActionResult Pages()
         {
@@ -724,14 +791,6 @@ namespace IdentitySample.Controllers
             ViewBag.ispostBack = false;
             return Redirect("/Admin/Notice");
         }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "modifier la page des conntacts.";
-
-            return View();
-        }
-
 
         /// <summary>
         /// function qui permet envoyer par courriel une publication a une compte de facebbok cible

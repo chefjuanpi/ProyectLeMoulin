@@ -89,27 +89,30 @@ namespace IdentitySample.Controllers
         {
             int y;
             string temp = "";
-            for (y = 0; y < tiny.Count() - 1; )
-            {
-                int start = tiny.IndexOf("<", y);
-                y = (start == 0 || y !=0  ) ? tiny.IndexOf(">", start) + 1 : y;
-                start = tiny.IndexOf("<", y);
-                if ((start - y) > 0)
+            if( tiny != null)
+            { 
+                for (y = 0; y < tiny.Count() - 1; )
                 {
-                    if (tiny.Substring(y, (start - y)) != "\r\n")
+                    int start = tiny.IndexOf("<", y);
+                    y = (start == 0 || y !=0  ) ? tiny.IndexOf(">", start) + 1 : y;
+                    start = tiny.IndexOf("<", y);
+                    if ((start - y) > 0)
                     {
-                        if (tiny.Substring(y, (start - y)).Trim() != "&nbsp;")
+                        if (tiny.Substring(y, (start - y)) != "\r\n")
                         {
-                            temp += " " + tiny.Substring(y, (start - y));
-                            if (temp.Count() > 200)
+                            if (tiny.Substring(y, (start - y)).Trim() != "&nbsp;")
                             {
-                                temp = temp.Substring(0, 199);
-                                break;
+                                temp += " " + tiny.Substring(y, (start - y));
+                                if (temp.Count() > 200)
+                                {
+                                    temp = temp.Substring(0, 199);
+                                    break;
+                                }
                             }
                         }
                     }
+                    y = (y == 0) ? tiny.IndexOf(">", start) + 1 : y;
                 }
-                y = (y == 0) ? tiny.IndexOf(">", start) + 1 : y;
             }
             return temp;
         }
@@ -140,8 +143,30 @@ namespace IdentitySample.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            CoeurContainer db = new CoeurContainer();
+            var b = (from a in db.Pages where a.MenuName == "Contactez-Nous" select a).SingleOrDefault();
 
+            var s = (from a in db.Pages
+                     from r in a.Sections
+                     where a.MenuName == "Contactez-Nous"
+                     select r).ToList();
+
+            foreach (Section r in s)
+            {
+                switch (r.Nom)
+                {
+                    case "ville": ViewBag.Cville = r.Contenu; break;
+                    case "province": ViewBag.Cprov = r.Contenu; break;
+                    case "phone": ViewBag.CPhone = r.Contenu; break;
+                    case "email": ViewBag.CEmail = r.Contenu; break;
+                    case "codpos": ViewBag.CcodPos = r.Contenu; break;
+                }
+            }
+
+            ViewBag.Caddresse = b.Title;
+            ViewBag.Cmap = b.Text;
+            ViewBag.Message = "La page de contact du collective le moulin d'à côté " + ViewBag.addresse + " " + ViewBag.ville +
+                " " + ViewBag.prov + " " + ViewBag.codPos + " " + ViewBag.Email + " téléphone : " + ViewBag.Phone;
             return View();
         }
 

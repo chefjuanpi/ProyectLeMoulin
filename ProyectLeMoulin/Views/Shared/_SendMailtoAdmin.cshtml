@@ -10,22 +10,33 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary("", new { @class = "text-danger", @id="validation" })
     <div class="text-success" id="success"> @ViewBag.courriel </div>
-    <div class="input-group row">
-        @Html.LabelFor(m => m.to, new { @class = "input-group-addon" })
-        @Html.TextBoxFor(m => m.to, new { @class = "form-control", @placeholder = "votrenom@courriel.com" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                @Html.LabelFor(m => m.to, new { @class = "input-group-addon" })
+                @Html.TextBoxFor(m => m.to, new { @class = "form-control", @placeholder = "votrenom@courriel.com" })
+            </div>
+        </div>
     </div>
-    <div class="input-group row">
-        <p class="input-group-addon">sujet &nbsp; &nbsp; &nbsp;</p>
-        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <p class="input-group-addon">sujet &nbsp; &nbsp; &nbsp; </p>
+                @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+            </div>
+        </div>
     </div>
-    <div class="input-group row">
-        @Html.LabelFor(m => m.Body, new { @class = "input-group-addon" })
-        @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "8" })
+    <div class="row">
+        <div class="col-md-12">
+                @Html.LabelFor(m => m.Body, new { @class = "input-group" })
+                @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "8" })
+        </div>
     </div>
     <br />
-    <div class="input-group row">
-        <input type="hidden" name="adresse" value="@ViewData["adresse"]" />
-        <button type="submit" class="btn btn-success"><b><i class="fa fa-envelope"></i> Envoyer</b> </button>
+    <div class="form-group">
+        <div class="col-md-offset-1">
+            <button type="submit" class="btn btn-success"><b><i class="fa fa-envelope"></i> Envoyer</b> </button>
+        </div>
     </div>
 </form>
 

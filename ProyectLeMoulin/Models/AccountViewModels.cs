@@ -82,6 +82,8 @@ namespace IdentitySample.Models
 
         [RegularExpression(@"^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$", 
             ErrorMessage="Svp éntres le numéero dans le bon format: (123) 123-1234" )]
+        [Phone]
+        [DisplayFormat( DataFormatString= "{(999) 999-9999}") ]
         [Display(Name = "Téléphone")]
         public string Phone { get; set; }
 
