@@ -214,25 +214,26 @@
                 }); // Fin de getWeekProducts
             } // Fin de function getWeekProducts
 
-            function ModifyWeekProduct(id) {
-                var Id = id;
-                $("#Formulaire").show();
-
-                $.getJSON("/AchetAdmin/getWeekProductDetails", { ProductId: Id }, function (data) {
-                    $("#UnitPrice").val(data.UnitPrice);
-                    $("#Format").val(data.Format);
-                    $("#Quantity").val(data.Quantity);
-
-                    //$.getJSON("/AchatAdmin/getSuppliers", null , function (data) {
-
-                    //    $.each(data, function (index, optionData) {
-                    //        $("#Supplier").append("<option value='" + optionData.Value + "'>" + optionData.Text + "</option>");
-                    //    });
-                    //});
-
-                }); // Fin getWeekProductDetails
-            } // Fin de ModifyWeekProduct
         }); // Fin du DOM Load
+
+        function ModifyWeekProduct(id) {
+            var Id = id;
+            $("#Formulaire").show();
+
+            $.getJSON("/AchetAdmin/getWeekProductDetails", { ProductId: Id }, function (data) {
+                $("#UnitPrice").val(data.UnitPrice);
+                $("#Format").val(data.Format);
+                $("#Quantity").val(data.Quantity);
+
+                //$.getJSON("/AchatAdmin/getSuppliers", null , function (data) {
+
+                //    $.each(data, function (index, optionData) {
+                //        $("#Supplier").append("<option value='" + optionData.Value + "'>" + optionData.Text + "</option>");
+                //    });
+                //});
+
+            }); // Fin getWeekProductDetails
+        } // Fin de ModifyWeekProduct
 
     </script>
 }
