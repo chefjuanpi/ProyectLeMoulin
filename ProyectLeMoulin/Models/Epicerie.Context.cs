@@ -12,6 +12,9 @@ namespace IdentitySample.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
     public partial class EpicerieEntities : DbContext
     {
@@ -34,5 +37,11 @@ namespace IdentitySample.Models
         public DbSet<Weeks> Weeks { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<Taxes> Taxes { get; set; }
+    
+        public virtual int CopyLastWeekProducts()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CopyLastWeekProducts");
+        }
     }
 }

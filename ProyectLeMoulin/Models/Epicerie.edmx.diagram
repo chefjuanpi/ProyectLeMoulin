@@ -23,6 +23,7 @@
         <EntityTypeShape EntityType="EpicerieModel.OrderDetails" Width="1.5" PointX="14.25" PointY="1.75" />
         <AssociationConnector Association="EpicerieModel.FK_OrderDetails_Orders" />
         <AssociationConnector Association="EpicerieModel.FK_OrderDetails_Week" />
+        <EntityTypeShape EntityType="EpicerieModel.Taxes" Width="1.5" PointX="3.375" PointY="5.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EpicerieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EpicerieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
@@ -87,6 +87,13 @@
           <Property Name="Fax" Type="nvarchar" MaxLength="256" />
           <Property Name="PostalCode" Type="nvarchar" MaxLength="7" Nullable="false" />
           <Property Name="Ville" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Taxes">
+          <Key>
+            <PropertyRef Name="Taxe" />
+          </Key>
+          <Property Name="Taxe" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="WeekProduct">
           <Key>
@@ -219,6 +226,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CopyLastWeekProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="EpicerieModelStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
@@ -227,6 +235,7 @@
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Taxes" EntityType="Self.Taxes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WeekProduct" EntityType="Self.WeekProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Weeks" EntityType="Self.Weeks" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CategoryProduct_Categories" Association="Self.FK_CategoryProduct_Categories">
@@ -316,6 +325,8 @@
             <End Role="WeekProduct" EntitySet="WeekProduct" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
+          <EntitySet Name="Taxes" EntityType="EpicerieModel.Taxes" />
+          <FunctionImport Name="CopyLastWeekProducts" />
           </EntityContainer>
         <EntityType Name="AspNetUsers">
           <Key>
@@ -549,6 +560,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Taxes">
+          <Key>
+            <PropertyRef Name="Taxe" />
+          </Key>
+          <Property Name="Taxe" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -664,6 +682,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Taxes">
+            <EntityTypeMapping TypeName="EpicerieModel.Taxes">
+              <MappingFragment StoreEntitySet="Taxes">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Taxe" ColumnName="Taxe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CopyLastWeekProducts" FunctionName="EpicerieModel.Store.CopyLastWeekProducts" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
