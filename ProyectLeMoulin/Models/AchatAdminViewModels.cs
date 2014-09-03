@@ -127,7 +127,7 @@ namespace EpicerieModel.Models
 
         [RegularExpression(@"^\d+$", ErrorMessage = "Nombre entier uniquement")]
         [Required]
-        [StringLength(3, ErrorMessage = " Quantité trop élevé")]
+
         [Display(Name = "Quantité minimum :")]
         public int Quantity { get; set; }
 

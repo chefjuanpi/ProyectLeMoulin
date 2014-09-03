@@ -29,27 +29,27 @@
 
     <div class="row">
         <div class="input-group">
-            <table>
 
-                <tr>
-                    <td>
-                        @Html.LabelFor(t => t.Taxe, new { @class = "input-group-addon", @style = "width:160px" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(t => t.Value, new { @class = "form-control", @id = "TVQ", @style = "width:260px" })
-                    </td>
-                </tr>
+            <script type="text/x-handlebars-template" id="TaxeTemplate">
+                <strong> {{Taxe}} :</strong>
+                <div class="form-control value" id="{{Taxe}}"></div> 
+            </script>
 
-                <tr>
-                    <td>
-                        @Html.LabelFor(t => t.Taxe, new { @class = "input-group-addon", @style = "width:160px" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(t => t.Value, new { @class = "form-control", @id = "TPS", @style = "width:260px" })
-                    </td>
-                </tr>
-
-            </table>
         </div>
     </div>
 }
+
+<script type="text/x-handlebars-template" id="CategoriesTemplate">
+    <option selected="selected" id=0 value="0">Categories</option>
+    {{#each}}
+    <option id={{id}} value={{id}}>{{nom}}</option>
+    {{/each}}
+</script>
+
+<div class="row">
+    <div class="alert alert-warning" role="alert" id="boutons" style="height:65px;">
+        <div class="col-md-3" style="height:auto;">
+            <select class="form-control cats" id="CategoriesList"></select>
+        </div>
+    </div>
+</div>

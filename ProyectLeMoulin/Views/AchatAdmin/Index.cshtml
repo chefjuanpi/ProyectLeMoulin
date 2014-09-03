@@ -18,12 +18,7 @@
 
 <br />
 
-<script type="text/x-handlebars-template" id="CategoriesTemplate">
-    <option selected="selected" id=0 value="0">Categories</option>
-    {{#each}}
-    <option id={{id}} value={{id}}>{{nom}}</option>
-    {{/each}}
-</script>
+
 
 <div class="row">
     <div class="alert alert-warning" role="alert" id="boutons" style="height:65px;">
@@ -33,59 +28,13 @@
     </div>
 </div>
 
-<script type="text/x-handlebars-template" id="SuppliersTemplate">
-    <option selected="selected" id=0 value="0">Fournisseurs</option>
-    {{#each}}
-    <option id={{id}} value={{id}}>{{nom}}</option>
-    {{/each}}
-</script>
 
-<div class="row">
-    <div class="alert alert-warning" role="alert" id="boutons" style="height:65px;">
-        <div class=" col-md-3">
-            <select class="form-control sups" id="SuppliersList"></select>
-        </div>
-    </div>
-</div>
-
-<script type="text/x-handlebars-template" id="WeekProductsTemplate">
-    <div class="row">
-        <h4 class="col-xs-4">Produits</h4>
-        <h4 class="col-xs-4">Fournisseur</h4>
-        <h4 class="col-xs-1">Prix $</h4>
-        <h4 class="col-xs-1">Format</h4>
-        <h4 class="col-xs-1">Minimum</h4>
-        <h4 class="col-xs-1"></h4>
-    </div>
-    {{#each}}
-    <div class="row" id=Product{{ProductId}}>
-        <div class="col-xs-4">
-            <h5>{{ProductName}}</h5>
-        </div>
-        <div class="col-xs-4">
-            <h5 id="{{ProductId}}">{{SupplierName}}</h5>
-        </div>
-        <div class="col-xs-1">
-            <h5 id="{{ProductId}}">{{UnitPrice}}</h5>
-        </div>
-        <div class="col-xs-1">
-            <h5 id="{{ProductId}}">{{Format}}</h5>
-        </div>
-        <div class="col-xs-1">
-            <h5 id="{{ProductId}}">{{Quantity}}</h5>
-        </div>
-        <div class="col-xs-1">
-            <input id="btnModify" type="button" value="Modifier" onclick="ModifyWeekProduct('{{ProductId}}');" class="btn btn-info col-md-offset-1" />
-        </div>
-    </div>
-    {{/each}}
-</script>
 
 <div class="row">
     <div id="WeekProductsList" class="col-md-6"></div>
 </div>
 
-@using (Html.BeginForm("Indexs", "AchatAdmin", FormMethod.Post, new
+@using (Html.BeginForm("Index", "AchatAdmin", FormMethod.Post, new
 {
     @class = "form-horizontal",
     role = "form",
@@ -102,12 +51,13 @@
         <div class="input-group">
             <table>
                 <tr>
-                    @*<td>
-                        @Html.LabelFor(wp => wp.SupplierId, new { @class = "input-group-addon", @style = "width:160px" })
+                    <td>
+                        <div class = "input-group-addon" style = "width:160px">Fournisseur :</div>
                     </td>
                     <td>
-                        @Html.DropDownListFor(wp => wp.SupplierId, new SelectList(s.SupplierId, "SupplierId", "SupplierName"), "Select Supplier", new { @class = "form-control", @id = "Supplier", @onchange = "SupplierChange()" })
-                    </td>*@
+
+                        @Html.DropDownListFor(wp => wp.SupplierId, new SelectList(new string[] { "ERROR!!" }), new { @class = "form-control cats", @id = "SuppliersList" })
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -139,7 +89,7 @@
             </table>
         </div>
     </div>
-
+        @Html.HiddenFor(wp => wp.ProductId, new { @id = "new123" })
     <br />
 
     <div class="row">
@@ -148,20 +98,65 @@
         </button>
     </div>
 
-    @Html.HiddenFor(wp => wp.ProductId, new { @id = "new123" })
+
 }
 
 @section Scripts {
 
     @Scripts.Render("~/bundles/jqueryval")
 
+    <script type="text/x-handlebars-template" id="CategoriesTemplate">
+        <option selected="selected" id=0 value="0">Categories</option>
+        {{#each}}
+        <option id={{id}} value={{id}}>{{nom}}</option>
+        {{/each}}
+    </script>
+
+    <script type="text/x-handlebars-template" id="WeekProductsTemplate">
+        <div class="row">
+            <h4 class="col-xs-4">Produits</h4>
+            <h4 class="col-xs-4">Fournisseur</h4>
+            <h4 class="col-xs-1">Prix $</h4>
+            <h4 class="col-xs-1">Format</h4>
+            <h4 class="col-xs-1">Minimum</h4>
+            <h4 class="col-xs-1"></h4>
+        </div>
+        {{#each}}
+        <div class="row" id=Product{{ProductId}}>
+            <div class="col-xs-4">
+                <h5>{{ProductName}}</h5>
+            </div>
+            <div class="col-xs-4">
+                <h5 id="{{ProductId}}">{{SupplierName}}</h5>
+            </div>
+            <div class="col-xs-1">
+                <h5 id="{{ProductId}}">{{UnitPrice}}</h5>
+            </div>
+            <div class="col-xs-1">
+                <h5 id="{{ProductId}}">{{Format}}</h5>
+            </div>
+            <div class="col-xs-1">
+                <h5 id="{{ProductId}}">{{Quantity}}</h5>
+            </div>
+            <div class="col-xs-1">
+                <input id="btnModify" type="button" value="Modifier" onclick="ModifyWeekProduct('{{ProductId}}');" class="btn btn-info col-md-offset-1" />
+            </div>
+        </div>
+        {{/each}}
+    </script>
+<script type="text/x-handlebars-template" id="SuppliersTemplate">
+    {{#each}}
+    <option id={{id}} value={{id}}>{{nom}}</option>
+    {{/each}}
+</script>
     <script>
+        TemplateCategories = null;
+        TemplateWeekProducts = null;
+        TemplateSuppliers = null;
 
         $(function () {
 
-            TemplateCategories = null;
-            TemplateSuppliers = null;
-            TemplateWeekProducts = null;
+
 
             $.ajaxSetup({
                 // Disable caching of AJAX responses
@@ -169,25 +164,9 @@
             });
 
             TemplateCategories = Handlebars.compile($("#CategoriesTemplate").html());
-            TemplateSuppliers = Handlebars.compile($("#SuppliersTemplate").html());
             TemplateWeekProducts = Handlebars.compile($("#WeekProductsTemplate").html());
 
             $("#Formulaire").hide();
-
-            $.getJSON("/AchatAdmin/getSuppliers", null, function (data) {
-
-                var result = TemplateSuppliers(data);
-                $("#SuppliersList").html(result);
-
-                $(".sups").change(function () {
-                    var id = $(this).children(":selected").attr("id");
-
-                    if (id != 0) {
-                        getWeekProducts(id, "sup");
-                    }
-
-                }); // Fin de Suppliers.items.change
-            }); // Fin de getSuppliers
 
             $.getJSON("/AchatAdmin/getCategories", null, function (data) {
 
@@ -197,40 +176,44 @@
                 $(".cats").change(function () {
                     var id = $(this).children(":selected").attr("id");
 
+                    if ($("#Formulaire").show() == true) {
+                        $("#Formulaire").hide();
+                    }
+
                     if (id != 0) {
-                        getWeekProducts(id, "cat");
+                        $.getJSON("/AchatAdmin/getWeekProducts", { Id: id }, function (data) {
+
+                            var result = TemplateWeekProducts(data);
+                            $("#WeekProductsList").html(result);
+
+                        }); // Fin de getWeekProducts
                     }
 
                 }); // Fin de Categories.items.change
             }); // Fin de getCategories
 
-            function getWeekProducts(id, type) {
-
-                $.getJSON("/AchatAdmin/getWeekProducts", { Id: id, type: type }, function (data) {
-
-                    var result = TemplateWeekProducts(data);
-                    $("#WeekProductsList").html(result);
-
-                }); // Fin de getWeekProducts
-            } // Fin de function getWeekProducts
-
         }); // Fin du DOM Load
 
         function ModifyWeekProduct(id) {
+
             var Id = id;
             $("#Formulaire").show();
+            TemplateSuppliers = Handlebars.compile($("#SuppliersTemplate").html());
+            $.getJSON("/AchatAdmin/getSuppliers", null, function (sups) {
+                var result = TemplateSuppliers(sups);
+                $("#SuppliersList").html(result);
 
-            $.getJSON("/AchetAdmin/getWeekProductDetails", { ProductId: Id }, function (data) {
+            }); // Fin de getSuppliers
+
+            $.getJSON("/AchatAdmin/getWeekProductDetails", { ProductId: Id }, function (data) {
                 $("#UnitPrice").val(data.UnitPrice);
                 $("#Format").val(data.Format);
-                $("#Quantity").val(data.Quantity);
+                $("#Quantity").val(data.Qty);
+                $("#new123").val(data.Product);
+                //var valeur = data.SupplierId;
+                //$('#SuppliersList[value=' + valeur + ']').attr("selected", "selected");
 
-                //$.getJSON("/AchatAdmin/getSuppliers", null , function (data) {
 
-                //    $.each(data, function (index, optionData) {
-                //        $("#Supplier").append("<option value='" + optionData.Value + "'>" + optionData.Text + "</option>");
-                //    });
-                //});
 
             }); // Fin getWeekProductDetails
         } // Fin de ModifyWeekProduct
