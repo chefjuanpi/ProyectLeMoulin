@@ -1,4 +1,6 @@
-﻿@{
+﻿@model EpicerieModel.Models.ProductViewModel
+
+@{
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
 }
 
@@ -9,3 +11,152 @@
         <h3>@ViewBag.Message</h3>
     </div>
 </div>
+
+<br />
+
+<p>
+    Selectionner un produit dans la liste deroulante pour le voir et le modifier, ou cliquer sur le bouton
+    nouveau pour en ajouter un.
+</p>
+
+<div class="row">
+    @Html.Partial("_AdminButonSansMCE")
+</div>
+
+<br />
+
+@using (Html.BeginForm("Products", "AchatAdmin", FormMethod.Post, new
+{
+    @class = "form-horizontal",
+    role = "form",
+    @id = "Formulaire"
+}))
+{
+
+    @Html.AntiForgeryToken()
+    <hr />
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="row">
+        <div class="input-group">
+            <table>
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(p => p.ProductName, new { @class = "input-group-addon", @style = "width:160px" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(p => p.ProductName, new { @class = "form-control", @id = "name", @style = "width:360px" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(p => p.Description, new { @class = "input-group-addon", @style = "width:160px" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(p => p.Description, new { @class = "form-control", @id = "Description", @style = "width:360px" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(p => p.TVQ, new { @class = "input-group-addon", @style = "width:160px" })
+                    </td>
+                    <td>
+                        
+                        @Html.CheckBoxFor(p => p.TVQ, new { @class = "form-control", @id = "TVQ", @style = "width:35px" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(p => p.TPS, new { @class = "input-group-addon", @style = "width:160px" })
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(p => p.TPS, new { @class = "form-control", @id = "TPS", @style = "width:35px" })
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <button type="submit" class="btn btn-success col-md-offset-3 col-md-2" id="save">
+            <i class="fa fa-save"></i><b> Enregistrer </b>
+        </button>
+    </div>
+
+    @Html.HiddenFor(p => p.ProductId, new { @id = "new123" })
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/AdminButonsV2")
+
+    <script>
+
+        $(function () {
+
+            $.ajaxSetup({
+                // Disable caching of AJAX responses
+                cache: false
+            });
+
+            $("#btnSupr").click(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: 200,
+                    modal: true,
+                    buttons: {
+
+                        "Effacer": function () {
+                            var x = $("#new123").val();
+                            console.log(x);
+                            window.open("/AchatAdmin/delProduct?nID=" + x, "_self");
+                            $(this).dialog("close");
+                        },
+
+                        "Annuler": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                }); // Fin dialog
+            }); // Fin btnSupr.click
+
+            Templateitems = Handlebars.compile($("#itemsTemplate").html());
+
+            $.getJSON("/AchatAdmin/getProducts", null, function (data) {
+
+                var result = Templateitems(data);
+                $("#ItemsList").html(result);
+
+                $(".items").change(function () {
+                    var id = $(this).children(":selected").attr("id");
+
+                    if (id != 0) {
+                        $("#btnmodif").show();
+                        $("#btnSupr").show();
+                        $("#Formulaire").show();
+                        $("#new123").val(id);
+
+                        $.getJSON("/AchatAdmin/getProductDetails", { ProductId: id }, function (data) {
+                            $("#name").val(data.Nom);
+                            $("#description").val(data.description);
+                            $("#TVQ").prop('checked', data.TVQ);
+                            $("#TPS").prop('checked', data.TPS);
+                        }); // Fin getSupplierDetails
+
+                    }
+                    else $("#btnAnuler").click();
+
+                }); // Fin items .change
+            }); // Fin getSuppliers
+        }); // Fin des functions
+    </script>
+}
