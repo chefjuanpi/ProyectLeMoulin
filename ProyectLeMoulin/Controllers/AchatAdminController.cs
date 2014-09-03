@@ -88,29 +88,28 @@ namespace IdentitySample.Controllers
                                 on wp.SupplierId equals s.SupplierId
                                 orderby p.ProductName
                                 where wp.WeekId == 1
-                                where s.SupplierId == Id
                                 select new
                                 {
                                     CategoryId = cp.CategoryId,
                                     SupplierId = s.SupplierId,
                                     ProductId = wp.ProductId,
                                     ProductName = p.ProductName,
-                                    SupplierName = s.SupplierName,
+                                    SupplierName = c.CategoryName,
                                     UnitPrice = wp.UnitPrice,
                                     Format = wp.Format,
                                     Quantity = wp.Quantity
                                 }).ToList();
 
-            if (type == "cat")
-            {
-                WeekProducts.Where(c => c.CategoryId == Id);
-            }
-            else if (type == "sup")
-            {
-                WeekProducts.Where(s => s.SupplierId == Id);
-            }
+            //if (type == "cat")
+            //{
+            //    WeekProducts.Where(c => c.CategoryId == Id);
+            //}
+            //else if (type == "sup")
+            //{
+            //    WeekProducts.Where(s => s.SupplierId == Id);
+            //}
 
-            WeekProducts.ToList();
+            //WeekProducts.ToList();
 
             return Json(WeekProducts, JsonRequestBehavior.AllowGet);
         }
@@ -171,7 +170,7 @@ namespace IdentitySample.Controllers
         public ActionResult NewOrder()
         {
             ViewBag.Title = "Nouvelle Commande";
-            ViewBag.message = "Affiche la commande à faire cette semaine";
+            ViewBag.message = "Affiche la nouvelle commande";
             return View();
         }
 
@@ -184,101 +183,6 @@ namespace IdentitySample.Controllers
             ViewBag.Title = "Produits";
             ViewBag.message = "Administration des produits";
             return View();
-        }
-
-        /// <summary>
-        /// S'exécute au "Post" de la page Products
-        /// Enregistre les Ajouts et Modifications
-        /// </summary>
-        /// <param name="Product">Model à utiliser</param>
-        /// <returns>Une vue</returns>
-        [HttpPost]
-        public ActionResult Products(ProductViewModel product)
-        {
-            EpicerieEntities db = new EpicerieEntities();
-            if (product.ProductId == null)
-            {
-                Products p = new Products();
-                p.ProductName = product.ProductName;
-                p.Description = product.Description;
-                p.TVQ = product.TVQ;
-                p.TPS = product.TPS;
-
-                db.Products.Add(p);
-                db.SaveChanges();
-            }
-            else
-            {
-                int x = Convert.ToInt16(product.ProductId);
-                var modifProduct = (from p in db.Products
-                                     where p.ProductId == x
-                                     select p).Single();
-                modifProduct.ProductName = product.ProductName;
-                modifProduct.Description = product.Description;
-                modifProduct.TVQ = product.TVQ;
-                modifProduct.TPS = product.TPS;
-
-                db.SaveChanges();
-            }
-            getProducts();
-            return View();
-        }
-
-        /// <summary>
-        /// Permet d'obtenir l'ID et le Nom des Products
-        /// </summary>
-        /// <returns>Json contenant les Products</returns>
-        public JsonResult getProducts()
-        {
-            EpicerieEntities db = new EpicerieEntities();
-            var products = (from p in db.Products
-                              orderby p.ProductName
-                              select new
-                              {
-                                  id = p.ProductId,
-                                  nom = p.ProductName
-                              });
-            return Json(products, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Permet d'otenir les informations sur un product
-        /// </summary>
-        /// <param name="ProductId">ID du product</param>
-        /// <returns>Json contenant les informations</returns>
-        public JsonResult getProductDetails(int ProductId)
-        {
-            EpicerieEntities db = new EpicerieEntities();
-            var product = (from p in db.Products
-                           where p.ProductId == ProductId
-                            select new
-                            {
-                                id = p.ProductId,
-                                Nom = p.ProductName,
-                                description = p.Description,
-                                TVQ = p.TVQ,
-                                TPS = p.TPS,
-                            }).Single();
-            return Json(product, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Permet d'effacer un produit de la BD
-        /// </summary>
-        /// <param name="nID">ID du produit</param>
-        /// <returns>Retourne à la selection</returns>
-        public ActionResult delProduct(int nID)
-        {
-            EpicerieEntities db = new EpicerieEntities();
-            var delproduct = (from p in db.Products
-                               where p.ProductId == nID
-                               select p).Single();
-            if (delproduct != null)
-            {
-                db.Products.Remove(delproduct);
-                db.SaveChanges();
-            }
-            return Redirect("/AchatAdmin/Categories");
         }
 
         /// <summary>
@@ -307,6 +211,7 @@ namespace IdentitySample.Controllers
                 Categories c = new Categories();
                 c.CategoryName = category.CategoryName;
                 c.Description = category.Description;
+
 
                 db.Categories.Add(c);
                 db.SaveChanges();
@@ -504,7 +409,7 @@ namespace IdentitySample.Controllers
         /// <returns>Une vue avec titre et message</returns>
         public ActionResult OldOrders()
         {
-            ViewBag.Title = "Anciennes commandes";
+            ViewBag.Title = "Fournisseurs";
             ViewBag.message = "Pour obtenir les rapports d'anciennes commandes";
             return View();
         }
@@ -515,19 +420,8 @@ namespace IdentitySample.Controllers
         /// <returns>Une vue avec titre et message</returns>
         public ActionResult MembersOrders()
         {
-            ViewBag.Title = "Factures des membres";
+            ViewBag.Title = "Commandes des membres";
             ViewBag.message = "Pour sortir les commandes des membres et leurs reçu";
-            return View();
-        }
-
-        /// <summary>
-        /// Permet d'ouvrir la vue pour Taxes
-        /// </summary>
-        /// <returns>Une vue avec titre et message</returns>
-        public ActionResult Taxes()
-        {
-            ViewBag.Title = "Admnistration des Taxes";
-            ViewBag.message = "Permet de modifier les taxes au besoin";
             return View();
         }
 
