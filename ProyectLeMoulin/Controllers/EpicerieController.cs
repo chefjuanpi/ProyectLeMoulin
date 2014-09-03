@@ -16,11 +16,23 @@ namespace IdentitySample.Controllers
 {
 
     public class EpicerieController : Controller
-    
     {
         public ActionResult Index()
         {
-           return View();
+            EpicerieEntities db = new EpicerieEntities();
+
+            var week = (from w in db.Weeks
+                        orderby w.WeekId descending
+                        select new test1234
+                        {
+                            Debut = (DateTime)w.Date_Debut,
+                            Fin = (DateTime)w.Date_Fin,
+                            Recup = (DateTime)w.Date_Recuperation
+                        }).Take(1).ToList();
+
+            ViewBag.Period = week;
+
+            return View();
         }
 
         /// <summary>
@@ -42,10 +54,15 @@ namespace IdentitySample.Controllers
             var week = (from w in db.Weeks
                         orderby w.WeekId descending
                         select new
-                        {   w.WeekId
+                        {
+                            w.WeekId
                         }).FirstOrDefault();
+
+
             return Json(week, JsonRequestBehavior.AllowGet);
         }
+
+
 
         public JsonResult GetPeriod()
         {
@@ -55,11 +72,11 @@ namespace IdentitySample.Controllers
                         orderby w.WeekId descending
                         select new
                         {
-                            Debut   =   w.Date_Debut,
-                            Fin     =   w.Date_Fin,
-                            Recup   =   w.Date_Recuperation
+                            Debut = w.Date_Debut,
+                            Fin = w.Date_Fin,
+                            Recup = w.Date_Recuperation
                         }).FirstOrDefault();
-            
+
             return Json(week, JsonRequestBehavior.AllowGet);
         }
 
@@ -72,7 +89,7 @@ namespace IdentitySample.Controllers
         //    var fin = (from w in db.Weeks
         //                where w.WeekId == week
         //                select w.Date_Fin).SingleOrDefault();
-            
+
         //    if (DateTime.Today <= (DateTime)fin)
         //        valide = true;
         //    return Json(valide, JsonRequestBehavior.AllowGet);
@@ -84,9 +101,9 @@ namespace IdentitySample.Controllers
             var category = (from c in db.Categories
                             select new
                             {
-                                CategoryID      =   c.CategoryId,
-                                CategoryName    =   c.CategoryName,
-                                Description     =   c.Description
+                                CategoryID = c.CategoryId,
+                                CategoryName = c.CategoryName,
+                                Description = c.Description
                             }).ToList();
             return Json(category, JsonRequestBehavior.AllowGet);
         }
@@ -99,37 +116,37 @@ namespace IdentitySample.Controllers
         public JsonResult GetProduits(int cat)
         {
             EpicerieEntities db = new EpicerieEntities();
-                        
-            int weekID =    (from       w               in    db.Weeks
-                            orderby     w.WeekId        descending
-                            select      w.WeekId
+
+            int weekID = (from w in db.Weeks
+                          orderby w.WeekId descending
+                          select w.WeekId
                             ).FirstOrDefault();
 
-            int category = (from        c               in      db.Categories
-                            where       c.CategoryId    ==  cat
-                            select      c.CategoryId
+            int category = (from c in db.Categories
+                            where c.CategoryId == cat
+                            select c.CategoryId
                             ).FirstOrDefault();
 
-            var produit =   (from   w              in      db.Weeks
-                            join   wp              in      db.WeekProduct
-                            on     w.WeekId        equals  wp.WeekId
-                            join   p               in      db.Products
-                            on     wp.ProductId    equals  p.ProductId
-                            join   cp              in      db.CategoryProduct
-                            on     p.ProductId     equals  cp.ProductId
-                            where  cp.CategoryId   ==      category
-                            &&     w.WeekId        ==      weekID
-                            select new
-                            {
-                                WeeK           =   weekID,
-                                ProductID      =   p.ProductId,
-                                ProductName    =   p.ProductName,
-                                Format         =   wp.Format,
-                                Price          =   wp.UnitPrice
-                            }).ToList();
-                return Json(produit, JsonRequestBehavior.AllowGet);
+            var produit = (from w in db.Weeks
+                           join wp in db.WeekProduct
+                           on w.WeekId equals wp.WeekId
+                           join p in db.Products
+                           on wp.ProductId equals p.ProductId
+                           join cp in db.CategoryProduct
+                           on p.ProductId equals cp.ProductId
+                           where cp.CategoryId == category
+                           && w.WeekId == weekID
+                           select new
+                           {
+                               WeeK = weekID,
+                               ProductID = p.ProductId,
+                               ProductName = p.ProductName,
+                               Format = wp.Format,
+                               Price = wp.UnitPrice
+                           }).ToList();
+            return Json(produit, JsonRequestBehavior.AllowGet);
         }
-        
+
         /// <summary>
         /// Garder ou modifier la bd en async sans affecter la vitesse de l'utilisateur
         /// </summary>
@@ -141,53 +158,43 @@ namespace IdentitySample.Controllers
         {
             EpicerieEntities db = new EpicerieEntities();
 
-            var weekbd = (from w in db.Weeks select w.WeekId).LastOrDefault();
 
-            if (cart.week == weekbd)
+            string utilisateur = User.Identity.Name;
+            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+
+            //Créer un Order et enregistrer l'Order dans la BD
+            Orders NewOrders = new Orders();
+
+            NewOrders.UserId = guid;
+            NewOrders.WeekId = cart.week;
+            NewOrders.Commande_Payee = false;
+
+            //Créer et enregistrer l'OrderDetail dans la BD
+            foreach (var item in cart.obj)
             {
-                string utilisateur = User.Identity.Name;
-                string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+                var price = db.WeekProduct.SingleOrDefault(p => p.ProductId == item.PID && p.WeekId == cart.week).UnitPrice;
 
-                //Créer un Order et enregistrer l'Order dans la BD
-                Orders NewOrders = new Orders();
-
-                NewOrders.UserId = guid;
-                NewOrders.WeekId = cart.week;
-                NewOrders.Commande_Payee = false;
-                db.Orders.Add(NewOrders);
-
-                await db.SaveChangesAsync();
-
-                //Sortir le OrderID pour créer le Order Detail
-                var comID = (from o in db.Orders
-                             where
-                             o.UserId == NewOrders.UserId &
-                             o.WeekId == NewOrders.WeekId
-                             select o.OrderId).Single();
-                //int OID = int.Parse()
-                //Créer et enregistrer l'OrderDetail dans la BD
-                foreach (var item in cart.obj)
-                {
-                    var price = db.WeekProduct.SingleOrDefault(p => p.ProductId == item.PID).UnitPrice;
-
-                    OrderDetails NewOdersDetails = new OrderDetails();
-                    NewOdersDetails.ProductId = item.PID;
-                    NewOdersDetails.OrderId = comID;
-                    NewOdersDetails.Quantite = item.qty;
-                    NewOdersDetails.UnitPrice = price;
-                    NewOdersDetails.WeekId = cart.week;
-                    db.OrderDetails.Add(NewOdersDetails);
-                }
-                await db.SaveChangesAsync();
-
-                ViewBag.Steeve = "ton panier";
-                //}
-                //else
-                //{
-                //    ViewBag.Steeve = "erreur";
-                //}
+                OrderDetails NewOdersDetails = new OrderDetails();
+                NewOdersDetails.ProductId = item.PID;
+                NewOdersDetails.Quantite = item.qty;
+                NewOdersDetails.UnitPrice = price;
+                NewOdersDetails.WeekId = cart.week;
+                NewOrders.OrderDetails.Add(NewOdersDetails);
             }
-                return View();
+
+
+            db.Orders.Add(NewOrders);
+
+            await db.SaveChangesAsync();
+
+            ViewBag.Steeve = "ton panier";
+            //}
+            //else
+            //{
+            //    ViewBag.Steeve = "erreur";
+            //}
+            //}
+            return View();
 
         }
 
@@ -198,11 +205,11 @@ namespace IdentitySample.Controllers
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
-            var oldbill = (from     o           in      db.Orders
-                           join     w           in      db.Weeks
-                           on       o.WeekId    equals  w.WeekId
-                           where    o.UserId    ==      guid
-                           select   w.Date_Debut).Single();
+            var oldbill = (from o in db.Orders
+                           join w in db.Weeks
+                           on o.WeekId equals w.WeekId
+                           where o.UserId == guid
+                           select w.Date_Debut).Single();
             return Json(oldbill, JsonRequestBehavior.AllowGet);
         }
 
@@ -212,23 +219,24 @@ namespace IdentitySample.Controllers
 
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-            int weekbd = (from w in db.Weeks    select w.WeekId).LastOrDefault();
+            int weekbd = (from w in db.Weeks select w.WeekId).LastOrDefault();
 
-            var bill = (from    u               in      db.AspNetUsers
-                        join    o               in      db.Orders
-                        on      u.Id            equals  o.UserId
-                        join    w               in      db.Weeks
-                        on      o.WeekId        equals  w.WeekId
-                        where   u.Id            ==      guid 
-                        &       w.WeekId        ==      weekbd
-                        select new{
-                            Usager          =   u.Prenom + " " + u.Nom, 
-                            OrderID         =   o.OrderId,
-                            Debut           =   w.Date_Debut,
-                            Fin             =   w.Date_Fin,
-                            DateRecup       =   w.Date_Recuperation,
-                            Date            =   DateTime.Today
-                            }).ToList();
+            var bill = (from u in db.AspNetUsers
+                        join o in db.Orders
+                        on u.Id equals o.UserId
+                        join w in db.Weeks
+                        on o.WeekId equals w.WeekId
+                        where u.Id == guid
+                        & w.WeekId == weekbd
+                        select new
+                        {
+                            Usager = u.Prenom + " " + u.Nom,
+                            OrderID = o.OrderId,
+                            Debut = w.Date_Debut,
+                            Fin = w.Date_Fin,
+                            DateRecup = w.Date_Recuperation,
+                            Date = DateTime.Today
+                        }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
 
@@ -238,26 +246,26 @@ namespace IdentitySample.Controllers
 
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-            int weekbd  =   (from      w           in  db.Weeks
-                            where     w.WeekId    ==  week
-                            select    w.WeekId
+            int weekbd = (from w in db.Weeks
+                          where w.WeekId == week
+                          select w.WeekId
                             ).LastOrDefault();
 
-            var bill    =   (from       u           in      db.AspNetUsers
-                            join        o           in      db.Orders
-                            on          u.Id        equals  o.UserId
-                            join        w           in      db.Weeks
-                            on          o.WeekId    equals  w.WeekId
-                            where       u.Id        ==      guid
-                            &           w.WeekId    ==      weekbd
-                            select new
-                            {
-                                Usager      =   u.Prenom + " " + u.Nom,
-                                OrderID     =   o.OrderId,
-                                Debut       =   w.Date_Debut,
-                                Fin         =   w.Date_Fin,
-                                DateRecup   =   w.Date_Recuperation
-                            }).ToList();
+            var bill = (from u in db.AspNetUsers
+                        join o in db.Orders
+                        on u.Id equals o.UserId
+                        join w in db.Weeks
+                        on o.WeekId equals w.WeekId
+                        where u.Id == guid
+                        & w.WeekId == weekbd
+                        select new
+                        {
+                            Usager = u.Prenom + " " + u.Nom,
+                            OrderID = o.OrderId,
+                            Debut = w.Date_Debut,
+                            Fin = w.Date_Fin,
+                            DateRecup = w.Date_Recuperation
+                        }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
 
@@ -267,31 +275,32 @@ namespace IdentitySample.Controllers
 
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-            int weekbd = (from      w           in  db.Weeks 
-                          where     w.WeekId    ==  week 
-                          select    w.WeekId
+            int weekbd = (from w in db.Weeks
+                          where w.WeekId == week
+                          select w.WeekId
                           ).LastOrDefault();
-            
-            var bill = (from    o               in      db.Orders
-                        join    od              in      db.OrderDetails
-                        on      o.OrderId       equals  od.OrderId
-                        join    p               in      db.Products
-                        on      od.ProductId    equals  p.ProductId
-                        join    cp              in      db.CategoryProduct
-                        on      p.ProductId     equals  cp.ProductId
-                        join    wp              in      db.WeekProduct
-                        on      o.WeekId        equals  wp.WeekId
-                        where   o.UserId        ==      guid 
-                        &       o.WeekId        ==      weekbd
+
+            var bill = (from o in db.Orders
+                        join od in db.OrderDetails
+                        on o.OrderId equals od.OrderId
+                        join p in db.Products
+                        on od.ProductId equals p.ProductId
+                        join cp in db.CategoryProduct
+                        on p.ProductId equals cp.ProductId
+                        join wp in db.WeekProduct
+                        on o.WeekId equals wp.WeekId
+                        where o.UserId == guid
+                        & o.WeekId == weekbd
                         orderby cp.CategoryId
-                        select new{
-                            Nom         =   p.ProductName,
-                            Format      =   wp.Format,
-                            Quantite    =   od.Quantite,
-                            Prix        =   od.UnitPrice,
-                            SousTotal   =   od.Quantite * od.UnitPrice
+                        select new
+                        {
+                            Nom = p.ProductName,
+                            Format = wp.Format,
+                            Quantite = od.Quantite,
+                            Prix = od.UnitPrice,
+                            SousTotal = od.Quantite * od.UnitPrice
                             //Total       =   sum(od.Quantite * od.UnitPrice)
-            }).ToList();
+                        }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
     }
