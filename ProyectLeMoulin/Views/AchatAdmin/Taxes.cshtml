@@ -100,7 +100,6 @@
 
                 $(".items").change(function () {
                     var id = $(this).children(":selected").attr("id");
-                    console.log(id);
 
                     if (id != 0) {
                         $("#btnmodif").show();
@@ -109,7 +108,7 @@
                         $.getJSON("getTaxeDetails", { TaxeId: id }, function (data) {
                             $("#taxe").val(data.Nom);
                             $("#value").val(data.value);
-                            $("#new123").val(date.id);
+                            $("#new123").val(data.id);
 
                         }); // Fin getTaxeDetails
 
