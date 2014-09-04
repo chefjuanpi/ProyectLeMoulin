@@ -216,8 +216,6 @@
                 $("#SuppliersList").html(result);
             }); // Fin de getSuppliers
 
-
-
             $.getJSON("/AchatAdmin/getWeekProductDetails", { ProductId: id }, function (data) {
                 $("#UnitPrice").val(data.UnitPrice);
                 $("#Format").val(data.Format);
