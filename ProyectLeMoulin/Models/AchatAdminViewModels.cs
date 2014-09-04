@@ -129,7 +129,7 @@ namespace EpicerieModel.Models
         [Required]
 
         [Required]
-        [Display(Name = "Quantité minimum :")]
+        [Display(Name = "Minimum :")]
         public int Quantity { get; set; }
 
         [Required]
