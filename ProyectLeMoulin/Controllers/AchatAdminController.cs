@@ -620,5 +620,18 @@ namespace IdentitySample.Controllers
                             }).Single();
             return Json(taxe, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        ///  Permet d'ouvrir la vue pour la création de session.
+        /// </summary>
+        /// <returns>Une vue avec titre et message</returns>
+        public ActionResult NewWeek()
+        {
+            ViewBag.Title = "Nouvelle Week";
+            ViewBag.message = "Permet la création d'une nouvelle session d'achat";
+            return View();
+        }
+
+
     }
-}
+} 
