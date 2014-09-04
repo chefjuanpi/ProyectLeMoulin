@@ -34,7 +34,7 @@
                 <h5 id="Format{{ProductID}}">{{Quantite}}</h5>
             </div>
             <div class="col-xs-2">
-                <h5 id="Format{{ProductID}}">{{Prix}}</h5>
+                <input class="prix col-xs-1" id="{{ProductID}}" type="text" value="{{Prix}}" name="{{Prix}}.qty" readonly="readonly" />
             </div>
             <div class="col-xs-1">
                 <h5 id="Format{{ProductID}}">{{SousTotal}}</h5>
@@ -43,14 +43,30 @@
         </div>
     </script>
 
+<script type="text/x-handlebars-template" id="MembresTemplate">
+    <div class="row">
+        <h4 class="col-xs-4">No. Facture</h4>
+        <h4 class="col-xs-3">Membre</h4>
+    </div>
+    <div class="row" id=Detail{{ProductID}}>
+        <div class="col-xs-4">
+            <h5 id="Name{{OrderID}}">{{OrderID}}</h5>
+        </div>
+        <div class="col-xs-3">
+            <h5 id="Format{{OrderID}}">{{Membre}}</h5>
+        </div>
+    </div>
+</script>
+
     <script type="text/javascript">
         templateOrders = null;
         templateDetails = null;
+        templateMembres = null;
 
         $(function () {
             templateOrders = Handlebars.compile($("#OrdersTemplate").html());
             templateDetails = Handlebars.compile($("#DetailsTemplate").html());
-
+            
 
             
 
@@ -61,7 +77,9 @@
                 $(".orders").change(function () {
                     var id = $(this).children(":selected").html("{{OrderID}}");
                     console.log("H2" + " " + id);
+                    AfficherMembre(id);
                     if (id != 0) {
+                        AfficherMembre(id);
                         $.getJSON("/Epicerie/GetDetails", { OID: id }, function (data) {
                             var result = templateDetails(data);
                             $("#DetailssOutput").html(result);
@@ -70,16 +88,29 @@
                 });
             });//GetOrders
         });
+
+        function AfficherMembre(id) {
+            templateMembres = Handlebars.compile($("#MembresTemplate").html());
+
+            $.getJSON("/Epicerie/GetMembre", { OID: id }, function (data) {
+                var result = templateMembres(data);
+                $("#MembresOutput").html(result);
+                CalculerSomme();
+            });
+        };
+
+        function CalculerSomme() {
+            foreach
+
+        }
+
     </script>
 }
 
 <div id="Facture" class="row">
     <div id="OrdersOutput" class="col-md-12"></div>
-
+    <div id="MembresOutput" class="col-md-12"></div>
     <div id="DetailsOutput" class="col-md-12"></div>
-
-
-
     <div>@Html.ActionLink("Retour", "Index")</div>
 </div>
 

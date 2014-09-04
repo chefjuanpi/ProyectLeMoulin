@@ -17,6 +17,11 @@ namespace IdentitySample.Controllers
 
     public class EpicerieController : Controller
     {
+        /// <summary>
+        /// Fait le lien avec la page index
+        /// Récupérer les dates de la période d'achat et de récupération
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -34,6 +39,11 @@ namespace IdentitySample.Controllers
 
             return View();
         }
+        
+        /// <summary>
+        /// Fait le lien avec la page Facture
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Facture()
         {
             return View();
@@ -84,6 +94,11 @@ namespace IdentitySample.Controllers
         //    return Json(week, JsonRequestBehavior.AllowGet);
         //}
 
+        /// <summary>
+        /// Fait la validation de la semaine pour savoir si le membre
+        /// peut passer une commande
+        /// </summary>
+        /// <returns></returns>
         //public JsonResult ValiderWeek()
         //{
         //    EpicerieEntities db = new EpicerieEntities();
@@ -91,14 +106,18 @@ namespace IdentitySample.Controllers
         //    bool valide = false;
         //    var week = (from w in db.Weeks orderby w.WeekId descending select w.WeekId).FirstOrDefault();
         //    var fin = (from w in db.Weeks
-        //                where w.WeekId == week
-        //                select w.Date_Fin).SingleOrDefault();
+        //               where w.WeekId == week
+        //               select w.Date_Fin).SingleOrDefault();
 
         //    if (DateTime.Today <= (DateTime)fin)
         //        valide = true;
         //    return Json(valide, JsonRequestBehavior.AllowGet);
         //}
 
+        /// <summary>
+        /// Récupérer La catégorie sélectionnée
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetCategories()
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -166,7 +185,7 @@ namespace IdentitySample.Controllers
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
-            //Créer un Order et enregistrer l'Order dans la BD
+            //Créer et enregistrer l'Order dans la BD
             Orders NewOrders = new Orders();
 
             NewOrders.UserId = guid;
@@ -203,22 +222,11 @@ namespace IdentitySample.Controllers
 
         }
         //----------------------------------------------------------------------------------------------------------------------
-
-        public JsonResult GetWeekFacture()
-        {
-            EpicerieEntities db = new EpicerieEntities();
-
-            var week = (from w in db.Weeks
-                        orderby w.WeekId descending
-                        select new
-                        {
-                            w.WeekId
-                        }).ToList();
-
-
-            return Json(week, JsonRequestBehavior.AllowGet);
-        }
         
+        /// <summary>
+        /// Récupérer le OrderId de la facture à afficher
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetOrder()
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -236,10 +244,42 @@ namespace IdentitySample.Controllers
             return Json(order, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetDetails(int OID)
+        /// <summary>
+        /// Récupères les informations du membre pour afficher
+        /// </summary>
+        /// <param name="OID">OrderID sélectionné</param>
+        /// <returns></returns>
+        public JsonResult GetMembre(int OID)
         {
             EpicerieEntities db = new EpicerieEntities();
 
+            string utilisateur = User.Identity.Name;
+            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+
+            var order = (from o in db.Orders
+                         join a in db.AspNetUsers
+                         on o.UserId equals a.Id
+                         where o.UserId == guid
+                         && o.OrderId == OID
+                         orderby o.OrderId descending
+                         select new
+                         {
+                             Membre = a.Prenom + " " + a.Nom,
+                             OrderID = o.OrderId
+                         }).ToList();
+
+            return Json(order, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Récupérer le détail de la facture sélectionnée
+        /// </summary>
+        /// <param name="OID"></param>
+        /// <returns></returns>
+        public JsonResult GetDetails(int OID)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            
             var bill = (from o in db.Orders
                         join od in db.OrderDetails
                         on o.OrderId equals od.OrderId
@@ -258,11 +298,11 @@ namespace IdentitySample.Controllers
                             Format = wp.Format,
                             Quantite = od.Quantite,
                             Prix = od.UnitPrice,
-                            SousTotal = od.Quantite * od.UnitPrice
+                            SousTotal = od.Quantite * od.UnitPrice,
+                            
                         }).ToList();
+            
             return Json(bill, JsonRequestBehavior.AllowGet);
-
-
         }
     }
 }
