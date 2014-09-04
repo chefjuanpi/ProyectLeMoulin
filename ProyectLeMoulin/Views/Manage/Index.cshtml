@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-10">
         <p>
-            Numéro de téléphone @(ViewBag.PhoneNumber ?? "None") [
+            Numéro de céllulaire : @(ViewBag.PhoneNumber ?? "None") [
             @if (ViewBag.PhoneNumber != null)
             {
                 @Html.ActionLink("Modifier", "AddPhoneNumber")

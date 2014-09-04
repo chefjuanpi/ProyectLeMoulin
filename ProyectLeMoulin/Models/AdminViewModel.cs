@@ -29,6 +29,11 @@ namespace IdentitySample.Models
         [Display(Name = "Prenom")]
         public string Prenom { get; set; }
 
+        [Display(Name = "Cellulaire")]
+        [Phone]
+        [DataType(DataType.PhoneNumber)]
+        public string phone { get; set; }
+
         [Required]
         [StringLength(150, ErrorMessage = "Nom trop long, max. 150 charactéres")]
         [DataType(DataType.Text)]

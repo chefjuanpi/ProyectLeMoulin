@@ -150,6 +150,7 @@ namespace IdentitySample.Controllers
                 Email = user.Email,
                 Prenom = user.Prenom,
                 Nom = user.Nom,
+                phone = user.PhoneNumber,
                 susp = user.Suspendre,
                 RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
                 {
@@ -174,6 +175,9 @@ namespace IdentitySample.Controllers
 
                 user.UserName = editUser.Email;
                 user.Email = editUser.Email;
+                user.PhoneNumber = editUser.phone;
+                user.Prenom = editUser.Prenom;
+                user.Nom = editUser.Nom;
 
                 var userRoles = await UserManager.GetRolesAsync(user.Id);
 

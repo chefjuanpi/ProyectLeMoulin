@@ -218,7 +218,7 @@
 
 
 
-            $.getJSON("/AchatAdmin/getWeekProductDetails", { ProductId: Id }, function (data) {
+            $.getJSON("/AchatAdmin/getWeekProductDetails", { ProductId: id }, function (data) {
                 $("#UnitPrice").val(data.UnitPrice);
                 $("#Format").val(data.Format);
                 $("#Quantity").val(data.Qty);

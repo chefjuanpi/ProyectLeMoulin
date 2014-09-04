@@ -66,6 +66,7 @@ namespace IdentitySample.Models
     {
         [Required]
         [Phone]
+        [DataType(DataType.PhoneNumber)]
         [Display(Name = "Numero de téléphone")]
         public string Number { get; set; }
     }
