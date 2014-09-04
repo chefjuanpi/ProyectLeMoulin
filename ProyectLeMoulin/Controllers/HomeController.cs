@@ -21,7 +21,7 @@ namespace IdentitySample.Controllers
             //obtienne de la bd les dernier 5 evenemets avec sont informstion de base, et les envoi dans ViewBag.photos
             var photos = (from e in db.Evenements
                           where e.Poublier == true
-                          orderby e.DateStart
+                          orderby e.DateStart descending
                           select new EvemPhoto
                           {
                               photos = e.PrincipalPhotoEvenement,

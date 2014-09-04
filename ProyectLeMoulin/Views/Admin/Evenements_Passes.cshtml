@@ -126,7 +126,7 @@
                         "Effacer": function () {
                             var x = $("#new123").val();
                             console.log(x);
-                            window.open("/Admin/delEvenement?eID=" + x, "_self");
+                            window.open("/Admin/delEvenement?eID=" + x + "&page=passes" , "_self");
                             $(this).dialog("close");
                         },
                         Anuler: function () {

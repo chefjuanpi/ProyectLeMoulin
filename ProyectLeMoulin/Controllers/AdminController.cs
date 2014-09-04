@@ -620,7 +620,7 @@ namespace IdentitySample.Controllers
         /// </summary>
         /// <param name="eID">id evenemetn a effacer</param>
         /// <returns></returns>
-        public async Task<ActionResult> delEvenement(int eID)
+        public async Task<ActionResult> delEvenement(int eID, string page)
         {
             CoeurContainer db = new CoeurContainer();
             var delevenement = (from n in db.Evenements
@@ -633,7 +633,14 @@ namespace IdentitySample.Controllers
                 ViewBag.success = "Information sousgarde!!";
             }
             ViewBag.ispostBack = false;
-            return Redirect("/Admin/Evenements");
+            if(page=="passes")
+            { 
+                return Redirect("/Admin/Evenements_Passes");
+            }
+            else
+            {
+                return Redirect("/Admin/Evenements_a_venir");
+            }
         }
 
         

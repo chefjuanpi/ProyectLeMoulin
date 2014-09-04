@@ -50,7 +50,8 @@ namespace IdentitySample.Controllers
             var user = (from n in db.AspNetUsers
                         where n.Id == ID
                         select n).SingleOrDefault();
-            ViewBag.author = user.Prenom + " " + user.Nom;
+            ViewBag.author = user.Prenom.First().ToString().ToUpper() + String.Join("", user.Prenom.Skip(1));
+            ViewBag.author += " " + user.Nom.First().ToString().ToUpper() + String.Join("", user.Nom.Skip(1));
             ViewBag.news = news;
 
             return View();

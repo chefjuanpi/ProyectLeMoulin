@@ -144,15 +144,9 @@
                 <h5 id="{{ProductId}}">{{Quantity}}</h5>
             </div>
             <div class="col-xs-1">
-                <input id="btnmodif" type="button" value="Modifier" onclick="ModifyWeekProduct('{{ProductId}}');" class="btn btn-info col-md-offset-1" />
+                <input id="btnmodif" type="button" value="Modifier" onclick="ModifyWeekProduct('{{ProductId}}', '{{ProductName}}');" class="btn btn-info col-md-offset-1" />
             </div>
         </div>
-        {{/each}}
-    </script>
-
-    <script type="text/x-handlebars-template" id="SuppliersTemplate">
-        {{#each}}
-        <option id={{id}} value={{id}}>{{nom}}</option>
         {{/each}}
     </script>
 
@@ -205,30 +199,30 @@
             }); // Fin de getCategories
 
         }); // Fin du DOM Load
+        //$.getJSON("/AchatAdmin/getProducts", null, function (prod) {
+        //    var result = TemplateProducts(prod);
+        //    $("#ProductsList").html(result);
+        //}); // Fin de getProducts
 
-        function ModifyWeekProduct(id) {
-            var Id = id;
+        function ModifyWeekProduct(id, nom) {
+
             $("#Formulaire").show();
 
-            TemplateSuppliers = Handlebars.compile($("#SuppliersTemplate").html());
-            TemplateProducts = Handlebars.compile($("#ProductsTemplate").html());
+            TemplateSuppliers = Handlebars.compile($("#ProductsTemplate").html());
 
+            $("#ProductsList").html("<option id=" + id + " value=" + id + " selected=true >" + nom + "</option>");
             $.getJSON("/AchatAdmin/getSuppliers", null, function (sups) {
                 var result = TemplateSuppliers(sups);
                 $("#SuppliersList").html(result);
             }); // Fin de getSuppliers
 
-            $.getJSON("/AchatAdmin/getProducts", null, function (prod) {
-                var result = TemplateProducts(prod);
-                $("#ProductsList").html(result);
-            }); // Fin de getProducts
+
 
             $.getJSON("/AchatAdmin/getWeekProductDetails", { ProductId: Id }, function (data) {
                 $("#UnitPrice").val(data.UnitPrice);
                 $("#Format").val(data.Format);
                 $("#Quantity").val(data.Qty);
                 $("#SuppliersList option[value='" + data.Supplier + "']").prop('selected', true);
-                $("#ProductsList option[value='" + data.Product + "']").prop('selected', true);
             }); // Fin getWeekProductDetails
 
         } // Fin de ModifyWeekProduct
