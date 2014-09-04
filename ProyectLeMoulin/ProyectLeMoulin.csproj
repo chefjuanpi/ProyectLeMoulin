@@ -593,6 +593,7 @@
     <Content Include="Views\Nouvelles\_NList.cshtml" />
     <Content Include="Views\AchatAdmin\Taxes.cshtml" />
     <Content Include="Views\Epicerie\Facture.cshtml" />
+    <Content Include="Views\AchatAdmin\NewWeek.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
