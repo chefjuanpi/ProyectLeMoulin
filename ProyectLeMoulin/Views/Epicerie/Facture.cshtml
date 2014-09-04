@@ -47,11 +47,9 @@
         templateOrders = null;
         templateDetails = null;
 
-        
-
         $(function () {
             templateOrders = Handlebars.compile($("#OrdersTemplate").html());
-            //templateDetails = Handlebars.compile($("#DetailsTemplate").html());
+            templateDetails = Handlebars.compile($("#DetailsTemplate").html());
 
             $.getJSON("/Epicerie/GetOrder", null, function (data) {
                 var result = templateOrders(data);
@@ -59,18 +57,16 @@
 
                 $("#OrdersOutput").change(function () {
                     var id = $(this).children(":selected").attr("id");
-                    console.log(id);
+                    console.log("H2" + " " + id);
                     if (id != 0) {
-                        $.getJSON("/Epicerie/GetDetails", { cat: id }, function (data) {
+                        $.getJSON("/Epicerie/GetDetails", { OID: id }, function (data) {
                             var result = templateDetails(data);
                             $("#DetailssOutput").html(result);
                         });//GetDetails  
                     }
                 });
             });//GetOrders
-        });
-
-        
+        });        
     </script>
 }
 
