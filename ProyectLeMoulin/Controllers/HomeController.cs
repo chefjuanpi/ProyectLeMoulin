@@ -20,8 +20,8 @@ namespace IdentitySample.Controllers
             CoeurContainer db = new CoeurContainer();
             //obtienne de la bd les dernier 5 evenemets avec sont informstion de base, et les envoi dans ViewBag.photos
             var photos = (from e in db.Evenements
-                          where e.Poublier == true
-                          orderby e.DateStart descending
+                          where e.Poublier == true & e.DateStart >= DateTime.Now 
+                          orderby e.DateStart
                           select new EvemPhoto
                           {
                               photos = e.PrincipalPhotoEvenement,
@@ -30,6 +30,27 @@ namespace IdentitySample.Controllers
                               dateEnd = e.DateEnd,
                               details =  e.Text
                           }).Take(5).ToList();
+            
+            if(photos.Count < 5 )
+            {
+                int i = 5 - photos.Count;
+                var p2 = (from e in db.Evenements
+                          where e.Poublier == true & e.DateStart < DateTime.Now
+                          orderby e.DateStart descending
+                          select new EvemPhoto
+                          {
+                              photos = e.PrincipalPhotoEvenement,
+                              titre = e.TitleEvenement,
+                              dateStart = e.DateStart,
+                              dateEnd = e.DateEnd,
+                              details = e.Text
+                          }).Take(i).ToList();
+
+                var temp = new List<EvemPhoto>(photos.Count + p2.Count);
+                temp.AddRange(photos);
+                temp.AddRange(p2);
+                photos = temp;
+            }
 
             for (int x = 0; x < photos.Count(); x++)
             {
