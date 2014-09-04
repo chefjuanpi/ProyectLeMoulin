@@ -74,7 +74,6 @@
             templateProducts = Handlebars.compile($("#ProductsTemplate").html());
             templateCart = Handlebars.compile($("#CartTemplate").html());
 
-            
             $.getJSON("/Epicerie/GetWeek", null, function (data) {
                 var result = templateCategories(data);
                 $("#CategoriesOutput").html(result);

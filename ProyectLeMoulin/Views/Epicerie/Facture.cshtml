@@ -7,7 +7,7 @@
     @*Template des Catégories*@
     <script type="text/x-handlebars-template" id="OrdersTemplate">
         <select id="OrderOutput" name="Orders" class="form-control">
-            <option selected="selected" id=0 value="0">Choisissez une facture</option>
+            @*<option selected="selected" id=0 value="0">Choisissez une facture</option>*@
             {{#each}}
             <option id={{OrderId}}>{{OrderID}}</option>
             {{/each}}
@@ -56,26 +56,26 @@
                 $("#OrdersOutput").html(result);
 
                 $("#OrdersOutput").change(function () {
-                    var id = $(this).children(":selected").attr("id");
+                    var id = $(this).children(":selected").value;
                     console.log("H2" + " " + id);
                     if (id != 0) {
                         $.getJSON("/Epicerie/GetDetails", { OID: id }, function (data) {
                             var result = templateDetails(data);
                             $("#DetailssOutput").html(result);
-                        });//GetDetails  
+                        });//GetDetails
                     }
                 });
             });//GetOrders
-        });        
+        });
     </script>
 }
 
 <div id="Facture" class="row">
-    <div id="OrdersOutput"  class="col-md-12"></div>
+    <div id="OrdersOutput" class="col-md-12"></div>
 
     <div id="DetailsOutput" class="col-md-12"></div>
 
-    
+
 
     <div>@Html.ActionLink("Retour", "Index")</div>
 </div>
