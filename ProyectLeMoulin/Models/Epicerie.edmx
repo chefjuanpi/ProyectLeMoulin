@@ -563,7 +563,6 @@
         </Association>
         <EntityType Name="Taxes">
           <Key>
-            <PropertyRef Name="Taxe" />
             <PropertyRef Name="id" />
           </Key>
           <Property Name="Taxe" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />

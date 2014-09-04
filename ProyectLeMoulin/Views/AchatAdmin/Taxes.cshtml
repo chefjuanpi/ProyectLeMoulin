@@ -89,59 +89,43 @@
                 cache: false
             });
 
-            $("#btnSupr").click(function () {
-                $("#dialog-confirm").dialog({
-                    resizable: false,
-                    height: 200,
-                    modal: true,
-                    buttons: {
-
-                        "Effacer": function () {
-                            var x = $("#new123").val();
-                            console.log(x);
-                            window.open("/AchatAdmin/delSupplier?nID=" + x, "_self");
-                            $(this).dialog("close");
-                        },
-
-                        "Annuler": function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                }); // Fin dialog
-            }); // Fin btnSupr.click
-
             Templateitems = Handlebars.compile($("#itemsTemplate").html());
 
-            $.getJSON("getSuppliers", null, function (data) {
+            $.getJSON("getTaxes", null, function (data) {
+
+                $("#btnNew").hide();
 
                 var result = Templateitems(data);
                 $("#ItemsList").html(result);
 
                 $(".items").change(function () {
                     var id = $(this).children(":selected").attr("id");
+                    console.log(id);
 
                     if (id != 0) {
                         $("#btnmodif").show();
-                        $("#btnSupr").show();
                         $("#Formulaire").show();
-                        $("#new123").val(id);
 
-                        $.getJSON("getSupplierDetails", { SupplierId: id }, function (data) {
-                            $("#name").val(data.Nom);
-                            $("#contact").val(data.contact);
-                            $("#adress").val(data.adresse);
-                            $("#mail").val(data.mail);
-                            $("#phone").val(data.phone);
-                            $("#fax").val(data.fax);
-                            $("#city").val(data.ville);
-                            $("#postalcode").val(data.codepostal);
-                        }); // Fin getSupplierDetails
+                        $.getJSON("getTaxeDetails", { TaxeId: id }, function (data) {
+                            $("#taxe").val(data.Nom);
+                            $("#value").val(data.value);
+                            $("#new123").val(date.id);
+
+                        }); // Fin getTaxeDetails
 
                     }
                     else $("#btnAnuler").click();
 
                 }); // Fin items .change
-            }); // Fin getSuppliers
-        }); // Fin des functions
+            }); // Fin getTaxes
+
+            $("#btnmodif").click(function () {
+                $("#boutons").hide();
+                $("#btnAnuler").show();
+                $("#Formulaire *").attr("disabled", false).on('click');
+                $("#taxe").attr("disabled", true).on("click");
+            });
+
+        }); // Fin de chargement du DOM
     </script>
 }
