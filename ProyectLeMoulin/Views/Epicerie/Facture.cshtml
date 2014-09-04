@@ -32,7 +32,7 @@
             </div>
 
             <div class="col-xs-2">
-                <h5 id="Format{{ProductID}}">{{Quantite}}</h5>
+                <h5 id="Quantité{{ProductID}}">{{Quantite}}</h5>
             </div>
             <div class="col-xs-1">
                 <h5 id="Format{{ProductID}}">{{Prix}}</h5>
@@ -49,16 +49,17 @@
     <div class="row">
         <h4 class="col-xs-4">No. Facture</h4>
         <h4 class="col-xs-3">Membre</h4>
+        <h4 class="col-xs-3">Date</h4>
     </div>
-    <div class="row" id=Detail{{ProductID}}>
+    <div class="row" id="Detail">
         <div class="col-xs-4">
-            <h5 id="Name{{OrderID}}">{{OrderID}}</h5>
+            <h5 id="Name">{{OrderID}}</h5>
         </div>
         <div class="col-xs-3">
-            <h5 id="Format{{OrderID}}">{{Membre}}</h5>
+            <h5 id="Membre">{{Membre}}</h5>
         </div>
         <div class="col-xs-3">
-            <h5 id="Date{{OrderID}}">{{Fin}}</h5>
+            <h5 id="Date">{{Fin}}</h5>
         </div>
     </div>
 </script>
@@ -78,7 +79,7 @@
                 $("#OrdersOutput").html(result);
 
                 $(".orders").change(function () {
-                    var id = $(this).children(":selected").attr("id");;
+                    var id = $(this).children(":selected").attr("id");
                     
                     if (id != 0) {
 
@@ -86,8 +87,8 @@
 
                         $.getJSON("/Epicerie/GetDetails", { OID: id }, function (data) {
                             var result = templateDetails(data);
-                            console.log(result);
                             $("#DetailsOutput").html(result);
+
                         });//GetDetails
                     }
                 });
@@ -98,28 +99,29 @@
             templateMembres = Handlebars.compile($("#MembresTemplate").html());
 
             $.getJSON("/Epicerie/GetMembre", { OID: id }, function (data) {
-                var Somme = 0;
                 var result = templateMembres(data);
+                console.log(data);
+                var Somme = 0;
                 $("#MembresOutput").html(result);
                 $(".sTotal").each(function(){
-                    var stot = (this).val()
-                    Somme = Somme + stot;
+                    Somme += (this).val();
                 });
-                console.log(Somme)
+                //console.log(Somme)
                 $("#SommeOutput").html(Somme);
             });
         };
-
-
-
     </script>
 }
 
-<div id="Facture" class="row">
-    <div id="OrdersOutput"  class="col-md-12"></div>
+<div id="dvContainer" class="row">
+    <div id="OrdersOutput" class="col-md-12"></div>
     <div id="MembresOutput" class="col-md-12"></div>
     <div id="DetailsOutput" class="col-md-12"></div>
-    <div id="SommeOutput"   class="col-md-12"></div>
-    <div>@Html.ActionLink("Retour", "Index")</div>
+    <div id="SommeOutput" class="col-md-12"></div>
 </div>
+    
+<div>@Html.ActionLink("Retour", "Index")</div>
+
+
+
 

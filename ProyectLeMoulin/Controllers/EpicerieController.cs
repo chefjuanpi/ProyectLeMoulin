@@ -288,8 +288,6 @@ namespace IdentitySample.Controllers
             return Json(order, JsonRequestBehavior.AllowGet);
         }
 
-       
-
         /// <summary>
         /// Récupérer le détail de la facture sélectionnée
         /// </summary>
@@ -299,12 +297,7 @@ namespace IdentitySample.Controllers
         {        
             EpicerieEntities db = new EpicerieEntities();
         
-            //if (OID != null)
-            //{
-
-
-
-                var bill = (from c in db.Categories
+               var bill = (from c in db.Categories
                             join cp in db.CategoryProduct
                             on c.CategoryId equals cp.CategoryId
                             join p in db.Products
