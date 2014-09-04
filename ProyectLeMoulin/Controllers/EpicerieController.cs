@@ -68,21 +68,21 @@ namespace IdentitySample.Controllers
 
 
 
-        public JsonResult GetPeriod()
-        {
-            EpicerieEntities db = new EpicerieEntities();
+        //public JsonResult GetPeriod()
+        //{
+        //    EpicerieEntities db = new EpicerieEntities();
 
-            var week = (from w in db.Weeks
-                        orderby w.WeekId descending
-                        select new
-                        {
-                            Debut = w.Date_Debut,
-                            Fin = w.Date_Fin,
-                            Recup = w.Date_Recuperation
-                        }).FirstOrDefault();
+        //    var week = (from w in db.Weeks
+        //                orderby w.WeekId descending
+        //                select new
+        //                {
+        //                    Debut = w.Date_Debut,
+        //                    Fin = w.Date_Fin,
+        //                    Recup = w.Date_Recuperation
+        //                }).FirstOrDefault();
 
-            return Json(week, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(week, JsonRequestBehavior.AllowGet);
+        //}
 
         //public JsonResult ValiderWeek()
         //{
@@ -198,8 +198,9 @@ namespace IdentitySample.Controllers
             //    ViewBag.Steeve = "erreur";
             //}
             //}
-            return View();
-
+            
+            return Redirect("/Epicerie/Facture");
+            
         }
 //----------------------------------------------------------------------------------------------------------------------
         public JsonResult GetOrder()
@@ -215,38 +216,15 @@ namespace IdentitySample.Controllers
                             select new
                             {
                                 OrderID = o.OrderId,
-                                WeekId = o.WeekId
+                                WeekId = o.WeekId,
+                                UserId = o.UserId
                             }).ToList();
             return Json(category, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Afficher_Entete_Facture(int OID)
+        public JsonResult GetDetails(int OID)
         {
             EpicerieEntities db = new EpicerieEntities();
-
-            var bill = (from a in db.AspNetUsers
-                        join o in db.Orders
-                        on a.Id equals o.UserId
-                        where o.OrderId == OID
-                        select new
-                        {
-                            Usager = a.Prenom + " " + a.Nom,
-                            OrderID = o.OrderId
-                        }).ToList();
-
-            return Json(bill, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult Afficher_Facture(int week)
-        {
-            EpicerieEntities db = new EpicerieEntities();
-
-            string utilisateur = User.Identity.Name;
-            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-            int weekbd = (from w in db.Weeks
-                          where w.WeekId == week
-                          select w.WeekId
-                          ).LastOrDefault();
 
             var bill = (from o in db.Orders
                         join od in db.OrderDetails
@@ -257,17 +235,16 @@ namespace IdentitySample.Controllers
                         on p.ProductId equals cp.ProductId
                         join wp in db.WeekProduct
                         on o.WeekId equals wp.WeekId
-                        where o.UserId == guid
-                        & o.WeekId == weekbd
+                        where o.OrderId == OID
                         orderby cp.CategoryId
                         select new
                         {
-                            Nom = p.ProductName,
+                            Produit = p.ProductName,
+                            ProductID = od.ProductId,
                             Format = wp.Format,
                             Quantite = od.Quantite,
                             Prix = od.UnitPrice,
                             SousTotal = od.Quantite * od.UnitPrice
-                            //Total       =   sum(od.Quantite * od.UnitPrice)
                         }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
