@@ -78,21 +78,21 @@ namespace IdentitySample.Controllers
 
 
 
-        //public JsonResult GetPeriod()
-        //{
-        //    EpicerieEntities db = new EpicerieEntities();
+        public JsonResult GetPeriod()
+        {
+            EpicerieEntities db = new EpicerieEntities();
 
-        //    var week = (from w in db.Weeks
-        //                orderby w.WeekId descending
-        //                select new
-        //                {
-        //                    Debut = w.Date_Debut,
-        //                    Fin = w.Date_Fin,
-        //                    Recup = w.Date_Recuperation
-        //                }).FirstOrDefault();
+            var week = (from w in db.Weeks
+                        orderby w.WeekId descending
+                        select new
+                        {
+                            Debut = w.Date_Debut,
+                            Fin = w.Date_Fin,
+                            Recup = w.Date_Recuperation
+                        }).FirstOrDefault();
 
-        //    return Json(week, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(week, JsonRequestBehavior.AllowGet);
+        }
 
         /// <summary>
         /// Fait la validation de la semaine pour savoir si le membre
@@ -210,7 +210,7 @@ namespace IdentitySample.Controllers
 
             await db.SaveChangesAsync();
 
-            ViewBag.Steeve = "ton panier";
+            //ViewBag.Steeve = "ton panier";
             //}
             //else
             //{
@@ -238,14 +238,30 @@ namespace IdentitySample.Controllers
             var order = (from o in db.Orders
                          join a in db.AspNetUsers
                          on o.UserId equals a.Id
+                         join w in db.Weeks
+                         on o.WeekId equals w.WeekId
                          where o.UserId == guid
                          && o.OrderId == OID
                          orderby o.OrderId descending
                          select new
                          {
                              Membre = a.Prenom + " " + a.Nom,
-                             OrderID = o.OrderId
+                             OrderID = o.OrderId,
+                             Fin = w.Date_Fin
                          }).ToList();
+
+            var week = (from w in db.Weeks
+                        join o in db.Orders
+                        on w.WeekId equals o.WeekId
+                        where o.WeekId == OID
+                        orderby w.WeekId descending
+                        select new test1234
+                        {
+                            Fin = (DateTime)w.Date_Fin,
+                            Recup = (DateTime)w.Date_Recuperation
+                        }).ToList();
+
+            ViewBag.GetMembre = week;
 
             return Json(order, JsonRequestBehavior.AllowGet);
         }
