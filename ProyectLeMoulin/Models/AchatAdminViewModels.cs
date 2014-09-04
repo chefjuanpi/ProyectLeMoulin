@@ -44,9 +44,11 @@ namespace EpicerieModel.Models
         [Display(Name = "Courte description :")]
         public string Description { get; set; }
 
+        [Required]
         [Display(Name = "Appliquer la TVQ :")]
         public bool TVQ { get; set; }
 
+        [Required]
         [Display(Name = "Appliquer la TPS :")]
         public bool TPS { get; set; }
     }
@@ -77,13 +79,11 @@ namespace EpicerieModel.Models
         [Display(Name = "# Téléphone :")]
         public string SupplierPhone { get; set; }
 
-        [Required]
         [StringLength(20, ErrorMessage = "Numéro trop long")]  // valeur a confirmer
         [DataType(DataType.Text)]
         [Display(Name = "# Fax :")]
         public string SupplierFax { get; set; }
 
-        [Required]
         [StringLength(150, ErrorMessage = "Courriel trop long, max. 150 charactéres")]
         [DataType(DataType.Text)]
         [Display(Name = "Courriel :")]
@@ -95,13 +95,11 @@ namespace EpicerieModel.Models
         [Display(Name = "Adresse :")]
         public string SupplierAdress { get; set; }
 
-        [Required]
         [StringLength(100, ErrorMessage = "Nom de ville trop long, max. 100 charactéres")]
         [DataType(DataType.Text)]
         [Display(Name = "Ville :")]
         public string SupplierCity { get; set; }
 
-        [Required]
         [StringLength(20, ErrorMessage = "Code trop long")]  // valeur a confirmer
         [DataType(DataType.Text)]
         [Display(Name = "Code Postal :")]
@@ -115,8 +113,10 @@ namespace EpicerieModel.Models
     {
         public int WeekId { get; set; }
 
+        [Required]
         public int ProductId { get; set; }
 
+        [Required]
         public int SupplierId { get; set; }
 
         [Required]
@@ -128,6 +128,7 @@ namespace EpicerieModel.Models
         [RegularExpression(@"^\d+$", ErrorMessage = "Nombre entier uniquement")]
         [Required]
 
+        [Required]
         [Display(Name = "Quantité minimum :")]
         public int Quantity { get; set; }
 
@@ -143,6 +144,7 @@ namespace EpicerieModel.Models
     /// </summary>
     public class TaxesViewModel
     {
+        [Required]
         public string Taxe { get; set; }
 
         [Required]
