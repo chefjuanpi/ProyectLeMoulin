@@ -155,4 +155,25 @@ namespace EpicerieModel.Models
         public float Value { get; set; }
     }
 
+    /// <summary>
+    /// Modèle des données contenu dans Week
+    /// </summary>
+    public class WeekViewModel
+    {
+        [Required]
+        public int WeekId { get; set; }
+
+        [Required]
+        [Display(Name = "Date de Debut :")]
+        public DateTime DateDebut { get; set; }
+
+        [Required]
+        [Display(Name = "Date de Fin :")]
+        public DateTime DateFin { get; set; }
+
+        [Required]
+        [Display(Name = "Date de Distribution :")]
+        public DateTime DateRecup { get; set; }
+    }
+
 }

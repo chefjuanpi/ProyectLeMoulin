@@ -1,4 +1,4 @@
-﻿@model EpicerieModel.Models.NewWeekViewModel
+﻿@model EpicerieModel.Models.WeekViewModel
 
 @{
     Layout = "~/Views/Shared/_AdminMaster.cshtml";
@@ -20,12 +20,12 @@
 </p>
 
 <div class="row">
-    @Html.Partial("_AdminButonSansMCE")
+    <div class="btn btn-success col-md-offset-1" id="btnNew"><i class="fa fa-plus-square"></i> Créer nouvelle session d'achat</div>
 </div>
 
 <br />
 
-@using (Html.BeginForm("Suppliers", "AchatAdmin", FormMethod.Post, new
+@using (Html.BeginForm("NewWeek", "AchatAdmin", FormMethod.Post, new
 {
     @class = "form-horizontal",
     role = "form",
@@ -42,75 +42,30 @@
         <div class="input-group">
             <table>
 
-                <tr>
+                <tr class="input-group">
                     <td>
-                        @Html.LabelFor(s => s.SupplierName, new { @class = "input-group-addon", @style = "width:160px" })
+                        @Html.LabelFor(w => w.DateDebut, new { @class = "input-group-addon", @style = "width:160px" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(s => s.SupplierName, new { @class = "form-control", @id = "name", @style = "width:260px" })
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        @Html.LabelFor(s => s.SupplierContactName, new { @class = "input-group-addon", @style = "width:160px" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(s => s.SupplierContactName, new { @class = "form-control", @id = "contact", @style = "width:260px" })
+                        @Html.TextBoxFor(w => w.DateDebut, new { @id = "DateStart", @placeholder = "Date" })
                     </td>
                 </tr>
 
-                <tr>
-                    <td>
-                        @Html.LabelFor(s => s.SupplierPhone, new { @class = "input-group-addon", @style = "width:160px" })
+                <tr class="input-group">
+                    <td >
+                        @Html.LabelFor(w => w.DateFin, new { @class = "input-group-addon", @style = "width:160px" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(s => s.SupplierPhone, new { @class = "form-control", @id = "phone", @style = "width:260px" })
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        @Html.LabelFor(s => s.SupplierFax, new { @class = "input-group-addon", @style = "width:160px" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(s => s.SupplierFax, new { @class = "form-control", @id = "fax", @style = "width:260px" })
+                        @Html.TextBoxFor(w => w.DateFin, new { @id = "DateEnd", @placeholder = "Date" })
                     </td>
                 </tr>
 
-                <tr>
+                <tr class="input-group">
                     <td>
-                        @Html.LabelFor(s => s.SupplierMail, new { @class = "input-group-addon", @style = "width:160px" })
+                        @Html.LabelFor(w => w.DateRecup, new { @class = "input-group-addon", @style = "width:160px" })
                     </td>
                     <td>
-                        @Html.TextBoxFor(s => s.SupplierMail, new { @class = "form-control", @id = "mail", @style = "width:260px" })
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        @Html.LabelFor(s => s.SupplierAdress, new { @class = "input-group-addon", @style = "width:160px" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(s => s.SupplierAdress, new { @class = "form-control", @id = "adress", @style = "width:260px" })
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        @Html.LabelFor(s => s.SupplierCity, new { @class = "input-group-addon", @style = "width:160px" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(s => s.SupplierCity, new { @class = "form-control", @id = "city", @style = "width:260px" })
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        @Html.LabelFor(s => s.SupplierPostalCode, new { @class = "input-group-addon", @style = "width:160px" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(s => s.SupplierPostalCode, new { @class = "form-control", @id = "postalcode", @style = "width:260px" })
+                        @Html.TextBoxFor(w => w.DateRecup, new { @id = "DateRecup", @placeholder = "Date" })
                     </td>
                 </tr>
 
@@ -125,14 +80,11 @@
             <i class="fa fa-save"></i><b> Enregistrer </b>
         </button>
     </div>
-
-    @Html.HiddenFor(s => s.SupplierId, new { @id = "new123" })
 }
 
 @section Scripts {
 
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/AdminButonsV2")
 
     <script>
 
@@ -143,59 +95,39 @@
                 cache: false
             });
 
-            $("#btnSupr").click(function () {
-                $("#dialog-confirm").dialog({
-                    resizable: false,
-                    height: 200,
-                    modal: true,
-                    buttons: {
+            $('#DateStart').datetimepicker({
+                lang: "fr",
+                format: 'Y/m/d',
+                onShow: function (ct) {
+                    this.setOptions({
+                        maxDate: $('#DateEnd').val() ? $('#DateEnd').val() : false
+                    })
+                },
+                timepicker: false
+            });
 
-                        "Effacer": function () {
-                            var x = $("#new123").val();
-                            console.log(x);
-                            window.open("/AchatAdmin/delSupplier?nID=" + x, "_self");
-                            $(this).dialog("close");
-                        },
+            $('#DateEnd').datetimepicker({
+                lang: "fr",
+                format: 'Y/m/d',
+                onShow: function (ct) {
+                    this.setOptions({
+                        minDate: $('#DateStart').val() ? $('#DateStart').val() : false
+                    })
+                },
+                timepicker: false
+            });
 
-                        "Annuler": function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                }); // Fin dialog
-            }); // Fin btnSupr.click
+            $('#DateRecup').datetimepicker({
+                lang: "fr",
+                format: 'Y/m/d',
+                onShow: function (ct) {
+                    this.setOptions({
+                        minDate: $('#DateEnd').val() ? $('#DateEnd').val() : false
+                    })
+                },
+                timepicker: false
+            });
 
-            Templateitems = Handlebars.compile($("#itemsTemplate").html());
-
-            $.getJSON("getSuppliers", null, function (data) {
-
-                var result = Templateitems(data);
-                $("#ItemsList").html(result);
-
-                $(".items").change(function () {
-                    var id = $(this).children(":selected").attr("id");
-
-                    if (id != 0) {
-                        $("#btnmodif").show();
-                        $("#btnSupr").show();
-                        $("#Formulaire").show();
-                        $("#new123").val(id);
-
-                        $.getJSON("getSupplierDetails", { SupplierId: id }, function (data) {
-                            $("#name").val(data.Nom);
-                            $("#contact").val(data.contact);
-                            $("#adress").val(data.adresse);
-                            $("#mail").val(data.mail);
-                            $("#phone").val(data.phone);
-                            $("#fax").val(data.fax);
-                            $("#city").val(data.ville);
-                            $("#postalcode").val(data.codepostal);
-                        }); // Fin getSupplierDetails
-
-                    }
-                    else $("#btnAnuler").click();
-
-                }); // Fin items .change
-            }); // Fin getSuppliers
         }); // Fin des functions
     </script>
 }

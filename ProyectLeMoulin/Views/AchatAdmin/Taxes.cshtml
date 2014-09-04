@@ -64,6 +64,8 @@
         </div>
     </div>
 
+    @Html.HiddenFor(t => t.Id, new { @id = "new123" })
+
     <br />
 
     <div class="row">
@@ -71,8 +73,6 @@
             <i class="fa fa-save"></i><b> Enregistrer </b>
         </button>
     </div>
-
-    @Html.HiddenFor(t => t.Id, new { @id = "new123" })
 }
 
 @section Scripts {
@@ -104,11 +104,11 @@
                     if (id != 0) {
                         $("#btnmodif").show();
                         $("#Formulaire").show();
+                        $("#new123").val(id);
 
                         $.getJSON("getTaxeDetails", { TaxeId: id }, function (data) {
                             $("#taxe").val(data.Nom);
-                            $("#value").val(data.value);
-                            $("#new123").val(data.id);
+                            $("#value").val(data.value);                        
 
                         }); // Fin getTaxeDetails
 
