@@ -203,6 +203,7 @@ namespace IdentitySample.Controllers
             
         }
 //----------------------------------------------------------------------------------------------------------------------
+               
         public JsonResult GetOrder()
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -235,7 +236,7 @@ namespace IdentitySample.Controllers
                         on p.ProductId equals cp.ProductId
                         join wp in db.WeekProduct
                         on o.WeekId equals wp.WeekId
-                        where o.OrderId == OID
+                        where od.OrderId == OID
                         orderby cp.CategoryId
                         select new
                         {
@@ -247,6 +248,8 @@ namespace IdentitySample.Controllers
                             SousTotal = od.Quantite * od.UnitPrice
                         }).ToList();
             return Json(bill, JsonRequestBehavior.AllowGet);
+
+
         }
     }
 }

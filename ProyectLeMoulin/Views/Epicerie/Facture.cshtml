@@ -45,7 +45,9 @@
 
     <script type="text/javascript">
         templateOrders = null;
-        //templateDetails = null;
+        templateDetails = null;
+
+        
 
         $(function () {
             templateOrders = Handlebars.compile($("#OrdersTemplate").html());
@@ -58,19 +60,27 @@
                 $("#OrdersOutput").change(function () {
                     var id = $(this).children(":selected").attr("id");
                     console.log(id);
-                    $.getJSON("/Epicerie/GetDetails", { cat: id }, function (data) {
-                        var result = templateDetails(data);
-                        $("#DetailssOutput").html(result);
-                    });//GetDetails        
+                    if (id != 0) {
+                        $.getJSON("/Epicerie/GetDetails", { cat: id }, function (data) {
+                            var result = templateDetails(data);
+                            $("#DetailssOutput").html(result);
+                        });//GetDetails  
+                    }
                 });
             });//GetOrders
         });
+
+        
     </script>
 }
 
+<div id="Facture" class="row">
+    <div id="OrdersOutput"  class="col-md-12"></div>
 
-<div id="OrdersOutput" class="col-md-12"></div>
+    <div id="DetailsOutput" class="col-md-12"></div>
 
-<div id="DetailsOutput" class="col-md-6"></div>
+    
 
+    <div>@Html.ActionLink("Retour", "Index")</div>
+</div>
 
