@@ -1,7 +1,7 @@
 ﻿@model IdentitySample.Models.test1234
 @using System.Globalization
 
-@section Scripts 
+@section Scripts
 {
 
     @*Template des Catégories*@
@@ -57,57 +57,7 @@
             <div class="col-xs-1"><input id="Cartdelete{{id}}" type="button" value="Enlever" onclick="SupprimerProduit('{{id}}')" class="btn btn-danger" /></div>
         </div>
     </script>
-    @*Template des anciennes factures*@
-    <script type="text/x-handlebars-template" id="BillTemplate">
-        Factures
-        <select id="BillOutput" name="Categories" class="form-control">
-            <option selected="selected" id=0 value="0">Choisissez une date de facturation</option>
-            {{#each}}
-            <option id={{OrderID}}>{{Debut}}</option>
-            {{/each}}
-        </select>
-    </script>
-
-    @*Template d'entête de facture*@
-    <script type="text/x-handlebars-template" id="EnteteTemplate">
-        <div class="row">
-            <h4 class="col-xs-4">No. Facture</h4>
-            <h4 class="col-xs-3">Membre</h4>
-            <h4 class="col-xs-2">Semaine d'activité</h4>
-            <h4 class="col-xs-2">Date de récupération</h4>
-        </div>
-        {{#each}}
-        <div class="row" id=Product{{OrderID}}>
-            <div class="col-xs-4">
-                <h5 id="Name{{OrderID}}">{{OrderID}}</h5>
-            </div>
-            <div class="col-xs-3">
-                <h5 id="Format{{OrderID}}">{{Usager}}</h5>
-            </div>
-            <div class="col-xs-2">
-                <h5 id="FWeek{{OrderID}}">{{Debut}} à {{Fin}}</h5>
-            </div>
-            <div class="col-xs-2">
-                <h5 id="FRecup{{OrderID}}">{{Recup}}</h5>
-            </div>
-        </div>
-        {{/each}}
-    </script>
-
-    @*Template du détail de la facture*@
-    <script type="text/x-handlebars-template" id="DetailTemplate">
-
-        <div id="prod{{id}}" class="row produit">
-            <input type="hidden" name="{{name}}.PID" value="{{id}}" />
-            <div id="fname{{id}}" class="col-xs-3">{{Nom}}</div>
-            <div id="fformat{{id}}" class="col-xs-2">{{Format}} </div>
-            <div id="fprix{{id}}" class="col-xs-1">{{Prix}}</div>
-            <div id="fqty{{id}}" class="col-xs-1">{{Quantite}}</div>
-            <div id="fsous{{id}}" class="col-xs-2">{{SousTotal}}</div>
-        </div>
-    </script>
     <script type="text/javascript">
-
         templateCategories = null;
         templateProducts = null;
         templateCart = null;
@@ -251,51 +201,7 @@
 
         };
 
-        $("#NewBill").click(function () {
-            console.log("clic");
-            ViderEcran();
-            FactureCourrante();
-        });
 
-        function ViderEcran() {
-            console.log("reclic");
-            $("#Cat").attr("disabled", "disabled");
-            $("#Cat").attr("hidden", "hidden");
-            $("#Facture").attr("hidden", false);
-        };
-
-        function FactureCourrante() {
-
-            ViderEcran();
-
-            templateEntete = Handlebars.compile($("#EnteteTemplate").html());
-            templateDetail = Handlebars.compile($("#DetailTemplate").html());
-
-            $.getJSON("/Epicerie/Afficher_Entete_Facture", null, function (data) {
-                //console.log(data.legth);
-                var result = templateEntete(data);
-                $("#BillOutput").html(result);
-                $.getJSON("/Epicerie/Afficher_Facture", null, function (data) {
-                    //console.log(data.legth);
-                    var result = templateDetail(data);
-                    $("#BillOutput").html(result.toFixed(2));
-                    CalculTotalFacture(id)
-                });
-            });
-        };
-
-        //Fonction permettant d'imprimer le DIV de la facture affichée à l'écran
-        //$("#PrintButton").live("click", function () {
-        //    console.log("print");
-        //    var divContents = $("#Facture").html();
-        //    var printWindow = window.open('', '', 'height=400,width=800');
-        //    printWindow.document.write('<html><head><title>DIV Contents</title>');
-        //    printWindow.document.write('</head><body >');
-        //    printWindow.document.write(divContents);
-        //    printWindow.document.write('</body></html>');
-        //    printWindow.document.close();
-        //    printWindow.print();
-        //});
     </script>
 }
 
@@ -304,24 +210,23 @@
 </div>
 
 <div class="container" id="BillButtons">
-    <input id="NewBill" name="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Nouvelle Facture">
-    <input id="OldBill" name="OldBill" type="button" class="col-xs-2 btn btn-primary" value="Anciennes Factures" onclick="FactureAncienne">
+    <input id="NewBill" name="NewBill" type="button" class="col-xs-2 btn btn-primary" value="Factures">
 </div>
 
 <div id="Cat" class="Container">
     <div class="col-md-4">
         @*<div class="col-md-12">
-            @foreach (var p in ViewBag.Period)
-            {
-                <h4>
-                    Période de commande du @p.Debut.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
-                    au                     @p.Fin.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
-                </h4>
-                <h4>
-                    Récupération le        @p.Recup.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
-                </h4>
-            }
-        </div>*@
+                @foreach (var p in ViewBag.Period)
+                {
+                    <h4>
+                        Période de commande du @p.Debut.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                        au                     @p.Fin.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                    </h4>
+                    <h4>
+                        Récupération le        @p.Recup.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                    </h4>
+                }
+            </div>*@
         <div id="CategoriesOutput" class="col-md-12"></div>
     </div>
     <div id="ProductsOutput" class="col-md-6"></div>
@@ -366,28 +271,7 @@
     </div>
 </div>
 
-<div class="container" id="Facture">
-    <div><img class="col-md-2 col-xs-6 img-responsive" src="../Images/logo.png" alt="Le Moulin d'à côté'" /></div>
-    
-        <div class="row">
-            <h4 class="col-xs-3">Produits</h4>
-            <h4 class="col-xs-2">Format</h4>
-            <h4 class="col-xs-1">Prix $</h4>
-            <h4 class="col-xs-1">Qty</h4>
-            <h4 class="col-xs-2">Sous-Total</h4>
-        </div>
-    
-    <div class="col-md-12">
-        <div class="col-xs-7"></div>
-        <div class="col-xs-2">
-            <h3><b>total $</b></h3>
-            <div class="col-xs-3" id="FtotalOutput">
-                <h3><b>0</b></h3>
-            </div>
-        </div>
-    </div>
-    
-    @*Bouton qui permet d'imprimer le DIV de la facture*@
-    <input id="PrintButton" type="submit" class="col-xs-2 btn btn-primary" value="Imprimer" />
-</div>
-<div id="BillOutput" class="col-md-12"></div>
+
+
+
+

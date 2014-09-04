@@ -34,7 +34,7 @@ namespace IdentitySample.Controllers
 
             return View();
         }
-        public ActionResult test()
+        public ActionResult Facture()
         {
             return View();
         }
@@ -202,86 +202,32 @@ namespace IdentitySample.Controllers
 
         }
 
-        public JsonResult GetOldBill()
-        {
-            EpicerieEntities db = new EpicerieEntities();
-
-            string utilisateur = User.Identity.Name;
-            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-
-            var oldbill = (from o in db.Orders
-                           join w in db.Weeks
-                           on o.WeekId equals w.WeekId
-                           where o.UserId == guid
-                           select w.Date_Debut).Single();
-            return Json(oldbill, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult Afficher_Entete_Facture()
-        {
-            EpicerieEntities db = new EpicerieEntities();
-
-            string utilisateur = User.Identity.Name;
-            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-            int weekbd = (from w in db.Weeks select w.WeekId).LastOrDefault();
-
-            var bill = (from u in db.AspNetUsers
-                        join o in db.Orders
-                        on u.Id equals o.UserId
-                        join w in db.Weeks
-                        on o.WeekId equals w.WeekId
-                        where u.Id == guid
-                        & w.WeekId == weekbd
-                        select new
-                        {
-                            Usager = u.Prenom + " " + u.Nom,
-                            OrderID = o.OrderId,
-                            Debut = w.Date_Debut,
-                            Fin = w.Date_Fin,
-                            DateRecup = w.Date_Recuperation,
-                            Date = DateTime.Today
-                        }).ToList();
-            return Json(bill, JsonRequestBehavior.AllowGet);
-        }
-
         public JsonResult GetBill()
         {
             EpicerieEntities db = new EpicerieEntities();
-            var category = (from w in db.Weeks
-                            orderby w.WeekId descending
+            var category = (from o in db.Orders
+                            orderby o.OrderId descending
                             select new
                             {
-                                WeekId  =   w.WeekId
+                                OrderID = o.OrderId
                             }).ToList();
             return Json(category, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Afficher_Entete_Facture(int week)
+        public JsonResult Afficher_Entete_Facture(int OID)
         {
             EpicerieEntities db = new EpicerieEntities();
 
-            string utilisateur = User.Identity.Name;
-            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-            int weekbd = (from w in db.Weeks
-                          where w.WeekId == week
-                          select w.WeekId
-                            ).LastOrDefault();
-
-            var bill = (from u in db.AspNetUsers
+            var bill = (from a in db.AspNetUsers
                         join o in db.Orders
-                        on u.Id equals o.UserId
-                        join w in db.Weeks
-                        on o.WeekId equals w.WeekId
-                        where u.Id == guid
-                        & w.WeekId == weekbd
+                        on a.Id equals o.UserId
+                        where o.OrderId == OID
                         select new
                         {
-                            Usager = u.Prenom + " " + u.Nom,
-                            OrderID = o.OrderId,
-                            Debut = w.Date_Debut,
-                            Fin = w.Date_Fin,
-                            DateRecup = w.Date_Recuperation
+                            Usager = a.Prenom + " " + a.Nom,
+                            OrderID = o.OrderId
                         }).ToList();
+
             return Json(bill, JsonRequestBehavior.AllowGet);
         }
 
