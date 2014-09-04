@@ -78,7 +78,7 @@ namespace IdentitySample.Controllers
                         switch (parents[i].idParent)
                         {
                             case 2:
-                                menu += "<li><a href='/home/Calendar'>" + parents[i].nom + "</a></li>";
+                                menu += "<li><a href='/Evenements'>" + parents[i].nom + "</a></li>";
                                 break;
                             case 3:
                                 if (User.Identity.IsAuthenticated)

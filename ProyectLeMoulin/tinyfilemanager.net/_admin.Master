@@ -89,7 +89,7 @@
                                     <a href='../Admin/Evenements_a_venir'><i class="fa fa-star-o"></i> Évenements à venir</a>
                                 </li>
                                 <li>
-                                    <a href='../Admin/OldEvenements'><i class="fa fa-database"></i> Évenements passes</a>
+                                    <a href='../Admin/Evenements_Passes'><i class="fa fa-database"></i> Évenements passes</a>
                                 </li>
                             </ul>
                         </li>
@@ -138,7 +138,7 @@
                                 </li>
 
                                 <li>
-                                    <a href='../AchatAdmin/Categories'><i class="fa fa-truck"></i> Categories</a>
+                                    <a href='../AchatAdmin/Categories'><i class="fa fa-list-ul"></i> Categories</a>
                                 </li>
                                 <li>
                                     <a href='../AchatAdmin/Products'><i class="fa fa-coffee"></i> Produits</a>
@@ -148,6 +148,9 @@
                                 </li>
                                 <li>
                                     <a href='../AchatAdmin/OldOrders'><i class="fa fa-database"></i> Anciennes Commandes</a>
+                                </li>
+                                <li>
+                                    <a href='../AchatAdmin/Taxes'><i class="fa fa-line-chart"></i> Taxes</a>
                                 </li>
                             </ul>
                         </li>
