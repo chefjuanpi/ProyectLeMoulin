@@ -34,10 +34,10 @@
                 <h5 id="Format{{ProductID}}">{{Quantite}}</h5>
             </div>
             <div class="col-xs-2">
-                <input class="prix col-xs-1" id="{{ProductID}}" type="text" value="{{Prix}}" name="{{Prix}}.qty" readonly="readonly" />
+                <h5 id="Format{{ProductID}}">{{Prix}}</h5>
             </div>
             <div class="col-xs-1">
-                <h5 id="Format{{ProductID}}">{{SousTotal}}</h5>
+                <input class="sTotal prix col-xs-1" id="STotal{{ProductID}}" type="text" value="{{SousTotal}}" name="{{SousTotal}}.qty" readonly="readonly" />
             </div>
             {{/each}}
         </div>
@@ -62,6 +62,7 @@
         templateOrders = null;
         templateDetails = null;
         templateMembres = null;
+       
 
         $(function () {
             templateOrders = Handlebars.compile($("#OrdersTemplate").html());
@@ -93,24 +94,27 @@
             templateMembres = Handlebars.compile($("#MembresTemplate").html());
 
             $.getJSON("/Epicerie/GetMembre", { OID: id }, function (data) {
+                var Somme = 0;
                 var result = templateMembres(data);
                 $("#MembresOutput").html(result);
-                CalculerSomme();
+                $(".sTotal").each(function(){
+                    Somme += $(this).val();
+                });
+                console.log(Somme)
+                $("#SommeOutput").html(result);
             });
         };
 
-        function CalculerSomme() {
-            foreach
 
-        }
 
     </script>
 }
 
 <div id="Facture" class="row">
-    <div id="OrdersOutput" class="col-md-12"></div>
+    <div id="OrdersOutput"  class="col-md-12"></div>
     <div id="MembresOutput" class="col-md-12"></div>
     <div id="DetailsOutput" class="col-md-12"></div>
+    <div id="SommeOutput"   class="col-md-12"></div>
     <div>@Html.ActionLink("Retour", "Index")</div>
 </div>
 

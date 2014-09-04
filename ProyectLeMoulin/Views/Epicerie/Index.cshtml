@@ -1,7 +1,4 @@
-﻿@model IdentitySample.Models.test1234
-@using System.Globalization
-
-@section Scripts
+﻿@section Scripts
 {
 
     @*Template des Catégories*@
@@ -207,7 +204,7 @@
 
 <div id="Cat" class="Container">
     <div class="col-md-4">
-        <div class="col-md-12">
+        @*<div class="col-md-12">
                 @foreach (var p in ViewBag.Period)
                 {
                     <h4>
@@ -218,7 +215,7 @@
                         Récupération le        @p.Recup.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
                     </h4>
                 }
-            </div>
+            </div>*@
         <div id="CategoriesOutput" class="col-md-12"></div>
     </div>
     <div id="ProductsOutput" class="col-md-6"></div>
@@ -255,7 +252,7 @@
                     <div class="row col-md-12">
                         <!--Boutton pour envoyer le panier au serveur-->
                         <div style="text-align:center"><h3><b>En cliquant sur le bouton "Envoyez" vous ne pourrez pus effectuer de changement</b></h3></div>
-                        <div class="col-xs-5"></div><input type="submit" class="col-xs-2 btn btn-primary" value="Envoyer" />
+                        <div class="col-xs-5"></div><input id="NewBill" type="submit" class="col-xs-2 btn btn-primary" value="Envoyer" />
                     </div>
                 </div>
             }

@@ -552,5 +552,73 @@ namespace IdentitySample.Controllers
             ViewBag.message = "Permet de modifier les taxes au besoin";
             return View();
         }
+
+        /// <summary>
+        /// S'exécute au "Post" de la page Taxes
+        /// Enregistre les Modifications
+        /// </summary>
+        /// <param name="Taxe">Model à utiliser</param>
+        /// <returns>Une vue</returns>
+        [HttpPost]
+        public ActionResult Taxes(TaxesViewModel Taxe)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+
+            int x = Convert.ToInt16(Taxe.Id);
+
+            var modiftaxe = (from t in db.Taxes
+                             where t.id == x
+                             select t).SingleOrDefault();
+
+            modiftaxe.id = Taxe.Id;
+            modiftaxe.Taxe = Taxe.Taxe;
+            modiftaxe.value = Taxe.Value;
+
+            db.SaveChanges();
+
+            getTaxes();
+
+            ViewBag.Title = "Admnistration des Taxes";
+            ViewBag.message = "Permet de modifier les taxes au besoin";
+            return View();
+        }
+
+        /// <summary>
+        /// Permet d'obtenir l'ID et le nom des Taxes
+        /// </summary>
+        /// <returns>Json contenant les Taxes</returns>
+        public JsonResult getTaxes()
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var taxes = (from t in db.Taxes
+                             orderby t.id
+                             select new
+                             {
+                                 id = t.id,
+                                 nom = t.Taxe,
+                                 value = t.value,
+                             }).ToList();
+
+            return Json(taxes, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Permet d'otenir les informations sur une Taxe
+        /// </summary>
+        /// <param name="TaxeId">ID de la Taxe</param>
+        /// <returns>Json contenant les informations</returns>
+        public JsonResult getTaxeDetails(int TaxeId)
+        {
+            EpicerieEntities db = new EpicerieEntities();
+            var taxe = (from t in db.Taxes
+                            where t.id == TaxeId
+                            select new
+                            {
+                                id = t.id,
+                                Nom = t.Taxe,
+                                value = t.value,
+                            }).Single();
+            return Json(taxe, JsonRequestBehavior.AllowGet);
+        }
     }
 }

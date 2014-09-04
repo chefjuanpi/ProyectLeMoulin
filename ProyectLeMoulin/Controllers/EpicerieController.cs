@@ -222,27 +222,6 @@ namespace IdentitySample.Controllers
 
         }
         //----------------------------------------------------------------------------------------------------------------------
-        
-        /// <summary>
-        /// Récupérer le OrderId de la facture à afficher
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult GetOrder()
-        {
-            EpicerieEntities db = new EpicerieEntities();
-
-            string utilisateur = User.Identity.Name;
-            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
-
-            var order = (from o in db.Orders
-                         where o.UserId == guid
-                         orderby o.OrderId descending
-                         select new{
-                            OrderID = o.OrderId
-                         }).ToList();
-
-            return Json(order, JsonRequestBehavior.AllowGet);
-        }
 
         /// <summary>
         /// Récupères les informations du membre pour afficher
@@ -272,37 +251,60 @@ namespace IdentitySample.Controllers
         }
 
         /// <summary>
+        /// Récupérer le OrderId de la facture à afficher
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetOrder()
+        {
+            EpicerieEntities db = new EpicerieEntities();
+
+            string utilisateur = User.Identity.Name;
+            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+
+            var order = (from o in db.Orders
+                         where o.UserId == guid
+                         orderby o.OrderId descending
+                         select new
+                         {
+                             OrderID = o.OrderId
+                         }).ToList();
+            return Json(order, JsonRequestBehavior.AllowGet);
+        }
+
+       
+
+        /// <summary>
         /// Récupérer le détail de la facture sélectionnée
         /// </summary>
         /// <param name="OID"></param>
         /// <returns></returns>
         public JsonResult GetDetails(int OID)
-        {
+        {        
             EpicerieEntities db = new EpicerieEntities();
-            
-            var bill = (from o in db.Orders
-                        join od in db.OrderDetails
-                        on o.OrderId equals od.OrderId
-                        join p in db.Products
-                        on od.ProductId equals p.ProductId
-                        join cp in db.CategoryProduct
-                        on p.ProductId equals cp.ProductId
-                        join wp in db.WeekProduct
-                        on o.WeekId equals wp.WeekId
-                        where od.OrderId == OID
-                        orderby cp.CategoryId
-                        select new
-                        {
-                            Produit = p.ProductName,
-                            ProductID = od.ProductId,
-                            Format = wp.Format,
-                            Quantite = od.Quantite,
-                            Prix = od.UnitPrice,
-                            SousTotal = od.Quantite * od.UnitPrice,
-                            
-                        }).ToList();
-            
-            return Json(bill, JsonRequestBehavior.AllowGet);
+        
+            //if (OID != null)
+            //{
+                var bill = (from o in db.Orders
+                            join od in db.OrderDetails
+                            on o.OrderId equals od.OrderId
+                            join p in db.Products
+                            on od.ProductId equals p.ProductId
+                            join cp in db.CategoryProduct
+                            on p.ProductId equals cp.ProductId
+                            join wp in db.WeekProduct
+                            on o.WeekId equals wp.WeekId
+                            where od.OrderId == OID
+                            orderby cp.CategoryId
+                            select new
+                            {
+                                Produit = p.ProductName,
+                                ProductID = od.ProductId,
+                                Format = wp.Format,
+                                Quantite = od.Quantite,
+                                Prix = od.UnitPrice,
+                                SousTotal = od.Quantite * od.UnitPrice
+                            }).ToList();
+                return Json(bill, JsonRequestBehavior.AllowGet);
         }
     }
 }
