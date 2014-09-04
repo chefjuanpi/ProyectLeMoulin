@@ -42,7 +42,7 @@
         <div class="input-group">
             <table>
 
-                <tr>
+                <tr class="input-group">
                     <td>
                         @Html.LabelFor(w => w.DateDebut, new { @class = "input-group-addon", @style = "width:160px" })
                     </td>
@@ -60,7 +60,7 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr class="input-group">
                     <td>
                         @Html.LabelFor(w => w.DateRecup, new { @class = "input-group-addon", @style = "width:160px" })
                     </td>
@@ -96,7 +96,6 @@
             });
 
             $('#DateStart').datetimepicker({
-                datepicker: false,
                 lang: "fr",
                 format: 'Y/m/d',
                 onShow: function (ct) {
@@ -104,8 +103,8 @@
                         maxDate: $('#DateEnd').val() ? $('#DateEnd').val() : false
                     })
                 },
+                timepicker: false
             });
-            $("#DateStart").datepicker('setDate', new Date());
 
             $('#DateEnd').datetimepicker({
                 lang: "fr",
