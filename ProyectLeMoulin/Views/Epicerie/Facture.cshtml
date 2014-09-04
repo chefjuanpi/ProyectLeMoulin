@@ -7,9 +7,9 @@
     @*Template des Catégories*@
     <script type="text/x-handlebars-template" id="OrdersTemplate">
         <select id="OrderOutput" name="Orders" class="form-control orders">
-            @*<option selected="selected" id=0 value="0">Choisissez une facture</option>*@
+            <option selected="selected" id=0 value="0">Choisissez une facture</option>
             {{#each}}
-            <option id={{OrderId}} value="{{OrderID}}">{{OrderID}}</option>
+            <option id={{OrderID}} value="{{OrderID}}">{{OrderID}}</option>
             {{/each}}
         </select>
     </script>
@@ -51,12 +51,15 @@
             templateOrders = Handlebars.compile($("#OrdersTemplate").html());
             templateDetails = Handlebars.compile($("#DetailsTemplate").html());
 
+
+            
+
             $.getJSON("/Epicerie/GetOrder", null, function (data) {
                 var result = templateOrders(data);
                 $("#OrdersOutput").html(result);
 
                 $(".orders").change(function () {
-                    var id = $(this).children(":selected").attr("id");
+                    var id = $(this).children(":selected").html("{{OrderID}}");
                     console.log("H2" + " " + id);
                     if (id != 0) {
                         $.getJSON("/Epicerie/GetDetails", { OID: id }, function (data) {

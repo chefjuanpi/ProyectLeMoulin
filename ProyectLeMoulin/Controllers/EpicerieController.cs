@@ -204,6 +204,21 @@ namespace IdentitySample.Controllers
         }
         //----------------------------------------------------------------------------------------------------------------------
 
+        public JsonResult GetWeekFacture()
+        {
+            EpicerieEntities db = new EpicerieEntities();
+
+            var week = (from w in db.Weeks
+                        orderby w.WeekId descending
+                        select new
+                        {
+                            w.WeekId
+                        }).ToList();
+
+
+            return Json(week, JsonRequestBehavior.AllowGet);
+        }
+        
         public JsonResult GetOrder()
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -214,10 +229,10 @@ namespace IdentitySample.Controllers
             var order = (from o in db.Orders
                          where o.UserId == guid
                          orderby o.OrderId descending
-                         select new
-                         {
-                             OrderID = o.OrderId
+                         select new{
+                            OrderID = o.OrderId
                          }).ToList();
+
             return Json(order, JsonRequestBehavior.AllowGet);
         }
 
