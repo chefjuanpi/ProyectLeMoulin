@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
 {
-    //[Authorize(Roles = "Administrateur")]
+    [Authorize(Roles = "Administrateur")]
     public class AchatAdminController : Controller
     {
         /// <summary>

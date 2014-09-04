@@ -4,7 +4,6 @@ using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
 {
-    [RequireHttps]
     public class LayoutController : Controller
     {
         /// <summary>

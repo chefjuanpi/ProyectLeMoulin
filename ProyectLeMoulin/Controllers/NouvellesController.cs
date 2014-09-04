@@ -7,7 +7,6 @@ using IdentitySample.Models;
 
 namespace IdentitySample.Controllers
 {
-    [RequireHttps]
     public class NouvellesController : Controller
     {
         // GET: Nouvelles envoi la liste des nouvelles
