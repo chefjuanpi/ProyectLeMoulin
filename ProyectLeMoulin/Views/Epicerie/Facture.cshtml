@@ -6,10 +6,10 @@
 
     @*Template des Catégories*@
     <script type="text/x-handlebars-template" id="OrdersTemplate">
-        <select id="OrderOutput" name="Orders" class="form-control">
-            <option selected="selected" id=0 value="0">Choisissez une facture</option>
+        <select id="OrderOutput" name="Orders" class="form-control orders">
+            @*<option selected="selected" id=0 value="0">Choisissez une facture</option>*@
             {{#each}}
-            <option id={{OrderId}}>{{OrderID}}</option>
+            <option id={{OrderId}} value="{{OrderID}}">{{OrderID}}</option>
             {{/each}}
         </select>
     </script>
@@ -47,39 +47,35 @@
         templateOrders = null;
         templateDetails = null;
 
-        
-
         $(function () {
             templateOrders = Handlebars.compile($("#OrdersTemplate").html());
-            //templateDetails = Handlebars.compile($("#DetailsTemplate").html());
+            templateDetails = Handlebars.compile($("#DetailsTemplate").html());
 
             $.getJSON("/Epicerie/GetOrder", null, function (data) {
                 var result = templateOrders(data);
                 $("#OrdersOutput").html(result);
 
-                $("#OrdersOutput").change(function () {
+                $(".orders").change(function () {
                     var id = $(this).children(":selected").attr("id");
-                    console.log(id);
+                    console.log("H2" + " " + id);
                     if (id != 0) {
-                        $.getJSON("/Epicerie/GetDetails", { cat: id }, function (data) {
+                        $.getJSON("/Epicerie/GetDetails", { OID: id }, function (data) {
                             var result = templateDetails(data);
                             $("#DetailssOutput").html(result);
-                        });//GetDetails  
+                        });//GetDetails
                     }
                 });
             });//GetOrders
         });
-
-        
     </script>
 }
 
 <div id="Facture" class="row">
-    <div id="OrdersOutput"  class="col-md-12"></div>
+    <div id="OrdersOutput" class="col-md-12"></div>
 
     <div id="DetailsOutput" class="col-md-12"></div>
 
-    
+
 
     <div>@Html.ActionLink("Retour", "Index")</div>
 </div>

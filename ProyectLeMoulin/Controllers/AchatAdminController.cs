@@ -60,20 +60,29 @@ namespace IdentitySample.Controllers
                                  where wp.ProductId == x
                                  where wp.WeekId == Week
                                  select wp).Single();
-
+            
                 modifWeekProduct.ProductId = WeekProduct.ProductId;
                 modifWeekProduct.SupplierId = WeekProduct.SupplierId;
                 modifWeekProduct.UnitPrice = WeekProduct.UnitPrice;
                 modifWeekProduct.Quantity = WeekProduct.Quantity;
                 modifWeekProduct.Format = WeekProduct.Format;
-
+            
                 db.SaveChanges();
             }
+
             getSuppliers();
             getCategories();
+
+            ViewBag.Title = "Liste des produits";
+            ViewBag.message = "Administration de la liste d'achat";
             return View();
         }
 
+        /// <summary>
+        /// Permet de récupérer les WeekProducts de la semaine courrante
+        /// </summary>
+        /// <param name="Id">Id du produit voulu</param>
+        /// <returns></returns>
         public JsonResult getWeekProducts(int Id)
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -220,7 +229,11 @@ namespace IdentitySample.Controllers
 
                 db.SaveChanges();
             }
+
             getProducts();
+
+            ViewBag.Title = "Produits";
+            ViewBag.message = "Administration des produits";
             return View();
         }
 
@@ -323,7 +336,11 @@ namespace IdentitySample.Controllers
 
                 db.SaveChanges();
             }
+
             getCategories();
+
+            ViewBag.Title = "Categories";
+            ViewBag.message = "Administration des catégories";
             return View();
         }
 
@@ -434,7 +451,11 @@ namespace IdentitySample.Controllers
                 modifsupplier.Ville = Supplier.SupplierCity;
                 db.SaveChanges();
             }
+
             getSuppliers();
+
+            ViewBag.Title = "Fournisseurs";
+            ViewBag.message = "Administration des fournisseurs";
             return View();
         }
 

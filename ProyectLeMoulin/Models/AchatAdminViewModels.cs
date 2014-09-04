@@ -125,9 +125,9 @@ namespace EpicerieModel.Models
         [Display(Name = "Cout :")]
         public decimal UnitPrice { get; set; }
 
-        [RegularExpression(@"^\d+$", ErrorMessage = "Nombre entier uniquement")]
         [Required]
-        [Display(Name = "Quantité minimum :")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Nombre entier uniquement")]
+        [Display(Name = "Minimum :")]
         public int Quantity { get; set; }
 
         [Required]

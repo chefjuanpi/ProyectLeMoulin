@@ -198,12 +198,12 @@ namespace IdentitySample.Controllers
             //    ViewBag.Steeve = "erreur";
             //}
             //}
-            
+
             return Redirect("/Epicerie/Facture");
-            
+
         }
-//----------------------------------------------------------------------------------------------------------------------
-               
+        //----------------------------------------------------------------------------------------------------------------------
+
         public JsonResult GetOrder()
         {
             EpicerieEntities db = new EpicerieEntities();
@@ -211,16 +211,14 @@ namespace IdentitySample.Controllers
             string utilisateur = User.Identity.Name;
             string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
 
-            var category = (from o in db.Orders
-                            where o.UserId == guid
-                            orderby o.OrderId descending
-                            select new
-                            {
-                                OrderID = o.OrderId,
-                                WeekId = o.WeekId,
-                                UserId = o.UserId
-                            }).ToList();
-            return Json(category, JsonRequestBehavior.AllowGet);
+            var order = (from o in db.Orders
+                         where o.UserId == guid
+                         orderby o.OrderId descending
+                         select new
+                         {
+                             OrderID = o.OrderId
+                         }).ToList();
+            return Json(order, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDetails(int OID)

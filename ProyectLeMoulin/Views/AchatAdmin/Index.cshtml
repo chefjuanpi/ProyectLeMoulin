@@ -103,7 +103,10 @@
         </button>
         <div class="btn btn-danger col-md-1 col-md-offset-1" id="btnSupr">Supprimer</div>
     </div>
-
+    
+    <div id="dialog-confirm" title="Êtes-vous certain de vouloir effacer?">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Cette action efface de manière permanent et irrecuperable.</p>
+    </div>
 }
 
 @section Scripts {
@@ -172,6 +175,7 @@
             Templateitems = Handlebars.compile($("#itemsTemplate").html());
             TemplateWeekProducts = Handlebars.compile($("#WeekProductsTemplate").html());
 
+            $("#dialog-confirm").hide();
             $("#Formulaire").hide();
 
             $.getJSON("/AchatAdmin/getCategories", null, function (data) {
@@ -198,7 +202,38 @@
                 }); // Fin de Categories.items.change
             }); // Fin de getCategories
 
+            $("#btnAnnuler").click(function () {
+                $("#boutons").show();
+                $("#List").show();
+                $("#btnSupr").hide();
+                $("#btnAnnuler").hide();
+                $("#Formulaire").hide();
+                $("#ItemsList option[value='0']").prop('selected', true);
+            });
+
+            $("#btnSupr").click(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: 200,
+                    modal: true,
+                    buttons: {
+
+                        "Effacer": function () {
+                            var x = $("#new123").val();
+                            console.log(x);
+                            window.open("/AchatAdmin/delWeekProduct?nID=" + x, "_self");
+                            $(this).dialog("close");
+                        },
+
+                        "Annuler": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                }); // Fin dialog
+            }); // Fin btnSupr.click
+
         }); // Fin du DOM Load
+
         //$.getJSON("/AchatAdmin/getProducts", null, function (prod) {
         //    var result = TemplateProducts(prod);
         //    $("#ProductsList").html(result);
@@ -207,6 +242,10 @@
         function ModifyWeekProduct(id, nom) {
 
             $("#Formulaire").show();
+            $("#List").hide();
+            $("#boutons").hide();
+            $("#btnSupr").show();
+            $("#btnAnnuler").show();
 
             TemplateSuppliers = Handlebars.compile($("#ProductsTemplate").html());
 
@@ -216,13 +255,12 @@
                 $("#SuppliersList").html(result);
             }); // Fin de getSuppliers
 
-
-
             $.getJSON("/AchatAdmin/getWeekProductDetails", { ProductId: id }, function (data) {
                 $("#UnitPrice").val(data.UnitPrice);
                 $("#Format").val(data.Format);
                 $("#Quantity").val(data.Qty);
                 $("#SuppliersList option[value='" + data.Supplier + "']").prop('selected', true);
+                $("#new123").val(data.Product);
             }); // Fin getWeekProductDetails
 
         } // Fin de ModifyWeekProduct
