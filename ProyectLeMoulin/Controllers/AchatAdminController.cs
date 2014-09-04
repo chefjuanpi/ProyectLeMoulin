@@ -31,11 +31,20 @@ namespace IdentitySample.Controllers
         public ActionResult Index(WeekProductViewModel WeekProduct)
         {
             EpicerieEntities db = new EpicerieEntities();
-            if (WeekProduct.ProductId == null)
+
+            int x = Convert.ToInt16(WeekProduct.ProductId);
+            var Week = (from w in db.Weeks
+                        orderby w.WeekId descending
+                        select w.WeekId).First();
+
+            if ((from wp in db.WeekProduct
+                 where wp.ProductId == x 
+                 where wp.WeekId == Week 
+                 select wp).Count() == 0)
             {
                 WeekProduct wp = new WeekProduct();
 
-                wp.WeekId = WeekProduct.WeekId;
+                wp.WeekId = Week;
                 wp.ProductId = WeekProduct.ProductId;
                 wp.SupplierId = WeekProduct.SupplierId;
                 wp.UnitPrice = WeekProduct.UnitPrice;
@@ -47,12 +56,6 @@ namespace IdentitySample.Controllers
             }
             else
             {
-                int x = Convert.ToInt16(WeekProduct.ProductId);
-
-                var Week = (from w in db.Weeks
-                            orderby w.WeekId descending
-                            select w.WeekId).First();
-
                 var modifWeekProduct = (from wp in db.WeekProduct
                                  where wp.ProductId == x
                                  where wp.WeekId == Week
@@ -89,7 +92,7 @@ namespace IdentitySample.Controllers
                                 join s in db.Suppliers
                                 on wp.SupplierId equals s.SupplierId
                                 orderby p.ProductName
-                                where wp.WeekId == 1
+                                where wp.WeekId == weekbd
                                 where c.CategoryId == Id
                                 select new
                                 {
@@ -234,7 +237,7 @@ namespace IdentitySample.Controllers
                             {
                                 id = p.ProductId,
                                 nom = p.ProductName
-                            });
+                            }).ToList();
             return Json(products, JsonRequestBehavior.AllowGet);
         }
 

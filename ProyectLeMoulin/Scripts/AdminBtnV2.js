@@ -18,7 +18,6 @@ $(function () {
         $("#Formulaire").show();
         $("#btnAnuler").show();
         $("#Formulaire").find("input[type=text], textarea, input[type=hidden]").val("");
-        $("#publier").prop('checked', false);
         $("#Formulaire *").attr("disabled", false).on('click');
     });
 
