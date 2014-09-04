@@ -74,9 +74,7 @@
             templateProducts = Handlebars.compile($("#ProductsTemplate").html());
             templateCart = Handlebars.compile($("#CartTemplate").html());
 
-            //$.getJSON("/Epicerie/ValiderWeek", null, function (data) {
-            //    if(data.val == true)
-            //    {
+            
             $.getJSON("/Epicerie/GetWeek", null, function (data) {
                 var result = templateCategories(data);
                 $("#CategoriesOutput").html(result);
@@ -98,11 +96,6 @@
                     })//GetCategories
                 });
             })
-
-            //    }});
-            //else {    <h2>Aucune période d'achat en ce moment. Revenez plus tard.</h2>    });
-            //});
-
         });
         function AjouterPanier(id) {
             action = "AJOUT";
