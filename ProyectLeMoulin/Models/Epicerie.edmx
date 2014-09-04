@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EpicerieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EpicerieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
@@ -90,10 +90,11 @@
         </EntityType>
         <EntityType Name="Taxes">
           <Key>
-            <PropertyRef Name="Taxe" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="Taxe" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Value" Type="float" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Taxe" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="value" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="WeekProduct">
           <Key>
@@ -129,18 +130,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CategoryProduct_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="CategoryProduct" Type="Self.CategoryProduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="CategoryProduct">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CategoryProduct_Products1">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="CategoryProduct" Type="Self.CategoryProduct" Multiplicity="*" />
           <ReferentialConstraint>
@@ -255,10 +244,6 @@
             <End Role="CategoryProduct" EntitySet="CategoryProduct" />
           </AssociationSet>
           <AssociationSet Name="FK_CategoryProduct_Products" Association="Self.FK_CategoryProduct_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="CategoryProduct" EntitySet="CategoryProduct" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CategoryProduct_Products1" Association="Self.FK_CategoryProduct_Products1">
             <End Role="Products" EntitySet="Products" />
             <End Role="CategoryProduct" EntitySet="CategoryProduct" />
           </AssociationSet>
@@ -579,9 +564,11 @@
         <EntityType Name="Taxes">
           <Key>
             <PropertyRef Name="Taxe" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="Taxe" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Value" Type="Double" Nullable="false" />
+          <Property Name="Taxe" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="value" Type="Double" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -701,7 +688,8 @@
           <EntitySetMapping Name="Taxes">
             <EntityTypeMapping TypeName="EpicerieModel.Taxes">
               <MappingFragment StoreEntitySet="Taxes">
-                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="Taxe" ColumnName="Taxe" />
               </MappingFragment>
             </EntityTypeMapping>

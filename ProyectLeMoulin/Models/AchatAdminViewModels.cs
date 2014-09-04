@@ -143,6 +143,10 @@ namespace EpicerieModel.Models
     public class TaxesViewModel
     {
         [Required]
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Taxe :")]
         public string Taxe { get; set; }
 
         [Required]

@@ -15,6 +15,7 @@ namespace IdentitySample.Models
     public partial class Taxes
     {
         public string Taxe { get; set; }
-        public double Value { get; set; }
+        public int id { get; set; }
+        public double value { get; set; }
     }
 }
