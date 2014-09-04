@@ -22,6 +22,7 @@
             <h4 class="col-xs-1">Prix</h4>
             <h4 class="col-xs-1">SousTotal</h4>
         </div>
+        {{#each}}
         <div class="row" id=Detail{{ProductID}}>
             <div class="col-xs-4">
                 <h5 id="Name{{ProductID}}">{{Produit}}</h5>
@@ -29,7 +30,7 @@
             <div class="col-xs-3">
                 <h5 id="Format{{ProductID}}">{{Format}}</h5>
             </div>
-            {{#each}}
+
             <div class="col-xs-2">
                 <h5 id="Format{{ProductID}}">{{Quantite}}</h5>
             </div>
@@ -39,8 +40,9 @@
             <div class="col-xs-1">
                 <input class="sTotal prix col-xs-1" id="STotal{{ProductID}}" type="text" value="{{SousTotal}}" name="{{SousTotal}}.qty" readonly="readonly" />
             </div>
-            {{/each}}
+
         </div>
+        {{/each}}
     </script>
 
 <script type="text/x-handlebars-template" id="MembresTemplate">
@@ -76,14 +78,14 @@
                 $("#OrdersOutput").html(result);
 
                 $(".orders").change(function () {
-                    var id = $(this).children(":selected").html("{{OrderID}}");
-                    console.log("H2" + " " + id);
+                    var id = $(this).children(":selected").attr("id");;
                     AfficherMembre(id);
                     if (id != 0) {
                         AfficherMembre(id);
                         $.getJSON("/Epicerie/GetDetails", { OID: id }, function (data) {
                             var result = templateDetails(data);
-                            $("#DetailssOutput").html(result);
+                            console.log(result);
+                            $("#DetailsOutput").html(result);
                         });//GetDetails
                     }
                 });

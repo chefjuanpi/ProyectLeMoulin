@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="635ddf5905d74f57b3250b9e8030bd68" Name="Diagramme1" ZoomLevel="71">
         <EntityTypeShape EntityType="EpicerieModel.AspNetUsers" Width="1.5" PointX="9.625" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EpicerieModel.Categories" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EpicerieModel.Categories" Width="1.5" PointX="5.375" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EpicerieModel.CategoryProduct" Width="1.5" PointX="3.125" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EpicerieModel.Products" Width="1.5" PointX="0.5" PointY="3.375" IsExpanded="true" />
         <AssociationConnector Association="EpicerieModel.FK_CategoryProduct_Categories" ManuallyRouted="false" />
@@ -23,7 +23,7 @@
         <EntityTypeShape EntityType="EpicerieModel.OrderDetails" Width="1.5" PointX="14.25" PointY="1.75" />
         <AssociationConnector Association="EpicerieModel.FK_OrderDetails_Orders" />
         <AssociationConnector Association="EpicerieModel.FK_OrderDetails_Week" />
-        <EntityTypeShape EntityType="EpicerieModel.Taxes" Width="1.5" PointX="3.375" PointY="5.75" />
+        <EntityTypeShape EntityType="EpicerieModel.Tax" Width="1.5" PointX="0.75" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

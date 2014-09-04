@@ -12,7 +12,7 @@ namespace IdentitySample.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Taxes
+    public partial class Tax
     {
         public string Taxe { get; set; }
         public double Value { get; set; }

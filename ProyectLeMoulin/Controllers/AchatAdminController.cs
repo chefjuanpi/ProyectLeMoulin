@@ -572,7 +572,7 @@ namespace IdentitySample.Controllers
 
             modiftaxe.id = Taxe.Id;
             modiftaxe.Taxe = Taxe.Taxe;
-            modiftaxe.value = Taxe.Value;
+            modiftaxe.Value = Taxe.Value;
 
             db.SaveChanges();
 
@@ -596,7 +596,7 @@ namespace IdentitySample.Controllers
                              {
                                  id = t.id,
                                  nom = t.Taxe,
-                                 value = t.value,
+                                 value = t.Value,
                              }).ToList();
 
             return Json(taxes, JsonRequestBehavior.AllowGet);
@@ -616,7 +616,7 @@ namespace IdentitySample.Controllers
                             {
                                 id = t.id,
                                 Nom = t.Taxe,
-                                value = t.value,
+                                value = t.Value,
                             }).Single();
             return Json(taxe, JsonRequestBehavior.AllowGet);
         }

@@ -37,7 +37,7 @@ namespace IdentitySample.Models
         public DbSet<Weeks> Weeks { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
-        public DbSet<Taxes> Taxes { get; set; }
+        public DbSet<Tax> Taxes { get; set; }
     
         public virtual int CopyLastWeekProducts()
         {

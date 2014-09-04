@@ -14,7 +14,8 @@ using System.Collections.Generic;
 
 namespace IdentitySample.Controllers
 {
-
+    [RequireHttps]
+    [Authorize(Roles = "Membre groupe d'achats")]
     public class EpicerieController : Controller
     {
         /// <summary>
@@ -284,25 +285,28 @@ namespace IdentitySample.Controllers
         
             //if (OID != null)
             //{
-                var bill = (from o in db.Orders
-                            join od in db.OrderDetails
-                            on o.OrderId equals od.OrderId
-                            join p in db.Products
-                            on od.ProductId equals p.ProductId
+
+
+
+                var bill = (from c in db.Categories
                             join cp in db.CategoryProduct
-                            on p.ProductId equals cp.ProductId
+                            on c.CategoryId equals cp.CategoryId
+                            join p in db.Products
+                            on cp.ProductId equals p.ProductId
                             join wp in db.WeekProduct
-                            on o.WeekId equals wp.WeekId
-                            where od.OrderId == OID
+                            on p.ProductId equals wp.ProductId
+                            join od in db.OrderDetails
+                            on wp.ProductId equals od.ProductId into xs
+                            from y in xs.Where(od => od.OrderId == OID)
                             orderby cp.CategoryId
                             select new
                             {
                                 Produit = p.ProductName,
-                                ProductID = od.ProductId,
+                                ProductID = y.ProductId,
                                 Format = wp.Format,
-                                Quantite = od.Quantite,
-                                Prix = od.UnitPrice,
-                                SousTotal = od.Quantite * od.UnitPrice
+                                Quantite = y.Quantite,
+                                Prix = y.UnitPrice,
+                                SousTotal = y.Quantite * y.UnitPrice
                             }).ToList();
                 return Json(bill, JsonRequestBehavior.AllowGet);
         }

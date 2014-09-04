@@ -799,7 +799,7 @@
     <Compile Include="Models\Products.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Taxes.cs">
+    <Compile Include="Models\Tax.cs">
       <DependentUpon>Epicerie.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WeekProduct.cs">

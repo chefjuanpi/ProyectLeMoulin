@@ -1,4 +1,9 @@
-﻿@section Scripts
+﻿﻿@model IdentitySample.Models.test1234
+@using System.Globalization
+
+
+
+@section Scripts
 {
 
     @*Template des Catégories*@
@@ -203,19 +208,21 @@
 </div>
 
 <div id="Cat" class="Container">
+    <div class="col-md-12">
+        @foreach (var p in ViewBag.Period)
+        {
+            <h4>
+                Période de commande du @p.Debut.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                au                     @p.Fin.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+            </h4>
+            <h4>
+                Récupération le        @p.Recup.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+            </h4>
+        }
+    </div>
+
     <div class="col-md-4">
-        @*<div class="col-md-12">
-                @foreach (var p in ViewBag.Period)
-                {
-                    <h4>
-                        Période de commande du @p.Debut.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
-                        au                     @p.Fin.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
-                    </h4>
-                    <h4>
-                        Récupération le        @p.Recup.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
-                    </h4>
-                }
-            </div>*@
+
         <div id="CategoriesOutput" class="col-md-12"></div>
     </div>
     <div id="ProductsOutput" class="col-md-6"></div>
