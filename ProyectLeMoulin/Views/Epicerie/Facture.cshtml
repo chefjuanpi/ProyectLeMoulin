@@ -5,3 +5,87 @@
 {
 
 
+@*Template des Catégories*@
+<script type="text/x-handlebars-template" id="OrdersTemplate">
+    <select id="OrderOutput" name="Orders" class="form-control">
+        <option selected="selected" id=0 value="0">Choisissez une facture</option>
+        {{#each}}
+        <option id={{OrderId}}>{{OrderID}}</option>
+        {{/each}}
+    </select>
+</script>
+
+@*Template des produits*@
+<script type="text/x-handlebars-template" id="EnteteTemplate">
+    <div class="row">
+        <h4 class="col-xs-4">Produits</h4>
+        <h4 class="col-xs-3">Format</h4>
+        <h4 class="col-xs-2">Prix $</h4>
+        <h4 class="col-xs-2">Qty</h4>
+        <h4 class="col-xs-1">Ajouter au panier</h4>
+    </div>
+
+    <div class="row" id=Entete{{OrderId}}>
+        <div class="col-xs-4">
+            <h5 id="Name{{OrderId}}">{{OrderId}}</h5>
+        </div>
+        <div class="col-xs-3">
+            <h5 id="Format{{OrderId}}">{{Format}}</h5>
+        </div>
+    </div>
+
+</script>
+
+
+<script type="text/javascript">
+    templateOrders = null;
+    templateEntete = null;
+
+    $(function () {
+        templateOrders = Handlebars.compile($("#OrdersTemplate").html());
+           
+        $.getJSON("/Epicerie/GetOrder", null, function (data) {
+            var result = templateOrders(data);
+            $("#OrdersOutput").html(result);
+
+            $("#OrdersOutput").change(function () {
+                var id = $(this).children(":selected").attr("id");
+                console.log(this);
+                $.getJSON("/Epicerie/Afficher_Entete_Facture", null, function (data) {
+                    var result = templateEntete(data);
+                    console.log(data);
+                    $("#EnteteOutput").html(result);
+                });
+            });
+        });
+    });
+   
+</script>
+}
+
+<div class="row">
+    <div id="Message"></div>
+</div>
+
+<div id="Cat" class="Container">
+    <div class="col-md-4">
+        @*<div class="col-md-12">
+                @foreach (var p in ViewBag.Period)
+                {
+                    <h4>
+                        Période de commande du @p.Debut.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                        au                     @p.Fin.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                    </h4>
+                    <h4>
+                        Récupération le        @p.Recup.ToString("dd/MMMM/yyyy", CultureInfo.CreateSpecificCulture("fr-CA"))
+                    </h4>
+                }
+            </div>*@
+
+    </div>
+</div>
+<div id="OrdersOutput" class="col-md-12"></div>
+
+<div id="EnteteOutput" class="col-md-6"></div>
+
+

@@ -201,15 +201,21 @@ namespace IdentitySample.Controllers
             return View();
 
         }
-
-        public JsonResult GetBill()
+//----------------------------------------------------------------------------------------------------------------------
+        public JsonResult GetOrder()
         {
             EpicerieEntities db = new EpicerieEntities();
+
+            string utilisateur = User.Identity.Name;
+            string guid = db.AspNetUsers.Single(m => m.UserName == utilisateur).Id;
+
             var category = (from o in db.Orders
+                            where o.UserId == guid
                             orderby o.OrderId descending
                             select new
                             {
-                                OrderID = o.OrderId
+                                OrderID = o.OrderId,
+                                WeekId = o.WeekId
                             }).ToList();
             return Json(category, JsonRequestBehavior.AllowGet);
         }
