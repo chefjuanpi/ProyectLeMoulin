@@ -15,8 +15,7 @@
 <br />
 
 <p>
-    Selectionner un fournisseur dans la liste deroulante pour le voir et le modifier, ou cliquer sur le bouton
-    nouveau pour en ajouter un.
+    Selectionner une taxe dans la liste déroulante pour pouvoir la modifier.
 </p>
 
 <div class="row">
@@ -118,12 +117,11 @@
                 }); // Fin items .change
             }); // Fin getTaxes
 
-            $("#btnmodif").click(function () {
-                $("#boutons").hide();
-                $("#btnAnuler").show();
-                $("#Formulaire *").attr("disabled", false).on('click');
-                $("#taxe").attr("disabled", true).on("click");
-            });
+            //$("#btnmodif").click(function () {
+            //    $("#boutons").hide();
+            //    $("#btnAnuler").show();
+            //    $("#Formulaire *").attr("disabled", false).on('click');
+            //});
 
         }); // Fin de chargement du DOM
     </script>

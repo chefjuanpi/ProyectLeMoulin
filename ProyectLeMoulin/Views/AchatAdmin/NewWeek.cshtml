@@ -15,11 +15,10 @@
 <br />
 
 <p>
-    Selectionner un fournisseur dans la liste deroulante pour le voir et le modifier, ou cliquer sur le bouton
-    nouveau pour en ajouter un.
+    Attention! Créer une nouvelle semaine rendra toute modification de la précédente impossible.
 </p>
 
-<div class="row">
+<div class="row" id="bouton">
     <div class="btn btn-success col-md-offset-1" id="btnNew"><i class="fa fa-plus-square"></i> Créer nouvelle session d'achat</div>
 </div>
 
@@ -76,6 +75,7 @@
     <br />
 
     <div class="row">
+        <div class="btn btn-success col-md-2 col-md-offset-1" id="btnAnnuler"><i class="fa fa-undo"></i> Annuler</div>
         <button type="submit" class="btn btn-success col-md-offset-3 col-md-2" id="save">
             <i class="fa fa-save"></i><b> Enregistrer </b>
         </button>
@@ -94,6 +94,9 @@
                 // Disable caching of AJAX responses
                 cache: false
             });
+
+            $("#Formulaire").hide();
+            $("#btnAnuler").hide();
 
             $('#DateStart').datetimepicker({
                 lang: "fr",
@@ -127,6 +130,18 @@
                 },
                 timepicker: false
             });
+
+            $("#btnNew").click(function () {
+                $("#bouton").hide();
+                $("#Formulaire").show();
+                $("#btnAnuler").show();
+            });
+
+            $("#btnAnnuler").click(function () {
+                $("#bouton").show();
+                $("#Formulaire").hide();
+                $("#btnAnuler").hide();
+            })
 
         }); // Fin des functions
     </script>

@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace IdentitySample.Controllers
 {
-    [RequireHttps]
+
     [Authorize(Roles = "Membre groupe d'achats")]
     public class EpicerieController : Controller
     {

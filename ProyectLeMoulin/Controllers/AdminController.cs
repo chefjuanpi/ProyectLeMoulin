@@ -16,7 +16,7 @@ using Microsoft.Owin.Security;
 
 namespace IdentitySample.Controllers
 {
-    [RequireHttps]
+
     [Authorize(Roles = "Administrateur")]
     public class AdminController : Controller
     {

@@ -632,6 +632,31 @@ namespace IdentitySample.Controllers
             return View();
         }
 
+        /// <summary>
+        /// S'exécute au "Post" de la page NewWeek
+        /// Crée la nouvelle semaine.
+        /// </summary>
+        /// <param name="Week">Model à utiliser</param>
+        /// <returns>Une vue</returns>
+        [HttpPost]
+        public ActionResult NewWeek(WeekViewModel Week)
+        {
+            EpicerieEntities db = new EpicerieEntities();
 
+            Weeks w = new Weeks();
+            w.Date_Debut = Week.DateDebut;
+            w.Date_Fin = Week.DateFin;
+            w.Date_Recuperation = Week.DateRecup;
+
+            db.Weeks.Add(w);
+
+            db.CopyLastWeekProducts();
+
+            db.SaveChanges();
+      
+            ViewBag.Title = "Admnistration des Taxes";
+            ViewBag.message = "Permet de modifier les taxes au besoin";
+            return View();
+        }
     }
 } 
