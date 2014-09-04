@@ -52,7 +52,7 @@
                         <div class="input-group-addon" style="width:160px">Produit :</div>
                     </td>
                     <td>
-                        @Html.DropDownListFor(wp => wp.ProductId, new SelectList(new string[] { "Produits" }), new { @class = "form-control", @id = "ProductsList" })
+                        @Html.DropDownListFor(wp => wp.ProductId, new SelectList(new string[] { "Produits" }), new { @class = "form-control prods", @id = "ProductsList" })
                     </td>
                 </tr>
                 <tr>
@@ -60,7 +60,7 @@
                         <div class = "input-group-addon" style = "width:160px">Fournisseur :</div>
                     </td>
                     <td>
-                        @Html.DropDownListFor(wp => wp.SupplierId, new SelectList(new string[] { "Fournisseurs" }), new { @class = "form-control", @id = "SuppliersList" })
+                        @Html.DropDownListFor(wp => wp.SupplierId, new SelectList(new string[] { "Fournisseurs" }), new { @class = "form-control supls", @id = "SuppliersList" })
                     </td>
                 </tr>
                 <tr>
@@ -153,6 +153,12 @@
         {{/each}}
     </script>
 
+    <script type="text/x-handlebars-template" id="SuppliersTemplate">
+        {{#each}}
+        <option id={{id}} value={{id}}>{{nom}}</option>
+        {{/each}}
+    </script>
+
     <script type="text/x-handlebars-template" id="ProductsTemplate">
         {{#each}}
         <option id={{id}} value={{id}}>{{nom}}</option>
@@ -191,12 +197,18 @@
                     //}
 
                     if (id != 0) {
+                        $("#List").show();
+
                         $.getJSON("/AchatAdmin/getWeekProducts", { Id: id }, function (data) {
 
                             var result = TemplateWeekProducts(data);
                             $("#WeekProductsList").html(result);
 
                         }); // Fin de getWeekProducts
+                    }
+                    else
+                    {
+                        $("#List").hide();
                     }
 
                 }); // Fin de Categories.items.change
@@ -205,8 +217,6 @@
             $("#btnAnnuler").click(function () {
                 $("#boutons").show();
                 $("#List").show();
-                $("#btnSupr").hide();
-                $("#btnAnnuler").hide();
                 $("#Formulaire").hide();
                 $("#ItemsList option[value='0']").prop('selected', true);
             });
@@ -232,22 +242,42 @@
                 }); // Fin dialog
             }); // Fin btnSupr.click
 
-        }); // Fin du DOM Load
+            $("#btnNew").click(function () {
+                $("#boutons").hide();
+                $("#List").hide();
+                $("#Formulaire").show();
 
-        //$.getJSON("/AchatAdmin/getProducts", null, function (prod) {
-        //    var result = TemplateProducts(prod);
-        //    $("#ProductsList").html(result);
-        //}); // Fin de getProducts
+                TemplateSuppliers = Handlebars.compile($("#SuppliersTemplate").html());
+                TemplateProducts = Handlebars.compile($("#ProductsTemplate").html());
+
+                $.getJSON("/AchatAdmin/getSuppliers", null, function (sups) {
+                    var result = TemplateSuppliers(sups);
+                    $("#SuppliersList").html(result);
+                }); // Fin de getSuppliers
+
+                $.getJSON("/AchatAdmin/getProducts", null, function (prod) {
+                    var result = TemplateProducts(prod);
+                    $("#ProductsList").html(result);
+
+                    $(".prods").change(function () {
+                        var id = $(this).children(":selected").attr("id");
+                        
+                        $("#new123").val(id);
+                    })
+                }); // Fin de getProducts
+
+
+            });
+
+        }); // Fin du DOM Load
 
         function ModifyWeekProduct(id, nom) {
 
             $("#Formulaire").show();
             $("#List").hide();
             $("#boutons").hide();
-            $("#btnSupr").show();
-            $("#btnAnnuler").show();
 
-            TemplateSuppliers = Handlebars.compile($("#ProductsTemplate").html());
+            TemplateSuppliers = Handlebars.compile($("#SuppliersTemplate").html());
 
             $("#ProductsList").html("<option id=" + id + " value=" + id + " selected=true >" + nom + "</option>");
             $.getJSON("/AchatAdmin/getSuppliers", null, function (sups) {
