@@ -5,6 +5,12 @@
  */
 
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+.test{
+background-color:green;
+color:white;
+font-size:30px;
+}
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
