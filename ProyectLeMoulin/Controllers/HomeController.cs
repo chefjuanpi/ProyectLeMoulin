@@ -221,6 +221,7 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
+                var i = Request.Files.Count;
                 MailMessage mail = new MailMessage();
                 mail.ReplyToList.Add(new MailAddress(obj.to));
                 mail.To.Add(ConfigurationManager.AppSettings["mailAccount"]);

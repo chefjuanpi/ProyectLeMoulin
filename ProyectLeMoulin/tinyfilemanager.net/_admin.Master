@@ -183,7 +183,7 @@
 
                     <hr />
                     <footer>
-                        <p>&copy; <% Response.Write(DateTime.Now.Year); %> - Crée par Pablo Aguilar-Lliguin, Steeve Bouchard et Michel Goyette</p>
+                        <p>&copy; <% Response.Write(DateTime.Now.Year); %> - Crée par Pablo Aguilar-Lliguin</p>
                     </footer>
                 </div>
                 <!-- /#page-wrapper -->

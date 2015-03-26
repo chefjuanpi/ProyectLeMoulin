@@ -6,9 +6,9 @@
 }
 <h3>@ViewBag.Title</h3>
 
-<form method="post" class="form-horizontal" role="form" id="sendMail">
+<form method="post" class="form-horizontal" role="form" id="sendMail" enctype="multipart/form-data" action="/Home/_SendMail">
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary("", new { @class = "text-danger", @id="validation" })
+    @Html.ValidationSummary("", new { @class = "text-danger", @id = "validation" })
     <div class="text-success" id="success"> @ViewBag.courriel </div>
     <div class="row">
         <div class="col-md-12">
@@ -28,8 +28,13 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-                @Html.LabelFor(m => m.Body, new { @class = "input-group" })
-                @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "8" })
+            @Html.LabelFor(m => m.Body, new { @class = "input-group" })
+            @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "8" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <input type="file" class="form-control" name="image456" id="image456" />
         </div>
     </div>
     <br />
@@ -42,7 +47,7 @@
 
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/form")
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         $(function () {
             $("#sendMail").ajaxForm({
                 url: "/Home/_SendMail?obj",
@@ -56,4 +61,4 @@
                 $("#success").html(data);
             }
         });
-    </script>
+    </script>*@

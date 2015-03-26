@@ -1,6 +1,9 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.Mail;
+using System.Web;
+
 namespace IdentitySample.Models
 {
     public class MailModel
@@ -25,6 +28,8 @@ namespace IdentitySample.Models
         public string Body { get; set; }
 
         public string adresse { get; set; }
-        
+
+        [NotMapped]
+        public HttpPostedFileBase image456 { get; set; }
     }
 }

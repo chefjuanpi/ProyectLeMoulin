@@ -127,3 +127,8 @@ http://stackoverflow.com/questions/6086529/how-to-check-user-is-logged-in-in-asp
 
 envoie model plein to view exaple checkbox on
 http://stackoverflow.com/questions/16435448/how-to-set-a-checkbox-by-default-checked-in-asp-net-mvc
+
+taxes            
+Taxe nvarchar TPS tvq
+Value float   5   9,975
+id  int kle
